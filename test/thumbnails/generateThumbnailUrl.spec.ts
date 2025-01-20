@@ -1,10 +1,13 @@
 import { describe, expect, it } from "vitest"
 import { generateThumbnailUrl } from "../../src/thumbnails/generateThumbnailUrl"
+import { mockSettings } from "@nosto/nosto-js/testing"
 
 describe("generateThumbnailUrl", () => {
   it("should generate the correct URL", () => {
+    mockSettings({
+      account: "1111"
+    })
     const url = generateThumbnailUrl({
-      merchantId: "1111",
       size: "100x100",
       productId: "2222",
       hash: "3333"

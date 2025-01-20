@@ -3,57 +3,66 @@ import { generateThumbnailUrl } from "./generateThumbnailUrl"
 import { ThumbnailSize } from "./types"
 
 type Config = {
-  merchantId: string
   size: ThumbnailSize
-}
-
-type AugmentedSearchProduct = Omit<SearchProduct, "skus"> & {
-  skus?: (SearchProductSku & {
-    thumbUrl?: string
-  })[]
 }
 
 /**
  * Replaces full size images with thumbnail sized versions
  */
-export function thumbnailDecorator({ merchantId, size }: Config) {
-  return function decorator(hit: SearchProduct): AugmentedSearchProduct {
+export function thumbnailDecorator({ size }: Config) {
+  function getThumbnailUrlForHash(productId: string, hash: string | undefined) {
+    if (!hash) {
+      return undefined
+    }
+
+    return generateThumbnailUrl({
+      size,
+      productId,
+      hash
+    })
+  }
+
+  function processSkus(productId: string, skus: SearchProductSku[] | undefined) {
+    if (!skus) {
+      return undefined
+    }
+    return skus.map(sku => {
+      return {
+        ...sku,
+        imageUrl: getThumbnailUrlForHash(productId, sku.imageHash) ?? sku.imageUrl
+      }
+    })
+  }
+
+  function processAlternateImages(productId: string, images: string[] | undefined, hashes: string[] | undefined) {
+    if (!hashes) {
+      return images
+    }
+    if (!images) {
+      return undefined
+    }
+
+    return hashes.map(hash =>
+      generateThumbnailUrl({
+        size,
+        productId,
+        hash
+      })
+    )
+  }
+
+  return function decorator(hit: SearchProduct): SearchProduct {
     const productId = hit.productId
     if (!productId) {
       return hit
     }
 
-    const productThumbnail = hit.thumbHash
-      ? generateThumbnailUrl({
-          merchantId,
-          size,
-          productId,
-          hash: hit.thumbHash
-        })
-      : undefined
-
-    const updatedSkus =
-      hit.skus?.map(sku => {
-        // TODO: sku.thumbHash ?
-        const hash = sku.imageHash
-        if (!hash) {
-          return sku
-        }
-        return {
-          ...sku,
-          thumbUrl: generateThumbnailUrl({
-            merchantId,
-            size,
-            productId,
-            hash
-          })
-        }
-      }) ?? ([] as AugmentedSearchProduct["skus"])
-
     return {
       ...hit,
-      thumbUrl: productThumbnail ?? hit.thumbUrl,
-      skus: updatedSkus
+      imageUrl: getThumbnailUrlForHash(productId, hit.imageHash) ?? hit.imageUrl,
+      thumbUrl: getThumbnailUrlForHash(productId, hit.thumbHash) ?? hit.thumbUrl,
+      skus: processSkus(productId, hit.skus),
+      alternateImageUrls: processAlternateImages(productId, hit.alternateImageUrls, hit.alternateImageHashes)
     }
   }
 }

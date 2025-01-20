@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest"
 import { thumbnailDecorator } from "../../src/thumbnails/thumbnailDecorator"
 import { SearchProduct } from "@nosto/nosto-js/client"
+import { mockSettings } from "@nosto/nosto-js/testing"
+import { beforeEach } from "node:test"
 
 const baseMockProduct: SearchProduct = {
   productId: "2222",
@@ -15,9 +17,13 @@ const baseMockProduct: SearchProduct = {
 }
 
 describe("thumbnailDecorator", () => {
+  beforeEach(() => {
+    mockSettings({
+      account: "1111"
+    })
+  })
   it("should replace the product image url", () => {
     const decorator = thumbnailDecorator({
-      merchantId: "1111",
       size: "100x100"
     })
 
@@ -27,7 +33,6 @@ describe("thumbnailDecorator", () => {
 
   it("does not modify object if productId is not provided", () => {
     const decorator = thumbnailDecorator({
-      merchantId: "1111",
       size: "100x100"
     })
 
@@ -42,7 +47,6 @@ describe("thumbnailDecorator", () => {
 
   it("does not modify url if thumb hash is not provided", () => {
     const decorator = thumbnailDecorator({
-      merchantId: "1111",
       size: "100x100"
     })
 
@@ -58,17 +62,15 @@ describe("thumbnailDecorator", () => {
 
   it("should replace the sku image urls", () => {
     const decorator = thumbnailDecorator({
-      merchantId: "1111",
       size: "100x100"
     })
 
     const result = decorator(baseMockProduct)
-    expect(result.skus?.[0].thumbUrl).toEqual("https://thumbs.nosto.com/1111/100x100/2222/5555/A")
+    expect(result.skus?.[0].imageUrl).toEqual("https://thumbs.nosto.com/1111/100x100/2222/5555/A")
   })
 
   it("does not modify skus if hash is not provided", () => {
     const decorator = thumbnailDecorator({
-      merchantId: "1111",
       size: "100x100"
     })
 
@@ -87,7 +89,7 @@ describe("thumbnailDecorator", () => {
     }
 
     const result = decorator(mockProduct)
-    expect(result.skus?.[0].thumbUrl).toEqual(undefined)
-    expect(result.skus?.[1].thumbUrl).toEqual("https://thumbs.nosto.com/1111/100x100/2222/5555/A")
+    expect(result.skus?.[0].imageUrl).toEqual(undefined)
+    expect(result.skus?.[1].imageUrl).toEqual("https://thumbs.nosto.com/1111/100x100/2222/5555/A")
   })
 })
