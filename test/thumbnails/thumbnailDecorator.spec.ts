@@ -24,16 +24,26 @@ describe("thumbnailDecorator", () => {
   })
   it("should replace the product image url", () => {
     const decorator = thumbnailDecorator({
-      size: "100x100"
+      size: "13"
     })
 
     const result = decorator(baseMockProduct)
-    expect(result.thumbUrl).toEqual("https://thumbs.nosto.com/1111/100x100/2222/3333/A")
+    expect(result.thumbUrl).toEqual("https://thumbs.nosto.com/1111/13/2222/3333/A")
+  })
+
+  it("handles numeric size as well", () => {
+    const decorator = thumbnailDecorator({
+      // @ts-expect-error we secretly accept numbers as well
+      size: 13
+    })
+
+    const result = decorator(baseMockProduct)
+    expect(result.thumbUrl).toEqual("https://thumbs.nosto.com/1111/13/2222/3333/A")
   })
 
   it("does not modify object if productId is not provided", () => {
     const decorator = thumbnailDecorator({
-      size: "100x100"
+      size: "13"
     })
 
     const mockProduct = {
@@ -47,7 +57,7 @@ describe("thumbnailDecorator", () => {
 
   it("does not modify url if thumb hash is not provided", () => {
     const decorator = thumbnailDecorator({
-      size: "100x100"
+      size: "13"
     })
 
     const mockProduct = {
@@ -62,7 +72,7 @@ describe("thumbnailDecorator", () => {
 
   it("should replace the sku image urls", () => {
     const decorator = thumbnailDecorator({
-      size: "100x100"
+      size: "13"
     })
 
     const result = decorator(baseMockProduct)
@@ -71,7 +81,7 @@ describe("thumbnailDecorator", () => {
 
   it("does not modify skus if hash is not provided", () => {
     const decorator = thumbnailDecorator({
-      size: "100x100"
+      size: "13"
     })
 
     const mockProduct: SearchProduct = {

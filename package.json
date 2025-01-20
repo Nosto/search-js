@@ -36,10 +36,8 @@
     "preview": "vite preview",
     "typedoc": "typedoc src/index.ts"
   },
-  "dependencies": {
-    "@nosto/nosto-js": "^1.4.2"
-  },
   "devDependencies": {
+    "@nosto/nosto-js": "^1.4.3",
     "@testing-library/dom": "^10.4.0",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/node": "^22.8.7",
