@@ -6,7 +6,8 @@ describe("generateThumbnailUrl", () => {
   it("should generate the correct URL", () => {
     mockNostojs({})
     mockSettings({
-      account: "1111"
+      account: "1111",
+      thumbnailHost: "thumbs.nosto.com"
     })
     const url = generateThumbnailUrl({
       size: "2",
