@@ -1,3 +1,4 @@
 export * from "./thumbnails/generateThumbnailUrl"
 export * from "./thumbnails/thumbnailDecorator"
-export type { ThumbnailSize } from "./thumbnails/types"
+export * from "./thumbnails/shopifyThumbnailDecorator"
+export type { ThumbnailSize, ShopifySize } from "./thumbnails/types"
