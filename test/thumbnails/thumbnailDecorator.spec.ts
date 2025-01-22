@@ -50,7 +50,7 @@ describe("thumbnailDecorator", () => {
     expect(result.imageUrl).toEqual("https://thumbs.nosto.com/accountId/13/productId/imageHash/A")
   })
 
-  it("does not modify object if productId is not provided", () => {
+  it("should not modify object if productId is not provided", () => {
     const decorator = thumbnailDecorator({
       size: "13"
     })
