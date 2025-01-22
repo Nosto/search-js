@@ -5,7 +5,11 @@ export default defineConfig({
   build: {
     lib: {
       name: "@nosto/search-js",
-      entry: [resolve(__dirname, "src/index.ts"), resolve(__dirname, "src/thumbnails.ts")],
+      entry: [
+        resolve(__dirname, "src/index.ts"),
+        resolve(__dirname, "src/thumbnails.ts"),
+        resolve(__dirname, "src/currencies.ts")
+      ],
       formats: ["es", "cjs"],
       fileName: (format, name) => `${name}.${format}.js`
     }

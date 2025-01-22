@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { priceDecorator } from "../src/decorator"
+import { priceDecorator } from "../../src/currencies/priceDecorator"
 import { SearchProduct } from "@nosto/nosto-js/client"
 import { mockNostojs } from "@nosto/nosto-js/testing"
 
