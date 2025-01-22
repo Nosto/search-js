@@ -65,7 +65,7 @@ describe("thumbnailDecorator", () => {
     expect(result).toEqual(mockProduct)
   })
 
-  it("does not modify imageUrl if imageHash is not provided", () => {
+  it("should not modify imageUrl if imageHash is not provided", () => {
     const decorator = thumbnailDecorator({
       size: "13"
     })
@@ -80,7 +80,7 @@ describe("thumbnailDecorator", () => {
     expect(result).toEqual(mockProduct)
   })
 
-  it("does not modify thumbUrl if thumbHash is not provided", () => {
+  it("should not modify thumbUrl if thumbHash is not provided", () => {
     const decorator = thumbnailDecorator({
       size: "13"
     })
@@ -95,7 +95,7 @@ describe("thumbnailDecorator", () => {
     expect(result).toEqual(mockProduct)
   })
 
-  it("does not modify alternateImageUrls if hash is not provided", () => {
+  it("should not modify alternateImageUrls if hash is not provided", () => {
     const decorator = thumbnailDecorator({
       size: "13"
     })
@@ -107,7 +107,7 @@ describe("thumbnailDecorator", () => {
     expect(result.alternateImageUrls?.[0]).toEqual("oldUrl")
   })
 
-  it("does not modify skus if hash is not provided", () => {
+  it("should not modify skus if hash is not provided", () => {
     const decorator = thumbnailDecorator({
       size: "13"
     })

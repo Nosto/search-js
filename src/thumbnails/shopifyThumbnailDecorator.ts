@@ -7,6 +7,10 @@ type Config = {
 
 const cdnUrlRegex = /cdn\.shopify\.com/
 
+/**
+ * Replaces full size images with specified Shopify thumbnail size.
+ * This decorator will only affect the image URLs from Shopify CDN.
+ */
 export function shopifyThumbnailDecorator({ size }: Config) {
   function isUrlFromShopify(url: string | undefined) {
     if (!url) {
@@ -31,12 +35,10 @@ export function shopifyThumbnailDecorator({ size }: Config) {
     if (!skus) {
       return undefined
     }
-    return skus.map(sku => {
-      return {
-        ...sku,
-        imageUrl: processShopifyUrl(sku.imageUrl)
-      }
-    })
+    return skus.map(sku => ({
+      ...sku,
+      imageUrl: processShopifyUrl(sku.imageUrl)
+    }))
   }
 
   function processAlternateImages(images: string[] | undefined) {

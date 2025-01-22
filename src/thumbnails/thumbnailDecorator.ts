@@ -7,7 +7,7 @@ type Config = {
 }
 
 /**
- * Replaces full size images with thumbnail sized versions
+ * Replaces full size images with thumbnail sized versions.
  */
 export function thumbnailDecorator({ size }: Config) {
   function getThumbnailUrlForHash(productId: string, hash: string | undefined) {
@@ -26,12 +26,10 @@ export function thumbnailDecorator({ size }: Config) {
     if (!skus) {
       return undefined
     }
-    return skus.map(sku => {
-      return {
-        ...sku,
-        imageUrl: getThumbnailUrlForHash(productId, sku.imageHash) ?? sku.imageUrl
-      }
-    })
+    return skus.map(sku => ({
+      ...sku,
+      imageUrl: getThumbnailUrlForHash(productId, sku.imageHash) ?? sku.imageUrl
+    }))
   }
 
   function processAlternateImages(productId: string, images: string[] | undefined, hashes: string[] | undefined) {
