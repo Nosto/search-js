@@ -19,6 +19,11 @@
       "import": "./dist/index.es.js",
       "require": "./dist/index.cjs.js"
     },
+    "./currencies": {
+      "types": "./dist/currencies.d.ts",
+      "import": "./dist/currencies.es.js",
+      "require": "./dist/currencies.cjs.js"
+    },
     "./thumbnails": {
       "types": "./dist/thumbnails.d.ts",
       "import": "./dist/thumbnails.es.js",
