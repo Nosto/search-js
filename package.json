@@ -13,6 +13,18 @@
     "doc": "docs",
     "test": "test"
   },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./thumbnails": {
+      "types": "./dist/thumbnails.d.ts",
+      "import": "./dist/thumbnails.es.js",
+      "require": "./dist/thumbnails.cjs.js"
+    }
+  },
   "keywords": [],
   "author": "Nosto",
   "scripts": {
