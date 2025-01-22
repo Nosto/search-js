@@ -1,3 +1,1 @@
-export * from "./currencies/getCurrencyFormatting"
-export * from "./currencies/priceDecorator"
-export * from "./search"
+export { search, type Options, type HitDecorator } from "./search"
