@@ -1,11 +1,24 @@
 import { nostojs } from "@nosto/nosto-js"
 import { SearchOptions, SearchProduct, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 
-export type Options = SearchOptions & {
+export type HitDecorator<O extends SearchProduct = SearchProduct> = (hit: SearchProduct) => O
+
+export type Options<HD extends HitDecorator[]> = SearchOptions & {
   /**
    * Hit decorators to apply to the search results.
    */
-  hitDecorators?: HitDecorator[]
+  hitDecorators?: HD
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never
+
+type DecoratedProduct<HD extends HitDecorator[]> = SearchProduct & ToIntersection<ReturnType<HD[number]>>
+
+type DecoratedResult<HD extends HitDecorator[]> = Omit<SearchResult, "products"> & {
+  products: SearchResult["products"] & {
+    hits: DecoratedProduct<HD>[]
+  }
 }
 
 /**
@@ -16,20 +29,21 @@ export type Options = SearchOptions & {
  * @param options.hitDecorators - An optional array of decorators to be applied to the search results.
  * @returns A promise that resolves to the search result.
  */
-export async function search(query: SearchQuery, { hitDecorators, ...options }: Options = {}): Promise<SearchResult> {
+export async function search<HD extends HitDecorator[]>(
+  query: SearchQuery,
+  { hitDecorators, ...options }: Options<HD> = {}
+): Promise<DecoratedResult<HD>> {
   const api = await new Promise(nostojs)
 
   if (hitDecorators?.length) {
     return applyDecorators(await api.search(query, options), hitDecorators)
   }
-  return await api.search(query, options)
+  return (await api.search(query, options)) as DecoratedResult<HD>
 }
 
-export type HitDecorator = (hit: SearchProduct) => SearchProduct
-
-function applyDecorators(response: SearchResult, decorators: HitDecorator[]) {
+function applyDecorators<HD extends HitDecorator[]>(response: SearchResult, decorators: HD): DecoratedResult<HD> {
   if (!response.products) {
-    return response
+    return response as DecoratedResult<HD>
   }
   const decorator: HitDecorator = product => {
     return decorators.reduce((acc, decorator) => {
@@ -41,7 +55,7 @@ function applyDecorators(response: SearchResult, decorators: HitDecorator[]) {
     ...response,
     products: {
       ...response.products,
-      hits: response.products.hits.map(decorator)
+      hits: response.products.hits.map(decorator) as DecoratedProduct<HD>[]
     }
   }
 }
