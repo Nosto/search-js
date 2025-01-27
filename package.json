@@ -42,7 +42,7 @@
     "typedoc": "typedoc src/index.ts"
   },
   "devDependencies": {
-    "@nosto/nosto-js": "^1.4.3",
+    "@nosto/nosto-js": "^1.4.4",
     "@testing-library/dom": "^10.4.0",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/node": "^22.10.7",
