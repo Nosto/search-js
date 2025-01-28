@@ -3,10 +3,15 @@ import { CurrencyConfig, getCurrencyFormatting } from "./getCurrencyFormatting"
 
 type Prices = Pick<SearchProduct, "price" | "listPrice">
 
-type FormattedPrices = {
+export type FormattedPrices = {
   priceText?: string
   listPriceText?: string
 }
+
+export type Result = SearchProduct &
+  FormattedPrices & {
+    skus?: (SearchProductSku & FormattedPrices)[]
+  }
 
 /**
  * Exposes currency formatting logic as a SearchProduct decorator
@@ -29,11 +34,6 @@ export function priceDecorator(config?: Partial<CurrencyConfig>) {
   function hasPrices(obj: Prices) {
     return obj.price !== undefined || obj.listPrice !== undefined
   }
-
-  type Result = SearchProduct &
-    FormattedPrices & {
-      skus?: (SearchProductSku & FormattedPrices)[]
-    }
 
   return function decorator(hit: SearchProduct): Result {
     if (!hasPrices(hit)) {

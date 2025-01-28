@@ -13,7 +13,6 @@ export type Options = SearchOptions & {
  *
  * @param query - The search query to be executed.
  * @param options - An object containing optional parameters for the search.
- * @param options.hitDecorators - An optional array of decorators to be applied to the search results.
  * @returns A promise that resolves to the search result.
  */
 export async function search(query: SearchQuery, { hitDecorators, ...options }: Options = {}): Promise<SearchResult> {
