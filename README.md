@@ -5,6 +5,12 @@ Search JS is a wrapper for the Nosto Search functionality with some extended fun
 * Nosto product thumbnails
 * Retry logic
 
+For @nosto/search-js specific API documentation, see [Our Typedoc](https://nosto.github.io/search-js/).
+
+For more information about Nosto platform, see [Our documentation](https://docs.nosto.com/techdocs).
+
+For sources, issues and contributions, see the [GitHub repository](https://github.com/Nosto/search-js).
+
 ## Installation
 
 To install the package, use your preferred package manager:
