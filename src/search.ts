@@ -1,25 +1,6 @@
 import { nostojs } from "@nosto/nosto-js"
-import { SearchOptions, SearchProduct, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
-
-export type Options<HD extends HitDecorator[]> = SearchOptions & {
-  /**
-   * Hit decorators to apply to the search results.
-   */
-  hitDecorators?: HD
-}
-
-export type HitDecorator = (hit: SearchProduct) => SearchProduct
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never
-
-type DecoratedProduct<HD extends HitDecorator[]> = ToIntersection<ReturnType<HD[number]>>
-
-export type DecoratedResult<HD extends HitDecorator[]> = Omit<SearchResult, "products"> & {
-  products: SearchResult["products"] & {
-    hits: DecoratedProduct<HD>[]
-  }
-}
+import { SearchProduct, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import { HitDecorator, Options, DecoratedProduct, DecoratedResult } from "./types"
 
 /**
  * Performs a search operation using the provided query and options.

@@ -1,2 +1,3 @@
 /** @module ./ */
-export { search, type Options, type HitDecorator } from "./search"
+export { search } from "./search"
+export { type Options, type HitDecorator } from "./types"
