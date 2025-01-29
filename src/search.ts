@@ -1,5 +1,5 @@
 import { nostojs } from "@nosto/nosto-js"
-import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import { SearchProduct, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { Options, HitDecorator, DecoratedResult, DecoratedProduct } from "./types"
 
 /**
@@ -26,17 +26,17 @@ function applyDecorators<HD extends HitDecorator[]>(response: SearchResult, deco
   if (!response.products) {
     return response as DecoratedResult<HD>
   }
-  const decorator: HitDecorator = product => {
+  const decorator = (product: SearchProduct) => {
     return decorators.reduce((acc, decorator) => {
       return decorator(acc)
-    }, product)
+    }, product) as DecoratedProduct<HD>
   }
 
   return {
     ...response,
     products: {
       ...response.products,
-      hits: response.products.hits.map(decorator) as DecoratedProduct<HD>[]
+      hits: response.products.hits.map(decorator)
     }
   }
 }
