@@ -1,12 +1,6 @@
 import { nostojs } from "@nosto/nosto-js"
-import { SearchOptions, SearchProduct, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
-
-export type Options = SearchOptions & {
-  /**
-   * Hit decorators to apply to the search results.
-   */
-  hitDecorators?: HitDecorator[]
-}
+import { SearchProduct, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import { HitDecorator, Options, DecoratedProduct, DecoratedResult } from "./types"
 
 /**
  * Performs a search operation using the provided query and options.
@@ -15,25 +9,20 @@ export type Options = SearchOptions & {
  * @param options - An object containing optional parameters for the search.
  * @returns A promise that resolves to the search result.
  */
-export async function search(query: SearchQuery, { hitDecorators, ...options }: Options = {}): Promise<SearchResult> {
+export async function search<HD extends HitDecorator[]>(query: SearchQuery, options: Options<HD> = {}) {
+  const { hitDecorators, ...rest } = options
   const api = await new Promise(nostojs)
-
-  if (hitDecorators?.length) {
-    return applyDecorators(await api.search(query, options), hitDecorators)
-  }
-  return await api.search(query, options)
+  return applyDecorators(await api.search(query, rest), hitDecorators)
 }
 
-export type HitDecorator = (hit: SearchProduct) => SearchProduct
-
-function applyDecorators(response: SearchResult, decorators: HitDecorator[]) {
-  if (!response.products) {
-    return response
+function applyDecorators<HD extends HitDecorator[]>(response: SearchResult, decorators?: HD) {
+  if (!response.products || !decorators?.length) {
+    return response as DecoratedResult<HD>
   }
-  const decorator: HitDecorator = product => {
+  const decorator = (product: SearchProduct) => {
     return decorators.reduce((acc, decorator) => {
       return decorator(acc)
-    }, product)
+    }, product) as DecoratedProduct<HD>
   }
 
   return {
