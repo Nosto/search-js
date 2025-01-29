@@ -39,7 +39,7 @@
     "test": "vitest --run",
     "lint": "eslint '{src,test}/**/*.ts'",
     "preview": "vite preview",
-    "typedoc": "typedoc src/index.ts"
+    "typedoc": "typedoc src/index.ts src/currencies.ts src/thumbnails.ts"
   },
   "devDependencies": {
     "@nosto/nosto-js": "^1.4.4",

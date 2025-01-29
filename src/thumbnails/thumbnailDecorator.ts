@@ -2,7 +2,7 @@ import { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
 import { generateThumbnailUrl } from "./generateThumbnailUrl"
 import { ThumbnailSize } from "./types"
 
-type Config = {
+export type Config = {
   size: ThumbnailSize
 }
 

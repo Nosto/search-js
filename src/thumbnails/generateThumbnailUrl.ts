@@ -1,13 +1,16 @@
 import { ThumbnailSize } from "./types"
 import { getSettings } from "@nosto/nosto-js"
 
-type Props = {
+export type Props = {
   // Also known as imageVersion
   size: ThumbnailSize
   productId: string
   hash: string
 }
 
+/**
+ * Generates a thumbnail URL for a given product and size
+ */
 export function generateThumbnailUrl({ size, productId, hash }: Props) {
   const settings = getSettings()
   if (!settings) {
