@@ -1,6 +1,6 @@
 import { describe, it, beforeEach, expect, vi } from "vitest"
 import { mockNostojs } from "@nosto/nosto-js/testing"
-import { search, HitDecorator } from "../src"
+import { search, HitDecorator } from "../../src/search"
 import { SearchQuery, SearchProduct } from "@nosto/nosto-js/client"
 
 describe("search", () => {
@@ -70,5 +70,48 @@ describe("search", () => {
     })
     const result = await search(query)
     expect(result.products?.hits).toEqual([])
+  })
+
+  describe("retries", () => {
+    it("should retry search on fail", async () => {
+      mockNostojs({
+        search: vi
+          .fn()
+          .mockRejectedValueOnce(new Error("Network error"))
+          .mockResolvedValueOnce({ products: { hits: [] } })
+      })
+
+      await search(query, { maxRetries: 1, retryInterval: 5 }).then(result => {
+        expect(result.products?.hits).toEqual([])
+      })
+    })
+
+    it("should throw error after max retries", async () => {
+      mockNostojs({
+        search: vi.fn().mockRejectedValue(new Error("Network error"))
+      })
+
+      await search(query, { maxRetries: 1, retryInterval: 5 }).catch(error => {
+        expect(error.message).toBe("Network error")
+      })
+    })
+
+    it("should skip retries for bad request error", async () => {
+      const consoleSpy = vi.spyOn(console, "info").mockImplementation(() => {})
+
+      const error = new Error("Bad request")
+      // @ts-expect-error purposefully setting status to 400
+      error.status = 400
+      mockNostojs({
+        search: vi.fn().mockRejectedValue(error)
+      })
+
+      // Will time out if retries are attempted
+      await search(query, { maxRetries: 10, retryInterval: 1000 }).catch(error => {
+        expect(error.message).toBe("Bad request")
+      })
+
+      consoleSpy.mockRestore()
+    })
   })
 })
