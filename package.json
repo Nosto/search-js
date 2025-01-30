@@ -6,18 +6,18 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/index.cjs.js",
-  "module": "./dist/index.es.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/search.cjs.js",
+  "module": "./dist/search.es.js",
+  "types": "./dist/search.d.ts",
   "directories": {
     "doc": "docs",
     "test": "test"
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js"
+      "types": "./dist/search.d.ts",
+      "import": "./dist/search.es.js",
+      "require": "./dist/search.cjs.js"
     },
     "./currencies": {
       "types": "./dist/currencies.d.ts",

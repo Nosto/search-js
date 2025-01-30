@@ -5,6 +5,14 @@ export type Options<HD extends HitDecorator[]> = SearchOptions & {
    * Hit decorators to apply to the search results.
    */
   hitDecorators?: HD
+  /**
+   * Maximum number of retry attempts. Default: 0 (no retries).
+   */
+  maxRetries?: number
+  /**
+   * Interval (in ms) between retry attempts. Default: 1000 ms.
+   */
+  retryInterval?: number
 }
 
 export type HitDecorator = (hit: SearchProduct) => SearchProduct
