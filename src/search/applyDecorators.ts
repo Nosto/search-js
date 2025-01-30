@@ -1,5 +1,5 @@
 import { SearchProduct, SearchResult } from "@nosto/nosto-js/client"
-import { HitDecorator, DecoratedProduct, DecoratedResult } from "../types"
+import { HitDecorator, DecoratedProduct, DecoratedResult } from "./types"
 
 export function applyDecorators<HD extends HitDecorator[]>(response: SearchResult, decorators?: HD) {
   if (!response.products || !decorators?.length) {
