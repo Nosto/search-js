@@ -86,4 +86,15 @@ describe("currency formatting", () => {
     getCurrencyFormatting()
     expect(mockApi.internal.getSettings).toHaveBeenCalledTimes(1)
   })
+
+  it("should not crash if currencySettings is not provided", async () => {
+    const mockApi = {
+      internal: {
+        getSettings: vi.fn(() => ({}))
+      }
+    }
+    mockNostojs(mockApi)
+
+    expect(() => getCurrencyFormatting().formatCurrency(12345.0)).not.toThrow()
+  })
 })

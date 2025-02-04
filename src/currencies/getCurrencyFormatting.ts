@@ -39,7 +39,7 @@ export function getCurrencyFormatting(overrides: Partial<CurrencyConfig> = {}) {
   }
   if (!overrides.currencySettings) {
     nostojs(api => {
-      config.currencySettings = api.internal.getSettings().currencySettings
+      config.currencySettings = api.internal.getSettings().currencySettings ?? {}
     })
   }
 
