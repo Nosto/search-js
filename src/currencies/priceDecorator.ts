@@ -16,6 +16,7 @@ export type Result = SearchProduct &
 /**
  * Exposes currency formatting logic as a SearchProduct decorator
  * Sets priceText and listPriceText fields on product and SKU level
+ * Requires price, listPrice and priceCurrencyCode fields to be present
  */
 export function priceDecorator(config?: Partial<CurrencyConfig>) {
   const { formatCurrency } = getCurrencyFormatting(config)

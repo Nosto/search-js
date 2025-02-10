@@ -8,6 +8,11 @@ export type Config = {
 
 /**
  * Replaces full size images with thumbnail sized versions.
+ * Performs the following replacements based on availability of hash fields:
+ * - imageHash -> imageUrl
+ * - thumbHash -> thumbUrl
+ * - alternateImageHashes -> alternateImageUrls
+ * - sku.imageHash -> sku.imageUrl
  */
 export function thumbnailDecorator({ size }: Config) {
   function getThumbnailUrlForHash(productId: string, hash: string | undefined) {
