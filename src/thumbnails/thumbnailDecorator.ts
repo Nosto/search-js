@@ -4,14 +4,15 @@ import { ThumbnailSize } from "./types"
 
 export type Config = {
   size: ThumbnailSize
+  requireHash?: boolean
 }
 
 /**
  * Replaces full size images with thumbnail sized versions.
  */
-export function thumbnailDecorator({ size }: Config) {
-  function getThumbnailUrlForHash(productId: string, hash: string | undefined) {
-    if (!hash) {
+export function thumbnailDecorator({ size, requireHash = false }: Config) {
+  function getThumbnailUrlForHash(productId: string, hash: string | undefined, requireHash = true) {
+    if (!hash && requireHash) {
       return undefined
     }
 
@@ -57,7 +58,7 @@ export function thumbnailDecorator({ size }: Config) {
 
     return {
       ...hit,
-      imageUrl: getThumbnailUrlForHash(productId, hit.imageHash) ?? hit.imageUrl,
+      imageUrl: getThumbnailUrlForHash(productId, hit.imageHash, requireHash) ?? hit.imageUrl,
       thumbUrl: getThumbnailUrlForHash(productId, hit.thumbHash) ?? hit.thumbUrl,
       skus: processSkus(productId, hit.skus),
       alternateImageUrls: processAlternateImages(productId, hit.alternateImageUrls, hit.alternateImageHashes)

@@ -5,7 +5,7 @@ export type Props = {
   // Also known as imageVersion
   size: ThumbnailSize
   productId: string
-  hash: string
+  hash?: string
 }
 
 /**
@@ -16,5 +16,6 @@ export function generateThumbnailUrl({ size, productId, hash }: Props) {
   if (!settings) {
     throw new Error("Client script settings are not yet available")
   }
-  return `https://${settings.thumbnailHost}/${settings.account}/${size}/${productId}/${hash}/A`
+  const baseUrl = `https://${settings.thumbnailHost}/${settings.account}/${size}/${productId}`
+  return hash ? `${baseUrl}/${hash}/A` : baseUrl
 }

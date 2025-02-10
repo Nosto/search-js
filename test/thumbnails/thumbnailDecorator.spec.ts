@@ -65,9 +65,10 @@ describe("thumbnailDecorator", () => {
     expect(result).toEqual(mockProduct)
   })
 
-  it("should not modify imageUrl if imageHash is not provided", () => {
+  it("should not modify imageUrl if imageHash is not provided and requireHash is enabled", () => {
     const decorator = thumbnailDecorator({
-      size: "13"
+      size: "13",
+      requireHash: true
     })
 
     const mockProduct: SearchProduct = {
@@ -80,9 +81,26 @@ describe("thumbnailDecorator", () => {
     expect(result).toEqual(mockProduct)
   })
 
+  it("should modify imageUrl is imageHash is not provided and requireHash is disabled", () => {
+    const decorator = thumbnailDecorator({
+      size: "13",
+      requireHash: false // default
+    })
+
+    const mockProduct: SearchProduct = {
+      productId: "productId",
+      imageUrl: "oldUrl",
+      imageHash: undefined
+    }
+
+    const result = decorator(mockProduct)
+    expect(result.imageUrl).toEqual("https://thumbs.nosto.com/accountId/13/productId")
+  })
+
   it("should not modify thumbUrl if thumbHash is not provided", () => {
     const decorator = thumbnailDecorator({
-      size: "13"
+      size: "13",
+      requireHash: true
     })
 
     const mockProduct: SearchProduct = {
