@@ -1,17 +1,36 @@
 import { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
-import { ShopifySize } from "./types"
+import { ShopifySize, ThumbnailSize } from "./types"
 
 export type Config = {
-  size: ShopifySize
+  size: ThumbnailSize | ShopifySize
 }
 
 const cdnUrlRegex = /cdn\.shopify\.com/
 
+const sizeMappings: Record<string, string> = {
+  "1": "170x170_crop_center",
+  "2": "100x100_crop_center",
+  "3": "90x70_crop_center",
+  "4": "50x50_crop_center",
+  "5": "30x30_crop_center",
+  "6": "100x140_crop_center",
+  "7": "200x200_crop_center",
+  "8": "400x400",
+  "9": "750x750"
+}
+
 /**
- * Replaces full size images with specified Shopify thumbnail size.
+ * Replaces full size images with specified Nosto or Shopify thumbnail size.
  * This decorator will only affect the image URLs from Shopify CDN.
  */
 export function shopifyThumbnailDecorator({ size }: Config) {
+  if (size === "orig") {
+    // nothing to convert
+    return (hit: SearchProduct) => hit
+  }
+
+  const normalized = sizeMappings[size] || size
+
   function isUrlFromShopify(url: string | undefined) {
     if (!url) {
       return false
@@ -28,7 +47,7 @@ export function shopifyThumbnailDecorator({ size }: Config) {
       return url
     }
 
-    return url.replace(/(\.jpg|\.png|\.jpeg|\.gif|\.webp)/, `_${size}$1`)
+    return url.replace(/(\.jpg|\.png|\.jpeg|\.gif|\.webp)/, `_${normalized}$1`)
   }
 
   function processSkus(skus: SearchProductSku[] | undefined) {
