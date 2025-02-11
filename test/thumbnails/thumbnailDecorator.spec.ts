@@ -9,6 +9,8 @@ describe("thumbnailDecorator", () => {
       account: "accountId",
       thumbnailHost: "thumbs.nosto.com"
     })
+    // @ts-expect-error not defined
+    window.Nosto = {}
   })
   it("should replace the product image url", () => {
     const decorator = thumbnailDecorator({
@@ -48,6 +50,37 @@ describe("thumbnailDecorator", () => {
       imageUrl: "oldUrl"
     })
     expect(result.imageUrl).toEqual("https://thumbs.nosto.com/accountId/13/productId/imageHash/A")
+  })
+
+  it("should use the Shopify decorator for Shopify merchants", () => {
+    // @ts-expect-error not defined
+    window.Nosto = { shopifyScript: true }
+    const decorator = thumbnailDecorator({ size: "7" })
+
+    const shopifyUrl = "https://cdn.shopify.com/s/files/1/0097/5821/2174/files/clothing-red.jpg?v=12345"
+    const modifiedUrl =
+      "https://cdn.shopify.com/s/files/1/0097/5821/2174/files/clothing-red_200x200_crop_center.jpg?v=12345"
+
+    const result = decorator({
+      imageUrl: shopifyUrl
+    })
+
+    expect(result.imageUrl).toEqual(modifiedUrl)
+  })
+
+  it("should fallback to hash based thumbnails for Shopify merchants without Shopify CDN images", () => {
+    // @ts-expect-error not defined
+    window.Nosto = { shopifyScript: true }
+    const decorator = thumbnailDecorator({
+      size: "9"
+    })
+
+    const result = decorator({
+      productId: "productId",
+      imageHash: "imageHash",
+      imageUrl: "http://acme.cdn.com/products/productId.jpg"
+    })
+    expect(result.imageUrl).toEqual("https://thumbs.nosto.com/accountId/9/productId/imageHash/A")
   })
 
   it("should not modify object if productId is not provided", () => {

@@ -5,6 +5,7 @@ type NostoSize = keyof typeof sizeMappings
 
 export type Config = {
   size: NostoSize | "orig" | ShopifySize
+  fallback?: (hit: SearchProduct) => SearchProduct
 }
 
 const cdnUrlRegex = /cdn\.shopify\.com/
@@ -21,14 +22,19 @@ const sizeMappings = {
   "9": "750x750"
 }
 
+export function isSupportedNostoSize(size: string): size is NostoSize {
+  return size in sizeMappings
+}
+
 /**
  * Replaces full size images with specified Nosto or Shopify thumbnail size.
  * This decorator will only affect the image URLs from Shopify CDN.
+ * Supports the Nosto size codes "1"-"9" and additionally Shopify specific sizes.
  */
-export function shopifyThumbnailDecorator({ size }: Config) {
+export function shopifyThumbnailDecorator({ size, fallback = v => v }: Config) {
   if (size === "orig") {
     // nothing to convert
-    return (hit: SearchProduct) => hit
+    return fallback
   }
 
   const normalized = sizeMappings[size as NostoSize] || size
@@ -37,7 +43,6 @@ export function shopifyThumbnailDecorator({ size }: Config) {
     if (!url) {
       return false
     }
-
     return new URL(url).hostname.match(cdnUrlRegex)
   }
 
@@ -72,7 +77,7 @@ export function shopifyThumbnailDecorator({ size }: Config) {
 
   return function decorator(hit: SearchProduct): SearchProduct {
     if (!isUrlFromShopify(hit.imageUrl)) {
-      return hit
+      return fallback(hit)
     }
 
     return {

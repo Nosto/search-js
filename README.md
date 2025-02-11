@@ -32,6 +32,7 @@ The main export of this library is the `search` function. It is compatible with 
 ```ts
 import { search } from "@nosto/search-js"
 import { priceDecorator } from "@nosto/search-js/currencies"
+import { thumbnailDecorator } from "@nosto/search-js/thumbnails"
 
 const response = await search({
     query: 'my search',
@@ -41,13 +42,16 @@ const response = await search({
             "name",
             "price",
             "listPrice",
-            "priceCurrencyCode"
+            "priceCurrencyCode",
+            "imageUrl",
+            "imageHash"
         ] 
     }
 }, {
     track: 'serp',
     hitDecorators: [
-        priceDecorator()
+        priceDecorator(),
+        thumbnailDecorator()
     ]
 })
 
