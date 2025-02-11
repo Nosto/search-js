@@ -42,4 +42,18 @@ describe("shopifyThumbnailDecorator", () => {
     expect(result.skus![0].imageUrl).toEqual(modifiedUrl)
     expect(result.alternateImageUrls![0]).toEqual(modifiedUrl)
   })
+
+  it("supports Nosto size codes", () => {
+    const decorator = shopifyThumbnailDecorator({ size: "7" })
+
+    const shopifyUrl = "https://cdn.shopify.com/s/files/1/0097/5821/2174/files/clothing-red.jpg?v=12345"
+    const modifiedUrl =
+      "https://cdn.shopify.com/s/files/1/0097/5821/2174/files/clothing-red_200x200_crop_center.jpg?v=12345"
+
+    const result = decorator({
+      imageUrl: shopifyUrl
+    })
+
+    expect(result.imageUrl).toEqual(modifiedUrl)
+  })
 })
