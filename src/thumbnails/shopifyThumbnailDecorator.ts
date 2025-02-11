@@ -1,13 +1,15 @@
 import { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
-import { ShopifySize, ThumbnailSize } from "./types"
+import { ShopifySize } from "./types"
+
+type NostoSize = keyof typeof sizeMappings
 
 export type Config = {
-  size: ThumbnailSize | ShopifySize
+  size: NostoSize | "orig" | ShopifySize
 }
 
 const cdnUrlRegex = /cdn\.shopify\.com/
 
-const sizeMappings: Record<string, string> = {
+const sizeMappings = {
   "1": "170x170_crop_center",
   "2": "100x100_crop_center",
   "3": "90x70_crop_center",
@@ -29,7 +31,7 @@ export function shopifyThumbnailDecorator({ size }: Config) {
     return (hit: SearchProduct) => hit
   }
 
-  const normalized = sizeMappings[size] || size
+  const normalized = sizeMappings[size as NostoSize] || size
 
   function isUrlFromShopify(url: string | undefined) {
     if (!url) {
