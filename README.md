@@ -51,7 +51,7 @@ const response = await search({
     track: 'serp',
     hitDecorators: [
         priceDecorator(),
-        thumbnailDecorator()
+        thumbnailDecorator({ size: "9" })
     ]
 })
 
