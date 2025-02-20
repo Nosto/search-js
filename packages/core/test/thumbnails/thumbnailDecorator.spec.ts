@@ -9,7 +9,6 @@ describe("thumbnailDecorator", () => {
       account: "accountId",
       thumbnailHost: "thumbs.nosto.com"
     })
-    // @ts-expect-error not defined
     window.Nosto = {}
   })
   it("should replace the product image url", () => {
@@ -53,7 +52,6 @@ describe("thumbnailDecorator", () => {
   })
 
   it("should use the Shopify decorator for Shopify merchants", () => {
-    // @ts-expect-error not defined
     window.Nosto = { shopifyScript: true }
     const decorator = thumbnailDecorator({ size: "7" })
 
@@ -69,7 +67,6 @@ describe("thumbnailDecorator", () => {
   })
 
   it("should fallback to hash based thumbnails for Shopify merchants without Shopify CDN images", () => {
-    // @ts-expect-error not defined
     window.Nosto = { shopifyScript: true }
     const decorator = thumbnailDecorator({
       size: "9"

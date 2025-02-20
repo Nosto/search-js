@@ -33,8 +33,9 @@
   "keywords": [],
   "author": "Nosto",
   "scripts": {
-    "build": "tsc && vite build && npm run build-dts && npm run typedoc",
-    "build-dts": "tsc --noEmit false --emitDeclarationOnly",
+    "build": "tsc && npm run build-packages  && npm run build-dts && npm run typedoc",
+    "build-packages": "vite build --config vite.core.config.ts && vite build --config vite.preact.config.ts",
+    "build-dts": "tsc --noEmit false --emitDeclarationOnly && copyfiles -u 1 'dist/**/src/**' dist",
     "test": "vitest --run",
     "lint": "eslint",
     "typedoc": "typedoc packages/core/src/search.ts packages/core/src/currencies.ts packages/core/src/thumbnails.ts"

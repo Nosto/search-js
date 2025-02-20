@@ -20,5 +20,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["packages/core/src", "packages/core/preact"]
+  "include": ["packages/core/src", "packages/preact/src", "packages/core/src/shims.d.ts"]
 }

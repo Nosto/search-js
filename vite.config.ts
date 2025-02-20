@@ -1,22 +1,18 @@
-import { resolve } from "path"
+import { UserConfig } from "vite"
 import { defineConfig } from "vitest/config"
 
-const entryPoints = ["core/src/search.ts", "core/src/thumbnails.ts", "core/src/currencies.ts"]
-
-export default defineConfig({
+export const baseConfig = {
   build: {
     lib: {
       name: "@nosto/search-js",
-      entry: entryPoints.map(entry => resolve(__dirname, `packages/${entry}`)),
       formats: ["es", "cjs"],
-      fileName: (format, name) => `${name}.${format}.js`
+      entry: [] // Overriden per package
     }
-  },
-  server: {
-    port: 8080
   },
   test: {
     globals: true,
     environment: "jsdom"
   }
-})
+} satisfies UserConfig
+
+export default defineConfig(baseConfig)
