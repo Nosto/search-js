@@ -6,6 +6,9 @@
   "files": [
     "dist"
   ],
+  "workspaces": [
+    "packages/*"
+  ],
   "main": "./dist/core/search.cjs.js",
   "module": "./dist/core/search.es.js",
   "types": "./dist/core/src/search.d.ts",
