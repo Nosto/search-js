@@ -6,28 +6,33 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/search.cjs.js",
-  "module": "./dist/search.es.js",
-  "types": "./dist/search.d.ts",
+  "main": "./dist/core/search.cjs.js",
+  "module": "./dist/core/search.es.js",
+  "types": "./dist/core/src/search.d.ts",
   "directories": {
     "doc": "docs",
     "test": "test"
   },
   "exports": {
     ".": {
-      "types": "./dist/search.d.ts",
-      "import": "./dist/search.es.js",
-      "require": "./dist/search.cjs.js"
+      "types": "./dist/core/src/search.d.ts",
+      "import": "./dist/core/search.es.js",
+      "require": "./dist/core/search.cjs.js"
     },
     "./currencies": {
-      "types": "./dist/currencies.d.ts",
-      "import": "./dist/currencies.es.js",
-      "require": "./dist/currencies.cjs.js"
+      "types": "./dist/core/src/currencies.d.ts",
+      "import": "./dist/core/currencies.es.js",
+      "require": "./dist/core/currencies.cjs.js"
     },
     "./thumbnails": {
-      "types": "./dist/thumbnails.d.ts",
-      "import": "./dist/thumbnails.es.js",
-      "require": "./dist/thumbnails.cjs.js"
+      "types": "./dist/core/src/thumbnails.d.ts",
+      "import": "./dist/core/thumbnails.es.js",
+      "require": "./dist/core/thumbnails.cjs.js"
+    },
+    "./preact/hooks": {
+      "types": "./dist/preact/src/hooks.d.ts",
+      "import": "./dist/preact/hooks.es.js",
+      "require": "./dist/preact/hooks.cjs.js"
     }
   },
   "keywords": [],
@@ -35,10 +40,13 @@
   "scripts": {
     "build": "tsc && npm run build-packages  && npm run build-dts && npm run typedoc",
     "build-packages": "vite build --config vite.core.config.ts && vite build --config vite.preact.config.ts",
-    "build-dts": "tsc --noEmit false --emitDeclarationOnly && copyfiles -u 1 'dist/**/src/**' dist",
+    "build-dts": "tsc --noEmit false --emitDeclarationOnly",
     "test": "vitest --run",
     "lint": "eslint",
-    "typedoc": "typedoc packages/core/src/search.ts packages/core/src/currencies.ts packages/core/src/thumbnails.ts"
+    "typedoc": "typedoc packages/*/src/*.ts"
+  },
+  "peerDependencies": {
+    "preact": "^10.25.4"
   },
   "devDependencies": {
     "@nosto/nosto-js": "^1.4.4",

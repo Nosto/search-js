@@ -12,7 +12,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "dependencies": {
-    "preact": "^10.26.2"
+  "peerDependencies": {
+    "preact": "^10.25.4"
+  },
+  "devDependencies": {
+    "@testing-library/preact": "^3.2.4"
   }
 }
