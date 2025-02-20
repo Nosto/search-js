@@ -1,13 +1,13 @@
 import { resolve } from "path"
 import { defineConfig } from "vitest/config"
 
-const entryPoints = ["src/search.ts", "src/thumbnails.ts", "src/currencies.ts"]
+const entryPoints = ["core/src/search.ts", "core/src/thumbnails.ts", "core/src/currencies.ts"]
 
 export default defineConfig({
   build: {
     lib: {
       name: "@nosto/search-js",
-      entry: entryPoints.map(entry => resolve(__dirname, entry)),
+      entry: entryPoints.map(entry => resolve(__dirname, `packages/${entry}`)),
       formats: ["es", "cjs"],
       fileName: (format, name) => `${name}.${format}.js`
     }

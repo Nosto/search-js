@@ -33,13 +33,11 @@
   "keywords": [],
   "author": "Nosto",
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build && npm run build-dts && npm run typedoc",
     "build-dts": "tsc --noEmit false --emitDeclarationOnly",
     "test": "vitest --run",
-    "lint": "eslint '{src,test}/**/*.ts'",
-    "preview": "vite preview",
-    "typedoc": "typedoc src/search.ts src/currencies.ts src/thumbnails.ts"
+    "lint": "eslint",
+    "typedoc": "typedoc packages/core/src/search.ts packages/core/src/currencies.ts packages/core/src/thumbnails.ts"
   },
   "devDependencies": {
     "@nosto/nosto-js": "^1.4.4",
