@@ -48,9 +48,6 @@
     "lint": "eslint",
     "typedoc": "typedoc packages/*/src/*.ts"
   },
-  "peerDependencies": {
-    "preact": "^10.25.4"
-  },
   "devDependencies": {
     "@nosto/nosto-js": "^1.4.4",
     "@testing-library/dom": "^10.4.0",
