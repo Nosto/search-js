@@ -8,8 +8,8 @@ export default defineConfig({
     ...baseConfig.build,
     lib: {
       ...baseConfig.build.lib,
-      entry: resolve(import.meta.dirname, "preact.ts"),
-      fileName: (format, name) => `preact/${name}.${format}.js`
+      entry: resolve(import.meta.dirname, "index.ts"),
+      fileName: format => `preact/preact.${format}.js`
     },
     rollupOptions: {
       external: ["preact", "preact/hooks"]

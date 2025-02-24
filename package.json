@@ -18,22 +18,22 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/core/core.d.ts",
+      "types": "./dist/core/index.d.ts",
       "import": "./dist/core/core.es.js",
       "require": "./dist/core/core.cjs.js"
     },
     "./currencies": {
-      "types": "./dist/currencies/currencies.d.ts",
+      "types": "./dist/currencies/index.d.ts",
       "import": "./dist/currencies/currencies.es.js",
       "require": "./dist/currencies/currencies.cjs.js"
     },
     "./thumbnails": {
-      "types": "./dist/thumbnails/thumbnails.d.ts",
+      "types": "./dist/thumbnails/index.d.ts",
       "import": "./dist/thumbnails/thumbnails.es.js",
       "require": "./dist/thumbnails/thumbnails.cjs.js"
     },
     "./preact": {
-      "types": "./dist/preact/preact.d.ts",
+      "types": "./dist/preact/index.d.ts",
       "import": "./dist/preact/preact.es.js",
       "require": "./dist/preact/preact.cjs.js"
     }
@@ -41,13 +41,12 @@
   "keywords": [],
   "author": "Nosto",
   "scripts": {
-    "build": "tsc && npm run build-packages  && npm run build-dts && npm run typedoc",
-    "build-packages": "rm -rf dist && find packages -name 'vite.config.ts' | xargs -I $0 npm run build-single-package $0",
-    "build-single-package": "vite build --config",
+    "build": "tsc && npm run build-packages && npm run build-dts && npm run typedoc",
+    "build-packages": "npm run build --ws",
     "build-dts": "tsc --noEmit false --emitDeclarationOnly",
-    "test": "vitest --run",
-    "lint": "eslint",
-    "typedoc": "typedoc packages/core/core.ts packages/currencies/currencies.ts packages/thumbnails/thumbnails.ts packages/preact/preact.ts"
+    "typedoc": "typedoc",
+    "test": "npm run test --ws",
+    "lint": "eslint"
   },
   "devDependencies": {
     "@nosto/nosto-js": "^1.5.0",

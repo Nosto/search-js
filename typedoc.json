@@ -1,0 +1,5 @@
+{
+	"entryPoints": ["packages/*/index.ts"],
+	"out": "docs",
+	"highlightLanguages": ["typescript", "bash", "js", "jsx"]
+}

@@ -1,9 +1,8 @@
-import { ThumbnailSize } from "./types"
+import { NostoSize } from "./types"
 import { getSettings } from "@nosto/nosto-js"
 
-export type Props = {
-  // Also known as imageVersion
-  size: ThumbnailSize
+export type Config = {
+  size: NostoSize
   productId: string
   hash: string
 }
@@ -11,7 +10,7 @@ export type Props = {
 /**
  * Generates a thumbnail URL for a given product and size
  */
-export function generateThumbnailUrl({ size, productId, hash }: Props) {
+export function generateThumbnailUrl({ size, productId, hash }: Config) {
   const settings = getSettings()
   if (!settings) {
     throw new Error("Client script settings are not yet available")

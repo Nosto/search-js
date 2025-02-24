@@ -8,8 +8,8 @@ export default defineConfig({
     ...baseConfig.build,
     lib: {
       ...baseConfig.build.lib,
-      entry: resolve(import.meta.dirname, "thumbnails.ts"),
-      fileName: (format, name) => `thumbnails/${name}.${format}.js`
+      entry: resolve(import.meta.dirname, "index.ts"),
+      fileName: format => `thumbnails/thumbnails.${format}.js`
     }
   }
 })

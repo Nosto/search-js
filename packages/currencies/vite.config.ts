@@ -8,8 +8,8 @@ export default defineConfig({
     ...baseConfig.build,
     lib: {
       ...baseConfig.build.lib,
-      entry: resolve(import.meta.dirname, "currencies.ts"),
-      fileName: (format, name) => `currencies/${name}.${format}.js`
+      entry: resolve(import.meta.dirname, "index.ts"),
+      fileName: format => `currencies/currencies.${format}.js`
     }
   }
 })

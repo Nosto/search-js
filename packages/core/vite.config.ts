@@ -8,8 +8,8 @@ export default defineConfig({
     ...baseConfig.build,
     lib: {
       ...baseConfig.build.lib,
-      entry: resolve(import.meta.dirname, "core.ts"),
-      fileName: (format, name) => `core/${name}.${format}.js`
+      entry: resolve(import.meta.dirname, "index.ts"),
+      fileName: format => `core/core.${format}.js`
     }
   }
 })

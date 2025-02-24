@@ -1,9 +1,10 @@
+import { resolve } from "path"
 import { defineConfig, ViteUserConfig } from "vitest/config"
 
 export const baseConfig = {
   build: {
     emptyOutDir: false,
-    outDir: "dist",
+    outDir: resolve(import.meta.dirname, "dist"),
     lib: {
       name: "@nosto/search-js",
       formats: ["es", "cjs"],

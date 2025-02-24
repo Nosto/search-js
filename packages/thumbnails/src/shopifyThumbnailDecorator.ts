@@ -1,10 +1,8 @@
 import { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
-import { ShopifySize } from "./types"
-
-export type NostoSize = keyof typeof sizeMappings
+import { NostoShopifySize, ShopifySize } from "./types"
 
 export type Config = {
-  size: NostoSize | "orig" | ShopifySize
+  size: ShopifySize | NostoShopifySize | "orig"
   fallback?: (hit: SearchProduct) => SearchProduct
 }
 
@@ -20,9 +18,9 @@ const sizeMappings = {
   "7": "200x200_crop_center",
   "8": "400x400",
   "9": "750x750"
-}
+} as const satisfies Record<NostoShopifySize, string>
 
-export function isSupportedNostoSize(size: string): size is NostoSize {
+export function isSupportedNostoSize(size: string): size is NostoShopifySize {
   return size in sizeMappings
 }
 
@@ -37,7 +35,7 @@ export function shopifyThumbnailDecorator({ size, fallback = v => v }: Config) {
     return fallback
   }
 
-  const normalized = sizeMappings[size as NostoSize] || size
+  const normalized = sizeMappings[size as NostoShopifySize] || size
 
   function isUrlFromShopify(url: string | undefined) {
     if (!url) {
