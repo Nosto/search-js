@@ -1,4 +1,4 @@
-import { defineConfig, UserConfig } from "vite"
+import { defineConfig, ViteUserConfig } from "vitest/config"
 
 export const baseConfig = {
   build: {
@@ -14,6 +14,6 @@ export const baseConfig = {
     globals: true,
     environment: "jsdom"
   }
-} satisfies UserConfig
+} satisfies ViteUserConfig
 
 export default defineConfig(baseConfig)
