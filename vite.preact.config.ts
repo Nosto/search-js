@@ -14,12 +14,7 @@ export default defineConfig({
       fileName: (format, name) => `preact/${name}.${format}.js`
     },
     rollupOptions: {
-      external: ["preact"],
-      output: {
-        globals: {
-          preact: "Preact"
-        }
-      }
+      external: ["preact", "preact/hooks"]
     }
   }
 })

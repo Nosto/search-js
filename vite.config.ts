@@ -7,14 +7,6 @@ export const baseConfig = {
       name: "@nosto/search-js",
       formats: ["es", "cjs"],
       entry: [] // Overriden per package
-    },
-    rollupOptions: {
-      external: ["preact"],
-      output: {
-        globals: {
-          preact: "Preact"
-        }
-      }
     }
   },
   test: {
