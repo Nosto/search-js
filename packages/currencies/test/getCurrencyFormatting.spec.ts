@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest"
 import { mockNostojs } from "@nosto/nosto-js/testing"
-import { getCurrencyFormatting } from "../currencies"
+import { getCurrencyFormatting } from ".."
 
 const currencyFormatsMock = {
   GBP: {
