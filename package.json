@@ -45,7 +45,8 @@
     "build-packages": "npm run build --ws",
     "build-dts": "tsc --noEmit false --emitDeclarationOnly",
     "typedoc": "typedoc",
-    "test": "npm run test --ws",
+    "test": "vitest --run",
+    "test:watch": "vitest",
     "lint": "eslint"
   },
   "devDependencies": {
