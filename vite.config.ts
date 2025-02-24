@@ -1,4 +1,4 @@
-import { UserConfig } from "vite"
+import { defineConfig, UserConfig } from "vite"
 
 export const baseConfig = {
   build: {
@@ -15,3 +15,5 @@ export const baseConfig = {
     environment: "jsdom"
   }
 } satisfies UserConfig
+
+export default defineConfig(baseConfig)
