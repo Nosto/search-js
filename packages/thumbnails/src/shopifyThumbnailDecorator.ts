@@ -1,7 +1,7 @@
 import { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
 import { ShopifySize } from "./types"
 
-type NostoSize = keyof typeof sizeMappings
+export type NostoSize = keyof typeof sizeMappings
 
 export type Config = {
   size: NostoSize | "orig" | ShopifySize

@@ -1,16 +1,14 @@
 import { resolve } from "path"
 import { defineConfig } from "vitest/config"
-import { baseConfig } from "./vite.config"
-
-const entryPoints = ["src/hooks.ts"]
+import { baseConfig } from "../../vite.config"
 
 export default defineConfig({
   ...baseConfig,
   build: {
-    emptyOutDir: false,
+    ...baseConfig.build,
     lib: {
       ...baseConfig.build.lib,
-      entry: entryPoints.map(entry => resolve(__dirname, `packages/preact/${entry}`)),
+      entry: resolve(import.meta.dirname, "preact.ts"),
       fileName: (format, name) => `preact/${name}.${format}.js`
     },
     rollupOptions: {

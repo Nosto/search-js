@@ -1,4 +1,4 @@
-import { API, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import type { API, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { Options } from "./types"
 import { delay } from "./utils/delay"
 

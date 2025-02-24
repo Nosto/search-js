@@ -18,35 +18,36 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/core/src/search.d.ts",
-      "import": "./dist/core/search.es.js",
-      "require": "./dist/core/search.cjs.js"
+      "types": "./dist/core/core.d.ts",
+      "import": "./dist/core/core.es.js",
+      "require": "./dist/core/core.cjs.js"
     },
     "./currencies": {
-      "types": "./dist/core/src/currencies.d.ts",
-      "import": "./dist/core/currencies.es.js",
-      "require": "./dist/core/currencies.cjs.js"
+      "types": "./dist/currencies/currencies.d.ts",
+      "import": "./dist/currencies/currencies.es.js",
+      "require": "./dist/currencies/currencies.cjs.js"
     },
     "./thumbnails": {
-      "types": "./dist/core/src/thumbnails.d.ts",
-      "import": "./dist/core/thumbnails.es.js",
-      "require": "./dist/core/thumbnails.cjs.js"
+      "types": "./dist/thumbnails/thumbnails.d.ts",
+      "import": "./dist/thumbnails/thumbnails.es.js",
+      "require": "./dist/thumbnails/thumbnails.cjs.js"
     },
-    "./preact/hooks": {
-      "types": "./dist/preact/src/hooks.d.ts",
-      "import": "./dist/preact/hooks.es.js",
-      "require": "./dist/preact/hooks.cjs.js"
+    "./preact": {
+      "types": "./dist/preact/preact.d.ts",
+      "import": "./dist/preact/preact.es.js",
+      "require": "./dist/preact/preact.cjs.js"
     }
   },
   "keywords": [],
   "author": "Nosto",
   "scripts": {
     "build": "tsc && npm run build-packages  && npm run build-dts && npm run typedoc",
-    "build-packages": "vite build --config vite.core.config.ts && vite build --config vite.preact.config.ts",
+    "build-packages": "rm -rf dist && find packages -name 'vite.config.ts' | xargs -I $0 npm run build-single-package $0",
+    "build-single-package": "vite build --config",
     "build-dts": "tsc --noEmit false --emitDeclarationOnly",
     "test": "vitest --run",
     "lint": "eslint",
-    "typedoc": "typedoc packages/*/src/*.ts"
+    "typedoc": "typedoc packages/core/core.ts packages/currencies/currencies.ts packages/thumbnails/thumbnails.ts packages/preact/preact.ts"
   },
   "devDependencies": {
     "@nosto/nosto-js": "^1.4.4",

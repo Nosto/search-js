@@ -1,8 +1,9 @@
 import { UserConfig } from "vite"
-import { defineConfig } from "vitest/config"
 
 export const baseConfig = {
   build: {
+    emptyOutDir: false,
+    outDir: "dist",
     lib: {
       name: "@nosto/search-js",
       formats: ["es", "cjs"],
@@ -14,5 +15,3 @@ export const baseConfig = {
     environment: "jsdom"
   }
 } satisfies UserConfig
-
-export default defineConfig(baseConfig)

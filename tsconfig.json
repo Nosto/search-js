@@ -6,6 +6,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "declaration": true,
+    "rootDir": "packages",
     "outDir": "dist",
 
     /* Bundler mode */
@@ -24,5 +25,5 @@
     "jsxFactory": "h",
     "jsxFragmentFactory": "Fragment"
   },
-  "include": ["packages/core/src", "packages/preact/src", "packages/core/src/utils/shims.d.ts"]
+  "exclude": ["**/vite.config.ts", "**/test"]
 }

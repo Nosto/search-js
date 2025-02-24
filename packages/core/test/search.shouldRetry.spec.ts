@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest"
-import { shouldRetry } from "../../src/search/searchWithRetries"
+import { shouldRetry } from "../src/searchWithRetries"
 
 describe("shouldRetry", () => {
   it("should return true for an error without status", () => {

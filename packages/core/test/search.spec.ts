@@ -1,7 +1,8 @@
 import { describe, it, beforeEach, expect, vi } from "vitest"
 import { mockNostojs } from "@nosto/nosto-js/testing"
-import { search, HitDecorator } from "../../src/search"
 import { SearchQuery, SearchProduct } from "@nosto/nosto-js/client"
+import { search } from "../src/search"
+import { HitDecorator } from "../src/types"
 
 describe("search", () => {
   beforeEach(() => {
