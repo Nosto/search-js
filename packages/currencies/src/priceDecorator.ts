@@ -1,4 +1,5 @@
 import { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
+
 import { CurrencyConfig, getCurrencyFormatting } from "./getCurrencyFormatting"
 
 type Prices = Pick<SearchProduct, "price" | "listPrice">

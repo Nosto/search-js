@@ -1,8 +1,10 @@
+import eslintConfigPrettier from "eslint-config-prettier"
+import barrelFiles from "eslint-plugin-barrel-files"
+import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
+import simpleImportSort from "eslint-plugin-simple-import-sort"
+import unusedImports from "eslint-plugin-unused-imports"
 import globals from "globals"
 import tseslint from "typescript-eslint"
-import eslintConfigPrettier from "eslint-config-prettier"
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
-import barrelFiles from "eslint-plugin-barrel-files"
 
 export default tseslint.config(
   { ignores: ["dist", "docs"] },
@@ -12,6 +14,17 @@ export default tseslint.config(
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser
+    }
+  },
+  {
+    plugins: {
+      "unused-imports": unusedImports,
+      "simple-import-sort": simpleImportSort
+    },
+    rules: {
+      "unused-imports/no-unused-imports": "error",
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error"
     }
   },
   {

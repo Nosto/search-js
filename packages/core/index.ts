@@ -1,3 +1,3 @@
 /** @module ./ */
 export { search } from "./src/search"
-export type { Options, HitDecorator } from "./src/types"
+export type { HitDecorator, Options } from "./src/types"

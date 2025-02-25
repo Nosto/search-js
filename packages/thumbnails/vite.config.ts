@@ -1,5 +1,6 @@
 import { resolve } from "path"
 import { defineConfig } from "vitest/config"
+
 import { baseConfig } from "../../vite.config"
 
 export default defineConfig({

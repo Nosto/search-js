@@ -1,7 +1,8 @@
-import { describe, it, expect } from "vitest"
-import { priceDecorator } from "../src/priceDecorator"
 import { SearchProduct } from "@nosto/nosto-js/client"
 import { mockNostojs } from "@nosto/nosto-js/testing"
+import { describe, expect, it } from "vitest"
+
+import { priceDecorator } from "../src/priceDecorator"
 
 mockNostojs({
   internal: {

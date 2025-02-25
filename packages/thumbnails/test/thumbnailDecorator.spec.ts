@@ -1,7 +1,8 @@
-import { beforeEach, describe, expect, it } from "vitest"
-import { thumbnailDecorator } from "../src/thumbnailDecorator"
 import { SearchProduct } from "@nosto/nosto-js/client"
 import { mockSettings } from "@nosto/nosto-js/testing"
+import { beforeEach, describe, expect, it } from "vitest"
+
+import { thumbnailDecorator } from "../src/thumbnailDecorator"
 
 describe("thumbnailDecorator", () => {
   beforeEach(() => {

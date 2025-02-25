@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest"
+
 import { shopifyThumbnailDecorator } from "../src/shopifyThumbnailDecorator"
 
 describe("shopifyThumbnailDecorator", () => {
