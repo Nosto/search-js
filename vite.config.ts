@@ -16,6 +16,14 @@ export const baseConfig = {
       external: ["preact", "preact/hooks"]
     }
   },
+  resolve: {
+    alias: {
+      "@core": resolve(import.meta.dirname, "packages/core/src"),
+      "@currencies": resolve(import.meta.dirname, "packages/currencies/src"),
+      "@preact": resolve(import.meta.dirname, "packages/preact/src"),
+      "@thumbnails": resolve(import.meta.dirname, "packages/thumbnails/src")
+    }
+  },
   test: {
     globals: true,
     environment: "jsdom"

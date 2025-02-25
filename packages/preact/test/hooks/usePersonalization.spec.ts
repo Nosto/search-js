@@ -1,9 +1,8 @@
 import { nostojs } from "@nosto/nosto-js"
 import { clearNostoGlobals, mockNostojs } from "@nosto/nosto-js/testing"
+import { usePersonalization } from "@preact/hooks/usePersonalization"
 import { renderHook } from "@testing-library/preact"
 import { afterEach, describe, expect, it } from "vitest"
-
-import { usePersonalization } from "../../src/hooks/usePersonalization"
 
 describe("usePersonalization", () => {
   afterEach(() => {
