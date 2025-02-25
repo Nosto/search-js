@@ -1,8 +1,9 @@
 import { nostojs } from "@nosto/nosto-js"
 import { SearchQuery } from "@nosto/nosto-js/client"
-import { HitDecorator, Options } from "./types"
+
 import { applyDecorators } from "./applyDecorators"
 import { searchWithRetries } from "./searchWithRetries"
+import { HitDecorator, Options } from "./types"
 
 /**
  * Performs a search operation using the provided query and options.

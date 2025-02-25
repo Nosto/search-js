@@ -1,5 +1,6 @@
-import { NostoSize } from "./types"
 import { getSettings } from "@nosto/nosto-js"
+
+import { NostoSize } from "./types"
 
 export type Config = {
   size: NostoSize

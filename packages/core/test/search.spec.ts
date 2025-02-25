@@ -1,6 +1,7 @@
-import { describe, it, beforeEach, expect, vi } from "vitest"
+import { SearchProduct, SearchQuery } from "@nosto/nosto-js/client"
 import { mockNostojs } from "@nosto/nosto-js/testing"
-import { SearchQuery, SearchProduct } from "@nosto/nosto-js/client"
+import { beforeEach, describe, expect, it, vi } from "vitest"
+
 import { search } from "../src/search"
 import { HitDecorator } from "../src/types"
 

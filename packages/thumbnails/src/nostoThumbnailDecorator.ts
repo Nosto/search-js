@@ -1,4 +1,5 @@
 import { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
+
 import { generateThumbnailUrl } from "./generateThumbnailUrl"
 import { NostoSize } from "./types"
 

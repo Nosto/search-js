@@ -1,4 +1,5 @@
 import { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
+
 import { NostoShopifySize, ShopifySize } from "./types"
 
 export type Config = {

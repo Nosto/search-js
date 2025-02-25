@@ -1,6 +1,6 @@
-import { NostoSize } from "./types"
-import { isSupportedNostoSize, shopifyThumbnailDecorator } from "./shopifyThumbnailDecorator"
 import { nostoThumbnailDecorator } from "./nostoThumbnailDecorator"
+import { isSupportedNostoSize, shopifyThumbnailDecorator } from "./shopifyThumbnailDecorator"
+import { NostoSize } from "./types"
 
 export type Config = {
   size: NostoSize
