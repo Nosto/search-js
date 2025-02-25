@@ -1,8 +1,7 @@
 import { SearchProduct } from "@nosto/nosto-js/client"
 import { mockSettings } from "@nosto/nosto-js/testing"
+import { thumbnailDecorator } from "@thumbnails/thumbnailDecorator"
 import { beforeEach, describe, expect, it } from "vitest"
-
-import { thumbnailDecorator } from "../src/thumbnailDecorator"
 
 describe("thumbnailDecorator", () => {
   beforeEach(() => {

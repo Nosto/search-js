@@ -1,9 +1,8 @@
+import { search } from "@core/search"
+import type { HitDecorator } from "@core/types"
 import { SearchProduct, SearchQuery } from "@nosto/nosto-js/client"
 import { mockNostojs } from "@nosto/nosto-js/testing"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-
-import { search } from "../src/search"
-import { HitDecorator } from "../src/types"
 
 describe("search", () => {
   beforeEach(() => {

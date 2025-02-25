@@ -1,6 +1,5 @@
+import { shopifyThumbnailDecorator } from "@thumbnails/shopifyThumbnailDecorator"
 import { describe, expect, it } from "vitest"
-
-import { shopifyThumbnailDecorator } from "../src/shopifyThumbnailDecorator"
 
 describe("shopifyThumbnailDecorator", () => {
   it("keeps non-shopify URLs as is", () => {

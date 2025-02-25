@@ -1,7 +1,6 @@
 import { mockSettings } from "@nosto/nosto-js/testing"
+import { generateThumbnailUrl } from "@thumbnails/generateThumbnailUrl"
 import { describe, expect, it } from "vitest"
-
-import { generateThumbnailUrl } from "../src/generateThumbnailUrl"
 
 describe("generateThumbnailUrl", () => {
   it("should generate the correct URL", () => {
