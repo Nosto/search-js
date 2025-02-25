@@ -42,7 +42,7 @@
   "author": "Nosto",
   "scripts": {
     "build": "tsc && npm run build-packages && npm run build-dts && npm run typedoc",
-    "build-packages": "npm run build --ws",
+    "build-packages": "vite build",
     "build-dts": "tsc --noEmit false --emitDeclarationOnly",
     "typedoc": "typedoc",
     "test": "vitest --run",
