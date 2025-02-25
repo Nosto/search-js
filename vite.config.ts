@@ -1,13 +1,7 @@
 import { resolve } from "path"
 import { defineConfig, ViteUserConfig } from "vitest/config"
 
-const entryPointToFolder = {
-  core: "packages/core",
-  currencies: "packages/currencies",
-  preact: "packages/preact",
-  thumbnails: "packages/thumbnails"
-}
-const entryPoints = Object.keys(entryPointToFolder)
+const packages = ["core", "currencies", "preact", "thumbnails"]
 
 export const baseConfig = {
   build: {
@@ -16,8 +10,8 @@ export const baseConfig = {
     lib: {
       name: "@nosto/search-js",
       formats: ["es", "cjs"],
-      entry: entryPoints.map(e => resolve(import.meta.dirname, `${entryPointToFolder[e]}/${e}.ts`)),
-      fileName: (format, filename) => `${entryPointToFolder[filename].split("/")[1]}/${filename}.${format}.js`
+      entry: packages.map(name => resolve(import.meta.dirname, `packages/${name}/${name}.ts`)),
+      fileName: (format, filename) => `${filename}/${filename}.${format}.js`
     },
     rollupOptions: {
       external: ["preact", "preact/hooks"]
