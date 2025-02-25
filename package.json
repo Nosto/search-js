@@ -41,8 +41,7 @@
   "keywords": [],
   "author": "Nosto",
   "scripts": {
-    "build": "tsc && npm run build-packages && npm run build-dts && npm run typedoc",
-    "build-packages": "vite build",
+    "build": "tsc && vite build && npm run build-dts && npm run typedoc",
     "build-dts": "tsc --noEmit false --emitDeclarationOnly",
     "typedoc": "typedoc",
     "test": "vitest --run",

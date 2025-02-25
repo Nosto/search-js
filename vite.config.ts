@@ -5,7 +5,6 @@ const packages = ["core", "currencies", "preact", "thumbnails"]
 
 export const baseConfig = {
   build: {
-    emptyOutDir: false,
     outDir: resolve(import.meta.dirname, "dist"),
     lib: {
       name: "@nosto/search-js",
