@@ -21,7 +21,8 @@ export const baseConfig = {
       "@core": resolve(import.meta.dirname, "packages/core/src"),
       "@currencies": resolve(import.meta.dirname, "packages/currencies/src"),
       "@preact": resolve(import.meta.dirname, "packages/preact/src"),
-      "@thumbnails": resolve(import.meta.dirname, "packages/thumbnails/src")
+      "@thumbnails": resolve(import.meta.dirname, "packages/thumbnails/src"),
+      "@utils": resolve(import.meta.dirname, "packages/utils/src")
     }
   },
   test: {
