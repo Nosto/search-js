@@ -1,0 +1,17 @@
+{
+  "name": "@nosto/search-js-preact",
+  "version": "0.1.0",
+  "license": "ISC",
+  "type": "module",
+  "author": "Nosto",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest --run"
+  },
+  "peerDependencies": {
+    "preact": "^10.26.2"
+  },
+  "devDependencies": {
+    "@testing-library/preact": "^3.2.4"
+  }
+}

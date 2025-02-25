@@ -6,6 +6,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "declaration": true,
+    "rootDir": "packages",
     "outDir": "dist",
 
     /* Bundler mode */
@@ -18,7 +19,11 @@
     /* Linting */
     "strict": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
   },
-  "include": ["src"]
+  "exclude": ["dist", "**/vite.config.ts", "**/test"]
 }

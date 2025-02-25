@@ -1,14 +1,9 @@
 import { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
 import { generateThumbnailUrl } from "./generateThumbnailUrl"
-import { ThumbnailSize } from "./types"
-import { isSupportedNostoSize, shopifyThumbnailDecorator } from "./shopifyThumbnailDecorator"
+import { NostoSize } from "./types"
 
 export type Config = {
-  size: ThumbnailSize
-}
-
-function isShopify() {
-  return window.Nosto?.shopifyScript
+  size: NostoSize
 }
 
 /**
@@ -73,17 +68,4 @@ export function nostoThumbnailDecorator({ size }: Config) {
       alternateImageUrls: processAlternateImages(productId, hit.alternateImageUrls, hit.alternateImageHashes)
     }
   }
-}
-
-/**
- * Replaces full size images with thumbnail sized versions.
- * Uses `shopifyThumbnailDecorator` and `nostoThumbnailDecorator` based on the platform.
- */
-export function thumbnailDecorator({ size }: Config) {
-  const decorator = nostoThumbnailDecorator({ size })
-
-  if (isShopify() && isSupportedNostoSize(size)) {
-    return shopifyThumbnailDecorator({ size, fallback: decorator })
-  }
-  return decorator
 }

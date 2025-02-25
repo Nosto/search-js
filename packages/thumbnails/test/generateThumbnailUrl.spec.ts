@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest"
-import { generateThumbnailUrl } from "../../src/thumbnails/generateThumbnailUrl"
+import { generateThumbnailUrl } from "../src/generateThumbnailUrl"
 import { mockSettings } from "@nosto/nosto-js/testing"
 
 describe("generateThumbnailUrl", () => {

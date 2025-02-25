@@ -6,40 +6,48 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/search.cjs.js",
-  "module": "./dist/search.es.js",
-  "types": "./dist/search.d.ts",
+  "workspaces": [
+    "packages/*"
+  ],
+  "main": "./dist/core/search.cjs.js",
+  "module": "./dist/core/search.es.js",
+  "types": "./dist/core/src/search.d.ts",
   "directories": {
     "doc": "docs",
     "test": "test"
   },
   "exports": {
     ".": {
-      "types": "./dist/search.d.ts",
-      "import": "./dist/search.es.js",
-      "require": "./dist/search.cjs.js"
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/core.es.js",
+      "require": "./dist/core/core.cjs.js"
     },
     "./currencies": {
-      "types": "./dist/currencies.d.ts",
-      "import": "./dist/currencies.es.js",
-      "require": "./dist/currencies.cjs.js"
+      "types": "./dist/currencies/index.d.ts",
+      "import": "./dist/currencies/currencies.es.js",
+      "require": "./dist/currencies/currencies.cjs.js"
     },
     "./thumbnails": {
-      "types": "./dist/thumbnails.d.ts",
-      "import": "./dist/thumbnails.es.js",
-      "require": "./dist/thumbnails.cjs.js"
+      "types": "./dist/thumbnails/index.d.ts",
+      "import": "./dist/thumbnails/thumbnails.es.js",
+      "require": "./dist/thumbnails/thumbnails.cjs.js"
+    },
+    "./preact": {
+      "types": "./dist/preact/index.d.ts",
+      "import": "./dist/preact/preact.es.js",
+      "require": "./dist/preact/preact.cjs.js"
     }
   },
   "keywords": [],
   "author": "Nosto",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build && npm run build-dts && npm run typedoc",
+    "build": "tsc && npm run build-packages && npm run build-dts && npm run typedoc",
+    "build-packages": "npm run build --ws",
     "build-dts": "tsc --noEmit false --emitDeclarationOnly",
+    "typedoc": "typedoc",
     "test": "vitest --run",
-    "lint": "eslint '{src,test}/**/*.ts'",
-    "preview": "vite preview",
-    "typedoc": "typedoc src/search.ts src/currencies.ts src/thumbnails.ts"
+    "test:watch": "vitest",
+    "lint": "eslint"
   },
   "devDependencies": {
     "@nosto/nosto-js": "^1.5.0",
