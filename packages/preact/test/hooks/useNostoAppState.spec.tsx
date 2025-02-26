@@ -1,4 +1,5 @@
 import { useNostoAppState } from "@preact/hooks/useNostoAppState"
+import { State } from "@preact/store"
 import { describe, expect, it, vi } from "vitest"
 
 import { mockStore } from "../mocks/mocks"
@@ -18,9 +19,17 @@ describe("useNostoAppState", () => {
     }
   })
 
+  it("returns the entire state without selector", () => {
+    const render = renderHookWithProviders(() => useNostoAppState(), { store })
+
+    expect<State>(render.result.current)
+    expect(render.result.current).toEqual(store.getInitialState())
+  })
+
   it("returns the entire state when selected", () => {
     const render = renderHookWithProviders(() => useNostoAppState(state => state), { store })
 
+    expect<State>(render.result.current)
     expect(render.result.current).toEqual(store.getInitialState())
   })
 
