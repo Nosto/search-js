@@ -1,10 +1,10 @@
-import { useNostoState } from "@preact/hooks/useNostoState"
+import { useNostoAppState } from "@preact/hooks/useNostoAppState"
 import { describe, expect, it, vi } from "vitest"
 
 import { mockStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
-describe("useNostoState", () => {
+describe("useNostoAppState", () => {
   const store = mockStore({
     loading: false,
     initialized: true,
@@ -19,24 +19,24 @@ describe("useNostoState", () => {
   })
 
   it("returns the entire state when selected", () => {
-    const render = renderHookWithProviders(() => useNostoState(state => state), { store })
+    const render = renderHookWithProviders(() => useNostoAppState(state => state), { store })
 
     expect(render.result.current).toEqual(store.getInitialState())
   })
 
   it("returns response from state when selected", () => {
-    const render = renderHookWithProviders(() => useNostoState(state => state.response), { store })
+    const render = renderHookWithProviders(() => useNostoAppState(state => state.response), { store })
 
     expect(render.result.current).toEqual(store.getState().response)
   })
 
   it("does not modify the store state", () => {
-    renderHookWithProviders(() => useNostoState(state => state.response), { store })
+    renderHookWithProviders(() => useNostoAppState(state => state.response), { store })
     expect(store.getState()).toEqual(store.getInitialState())
   })
 
   it("updates the selector when state changes", () => {
-    const render = renderHookWithProviders(() => useNostoState(state => state.loading), { store })
+    const render = renderHookWithProviders(() => useNostoAppState(state => state.loading), { store })
 
     expect(render.result.current).toEqual(false)
     store.updateState({
@@ -50,14 +50,14 @@ describe("useNostoState", () => {
     store.onChange = vi.fn()
     store.clearOnChange = vi.fn()
 
-    renderHookWithProviders(() => useNostoState(state => state.loading), { store })
+    renderHookWithProviders(() => useNostoAppState(state => state.loading), { store })
 
     expect(store.onChange).toHaveBeenCalled()
     expect(store.clearOnChange).not.toHaveBeenCalled()
   })
 
   it("clears out the store registration on unmount", () => {
-    const render = renderHookWithProviders(() => useNostoState(state => state.loading), { store })
+    const render = renderHookWithProviders(() => useNostoAppState(state => state.loading), { store })
 
     store.clearOnChange = vi.fn()
     render.unmount()

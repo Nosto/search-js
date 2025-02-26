@@ -7,14 +7,14 @@ import { useContext, useEffect, useState } from "preact/hooks"
  *
  * @example
  * ```jsx
- * import { useNostoState } from '@nosto/search-js/preact'
+ * import { useNostoAppState } from '@nosto/search-js/preact'
  *
  * export default () => {
- *     const pageType = useNostoState(state => state.pageType)
+ *     const pageType = useNostoAppState(state => state.pageType)
  *
  *     return (
  *       <div>
- *         Page type is {pageTypey}
+ *         Page type is {pageType}
  *       </div>
  *     )
  * }
@@ -25,10 +25,10 @@ import { useContext, useEffect, useState } from "preact/hooks"
  *
  * @example
  * ```jsx
- * import { useNostoState } from '@nosto/search-js/preact'
+ * import { useNostoAppState } from '@nosto/search-js/preact'
  *
  * export default () => {
- *     const state = useNostoState()
+ *     const state = useNostoAppState()
  *
  *     return (
  *       <div>
@@ -40,7 +40,7 @@ import { useContext, useEffect, useState } from "preact/hooks"
  *
  * @group Hooks
  */
-export function useNostoState<Selected>(selector: (state: State) => Selected = fullStateSelector<Selected>): Selected {
+export function useNostoAppState<Selected>(selector: (state: State) => Selected = fullStateSelector<Selected>) {
   const store = useContext(StoreContext)
   const [slice, setSlice] = useState(selector(store.getState()))
   store.onChange(selector, setSlice)
