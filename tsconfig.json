@@ -6,7 +6,6 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "declaration": true,
-    "rootDir": "packages",
     "outDir": "dist",
 
     /* Bundler mode */
@@ -21,9 +20,18 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
+    /* JSX */
     "jsx": "react",
     "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment"
-  },
-  "exclude": ["dist", "**/vite.config.ts", "**/test"]
+    "jsxFragmentFactory": "Fragment",
+
+    /* Alias */
+    "baseUrl": ".",
+    "paths": {
+      "@core/*": ["packages/core/src/*"],
+      "@currencies/*": ["packages/currencies/src/*"],
+      "@preact/*": ["packages/preact/src/*"],
+      "@thumbnails/*": ["packages/thumbnails/src/*"]
+    }
+  }  
 }
