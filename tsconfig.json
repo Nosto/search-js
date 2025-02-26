@@ -21,9 +21,8 @@
     "noFallthroughCasesInSwitch": true,
 
     /* JSX */
-    "jsx": "react",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
 
     /* Alias */
     "baseUrl": ".",
@@ -31,7 +30,8 @@
       "@core/*": ["packages/core/src/*"],
       "@currencies/*": ["packages/currencies/src/*"],
       "@preact/*": ["packages/preact/src/*"],
-      "@thumbnails/*": ["packages/thumbnails/src/*"]
+      "@thumbnails/*": ["packages/thumbnails/src/*"],
+      "@utils/*": ["packages/utils/src/*"],
     }
-  }  
+  },
 }
