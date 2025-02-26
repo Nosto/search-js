@@ -18,22 +18,22 @@
   },
   "exports": {
     ".": {
-      "types": "./dist/core/index.d.ts",
+      "types": "./dist/core/core.d.ts",
       "import": "./dist/core/core.es.js",
       "require": "./dist/core/core.cjs.js"
     },
     "./currencies": {
-      "types": "./dist/currencies/index.d.ts",
+      "types": "./dist/currencies/currencies.d.ts",
       "import": "./dist/currencies/currencies.es.js",
       "require": "./dist/currencies/currencies.cjs.js"
     },
     "./thumbnails": {
-      "types": "./dist/thumbnails/index.d.ts",
+      "types": "./dist/thumbnails/thumbnails.d.ts",
       "import": "./dist/thumbnails/thumbnails.es.js",
       "require": "./dist/thumbnails/thumbnails.cjs.js"
     },
     "./preact": {
-      "types": "./dist/preact/index.d.ts",
+      "types": "./dist/preact/preact.d.ts",
       "import": "./dist/preact/preact.es.js",
       "require": "./dist/preact/preact.cjs.js"
     }
