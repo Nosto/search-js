@@ -1,9 +1,21 @@
 import { resolve } from "path"
-import { defineConfig, ViteUserConfig } from "vitest/config"
+import dts from "vite-plugin-dts"
+import { defineConfig } from "vitest/config"
 
 const packages = ["core", "currencies", "preact", "thumbnails"]
 
-export const baseConfig = {
+export default defineConfig({
+  plugins: [
+    dts({
+      compilerOptions: {
+        rootDir: "packages",
+        declaration: true,
+        noEmit: false,
+        emitDeclarationOnly: true
+      },
+      exclude: ["dist", "**/vite.config.ts", "**/test", "dev"]
+    })
+  ],
   build: {
     outDir: resolve(import.meta.dirname, "dist"),
     lib: {
@@ -27,8 +39,7 @@ export const baseConfig = {
   },
   test: {
     globals: true,
-    environment: "jsdom"
+    environment: "jsdom",
+    include: ["packages/**/*.spec.ts", "packages/**/*.test.ts"]
   }
-} satisfies ViteUserConfig
-
-export default defineConfig(baseConfig)
+})

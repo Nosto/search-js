@@ -52,7 +52,7 @@ export const defaultState: State = {
   customParams: {}
 }
 
-export function createStore(overrides: Partial<State>) {
+export function createStore(overrides: Partial<State> = {}) {
   const changeCallbacks: Map<(piece: never) => void, (state: State) => void> = new Map()
   let state: State = overrides ? deepMerge(defaultState, overrides) : defaultState
   const initialState = deepFreeze(state)
