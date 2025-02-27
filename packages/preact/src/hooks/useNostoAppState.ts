@@ -40,6 +40,8 @@ import { useContext, useEffect, useState } from "preact/hooks"
  *
  * @group Hooks
  */
+export function useNostoAppState(): State
+export function useNostoAppState<Selected>(selector: (state: State) => Selected): Selected
 export function useNostoAppState<Selected>(selector: (state: State) => Selected = fullStateSelector<Selected>) {
   const store = useContext(StoreContext)
   const [slice, setSlice] = useState(selector(store.getState()))
