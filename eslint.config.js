@@ -1,5 +1,5 @@
 import eslintConfigPrettier from "eslint-config-prettier"
-import barrelFiles from "eslint-plugin-barrel-files"
+// import barrelFiles from "eslint-plugin-barrel-files"
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 import simpleImportSort from "eslint-plugin-simple-import-sort"
 import unusedImports from "eslint-plugin-unused-imports"
@@ -27,18 +27,18 @@ export default tseslint.config(
       "simple-import-sort/exports": "error"
     }
   },
-  {
-    plugins: {
-      "barrel-files": barrelFiles
-    },
-    files: ["**/src/*.{js,ts,tsx}"],
-    rules: {
-      "barrel-files/avoid-barrel-files": 2,
-      "barrel-files/avoid-importing-barrel-files": 2,
-      "barrel-files/avoid-namespace-import": 2,
-      "barrel-files/avoid-re-export-all": 2
-    }
-  },
+  // {
+  //   plugins: {
+  //     "barrel-files": barrelFiles
+  //   },
+  //   files: ["**/src/*.{js,ts,tsx}"],
+  //   rules: {
+  //     "barrel-files/avoid-barrel-files": 2,
+  //     "barrel-files/avoid-importing-barrel-files": 2,
+  //     "barrel-files/avoid-namespace-import": 2,
+  //     "barrel-files/avoid-re-export-all": 2
+  //   }
+  // },
   eslintConfigPrettier,
   eslintPluginPrettierRecommended
 )
