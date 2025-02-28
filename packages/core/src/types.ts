@@ -1,4 +1,4 @@
-import { SearchOptions, SearchProduct, SearchResult } from "@nosto/nosto-js/client"
+import type { SearchOptions, SearchProduct, SearchResult } from "@nosto/nosto-js/client"
 
 export type Options<HD extends HitDecorator[] = HitDecorator[]> = SearchOptions & {
   /**
