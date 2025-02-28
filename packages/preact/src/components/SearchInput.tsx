@@ -13,7 +13,7 @@ export function SearchInput({ children, onSearchInput }: Props) {
     children,
     select: HTMLInputSelector,
     where: vnode => vnode.props.type === "search",
-    bind: () => ({
+    mutateProps: () => ({
       onInput: event => {
         if (event.target instanceof HTMLInputElement) {
           onSearchInput(event.target)
