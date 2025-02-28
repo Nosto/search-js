@@ -7,6 +7,9 @@ export default defineConfig({
   resolve: {
     dedupe: ["preact", "preact/hooks"]
   },
+  server: {
+    port: 8000
+  },
   test: {
     globals: true,
     environment: "jsdom"

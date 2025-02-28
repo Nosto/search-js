@@ -8,22 +8,23 @@
 		"test": "vitest --run"
 	},
 	"dependencies": {
+		"@nosto/nosto-js": "^1.5.0",
 		"preact": "^10.26.2",
 		"preact-iso": "^2.9.0"
 	},
 	"devDependencies": {
-		"@preact/preset-vite": "^2.9.3",
 		"@nosto/search-js": "file:../..",
+		"@preact/preset-vite": "^2.9.3",
+		"@testing-library/preact": "^3.2.4",
+		"eslint": "^9.21.0",
+		"eslint-config-prettier": "^10.0.1",
+		"eslint-plugin-barrel-files": "^3.0.1",
+		"eslint-plugin-prettier": "^5.2.3",
+		"eslint-plugin-simple-import-sort": "^12.1.1",
+		"eslint-plugin-unused-imports": "^4.1.4",
 		"typescript": "^5.7.3",
 		"typescript-eslint": "^8.25.0",
 		"vite": "^6.0.4",
-		"vitest": "^3.0.7",
-		"eslint": "^9.21.0",
-    	"eslint-config-prettier": "^10.0.1",
-    	"eslint-plugin-barrel-files": "^3.0.1",
-    	"eslint-plugin-prettier": "^5.2.3",
-    	"eslint-plugin-simple-import-sort": "^12.1.1",
-    	"eslint-plugin-unused-imports": "^4.1.4",
-		"@testing-library/preact": "^3.2.4"
+		"vitest": "^3.0.7"
 	}
 }

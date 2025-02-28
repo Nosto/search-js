@@ -1,11 +1,12 @@
 import { ComponentChildren, toChildArray, VNode } from "preact"
 
+import { applyPropMutations, UnknownVnode } from "./utils"
+
 type Props<T extends object> = {
   children: ComponentChildren
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  select: (vnode: VNode<any>) => vnode is VNode<T>
-  where: (vnode: VNode<T>) => boolean
-  bind: () => Partial<T>
+  select?: (vnode: UnknownVnode) => vnode is VNode<T>
+  where?: (vnode: VNode<T>) => boolean
+  mutateProps: (vnode: VNode<T>) => Partial<T> | undefined
 }
 
 function isVNode(child: unknown): child is VNode {
@@ -18,11 +19,22 @@ function extractVNodes(children: ComponentChildren): VNode[] {
 export function renderHeadless<T extends object>(props: Props<T>) {
   const { children } = props
   const vnodes = extractVNodes(children)
+  const vnodeSelector = props.select ?? ((vnode: UnknownVnode): vnode is VNode<T> => true)
+  const vnodeFilter = props.where ?? (() => true)
   vnodes.forEach(vnode => {
-    if (props.select(vnode) && props.where(vnode)) {
-      vnode.props = { ...vnode.props, ...props.bind() }
+    const mutatedProps = (() => {
+      if (vnodeSelector(vnode) && vnodeFilter(vnode)) {
+        const propMutations = props.mutateProps(vnode)
+        if (propMutations) {
+          return applyPropMutations(vnode.props, propMutations)
+        }
+      }
+      return vnode.props
+    })()
+    vnode.props = {
+      ...mutatedProps,
+      children: renderHeadless({ ...props, children: vnode.props.children })
     }
-    vnode.props.children = renderHeadless({ ...props, children: vnode.props.children })
   })
   return children
 }

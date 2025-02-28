@@ -4,6 +4,7 @@
 		"module": "ESNext",
 		"moduleResolution": "bundler",
 		"noEmit": true,
+		"strict": true,
 
 		/* Preact Config */
 		"jsx": "react-jsx",
