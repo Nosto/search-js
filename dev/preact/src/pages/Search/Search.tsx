@@ -1,21 +1,17 @@
-import { SearchInput } from "@nosto/search-js/preact"
-import { useState } from "preact/hooks"
+import { NostoSearchPageProvider, SerpConfig } from "@nosto/search-js/preact"
+
+import { SearchContent } from "./SearchContent"
 
 export function Search() {
-  const [input, setInput] = useState("")
+  const config = {
+    merchant: "merchant-id",
+    defaultCurrency: "EUR",
+    queryModifications: query => query
+  } satisfies SerpConfig
+
   return (
-    <>
-      <div>Totally working search:</div>
-      <SearchInput onSearchInput={target => setInput(target.value)}>
-        <>
-          <input type="search" placeholder="Search" />
-          <input type="search" placeholder="Search" />
-          <input type="button" value="Search" />
-        </>
-      </SearchInput>
-      <div>
-        <b>{input}</b>
-      </div>
-    </>
+    <NostoSearchPageProvider config={config}>
+      <SearchContent />
+    </NostoSearchPageProvider>
   )
 }
