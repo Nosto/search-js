@@ -1,7 +1,12 @@
 /** @module preact */
 export { SearchInput } from "./src/components/SearchInput"
+export { SerpElement } from "./src/components/SerpElement"
+export { useActions } from "./src/hooks/useActions"
+export { useCurrencyFormatting } from "./src/hooks/useCurrencyFormatting"
 export { useNostoAppState } from "./src/hooks/useNostoAppState"
 export { usePersonalization } from "./src/hooks/usePersonalization"
+export type { PublicSerpConfig as SerpConfig } from "./src/nostoProviders"
+export { NostoAutocompletePageProvider, NostoCategoryPageProvider, NostoSearchPageProvider } from "./src/nostoProviders"
 export { createStore, type State, type Store } from "./src/store"
-export { StoreContext, StoreProvider } from "./src/storeContext"
+export { StoreContext } from "./src/storeContext"
 export { mockStore } from "./test/mocks/mocks"
