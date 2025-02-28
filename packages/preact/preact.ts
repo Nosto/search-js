@@ -1,4 +1,5 @@
 /** @module preact */
+export { SearchInput } from "./src/components/SearchInput"
 export { useNostoAppState } from "./src/hooks/useNostoAppState"
 export { usePersonalization } from "./src/hooks/usePersonalization"
 export { createStore, type State, type Store } from "./src/store"
