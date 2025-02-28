@@ -34,4 +34,5 @@
       "@utils/*": ["packages/utils/src/*"],
     }
   },
+  "exclude": ["dev"]
 }
