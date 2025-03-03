@@ -6,6 +6,18 @@ describe("merge", () => {
     expect(deepMerge({ a: 1 }, { b: 2 })).toEqual({ a: 1, b: 2 })
   })
 
+  it("merges objects with undefined", () => {
+    expect(deepMerge({ a: 10 }, undefined)).toEqual({
+      a: 10
+    })
+  })
+
+  it("merges undefined with object", () => {
+    expect(deepMerge(undefined, { a: 10 })).toEqual({
+      a: 10
+    })
+  })
+
   it("merges deep objects correctly", () => {
     expect(
       deepMerge(

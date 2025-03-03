@@ -15,7 +15,7 @@ export const useConfig = () => {
 
 export const useSerpConfig = () => {
   const context = useConfig()
-  if (context.pageType !== "search") {
+  if (context.pageType !== "serp") {
     throw new Error("useSerpConfig must be used within a NostoSearchPageProvider")
   }
   return context

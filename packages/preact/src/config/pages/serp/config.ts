@@ -7,7 +7,7 @@ export const defaultSerpConfig = {
 } satisfies Partial<SerpConfig>
 
 export interface SerpConfig extends BaseConfig {
-  pageType: "search"
+  pageType: "serp"
   /**
    * Enable persistent caching for search results.
    *
@@ -29,9 +29,9 @@ export interface SerpConfig extends BaseConfig {
 export type PublicSerpConfig = Omit<SerpConfig, keyof typeof defaultSerpConfig | "pageType"> &
   Partial<Pick<SerpConfig, keyof typeof defaultSerpConfig>>
 
-export function makeSerpConfig(config: PublicSerpConfig) {
+export function makeSerpConfig(config: PublicSerpConfig = {}) {
   return {
-    pageType: "search",
+    pageType: "serp",
     ...defaultSerpConfig,
     ...config
   } satisfies SerpConfig

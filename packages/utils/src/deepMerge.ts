@@ -16,6 +16,9 @@ function mergeRecursive(target: unknown, overrides: unknown): unknown {
       { ...target }
     )
   }
+  if (isPlainObject(target)) {
+    return target
+  }
 
   return overrides
 }

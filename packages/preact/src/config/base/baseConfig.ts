@@ -9,10 +9,6 @@ export const defaultBaseConfig = {
 
 export interface BaseConfig {
   /**
-   * Merchant ID.
-   */
-  merchant: string
-  /**
    * Merchant's default Currency.
    */
   defaultCurrency: string
