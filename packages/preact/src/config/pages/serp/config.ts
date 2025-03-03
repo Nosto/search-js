@@ -12,7 +12,7 @@ export interface SerpConfig extends BaseConfig {
    * Enable persistent caching for search results.
    *
    * If enabled, the search results will be restored from cache when returning to the search page,
-   * from example, from a product page.
+   * for example, from a product page.
    *
    * The cache is stored in the browser's session storage.
    */
