@@ -1,5 +1,5 @@
 import { createStore, Store } from "@preact/store"
-import { StoreProvider } from "@preact/storeContext"
+import { StoreContext } from "@preact/storeContext"
 import { renderHook, RenderHookOptions, RenderHookResult } from "@testing-library/preact"
 
 type ExtendedOptions<Props> = RenderHookOptions<Props> & { store?: Store }
@@ -17,15 +17,15 @@ function makeWrapper<Props>(options: ExtendedOptions<Props> = {}) {
 
   if (!UserWrapper) {
     return function Wrapper({ children }: { children: Element }) {
-      return <StoreProvider store={store}>{children}</StoreProvider>
+      return <StoreContext value={store}>{children}</StoreContext>
     }
   }
 
   return function Wrapper({ children }: { children: Element }) {
     return (
-      <StoreProvider store={store}>
+      <StoreContext value={store}>
         <UserWrapper>{children}</UserWrapper>
-      </StoreProvider>
+      </StoreContext>
     )
   }
 }
