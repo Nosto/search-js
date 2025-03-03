@@ -17,6 +17,12 @@ export async function searchWithRetries(api: API, query: SearchQuery, options: O
         throw error
       }
 
+      if (retries >= maxRetries && options.fallback) {
+        console.info(`Exhausted ${maxRetries} retries, invoking user-provided fallback`)
+        options.fallback(query)
+        return {}
+      }
+
       if (retries >= maxRetries) {
         throw error
       }

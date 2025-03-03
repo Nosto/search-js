@@ -1,4 +1,4 @@
-import { SearchOptions, SearchProduct, SearchResult } from "@nosto/nosto-js/client"
+import { SearchOptions, SearchProduct, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 
 export type Options<HD extends HitDecorator[] = HitDecorator[]> = SearchOptions & {
   /**
@@ -13,6 +13,24 @@ export type Options<HD extends HitDecorator[] = HitDecorator[]> = SearchOptions 
    * Interval (in ms) between retry attempts. Default: 1000 ms.
    */
   retryInterval?: number
+  /**
+   * Enable search fallback when service is unavailable and retries are exhausted.
+   * By default, if the fallback is not defined, the search operation will throw an error in this case.
+   *
+   * If your fallback involves a redirect, make sure to avoid redirecting to a page with Nosto search enabled.
+   *
+   * @example
+   * ```
+   * import { SearchQuery } from "@nosto/nosto-js/client"
+   *
+   * ...
+   *
+   * fallback: (query: SearchQuery) => {
+   *  location.replace(`/search?q=${query.query}`)
+   * }
+   * ```
+   */
+  fallback?: (query: SearchQuery) => void
 }
 
 export type HitDecorator = (hit: SearchProduct) => SearchProduct

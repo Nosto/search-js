@@ -97,6 +97,34 @@ describe("search", () => {
       })
     })
 
+    it("should return empty response after max retries if fallback is provided", async () => {
+      const consoleSpy = vi.spyOn(console, "info").mockImplementation(() => {})
+
+      mockNostojs({
+        search: vi.fn().mockRejectedValue(new Error("Network error"))
+      })
+
+      const result = await search(query, { maxRetries: 1, retryInterval: 5, fallback: vi.fn() })
+      expect(result).toEqual({})
+
+      consoleSpy.mockRestore()
+    })
+
+    it("should call fallback function after max retries if provided", async () => {
+      const consoleSpy = vi.spyOn(console, "info").mockImplementation(() => {})
+
+      mockNostojs({
+        search: vi.fn().mockRejectedValue(new Error("Network error"))
+      })
+
+      const fallback = vi.fn()
+
+      await search(query, { maxRetries: 1, retryInterval: 5, fallback })
+      expect(fallback).toHaveBeenCalledWith(query)
+
+      consoleSpy.mockRestore()
+    })
+
     it("should skip retries for bad request error", async () => {
       const consoleSpy = vi.spyOn(console, "info").mockImplementation(() => {})
 
