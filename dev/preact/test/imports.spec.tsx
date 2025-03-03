@@ -3,7 +3,6 @@ import {
   mockStore,
   State,
   StoreContext,
-  StoreProvider,
   useNostoAppState,
   usePersonalization
 } from "@nosto/search-js/preact"
@@ -16,14 +15,13 @@ describe("imports", () => {
     expect(usePersonalization).toBeDefined()
     expect(createStore).toBeDefined()
     expect(StoreContext).toBeDefined()
-    expect(StoreProvider).toBeDefined()
     expect(mockStore).toBeDefined()
   })
 
   it("runs preact components without conflicts", () => {
     const store = createStore()
     function Wrapper({ children }: { children: Element }) {
-      return <StoreProvider store={store}>{children}</StoreProvider>
+      return <StoreContext value={store}>{children}</StoreContext>
     }
     const render = renderHook(() => useNostoAppState(state => state), { wrapper: Wrapper })
     expect<State>(render.result.current)
