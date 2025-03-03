@@ -30,10 +30,6 @@ export interface State {
    */
   initialized: boolean
   /**
-   * Custom params from URL
-   */
-  customParams: Record<string, unknown>
-  /**
    * History items
    */
   historyItems?: string[]
@@ -48,8 +44,7 @@ export const defaultState: State = {
   response: {
     query: ""
   },
-  initialized: false,
-  customParams: {}
+  initialized: false
 }
 
 export function createStore(overrides: Partial<State> = {}) {
