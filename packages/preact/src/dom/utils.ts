@@ -9,10 +9,6 @@ export function isHTMLInput(vnode: UnknownVnode): vnode is VNode<JSX.IntrinsicEl
   return vnode.type === "input"
 }
 
-export function isAnchorTag(vnode: UnknownVnode): vnode is VNode<JSX.IntrinsicElements["a"]> {
-  return vnode.type === "a"
-}
-
 export function supportsOnClick(vnode: UnknownVnode): vnode is VNode<{ onClick?: (event: MouseEvent) => void }> {
   return typeof vnode.props.onClick === "function"
 }
