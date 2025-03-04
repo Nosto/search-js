@@ -54,7 +54,7 @@ describe("newSearch", () => {
           persistentSearchCache: true
         }),
         store: createStore({
-          pageType: "search"
+          pageType: "serp"
         })
       }
       await newSearch(context, query)
@@ -81,7 +81,7 @@ describe("newSearch", () => {
       const context = {
         config: makeSerpConfig({ persistentSearchCache: false }),
         store: createStore({
-          pageType: "search"
+          pageType: "serp"
         })
       }
       await newSearch(context, query)

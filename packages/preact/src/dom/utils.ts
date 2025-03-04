@@ -8,3 +8,11 @@ export type UnknownVnode = VNode<any>
 export function isHTMLInput(vnode: UnknownVnode): vnode is VNode<JSX.IntrinsicElements["input"]> {
   return vnode.type === "input"
 }
+
+export function supportsOnClick(vnode: UnknownVnode): vnode is VNode<{ onClick?: (event: MouseEvent) => void }> {
+  return typeof vnode.props.onClick === "function"
+}
+
+export function isVNode(child: unknown): child is VNode {
+  return !!child && typeof child === "object" && "type" in child && "props" in child
+}

@@ -1,7 +1,9 @@
-import type { SearchPageType, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { deepFreeze } from "@utils/deepFreeze"
 import { deepMerge } from "@utils/deepMerge"
 import { isEqual } from "@utils/isEqual"
+
+import { PageType } from "./api/types"
 
 /**
  * Preact state includes all changing variables of the app.
@@ -20,7 +22,7 @@ export interface State {
   /**
    * Displays which page type it is - category | search
    */
-  pageType: SearchPageType | undefined
+  pageType: PageType | undefined
   /**
    * Current search response that includes found products, keywords and other results.
    */
