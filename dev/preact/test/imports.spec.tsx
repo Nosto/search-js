@@ -1,8 +1,10 @@
 import {
   createStore,
   mockStore,
+  NostoAutocompletePageProvider,
+  NostoCategoryPageProvider,
+  NostoSearchPageProvider,
   State,
-  StoreContext,
   useNostoAppState,
   usePersonalization
 } from "@nosto/search-js/preact"
@@ -14,14 +16,20 @@ describe("imports", () => {
     expect(useNostoAppState).toBeDefined()
     expect(usePersonalization).toBeDefined()
     expect(createStore).toBeDefined()
-    expect(StoreContext).toBeDefined()
+    expect(NostoSearchPageProvider).toBeDefined()
+    expect(NostoCategoryPageProvider).toBeDefined()
+    expect(NostoAutocompletePageProvider).toBeDefined()
     expect(mockStore).toBeDefined()
   })
 
   it("runs preact components without conflicts", () => {
     const store = createStore()
     function Wrapper({ children }: { children: Element }) {
-      return <StoreContext value={store}>{children}</StoreContext>
+      return (
+        <NostoSearchPageProvider store={store} config={{}}>
+          {children}
+        </NostoSearchPageProvider>
+      )
     }
     const render = renderHook(() => useNostoAppState(state => state), { wrapper: Wrapper })
     expect<State>(render.result.current)

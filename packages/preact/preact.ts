@@ -1,5 +1,12 @@
 /** @module preact */
 export { SearchInput } from "./src/components/SearchInput"
+export type { PublicAutocompleteConfig as AutocompleteConfig } from "./src/config/pages/autocomplete/config"
+export { NostoAutocompletePageProvider } from "./src/config/pages/autocomplete/provider"
+export type { PublicCategoryConfig as CategoryConfig } from "./src/config/pages/category/config"
+export { NostoCategoryPageProvider } from "./src/config/pages/category/provider"
+export type { PublicSerpConfig as SerpConfig } from "./src/config/pages/serp/config"
+export { NostoSearchPageProvider } from "./src/config/pages/serp/provider"
+export { useActions } from "./src/hooks/useActions"
 export { useNostoAppState } from "./src/hooks/useNostoAppState"
 export { usePersonalization } from "./src/hooks/usePersonalization"
 export { createStore, type State, type Store } from "./src/store"
