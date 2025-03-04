@@ -1,5 +1,7 @@
 import { mockNostojs } from "@nosto/nosto-js/testing"
 import { SerpElement } from "@preact/components/SerpElement"
+import { ConfigContext } from "@preact/config/configContext"
+import { makeAutocompleteConfig } from "@preact/config/pages/autocomplete/config"
 import { render } from "@testing-library/preact"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -25,9 +27,11 @@ describe("SerpElement", () => {
         event.preventDefault()
       })
       const result = render(
-        <SerpElement hit={hit} onClick={onClick}>
-          {children}
-        </SerpElement>
+        <ConfigContext value={makeAutocompleteConfig({})}>
+          <SerpElement hit={hit} onClick={onClick}>
+            {children}
+          </SerpElement>
+        </ConfigContext>
       )
 
       result.getByText("Anchor").click()
@@ -43,9 +47,11 @@ describe("SerpElement", () => {
 
       const onClick = vi.fn()
       const result = render(
-        <SerpElement hit={hit} onClick={onClick}>
-          {children}
-        </SerpElement>
+        <ConfigContext value={makeAutocompleteConfig({})}>
+          <SerpElement hit={hit} onClick={onClick}>
+            {children}
+          </SerpElement>
+        </ConfigContext>
       )
 
       result.getByText("Button").click()
@@ -61,9 +67,11 @@ describe("SerpElement", () => {
 
       const onClick = vi.fn()
       const result = render(
-        <SerpElement hit={hit} onClick={onClick}>
-          {children}
-        </SerpElement>
+        <ConfigContext value={makeAutocompleteConfig({})}>
+          <SerpElement hit={hit} onClick={onClick}>
+            {children}
+          </SerpElement>
+        </ConfigContext>
       )
 
       result.getByText("Clickable div").click()
@@ -77,9 +85,11 @@ describe("SerpElement", () => {
         event.preventDefault()
       })
       const result = render(
-        <SerpElement hit={hit} onClick={onClick}>
-          {children}
-        </SerpElement>
+        <ConfigContext value={makeAutocompleteConfig({})}>
+          <SerpElement hit={hit} onClick={onClick}>
+            {children}
+          </SerpElement>
+        </ConfigContext>
       )
 
       result.getByText("Anchor").click()
@@ -97,9 +107,11 @@ describe("SerpElement", () => {
     )
 
     const result = render(
-      <SerpElement hit={hit} onClick={vi.fn()}>
-        {children}
-      </SerpElement>
+      <ConfigContext value={makeAutocompleteConfig({})}>
+        <SerpElement hit={hit} onClick={vi.fn()}>
+          {children}
+        </SerpElement>
+      </ConfigContext>
     )
 
     expect(result.getByText("Test")).toBeDefined()

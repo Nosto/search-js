@@ -1,7 +1,6 @@
 import { nostojs } from "@nosto/nosto-js"
+import { useConfig } from "@preact/config/configContext"
 import { renderHeadless } from "@preact/dom/renderHeadless"
-import { isAnchorTag } from "@preact/dom/utils"
-import { useNostoAppState } from "@preact/hooks/useNostoAppState"
 import { savePageScroll } from "@utils/savePageScroll"
 import { JSX } from "preact"
 
@@ -23,7 +22,7 @@ export type SerpElementProps = {
  * @group Components
  */
 export function SerpElement({ children, hit, onClick }: SerpElementProps) {
-  const pageType = useNostoAppState(state => state.pageType)
+  const { pageType } = useConfig()
   const track = pageType === "autocomplete" ? undefined : pageType
 
   return renderHeadless({
@@ -31,10 +30,6 @@ export function SerpElement({ children, hit, onClick }: SerpElementProps) {
     updateElement: (vnode, ctx) => {
       if (ctx.depth > 0) {
         return vnode
-      }
-
-      if (isAnchorTag(vnode)) {
-        vnode.props.href = hit.url
       }
 
       vnode.props = {
