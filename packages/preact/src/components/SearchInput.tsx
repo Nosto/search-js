@@ -1,4 +1,4 @@
-import { HTMLInputSelector } from "@preact/dom/utils"
+import { isHTMLInput } from "@preact/dom/utils"
 import { ComponentChildren } from "preact"
 
 import { renderHeadless } from "../dom/renderHeadless"
@@ -12,7 +12,7 @@ export function SearchInput({ children, onSearchInput }: Props) {
   return renderHeadless({
     children,
     updateElement: vnode => {
-      if (!HTMLInputSelector(vnode) || vnode.props.type !== "search") {
+      if (!isHTMLInput(vnode) || vnode.props.type !== "search") {
         return vnode
       }
       vnode.props = {

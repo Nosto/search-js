@@ -5,6 +5,6 @@ import { JSX } from "preact/jsx-runtime"
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type UnknownVnode = VNode<any>
 
-export function HTMLInputSelector(vnode: UnknownVnode): vnode is VNode<JSX.IntrinsicElements["input"]> {
+export function isHTMLInput(vnode: UnknownVnode): vnode is VNode<JSX.IntrinsicElements["input"]> {
   return vnode.type === "input"
 }
