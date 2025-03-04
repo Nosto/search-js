@@ -20,17 +20,17 @@ function isVNode(child: unknown): child is VNode {
 export function renderHeadless(props: Props): ComponentChildren {
   const { children } = props
   return toChildArray(children).map(child => {
-    if (isVNode(child)) {
-      const vnode = props.updateElement(child)
-      if (vnode === null) {
-        return null
-      }
-      vnode.props = {
-        ...vnode.props,
-        children: renderHeadless({ ...props, children: vnode.props.children })
-      }
-      return vnode
+    if (!isVNode(child)) {
+      return child
     }
-    return child
+    const vnode = props.updateElement(child)
+    if (vnode === null) {
+      return null
+    }
+    vnode.props = {
+      ...vnode.props,
+      children: renderHeadless({ ...props, children: vnode.props.children })
+    }
+    return vnode
   })
 }
