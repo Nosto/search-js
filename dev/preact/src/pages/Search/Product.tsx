@@ -1,4 +1,4 @@
-import type { Product, SearchProducts } from "@nosto/nosto-js/client"
+import type { SearchProducts } from "@nosto/nosto-js/client"
 import { SerpElement, useCurrencyFormatting } from "@nosto/search-js/preact"
 
 import { productImagePlaceholder } from "./productImagePlaceholder"

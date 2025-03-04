@@ -1,5 +1,7 @@
 import { ComponentChildren, toChildArray, VNode } from "preact"
 
+import { isVNode } from "./utils"
+
 type Props = {
   children: ComponentChildren
   /**
@@ -10,26 +12,26 @@ type Props = {
    * @returns {VNode} if the vnode should be updated
    * @returns {null} if the vnode should be removed
    */
-  updateElement: <P extends object>(vnode: VNode<P>) => VNode<P> | null
+  updateElement: <P extends object>(vnode: VNode<P>, context: Context) => VNode<P> | null
 }
 
-function isVNode(child: unknown): child is VNode {
-  return !!child && typeof child === "object" && "type" in child && "props" in child
+type Context = {
+  depth: number
 }
 
-export function renderHeadless(props: Props): ComponentChildren {
+export function renderHeadless(props: Props, ctx: Context = { depth: 0 }): ComponentChildren {
   const { children } = props
   return toChildArray(children).map(child => {
     if (!isVNode(child)) {
       return child
     }
-    const vnode = props.updateElement(child)
+    const vnode = props.updateElement(child, ctx)
     if (vnode === null) {
       return null
     }
     vnode.props = {
       ...vnode.props,
-      children: renderHeadless({ ...props, children: vnode.props.children })
+      children: renderHeadless({ ...props, children: vnode.props.children }, { depth: ctx.depth + 1 })
     }
     return vnode
   })
