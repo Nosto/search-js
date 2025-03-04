@@ -11,14 +11,19 @@ type Props = {
 export function SearchInput({ children, onSearchInput }: Props) {
   return renderHeadless({
     children,
-    select: HTMLInputSelector,
-    where: vnode => vnode.props.type === "search",
-    mutateProps: () => ({
-      onInput: event => {
-        if (event.target instanceof HTMLInputElement) {
-          onSearchInput(event.target)
+    updateElement: vnode => {
+      if (!HTMLInputSelector(vnode) || vnode.props.type !== "search") {
+        return vnode
+      }
+      vnode.props = {
+        ...vnode.props,
+        onInput: event => {
+          if (event.target instanceof HTMLInputElement) {
+            onSearchInput(event.target)
+          }
         }
       }
-    })
+      return vnode
+    }
   })
 }

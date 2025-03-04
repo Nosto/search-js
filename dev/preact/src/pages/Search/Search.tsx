@@ -9,7 +9,6 @@ export function Search() {
       <SearchInput onSearchInput={target => setInput(target.value)}>
         <>
           <input type="search" placeholder="Search" />
-          <input type="search" placeholder="Search" />
           <input type="button" value="Search" />
         </>
       </SearchInput>

@@ -1,6 +1,6 @@
 import "./style.css"
 
-import { createStore, StoreProvider } from "@nosto/search-js/preact"
+import { createStore, StoreContext } from "@nosto/search-js/preact"
 import { render } from "preact"
 import { LocationProvider, Route, Router } from "preact-iso"
 
@@ -11,7 +11,7 @@ import { Search } from "./pages/Search/Search"
 
 export function App() {
   return (
-    <StoreProvider store={createStore()}>
+    <StoreContext value={createStore()}>
       <LocationProvider>
         <Header />
         <main>
@@ -22,7 +22,7 @@ export function App() {
           </Router>
         </main>
       </LocationProvider>
-    </StoreProvider>
+    </StoreContext>
   )
 }
 
