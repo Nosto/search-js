@@ -2,19 +2,19 @@ import { nostojs } from "@nosto/nosto-js"
 import { useConfig } from "@preact/config/configContext"
 import { renderHeadless } from "@preact/dom/renderHeadless"
 import { savePageScroll } from "@utils/savePageScroll"
-import { JSX } from "preact"
+import { ComponentChildren } from "preact"
 
 /**
  * @group Components
  */
 export type SerpElementProps = {
+  children: ComponentChildren
   hit: {
     productId: string
     url?: string
   }
   onClick?: (event: Event) => void
-} & JSX.HTMLAttributes &
-  JSX.SVGAttributes
+}
 
 /**
  * Wrapper component that can be used to wrap any element in the search result list.
