@@ -2,7 +2,7 @@ import { SearchProduct, SearchResult } from "@nosto/nosto-js/client"
 
 import { DecoratedProduct, DecoratedResult, HitDecorator } from "./types"
 
-export function applyDecorators<HD extends HitDecorator[]>(response: SearchResult, decorators?: HD) {
+export function applyDecorators<HD extends readonly HitDecorator[]>(response: SearchResult, decorators?: HD) {
   if (!response.products || !decorators?.length) {
     return response as DecoratedResult<HD>
   }
