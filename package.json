@@ -45,7 +45,7 @@
     "dev": "concurrently \"npm run dev:library\" \"npm run dev:preact\"",
     "dev:library": "vite build --watch",
     "dev:preact": "cd dev/preact && npm run dev",
-    "typedoc": "typedoc",
+    "typedoc": "typedoc --treatWarningsAsErrors",
     "test": "vitest --run && (cd dev/preact && npm run test)",
     "test:watch": "vitest",
     "lint": "eslint",
