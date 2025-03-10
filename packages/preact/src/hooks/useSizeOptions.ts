@@ -15,27 +15,28 @@ function normalize(value: number) {
  * import { defaultConfig, sizes } from "../config"
  *
  * export default () => {
- *    const { from, to, size, total, handleSizeChange, sizeOptions } = useSizeOptions(sizes, defaultConfig.serpSize)
+ *   const options = useSizeOptions(sizes, defaultConfig.serpSize)
+ *   const { from, to, total, size, sizeOptions, handleSizeChange } = options
  *
- * return (
- *  <div>
+ *   return (
  *    <div>
- *      {from} - {total < to ? total : to} of {total} items
- *    </div>
- *     {sizeOptions.length > 0 && (
  *      <div>
- *        <select
- *          value={size}
- *          onChange={e => handleSizeChange(e.target.value)}
- *        >
- *          {sizeOptions.map(v => (
- *            <option value={v}>{v} items per page</option>
- *          ))}
- *        </select>
+ *        {from} - {total < to ? total : to} of {total} items
  *      </div>
- *    )}
- *  </div>
- *  )
+ *       {sizeOptions.length > 0 && (
+ *        <div>
+ *          <select
+ *            value={size}
+ *            onChange={e => handleSizeChange(e.target.value)}
+ *          >
+ *            {sizeOptions.map(v => (
+ *              <option value={v}>{v} items per page</option>
+ *            ))}
+ *          </select>
+ *        </div>
+ *      )}
+ *    </div>
+ *    )
  * }
  * ```
  * @group Hooks
