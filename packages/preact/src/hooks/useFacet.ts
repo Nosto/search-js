@@ -4,7 +4,7 @@ import { useState } from "preact/hooks"
 import { useActions } from "./useActions"
 
 /**
- * Preact hook that import facet state to the component.
+ * Preact hook that provides facet state to the component.
  * @param facet
  * @example
  * ```jsx
