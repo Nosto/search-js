@@ -1,15 +1,13 @@
-import type { SearchProduct } from "@nosto/nosto-js/client"
-import { SerpElement, useDecoratedSearchResults } from "@nosto/search-js/preact"
+import { SerpElement } from "@nosto/search-js/preact"
 
 import { productImagePlaceholder } from "./productImagePlaceholder"
-import { hitDecorators } from "./Search"
+import { SearchProduct } from "./Search"
 
 type Props = {
   product: SearchProduct
 }
 
-export function Product({ product: baseProduct }: Props) {
-  const product = useDecoratedSearchResults<typeof hitDecorators>(baseProduct)
+export function Product({ product }: Props) {
   const tags = [
     product.onDiscount
       ? {
