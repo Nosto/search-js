@@ -12,7 +12,7 @@ import { HitDecorator, Options } from "./types"
  * @param options - An object containing optional parameters for the search.
  * @returns A promise that resolves to the search result.
  */
-export async function search<HD extends HitDecorator[]>(query: SearchQuery, options: Options<HD> = {}) {
+export async function search<HD extends readonly HitDecorator[]>(query: SearchQuery, options: Options<HD> = {}) {
   const { hitDecorators, ...rest } = options
   const api = await new Promise(nostojs)
   const searchResult = await searchWithRetries(api, query, rest)
