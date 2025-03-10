@@ -18,7 +18,7 @@ export type Options<HD extends readonly HitDecorator[] = readonly HitDecorator[]
 export type HitDecorator = (hit: SearchProduct) => SearchProduct
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never
+export type ToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never
 
 export type DecoratedProduct<HD extends readonly HitDecorator[]> = ToIntersection<ReturnType<HD[number]>>
 

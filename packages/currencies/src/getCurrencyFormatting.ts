@@ -1,7 +1,7 @@
 import { nostojs } from "@nosto/nosto-js"
 import { CurrencySettingsDTO } from "@nosto/nosto-js/client"
 
-type CurrencyFormats = Record<string, CurrencySettingsDTO>
+export type CurrencyFormats = Record<string, CurrencySettingsDTO>
 
 const defaultConfig = {
   defaultCurrency: "EUR",

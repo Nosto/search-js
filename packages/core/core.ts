@@ -1,3 +1,3 @@
 /** @module ./ */
 export { search } from "./src/search"
-export type { DecoratedProduct, DecoratedResult, HitDecorator, Options } from "./src/types"
+export type { DecoratedProduct, DecoratedResult, HitDecorator, Options, ToIntersection } from "./src/types"
