@@ -6,7 +6,7 @@ function normalize(value: number) {
 }
 
 /**
- * Preact hook that import size options to the component.
+ * Preact hook that provides size options to the component.
  * @param sizes
  * @param serpSize
  * @example
