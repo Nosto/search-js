@@ -1,9 +1,11 @@
-import type { SearchOptions, SearchQuery } from "@nosto/nosto-js/client"
+import type { InputSearchRangeFilter, SearchOptions, SearchQuery } from "@nosto/nosto-js/client"
 import { useConfig } from "@preact/config/configContext"
 import { StoreContext } from "@preact/storeContext"
 import { useContext } from "preact/hooks"
 
 import { newSearch } from "../actions/newSearch"
+import { replaceFilter } from "../actions/replaceFilter"
+import { toggleProductFilter } from "../actions/toggleProductFilter"
 import { updateSearch } from "../actions/updateSearch"
 
 /**
@@ -42,6 +44,12 @@ export function useActions() {
     },
     updateSearch(query: SearchQuery, options?: SearchOptions) {
       return updateSearch(context, query, options)
+    },
+    toggleProductFilter(field: string, value: string, active: boolean) {
+      return toggleProductFilter(context, field, value, active)
+    },
+    replaceFilter(field: string, value: InputSearchRangeFilter | string | undefined) {
+      return replaceFilter(context, field, value)
     }
   }
 }
