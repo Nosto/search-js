@@ -43,15 +43,19 @@ export default tseslint.config(
   },
   {
     plugins: {
-      "react-eslint": react,
-      "react-hooks-eslint": reactHooks
+      react
     },
     extends: [
       react.configs.flat.recommended,
       react.configs.flat["jsx-runtime"],
       reactHooks.configs["recommended-latest"]
     ],
-    files: ["**/*.{js,ts,tsx}"]
+    files: ["**/*.{js,ts,tsx}"],
+    settings: {
+      react: {
+        version: "19.0"
+      }
+    }
   },
   eslintConfigPrettier,
   eslintPluginPrettierRecommended
