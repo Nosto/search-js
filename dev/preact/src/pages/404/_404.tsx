@@ -1,8 +1,9 @@
 export function NotFound() {
+  const message = "It's gone :("
   return (
     <section>
       <h1>404: Not Found</h1>
-      <p>It's gone :(</p>
+      <p>{message}</p>
     </section>
   )
 }
