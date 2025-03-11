@@ -16,7 +16,7 @@ export function Home() {
   }
 
   return (
-    <div class="home" style={{ width: "100%" }}>
+    <div className="home" style={{ width: "100%" }}>
       <div>Nosto query from context:</div>
       <div>
         <b>{JSON.stringify(nostoQuery)}</b>

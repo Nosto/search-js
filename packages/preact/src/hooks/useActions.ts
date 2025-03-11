@@ -1,7 +1,7 @@
 import type { InputSearchRangeFilter, SearchOptions, SearchQuery } from "@nosto/nosto-js/client"
 import { useConfig } from "@preact/config/configContext"
 import { StoreContext } from "@preact/storeContext"
-import { useContext } from "preact/hooks"
+import { useCallback, useContext, useMemo } from "preact/hooks"
 
 import { newSearch } from "../actions/newSearch"
 import { replaceFilter } from "../actions/replaceFilter"
@@ -34,22 +34,48 @@ import { updateSearch } from "../actions/updateSearch"
  * @group Hooks
  */
 export function useActions() {
-  const context = {
-    config: useConfig(),
-    store: useContext(StoreContext)
-  }
-  return {
-    newSearch(query: SearchQuery, options?: SearchOptions) {
+  const config = useConfig()
+  const store = useContext(StoreContext)
+  const context = useMemo(
+    () => ({
+      config,
+      store
+    }),
+    [config, store]
+  )
+
+  const newSearchCallback = useCallback(
+    (query: SearchQuery, options?: SearchOptions) => {
       return newSearch(context, query, options)
     },
-    updateSearch(query: SearchQuery, options?: SearchOptions) {
+    [context]
+  )
+
+  const updateSearchCallback = useCallback(
+    (query: SearchQuery, options?: SearchOptions) => {
       return updateSearch(context, query, options)
     },
-    toggleProductFilter(field: string, value: string, active: boolean) {
+    [context]
+  )
+
+  const toggleProductFilterCallback = useCallback(
+    (field: string, value: string, active: boolean) => {
       return toggleProductFilter(context, field, value, active)
     },
-    replaceFilter(field: string, value: InputSearchRangeFilter | string | undefined) {
+    [context]
+  )
+
+  const replaceFilterCallback = useCallback(
+    (field: string, value: InputSearchRangeFilter | string | undefined) => {
       return replaceFilter(context, field, value)
-    }
+    },
+    [context]
+  )
+
+  return {
+    newSearch: newSearchCallback,
+    updateSearch: updateSearchCallback,
+    toggleProductFilter: toggleProductFilterCallback,
+    replaceFilter: replaceFilterCallback
   }
 }

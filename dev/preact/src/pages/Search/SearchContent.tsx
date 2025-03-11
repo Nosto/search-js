@@ -30,7 +30,7 @@ export function SearchContent() {
         Searching for: <b>{input}</b>
       </div>
       <div>Results: {state.response.products?.hits.map(hit => hit.name).join(", ")}</div>
-      <div>{state.response.products?.hits.map(hit => <Product product={hit} />)}</div>
+      <div>{state.response.products?.hits.map(hit => <Product key={hit.productId} product={hit} />)}</div>
     </div>
   )
 }

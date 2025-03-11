@@ -112,7 +112,7 @@ describe("renderHeadless", () => {
     const children = (
       <>
         <input type="text" />
-        <span class="wrapper">
+        <span className="wrapper">
           <button>Button</button>
         </span>
       </>
