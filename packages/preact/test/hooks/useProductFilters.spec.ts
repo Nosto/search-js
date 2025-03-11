@@ -76,6 +76,32 @@ describe("useProductFilters", () => {
           filter: [
             {
               field: "quantity",
+              range: [{ gte: "0", lt: "10" }]
+            }
+          ]
+        }
+      }
+    })
+    const render = renderHookWithProviders(() => useProductFilters(), { store })
+    const { filters } = render.result.current
+    expect(filters).toEqual([
+      {
+        value: "0 - 10",
+        field: "quantity",
+        name: "quantity",
+        filter: { field: "quantity", range: [{ gte: 0, lt: 10 }] },
+        remove: expect.any(Function)
+      }
+    ])
+  })
+
+  it("should accept numbers in filter range", () => {
+    store.updateState({
+      query: {
+        products: {
+          filter: [
+            {
+              field: "quantity",
               // @ts-expect-error numbers used instead of strings
               range: [{ gte: 0, lt: 10 }]
             }

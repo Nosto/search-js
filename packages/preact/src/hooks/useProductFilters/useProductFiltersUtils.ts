@@ -39,21 +39,32 @@ export function useProductFiltersUtils() {
     )
   }, [])
 
+  const convertFilterRange = useCallback((filter: InputSearchTopLevelFilter) => {
+    return {
+      ...filter,
+      range: filter.range?.map(fi => ({
+        gt: fi.gt ? Number(fi.gt) : fi.gt,
+        gte: fi.gte ? Number(fi.gte) : fi.gte,
+        lt: fi.lt ? Number(fi.lt) : fi.lt,
+        lte: fi.lte ? Number(fi.lte) : fi.lte
+      }))
+    }
+  }, [])
+
   const toValueFilter = useCallback(
     (filter: InputSearchTopLevelFilter) => {
-      return (
-        filter?.value?.map(val => ({
-          value: val,
-          field: filter.field!,
-          name: getFilterName(filter.field!),
-          filter,
-          remove: () => {
-            toggleProductFilter(filter.field!, val, false)
-          }
-        })) ?? []
-      )
+      const value = filter.value ?? []
+      return value.map(val => ({
+        value: val,
+        field: filter.field!,
+        name: getFilterName(filter.field!),
+        filter: convertFilterRange(filter),
+        remove: () => {
+          toggleProductFilter(filter.field!, val, false)
+        }
+      }))
     },
-    [getFilterName, toggleProductFilter]
+    [convertFilterRange, getFilterName, toggleProductFilter]
   )
 
   const toRangeFilter = useCallback(
@@ -69,7 +80,7 @@ export function useProductFiltersUtils() {
               value: `${from} - ${to}`,
               field: filter.field!,
               name: getFilterName(filter.field!),
-              filter,
+              filter: convertFilterRange(filter),
               remove: () => {
                 replaceFilter(filter.field!, undefined)
               }
@@ -80,7 +91,7 @@ export function useProductFiltersUtils() {
         })
         .filter(Boolean)
     },
-    [findRangeFacet, getFilterName, replaceFilter]
+    [convertFilterRange, findRangeFacet, getFilterName, replaceFilter]
   )
 
   return {
