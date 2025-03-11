@@ -31,12 +31,7 @@ export function useProductFiltersUtils() {
   )
 
   const selectFilters = useCallback((filter: InputSearchTopLevelFilter) => {
-    return (
-      "field" in filter &&
-      (filter.value instanceof Array || filter.range instanceof Array) &&
-      // @ts-expect-error not sure, if used by clients
-      filter.filterFacets !== true
-    )
+    return "field" in filter && (filter.value instanceof Array || filter.range instanceof Array)
   }, [])
 
   const convertFilterRange = useCallback((filter: InputSearchTopLevelFilter) => {

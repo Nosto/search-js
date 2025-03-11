@@ -15,12 +15,7 @@ export async function toggleProductFilter(
   const filter = context.store.getState().query.products?.filter
 
   const activeFilter = filter?.find(v => {
-    return (
-      v.value instanceof Array &&
-      // @ts-expect-error not sure, if used by clients
-      v.filterFacets !== true &&
-      v.field === field
-    )
+    return v.value instanceof Array && v.field === field
   })
 
   const newFilter: InputSearchFilter | undefined = activeFilter?.value
