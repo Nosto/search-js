@@ -1,7 +1,7 @@
 import { useNostoAppState } from "./useNostoAppState"
 
 /**
- * Preact hook that import facets to the component.
+ * Preact hook that imports the facets to the component.
  * @example
  * ```jsx
  * import { useFacets } from '@nosto/search-js/preact'
