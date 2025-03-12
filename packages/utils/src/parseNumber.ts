@@ -1,4 +1,4 @@
-export default function parseNumber<T>(value: T): number | undefined {
+export default function parseNumber(value: unknown): number | undefined {
   if (typeof value === "number") {
     return value
   }
