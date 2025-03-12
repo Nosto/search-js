@@ -1,8 +1,6 @@
-import { beforeEach } from "node:test"
-
 import type { InputSearchFilter } from "@nosto/nosto-js/client"
 import { useRange } from "@preact/hooks/useRange"
-import { describe, expect, it } from "vitest"
+import { beforeEach, describe, expect, it } from "vitest"
 
 import { mockActions, mockStore, resetStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
