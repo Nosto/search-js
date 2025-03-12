@@ -1,6 +1,5 @@
+import { parseNumber } from "@utils/parseNumber"
 import { describe, expect, it } from "vitest"
-
-import parseNumber from "../src/parseNumber"
 
 describe("parseNumber", () => {
   it("should return the number if the input is a number", () => {
