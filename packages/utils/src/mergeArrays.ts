@@ -1,4 +1,4 @@
-type Unfreeze<T> = T extends object ? { -readonly [K in keyof T]: Unfreeze<T[K]> } : T
+import { Unfreeze } from "./types"
 
 export function mergeArrays<T extends (unknown[] | readonly unknown[] | undefined | null)[]>(
   ...objects: T
