@@ -1,27 +1,28 @@
 {
-	"compilerOptions": {
-		"target": "ES2020",
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"noEmit": true,
-		"strict": true,
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "strict": true,
 
-		/* Preact Config */
-		"jsx": "react-jsx",
-		"jsxImportSource": "preact",
-		"skipLibCheck": true,
-		"paths": {
-			"react": ["./node_modules/preact/compat/"],
-			"react-dom": ["./node_modules/preact/compat/"],
-			"@nosto/search-js": ["../../dist/core"],
-			"@nosto/search-js/currencies": ["../../dist/currencies"],
-			"@nosto/search-js/currencies/*": ["../../dist/currencies/*"],
-			"@nosto/search-js/preact": ["../../dist/preact"],
-			"@nosto/search-js/preact/*": ["../../dist/preact/*"],
-			"@nosto/search-js/thumbnails": ["../../dist/thumbnails"],
-			"@nosto/search-js/thumbnails/*": ["../../dist/thumbnails/*"],
-			"@nosto/search-js/*": ["../../dist/*"],
-		}
-	},
-	"include": ["node_modules/vite/client.d.ts", "**/*"]
+    /* Preact Config */
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "react": ["./node_modules/preact/compat/"],
+      "react-dom": ["./node_modules/preact/compat/"],
+      "@nosto/search-js": ["../../dist/core"],
+      "@nosto/search-js/currencies": ["../../dist/currencies"],
+      "@nosto/search-js/currencies/*": ["../../dist/currencies/*"],
+      "@nosto/search-js/preact": ["../../dist/preact"],
+      "@nosto/search-js/preact/*": ["../../dist/preact/*"],
+      "@nosto/search-js/thumbnails": ["../../dist/thumbnails"],
+      "@nosto/search-js/thumbnails/*": ["../../dist/thumbnails/*"],
+      "@nosto/search-js/*": ["../../dist/*"]
+    }
+  },
+  "include": ["node_modules/vite/client.d.ts", "**/*"]
 }
