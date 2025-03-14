@@ -34,7 +34,7 @@ export function createExtendableStore<State extends BaseState>(defaultState: Sta
   }
 
   function getInitialState() {
-    return deepMerge(initialState)
+    return deepMerge(initialState) as State
   }
 
   function onChange<T>(selector: (state: State) => T, callback: (piece: T) => void) {
