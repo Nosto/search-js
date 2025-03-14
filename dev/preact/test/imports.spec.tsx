@@ -1,6 +1,5 @@
 import {
   createStore,
-  mockStore,
   NostoAutocompletePageProvider,
   NostoCategoryPageProvider,
   NostoSearchPageProvider,
@@ -19,7 +18,6 @@ describe("imports", () => {
     expect(NostoSearchPageProvider).toBeDefined()
     expect(NostoCategoryPageProvider).toBeDefined()
     expect(NostoAutocompletePageProvider).toBeDefined()
-    expect(mockStore).toBeDefined()
   })
 
   it("runs preact components without conflicts", () => {

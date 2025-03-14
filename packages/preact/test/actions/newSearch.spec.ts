@@ -53,9 +53,7 @@ describe("newSearch", () => {
         config: makeSerpConfig({
           persistentSearchCache: true
         }),
-        store: createStore({
-          pageType: "serp"
-        })
+        store: createStore()
       }
       await newSearch(context, query)
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).not.toBeNull()
@@ -69,9 +67,7 @@ describe("newSearch", () => {
       })
       const context = {
         config,
-        store: createStore({
-          pageType: "category"
-        })
+        store: createStore()
       }
       await newSearch(context, query)
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).not.toBeNull()
@@ -80,9 +76,7 @@ describe("newSearch", () => {
     it("is skipped if persistentSearchCache is not set", async () => {
       const context = {
         config: makeSerpConfig({ persistentSearchCache: false }),
-        store: createStore({
-          pageType: "serp"
-        })
+        store: createStore()
       }
       await newSearch(context, query)
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).toBeNull()
