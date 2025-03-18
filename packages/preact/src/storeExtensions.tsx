@@ -1,4 +1,4 @@
-import { deepMerge, deepMergePlain } from "@utils/deepMerge"
+import { deepMergePlain } from "@utils/deepMerge"
 import { isEqual } from "@utils/isEqual"
 
 import { State as BaseState } from "./store"
@@ -34,7 +34,7 @@ export function createExtendableStore<State extends BaseState>(defaultState: Sta
   }
 
   function getInitialState() {
-    return deepMerge(initialState) as State
+    return structuredClone(initialState)
   }
 
   function onChange<T>(selector: (state: State) => T, callback: (piece: T) => void) {
