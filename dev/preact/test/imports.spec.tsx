@@ -19,6 +19,7 @@ import {
   useFacets,
   useNostoAppState,
   usePersonalization,
+  useProductFilters,
   useRange,
   useRangeSelector,
   useResponse,
@@ -47,6 +48,7 @@ describe("imports", () => {
     expect(useFacets).toBeDefined()
     expect(useNostoAppState).toBeDefined()
     expect(usePersonalization).toBeDefined()
+    expect(useProductFilters).toBeDefined()
     expect(useRange).toBeDefined()
     expect(useRangeSelector).toBeDefined()
     expect(useResponse).toBeDefined()
