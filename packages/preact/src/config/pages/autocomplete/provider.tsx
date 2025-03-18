@@ -12,7 +12,7 @@ type AutocompleteProps = {
   children: ComponentChildren
 }
 
-export function NostoAutocompletePageProvider({ config, store, children }: AutocompleteProps) {
+export function AutocompletePageProvider({ config, store, children }: AutocompleteProps) {
   const actualStore = store ?? createStore()
   useCheckClientScript()
 

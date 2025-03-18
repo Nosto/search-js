@@ -12,7 +12,7 @@ type CategoryProps = {
   children: ComponentChildren
 }
 
-export function NostoCategoryPageProvider({ config, store, children }: CategoryProps) {
+export function CategoryPageProvider({ config, store, children }: CategoryProps) {
   const actualStore = store ?? createStore()
   useCheckClientScript()
 
