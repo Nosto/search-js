@@ -1,34 +1,75 @@
 import {
+  // Page Providers
+  AutocompletePageProvider,
+  CategoryPageProvider,
+  createExtendableStore,
+  // Store and Context
   createStore,
-  mockStore,
-  NostoAutocompletePageProvider,
-  NostoCategoryPageProvider,
-  NostoSearchPageProvider,
+  defaultState,
+  // Components
+  SearchInput,
+  SearchPageProvider,
+  SerpElement,
   State,
+  StoreContext,
+  // Hooks
+  useActions,
+  useDecoratedSearchResults,
+  useFacet,
+  useFacets,
   useNostoAppState,
-  usePersonalization
+  usePersonalization,
+  useProductFilters,
+  useRange,
+  useRangeSelector,
+  useResponse,
+  useSelectedFiltersCount,
+  useSizeOptions,
+  useSort
 } from "@nosto/search-js/preact"
 import { renderHook } from "@testing-library/preact"
 import { describe, expect, it } from "vitest"
 
 describe("imports", () => {
-  it("is able to import preact dependencies", () => {
+  it("should be able to import all expected exports", () => {
+    // Components
+    expect(SearchInput).toBeDefined()
+    expect(SerpElement).toBeDefined()
+
+    // Page Providers
+    expect(AutocompletePageProvider).toBeDefined()
+    expect(CategoryPageProvider).toBeDefined()
+    expect(SearchPageProvider).toBeDefined()
+
+    // Hooks
+    expect(useActions).toBeDefined()
+    expect(useDecoratedSearchResults).toBeDefined()
+    expect(useFacet).toBeDefined()
+    expect(useFacets).toBeDefined()
     expect(useNostoAppState).toBeDefined()
     expect(usePersonalization).toBeDefined()
+    expect(useProductFilters).toBeDefined()
+    expect(useRange).toBeDefined()
+    expect(useRangeSelector).toBeDefined()
+    expect(useResponse).toBeDefined()
+    expect(useSelectedFiltersCount).toBeDefined()
+    expect(useSizeOptions).toBeDefined()
+    expect(useSort).toBeDefined()
+
+    // Store and Context
     expect(createStore).toBeDefined()
-    expect(NostoSearchPageProvider).toBeDefined()
-    expect(NostoCategoryPageProvider).toBeDefined()
-    expect(NostoAutocompletePageProvider).toBeDefined()
-    expect(mockStore).toBeDefined()
+    expect(defaultState).toBeDefined()
+    expect(StoreContext).toBeDefined()
+    expect(createExtendableStore).toBeDefined()
   })
 
   it("runs preact components without conflicts", () => {
     const store = createStore()
     function Wrapper({ children }: { children: Element }) {
       return (
-        <NostoSearchPageProvider store={store} config={{}}>
+        <SearchPageProvider store={store} config={{}}>
           {children}
-        </NostoSearchPageProvider>
+        </SearchPageProvider>
       )
     }
     const render = renderHook(() => useNostoAppState(state => state), { wrapper: Wrapper })

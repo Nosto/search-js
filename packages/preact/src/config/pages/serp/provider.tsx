@@ -12,7 +12,7 @@ type SearchProps = {
   children: ComponentChildren
 }
 
-export function NostoSearchPageProvider({ config, store, children }: SearchProps) {
+export function SearchPageProvider({ config, store, children }: SearchProps) {
   const actualStore = store ?? createStore()
   useCheckClientScript()
 
