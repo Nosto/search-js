@@ -50,7 +50,7 @@
     "test:watch": "vitest",
     "lint": "eslint",
     "lint-fix": "eslint --fix",
-    "postinstall": "(cd dev/preact && npm i --ignore-scripts)"
+    "install:dev": "(cd dev/preact && npm i --ignore-scripts)"
   },
   "devDependencies": {
     "@nosto/nosto-js": "^1.5.0",
