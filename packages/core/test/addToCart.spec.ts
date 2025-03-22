@@ -1,5 +1,11 @@
+import { beforeEach, describe, expect, it, Mock, vi } from "vitest"
+vi.mock("@nosto/nosto-js", async importOriginal => ({
+  ...(await importOriginal()),
+  addSkuToCart: vi.fn()
+}))
+
+import { addSkuToCart } from "@nosto/nosto-js"
 import { mockNostojs } from "@nosto/nosto-js/testing"
-import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { addToCart } from "../src/addToCart"
 
@@ -8,7 +14,6 @@ describe("addToCart", () => {
 
   beforeEach(() => {
     vi.resetAllMocks()
-    window.Nosto = { addSkuToCart: vi.fn() }
     mockNostojs({ recordSearchAddToCart })
   })
 
@@ -18,15 +23,15 @@ describe("addToCart", () => {
 
     await addToCart("serp", hit, quantity)
 
-    expect(window.Nosto?.addSkuToCart).toHaveBeenCalledWith(hit, undefined, quantity)
+    expect(addSkuToCart).toHaveBeenCalledWith(hit, undefined, quantity)
     expect(recordSearchAddToCart).toHaveBeenCalledWith("serp", hit)
   })
 
   it("should throw an error if window.Nosto is not available", async () => {
-    delete window.Nosto
+    ;(addSkuToCart as Mock).mockImplementation(() => Promise.reject(new Error("Nosto is not available")))
 
     const hit = { productId: "123", skuId: "sku-123" }
 
-    await expect(addToCart("serp", hit)).rejects.toThrow("window.Nosto.addSkuToCart is not available")
+    await expect(addToCart("serp", hit)).rejects.toThrow()
   })
 })
