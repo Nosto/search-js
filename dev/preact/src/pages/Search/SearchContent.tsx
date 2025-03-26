@@ -1,7 +1,7 @@
 import { SearchInput, useActions, useNostoAppState } from "@nosto/search-js/preact"
 import { useState } from "preact/hooks"
 
-import Pagination from "../../components/Pagination"
+import { Pagination } from "../../components/Pagination"
 import { Product } from "./Product"
 
 export function SearchContent() {

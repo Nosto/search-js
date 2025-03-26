@@ -12,7 +12,7 @@ export { useDecoratedSearchResults } from "./src/hooks/useDecoratedSearchResults
 export { useFacet } from "./src/hooks/useFacet"
 export { useFacets } from "./src/hooks/useFacets"
 export { useNostoAppState } from "./src/hooks/useNostoAppState"
-export { usePagination } from "./src/hooks/usePegination/usePagination"
+export { usePagination } from "./src/hooks/usePagination/usePagination"
 export { usePersonalization } from "./src/hooks/usePersonalization"
 export { useProductFilters } from "./src/hooks/useProductFilters/useProductFilters"
 export { useRange } from "./src/hooks/useRange"

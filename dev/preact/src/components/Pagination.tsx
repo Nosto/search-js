@@ -16,7 +16,7 @@ function PaginationLink({ goToPage, children }: { goToPage: () => void; children
   )
 }
 
-export default function Pagination() {
+export function Pagination() {
   const { prev, first, pages, last, next } = usePagination({
     width: 5
   })
@@ -31,7 +31,7 @@ export default function Pagination() {
     [updateSearch]
   )
 
-  const handlePaginate = (page: { from: number | undefined }) => () => paginate(page)
+  const handlePaginate = useCallback((page: { from: number | undefined }) => () => paginate(page), [paginate])
 
   return (
     <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>

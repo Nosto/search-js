@@ -1,31 +1,28 @@
+import { usePagination } from "@preact/hooks/usePagination/usePagination"
+import { range } from "@preact/hooks/usePagination/utils"
 import { describe, expect, it } from "vitest"
 
 import { mockStore } from "../mocks/mocks"
-
-const store = mockStore({
-  loading: false,
-  initialized: true,
-  query: {
-    products: {
-      from: 0
-    }
-  },
-  response: {
-    products: {
-      size: 10,
-      total: 100,
-      hits: []
-    }
-  }
-})
-const appState = store.getState()
-
-import { usePagination } from "@preact/hooks/usePegination/usePagination"
-import { range } from "@preact/hooks/usePegination/utils"
-
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 describe("usePagination", () => {
+  const store = mockStore({
+    loading: false,
+    initialized: true,
+    query: {
+      products: {
+        from: 0
+      }
+    },
+    response: {
+      products: {
+        size: 10,
+        total: 100,
+        hits: []
+      }
+    }
+  })
+  const appState = store.getState()
   it("previous for first page is undefined", () => {
     appState.query.products!.from = 0
     appState.response.products!.total = 100
