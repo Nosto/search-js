@@ -1,6 +1,7 @@
 import { SearchInput, useActions, useNostoAppState } from "@nosto/search-js/preact"
 import { useState } from "preact/hooks"
 
+import Pagination from "../../components/Pagination"
 import { Product } from "./Product"
 
 export function SearchContent() {
@@ -31,6 +32,7 @@ export function SearchContent() {
       </div>
       <div>Results: {state.response.products?.hits.map(hit => hit.name).join(", ")}</div>
       <div>{state.response.products?.hits.map(hit => <Product key={hit.productId} product={hit} />)}</div>
+      <Pagination />
     </div>
   )
 }
