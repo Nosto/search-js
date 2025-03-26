@@ -20,7 +20,7 @@ const store = mockStore({
 })
 const appState = store.getState()
 
-import { usePagination } from "@preact/hooks/usePegination/usePegination"
+import { usePagination } from "@preact/hooks/usePegination/usePagination"
 import { range } from "@preact/hooks/usePegination/utils"
 
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
