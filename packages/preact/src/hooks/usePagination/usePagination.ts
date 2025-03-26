@@ -3,6 +3,9 @@ import { useMemo } from "preact/hooks"
 import { useNostoAppState } from "../useNostoAppState"
 import { range } from "./utils"
 
+/**
+ * Pagination page type.
+ */
 export type Page = {
   from: number
   page: number
