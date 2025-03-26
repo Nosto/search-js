@@ -1,3 +1,5 @@
+import { useMemo } from "preact/hooks"
+
 import { useNostoAppState } from "../useNostoAppState"
 import { range } from "./utils"
 
@@ -45,58 +47,60 @@ export function usePagination(options?: { width?: number }): {
     products: state.response.products
   }))
 
-  if (!products) {
-    return {
-      totalPages: 0,
-      resultsFrom: 0,
-      resultsTo: 0,
-      pages: []
+  return useMemo(() => {
+    if (!products) {
+      return {
+        totalPages: 0,
+        resultsFrom: 0,
+        resultsTo: 0,
+        pages: []
+      }
     }
-  }
 
-  const from = query.products?.from ?? 0
-  const width = options?.width ?? Infinity
+    const from = query.products?.from ?? 0
+    const width = options?.width ?? Infinity
 
-  const pagesToShow = Math.max(Math.floor(width - 1) / 2, 1)
-  const currentPage = products.size! > 0 ? Math.floor(from / products.size!) + 1 : 1
-  const totalPages = products.size! > 0 ? Math.ceil(products.total / products.size!) : 0
+    const pagesToShow = Math.max(Math.floor(width - 1) / 2, 1)
+    const currentPage = products.size! > 0 ? Math.floor(from / products.size!) + 1 : 1
+    const totalPages = products.size! > 0 ? Math.ceil(products.total / products.size!) : 0
 
-  const showPage = (page: number) => page >= currentPage - pagesToShow && page <= currentPage + pagesToShow
+    const showPage = (page: number) => page >= currentPage - pagesToShow && page <= currentPage + pagesToShow
 
-  const resultsFrom = from + 1
-  const resultsTo = Math.min(from + products.total, products.total)
-  const current: Page = {
-    from,
-    page: currentPage,
-    current: true
-  }
-
-  const pageToPosition = (page: number) => {
-    return {
-      from: (page - 1) * products.size!,
-      page,
-      current: page === currentPage
+    const resultsFrom = from + 1
+    const resultsTo = Math.min(from + products.total, products.total)
+    const current: Page = {
+      from,
+      page: currentPage,
+      current: true
     }
-  }
 
-  const prev = currentPage > 1 ? pageToPosition(currentPage - 1) : undefined
-  const next = currentPage < totalPages ? pageToPosition(currentPage + 1) : undefined
-  const first = pagesToShow === Infinity || currentPage - pagesToShow - 1 > 1 ? pageToPosition(1) : undefined
-  const last =
-    pagesToShow === Infinity || currentPage + pagesToShow + 1 < totalPages ? pageToPosition(totalPages) : undefined
-  const pages = range(1, totalPages + 1)
-    .filter(showPage)
-    .map(pageToPosition)
+    const pageToPosition = (page: number) => {
+      return {
+        from: (page - 1) * products.size!,
+        page,
+        current: page === currentPage
+      }
+    }
 
-  return {
-    totalPages,
-    resultsFrom,
-    resultsTo,
-    current,
-    prev,
-    next,
-    first,
-    last,
-    pages
-  }
+    const prev = currentPage > 1 ? pageToPosition(currentPage - 1) : undefined
+    const next = currentPage < totalPages ? pageToPosition(currentPage + 1) : undefined
+    const first = pagesToShow === Infinity || currentPage - pagesToShow - 1 > 1 ? pageToPosition(1) : undefined
+    const last =
+      pagesToShow === Infinity || currentPage + pagesToShow + 1 < totalPages ? pageToPosition(totalPages) : undefined
+    const pages = range(1, totalPages + 1)
+      .filter(showPage)
+      .map(pageToPosition)
+
+    return {
+      totalPages,
+      resultsFrom,
+      resultsTo,
+      current,
+      prev,
+      next,
+      first,
+      last,
+      pages
+    }
+  }, [query, products, options?.width])
 }
