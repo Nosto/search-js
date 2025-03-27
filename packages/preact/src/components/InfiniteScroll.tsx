@@ -55,6 +55,12 @@ function hasMoreResults(query: SearchQuery, result: SearchResult) {
 export const InfiniteScroll =
   !isBot() && intersectionObserverSupported ? InfiniteScrollWithObserver : InfiniteScrollWithLink
 
+/**
+ * Infinite scroll component props
+ * @param children - The children to render
+ * @param loadMoreComponent - The component to render when more results are available
+ * @param pageSize - The page size to use when loading more results
+ */
 export interface InfiniteScrollProps {
   children: ComponentChildren
   loadMoreComponent?: ComponentType<{ pageSize?: number }>
@@ -103,7 +109,7 @@ function InfiniteScrollWithObserver({ children, pageSize }: InfiniteScrollProps)
 }
 
 /**
- * @group Components
+ * Infinite scroll component that loads more results when user clicks a link.
  */
 export function InfiniteScrollWithLink({ children, loadMoreComponent: LoadMore, pageSize }: InfiniteScrollProps) {
   const { loading, query, response } = useNostoAppState(state => pick(state, "loading", "query", "response"))
