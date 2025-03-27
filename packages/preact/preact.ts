@@ -1,4 +1,5 @@
 /** @module preact */
+export { InfiniteScroll } from "./src/components/InfiniteScroll"
 export { SearchInput } from "./src/components/SearchInput"
 export { SerpElement } from "./src/components/SerpElement"
 export type { PublicAutocompleteConfig as AutocompleteConfig } from "./src/config/pages/autocomplete/config"
@@ -11,6 +12,7 @@ export { useActions } from "./src/hooks/useActions"
 export { useDecoratedSearchResults } from "./src/hooks/useDecoratedSearchResults"
 export { useFacet } from "./src/hooks/useFacet"
 export { useFacets } from "./src/hooks/useFacets"
+export { useLoadMore } from "./src/hooks/useLoadMore"
 export { useNostoAppState } from "./src/hooks/useNostoAppState"
 export { usePersonalization } from "./src/hooks/usePersonalization"
 export { useProductFilters } from "./src/hooks/useProductFilters/useProductFilters"

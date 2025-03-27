@@ -3,10 +3,11 @@ import { SearchPageProvider, SerpConfig } from "@nosto/search-js/preact"
 import { thumbnailDecorator } from "@nosto/search-js/thumbnails"
 
 import { SearchContent } from "./SearchContent"
+import { SearchContentInfinite } from "./SearchContentInfinite"
 
 export const hitDecorators = [thumbnailDecorator({ size: "2" }), priceDecorator({ defaultCurrency: "EUR" })] as const
 
-export function Search() {
+export function Search({ infinite = false }: { infinite?: boolean }) {
   const config = {
     defaultCurrency: "EUR",
     search: {
@@ -15,8 +16,6 @@ export function Search() {
   } satisfies SerpConfig
 
   return (
-    <SearchPageProvider config={config}>
-      <SearchContent />
-    </SearchPageProvider>
+    <SearchPageProvider config={config}>{infinite ? <SearchContentInfinite /> : <SearchContent />}</SearchPageProvider>
   )
 }
