@@ -1,7 +1,7 @@
+import { range } from "@utils/range"
 import { useMemo } from "preact/hooks"
 
-import { useNostoAppState } from "../useNostoAppState"
-import { range } from "./utils"
+import { useNostoAppState } from "./useNostoAppState"
 
 /**
  * Pagination page type.
