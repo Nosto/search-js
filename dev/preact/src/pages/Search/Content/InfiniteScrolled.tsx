@@ -3,7 +3,7 @@ import { useState } from "preact/hooks"
 
 import { Product } from "../Product"
 
-export function InfinityScroll() {
+export function InfiniteScrolled() {
   const [input, setInput] = useState("")
   const { newSearch } = useActions()
 
