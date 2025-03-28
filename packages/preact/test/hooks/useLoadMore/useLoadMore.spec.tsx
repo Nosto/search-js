@@ -1,10 +1,10 @@
 import { ConfigContext } from "@preact/config/configContext"
 import { makeSerpConfig } from "@preact/config/pages/serp/config"
-import { useLoadMore } from "@preact/hooks/useLoadMore"
+import { useLoadMore } from "@preact/hooks/useLoadMore/useLoadMore"
 import { describe, expect, it } from "vitest"
 
-import { mockStore } from "../mocks/mocks"
-import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
+import { mockActions, mockStore } from "../../mocks/mocks"
+import { renderHookWithProviders } from "../../mocks/renderHookWithProviders"
 
 describe("useLoadMore", () => {
   const store = mockStore({
@@ -24,13 +24,15 @@ describe("useLoadMore", () => {
       }
     }
   })
+  mockActions()
 
   it("returns a loadMore function", () => {
     const pageSize = 24
-    const { result } = renderHookWithProviders(() => useLoadMore(pageSize), {
+    const { loadMore } = renderHookWithProviders(() => useLoadMore(pageSize), {
       store,
       wrapper: ({ children }) => <ConfigContext value={makeSerpConfig()}>{children}</ConfigContext>
-    })
-    expect(result.current.loadMore).toBeInstanceOf(Function)
+    }).result.current
+
+    expect(loadMore).toBeInstanceOf(Function)
   })
 })

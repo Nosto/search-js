@@ -1,20 +1,8 @@
-import { isBot } from "@utils/isBot"
+import { useActions } from "@preact/hooks/useActions"
+import { useNostoAppState } from "@preact/hooks/useNostoAppState"
 import { useCallback } from "preact/hooks"
 
-import { useActions } from "./useActions"
-import { useNostoAppState } from "./useNostoAppState"
-
-function queryChanges({ from, size, pageSize }: { from: number; size: number; pageSize: number }) {
-  if (isBot()) {
-    // increase from value for bots to move to the next page instead of loading more products
-    return {
-      products: { from: from + pageSize }
-    }
-  }
-  return {
-    products: { size: size + pageSize }
-  }
-}
+import { queryChanges } from "./utils"
 
 /**
  * Hook for loading more results by specified pageSize value

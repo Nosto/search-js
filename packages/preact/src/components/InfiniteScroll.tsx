@@ -1,11 +1,10 @@
-import { type SearchQuery, type SearchResult } from "@nosto/nosto-js/client"
+import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import { useLoadMore } from "@preact/hooks/useLoadMore/useLoadMore"
 import { useNostoAppState } from "@preact/hooks/useNostoAppState"
 import { isBot } from "@utils/isBot"
 import { pick } from "@utils/pick"
 import { ComponentChildren, ComponentType, JSX } from "preact"
 import { useEffect, useRef } from "preact/hooks"
-
-import { useLoadMore } from "../hooks/useLoadMore"
 
 const intersectionObserverSupported =
   window.IntersectionObserver &&
@@ -25,6 +24,8 @@ function hasMoreResults(query: SearchQuery, result: SearchResult) {
  * @param props
  * @example
  * ```jsx
+ * import { InfiniteScroll } from "@nosto/search-js/preact"
+ *
  * <InfiniteScroll pageSize={defaultConfig.pageSize}>
  *    {products?.hits?.map(hit => <Product hit={hit} />)}
  * </InfiniteScroll>
@@ -110,6 +111,7 @@ function InfiniteScrollWithObserver({ children, pageSize }: InfiniteScrollProps)
 
 /**
  * Infinite scroll component that loads more results when user clicks a link.
+ * @group Components
  */
 export function InfiniteScrollWithLink({ children, loadMoreComponent: LoadMore, pageSize }: InfiniteScrollProps) {
   const { loading, query, response } = useNostoAppState(state => pick(state, "loading", "query", "response"))
