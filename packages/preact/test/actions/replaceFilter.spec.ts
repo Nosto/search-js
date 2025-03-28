@@ -36,7 +36,7 @@ describe("replaceFilter", () => {
   it("commits updates to state on filter add", async () => {
     const promise = replaceFilter(context, "color", "red")
     expect(context.store.getState().loading).toBe(true)
-    expect(context.store.getState().response).toEqual({ query: "" })
+    expect(context.store.getState().response).toEqual({})
 
     await promise
 

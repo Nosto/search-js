@@ -37,7 +37,7 @@ describe("updateSearch", () => {
     const query = { query: "New query" }
     const promise = updateSearch(context, query)
     expect(context.store.getState().loading).toBe(true)
-    expect(context.store.getState().response).toEqual({ query: "" })
+    expect(context.store.getState().response).toEqual({})
 
     await promise
 

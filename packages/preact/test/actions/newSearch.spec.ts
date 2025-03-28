@@ -33,7 +33,7 @@ describe("newSearch", () => {
     const query = { products: { from: 0 } }
     const promise = newSearch(context, query)
     expect(context.store.getState().loading).toBe(true)
-    expect(context.store.getState().response).toEqual({ query: "" })
+    expect(context.store.getState().response).toEqual({})
 
     await promise
 

@@ -36,7 +36,7 @@ describe("toggleProductFilter", () => {
   it("commits updates to state on filter toggle on", async () => {
     const promise = toggleProductFilter(context, "color", "red", true)
     expect(context.store.getState().loading).toBe(true)
-    expect(context.store.getState().response).toEqual({ query: "" })
+    expect(context.store.getState().response).toEqual({})
 
     await promise
 
