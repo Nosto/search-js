@@ -1,5 +1,5 @@
 /** @module preact */
-export { InfiniteScroll } from "./src/components/InfiniteScroll"
+export { InfiniteScroll } from "./src/components/InfiniteScroll/InfiniteScroll"
 export { SearchInput } from "./src/components/SearchInput"
 export { SerpElement } from "./src/components/SerpElement"
 export type { PublicAutocompleteConfig as AutocompleteConfig } from "./src/config/pages/autocomplete/config"

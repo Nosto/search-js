@@ -2,7 +2,7 @@ import { useActions } from "@preact/hooks/useActions"
 import { useNostoAppState } from "@preact/hooks/useNostoAppState"
 import { useCallback } from "preact/hooks"
 
-import { queryChanges } from "./utils"
+import { getNextPageQuery } from "./getNextPageQuery"
 
 /**
  * Hook for loading more results by specified pageSize value
@@ -32,13 +32,9 @@ export function useLoadMore(pageSize = 24) {
   }))
   const { updateSearch } = useActions()
 
-  const loadMore = useCallback(
-    async (e?: MouseEvent) => {
-      e?.preventDefault()
-      await updateSearch(queryChanges({ from, size, pageSize }))
-    },
-    [from, size, pageSize, updateSearch]
-  )
+  const loadMore = useCallback(async () => {
+    await updateSearch(getNextPageQuery({ from, size, pageSize }))
+  }, [from, size, pageSize, updateSearch])
 
   return {
     loadMore
