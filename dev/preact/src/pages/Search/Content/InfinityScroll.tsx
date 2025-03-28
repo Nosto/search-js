@@ -1,9 +1,9 @@
 import { InfiniteScroll, SearchInput, useActions, useNostoAppState } from "@nosto/search-js/preact"
 import { useState } from "preact/hooks"
 
-import { Product } from "./Product"
+import { Product } from "../Product"
 
-export function SearchContentInfinite() {
+export function InfinityScroll() {
   const [input, setInput] = useState("")
   const { newSearch } = useActions()
 

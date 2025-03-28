@@ -1,10 +1,10 @@
 import { SearchInput, useActions, useNostoAppState } from "@nosto/search-js/preact"
 import { useState } from "preact/hooks"
 
-import { Pagination } from "../../components/Pagination"
-import { Product } from "./Product"
+import { Pagination } from "../../../components/Pagination"
+import { Product } from "../Product"
 
-export function SearchContent() {
+export function Paginated() {
   const [input, setInput] = useState("")
   const { newSearch } = useActions()
 
