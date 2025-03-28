@@ -38,11 +38,11 @@ export interface InfiniteScrollProps {
  *     const { loadMore } = useLoadMore(pageSize)
  *
  *     return (
- *         <a
+ *         <button
  *              onClick={loadMore}
  *          >
  *              More results
- *         </a>
+ *         </button>
  *    )
  * }
  *
