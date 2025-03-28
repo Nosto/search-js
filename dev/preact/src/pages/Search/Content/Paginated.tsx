@@ -8,7 +8,7 @@ export function Paginated() {
   const [input, setInput] = useState("")
   const { newSearch } = useActions()
 
-  const state = useNostoAppState()
+  const { hits } = useNostoAppState(state => ({ hits: state.response.products?.hits || [] }))
 
   const onSearch = () => {
     newSearch({
@@ -30,8 +30,12 @@ export function Paginated() {
       <div>
         Searching for: <b>{input}</b>
       </div>
-      <div>Results: {state.response.products?.hits.map(hit => hit.name).join(", ")}</div>
-      <div>{state.response.products?.hits.map(hit => <Product key={hit.productId} product={hit} />)}</div>
+      <div>Results: {hits.map(hit => hit.name).join(", ")}</div>
+      <div>
+        {hits.map(hit => (
+          <Product key={hit.productId} product={hit} />
+        ))}
+      </div>
       <Pagination />
     </div>
   )

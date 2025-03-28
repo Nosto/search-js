@@ -7,7 +7,7 @@ export function InfiniteScrolled() {
   const [input, setInput] = useState("")
   const { newSearch } = useActions()
 
-  const state = useNostoAppState()
+  const { hits } = useNostoAppState(state => ({ hits: state.response.products?.hits || [] }))
 
   const onSearch = () => {
     newSearch({
@@ -29,9 +29,11 @@ export function InfiniteScrolled() {
       <div>
         Searching for: <b>{input}</b>
       </div>
-      <div>Results: {state.response.products?.hits.map(hit => hit.name).join(", ")}</div>
+      <div>Results: {hits.map(hit => hit.name).join(", ")}</div>
       <InfiniteScroll pageSize={5}>
-        {state.response.products?.hits.map(hit => <Product key={hit.productId} product={hit} />)}
+        {hits.map(hit => (
+          <Product key={hit.productId} product={hit} />
+        ))}
       </InfiniteScroll>
     </div>
   )
