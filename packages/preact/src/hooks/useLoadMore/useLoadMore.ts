@@ -8,13 +8,14 @@ import { queryChanges } from "./utils"
  * Hook for loading more results by specified pageSize value
  * @example
  * ```jsx
+ *  import { useLoadMore } from '@nosto/search-js/preact'
+ *
  *  function LoadMoreButton({ pageSize }) {
- *     const { loadMore, href } = useLoadMore(pageSize)
+ *     const { loadMore } = useLoadMore(pageSize)
  *
  *     return (
  *         <a
  *              onClick={loadMore}
- *              href={href}
  *          >
  *              More results
  *         </a>
