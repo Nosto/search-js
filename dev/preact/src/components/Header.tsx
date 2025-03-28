@@ -12,6 +12,9 @@ export function Header() {
         <a href="/search" className={url == "/search" ? "active" : ""}>
           Search
         </a>
+        <a href="/search-infinite" className={url == "/search-infinite" ? "active" : ""}>
+          Search with infinite
+        </a>
       </nav>
     </header>
   )
