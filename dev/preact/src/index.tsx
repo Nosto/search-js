@@ -19,6 +19,7 @@ export function App() {
         <Router>
           <Route path="/" component={Home} />
           <Route path="/search" component={Search} />
+          <Route path="/search-infinite" component={() => <Search infinite />} />
           <Route default component={NotFound} />
         </Router>
       </main>
