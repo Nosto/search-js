@@ -32,12 +32,8 @@ export interface State {
 
 export const defaultState: State = {
   loading: true,
-  query: {
-    query: ""
-  },
-  response: {
-    query: ""
-  },
+  query: {},
+  response: {},
   initialized: false
 }
 
