@@ -27,7 +27,7 @@ describe("InfiniteScroll", () => {
     }
   })
 
-  beforeEach(async () => {
+  beforeEach(() => {
     resetStore(store)
   })
 
