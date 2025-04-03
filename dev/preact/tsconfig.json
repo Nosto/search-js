@@ -20,6 +20,7 @@
 			"@nosto/search-js/preact/*": ["../../dist/preact/*"],
 			"@nosto/search-js/thumbnails": ["../../dist/thumbnails"],
 			"@nosto/search-js/thumbnails/*": ["../../dist/thumbnails/*"],
+			"@nosto/search-js/utils/*": ["../../dist/utils/*"],
 			"@nosto/search-js/*": ["../../dist/*"],
 		}
 	},
