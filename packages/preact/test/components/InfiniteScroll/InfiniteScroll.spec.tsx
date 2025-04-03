@@ -1,13 +1,11 @@
-// import { botUserAgent, mockUserAgent } from "./utils"
-// mockUserAgent(botUserAgent)
 import { InfiniteScroll } from "@preact/components/InfiniteScroll/InfiniteScroll"
 import { makeSerpConfig } from "@preact/config/pages/serp/config"
 import { SearchPageProvider } from "@preact/config/pages/serp/provider"
 import { render } from "@testing-library/preact"
 import * as utils from "@utils/isBot"
-import { describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { mockStore } from "../../mocks/mocks"
+import { mockStore, resetStore } from "../../mocks/mocks"
 
 describe("InfiniteScroll", () => {
   vi.spyOn(utils, "isBot").mockReturnValue(true)
@@ -27,6 +25,10 @@ describe("InfiniteScroll", () => {
         hits: []
       }
     }
+  })
+
+  beforeEach(async () => {
+    resetStore(store)
   })
 
   const InfiniteScrollComponent = () => {
