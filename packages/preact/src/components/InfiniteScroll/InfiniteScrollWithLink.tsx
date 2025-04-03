@@ -8,7 +8,7 @@ import { hasMoreResults } from "./utils"
 /**
  * Infinite scroll component that loads more results when user clicks a link.
  * * @example
- * ```tsx
+ * ```jsx
  * import { InfiniteScrollWithLink } from "@nosto/search-js/preact"
  *
  * // With custom load more button
