@@ -36,6 +36,11 @@
       "types": "./dist/preact/preact.d.ts",
       "import": "./dist/preact/preact.es.js",
       "require": "./dist/preact/preact.cjs.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/utils.d.ts",
+      "import": "./dist/utils/utils.es.js",
+      "require": "./dist/utils/utils.cjs.js"
     }
   },
   "keywords": [],
