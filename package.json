@@ -37,6 +37,11 @@
       "import": "./dist/preact/preact.es.js",
       "require": "./dist/preact/preact.cjs.js"
     },
+    "./preact-legacy": {
+      "types": "./dist/preact-legacy/preact-legacy.d.ts",
+      "import": "./dist/preact-legacy/preact-legacy.es.js",
+      "require": "./dist/preact-legacy/preact-legacy.cjs.js"
+    },
     "./utils": {
       "types": "./dist/utils/utils.d.ts",
       "import": "./dist/utils/utils.es.js",
