@@ -2,7 +2,7 @@ import { resolve } from "path"
 import dts from "vite-plugin-dts"
 import { defineConfig } from "vitest/config"
 
-const packages = ["core", "currencies", "preact", "thumbnails", "utils"]
+const packages = ["core", "currencies", "preact", "thumbnails", "utils", "preact-legacy"]
 
 export default defineConfig({
   plugins: [
@@ -34,7 +34,8 @@ export default defineConfig({
       "@currencies": resolve(import.meta.dirname, "packages/currencies/src"),
       "@preact": resolve(import.meta.dirname, "packages/preact/src"),
       "@thumbnails": resolve(import.meta.dirname, "packages/thumbnails/src"),
-      "@utils": resolve(import.meta.dirname, "packages/utils/src")
+      "@utils": resolve(import.meta.dirname, "packages/utils/src"),
+      "@preact-legacy": resolve(import.meta.dirname, "packages/preact-legacy/src")
     }
   },
   test: {
