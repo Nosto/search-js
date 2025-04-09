@@ -1,4 +1,5 @@
 /** @module preact */
+export { AutocompleteElement } from "./src/components/Autocomplete/AutocompleteElement"
 export { InfiniteScroll, type InfiniteScrollProps } from "./src/components/InfiniteScroll/InfiniteScroll"
 export { InfiniteScrollWithLink } from "./src/components/InfiniteScroll/InfiniteScrollWithLink"
 export { SearchInput } from "./src/components/SearchInput"
