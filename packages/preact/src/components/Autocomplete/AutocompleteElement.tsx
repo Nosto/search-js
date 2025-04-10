@@ -12,7 +12,7 @@ export type AutocompleteElementProps = {
   /**
    * Get product data for analytics
    */
-  hit?: {
+  hit: {
     productId: string
     url?: string
     keyword?: string
