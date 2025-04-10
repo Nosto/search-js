@@ -32,11 +32,6 @@ export type AutocompleteElementProps = {
  *         <span>{hit.price}</span>
  *     </a>
  * </AutocompleteElement>)}
- *
- * // Render keywords
- * {keywords?.hits?.map(hit => <AutocompleteElement query={{ query: hit.keywords }} class="nosto-keyword">
- *     {hit.keywords}
- * </AutocompleteElement>)}
  * ```
  *
  * @group Components
