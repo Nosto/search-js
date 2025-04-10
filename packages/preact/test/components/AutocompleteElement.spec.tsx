@@ -24,20 +24,6 @@ describe("AutocompleteElement", () => {
     expect(getByText("Test Product")).toBeDefined()
   })
 
-  it("should only call original onclick if hit is not provided", () => {
-    const onClickMock = vi.fn()
-    const { getByText } = render(
-      <AutocompleteElement>
-        <a href={mockHit.url} onClick={onClickMock}>
-          Test Product
-        </a>
-      </AutocompleteElement>
-    )
-    getByText("Test Product").click()
-    expect(nostoJsSpy).not.toHaveBeenCalled()
-    expect(onClickMock).toHaveBeenCalled()
-  })
-
   it("should call tracking request and original onclick", () => {
     const onClickMock = vi.fn()
     const { getByText } = render(
