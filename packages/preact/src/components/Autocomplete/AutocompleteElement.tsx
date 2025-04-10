@@ -1,6 +1,8 @@
 import { nostojs } from "@nosto/nosto-js"
 import { cloneElement, ComponentChildren } from "preact"
 
+import { isValidHTMLElement } from "./utils"
+
 /**
  * @group Components
  */
@@ -37,8 +39,10 @@ export type AutocompleteElementProps = {
  * @group Components
  */
 export function AutocompleteElement({ children, hit }: AutocompleteElementProps) {
-  if (!children || typeof children !== "object" || !("props" in children)) {
-    throw new Error("AutocompleteElement expects a single valid VNode child element.")
+  if (!isValidHTMLElement(children)) {
+    throw new Error(
+      "AutocompleteElement expects a single valid HTML element as its child (e.g., <div>, <a>). Custom components are not supported."
+    )
   }
 
   const originalOnClick = children.props?.onClick

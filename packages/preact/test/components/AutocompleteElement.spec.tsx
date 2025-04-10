@@ -1,7 +1,8 @@
 import * as nostojs from "@nosto/nosto-js"
 import { AutocompleteElement } from "@preact/components/Autocomplete/AutocompleteElement"
 import { render } from "@testing-library/preact"
-import { describe, expect, it, vi, vitest } from "vitest"
+import { ComponentChildren } from "preact"
+import { beforeEach, describe, expect, it, vi, vitest } from "vitest"
 
 describe("AutocompleteElement", () => {
   vi.mock("@nosto/nosto-js", () => ({
@@ -13,6 +14,26 @@ describe("AutocompleteElement", () => {
     productId: "123",
     url: "https://example.com/product/123",
     keyword: "example"
+  }
+
+  beforeEach(() => {
+    nostoJsSpy.mockClear()
+  })
+
+  function CustomComponent({
+    url,
+    children,
+    onClickMock
+  }: {
+    url: string
+    children: ComponentChildren
+    onClickMock?: () => void
+  }) {
+    return (
+      <a href={url} onClick={onClickMock}>
+        {children}
+      </a>
+    )
   }
 
   it("renders children correctly", () => {
@@ -38,20 +59,56 @@ describe("AutocompleteElement", () => {
     expect(onClickMock).toHaveBeenCalled()
   })
 
-  it("should call tracking request and original onclick on custom component", () => {
+  it.skip("should handle nested component", () => {
     const onClickMock = vi.fn()
-
-    function CustomComponent() {
-      return (
-        <a href={mockHit.url} onClick={onClickMock}>
-          Custom Component
-        </a>
-      )
-    }
-
     const { getByText } = render(
       <AutocompleteElement hit={mockHit}>
-        <CustomComponent />
+        <>
+          <CustomComponent url={mockHit.url}>
+            <a href={mockHit.url} onClick={onClickMock}>
+              Custom Component
+            </a>
+          </CustomComponent>
+        </>
+      </AutocompleteElement>
+    )
+
+    getByText("Custom Component").click()
+    expect(nostoJsSpy).toHaveBeenCalled()
+    expect(onClickMock).toHaveBeenCalled()
+  })
+
+  it.skip("should handle multiple children gracefully", () => {
+    const onClickMock = vi.fn()
+    const { getByText } = render(
+      <AutocompleteElement hit={mockHit}>
+        <>
+          <CustomComponent url={mockHit.url} onClickMock={onClickMock}>
+            Custom Component
+          </CustomComponent>
+          <a href={mockHit.url} onClick={onClickMock}>
+            ProductBox
+          </a>
+        </>
+      </AutocompleteElement>
+    )
+
+    getByText("Custom Component").click()
+    expect(nostoJsSpy).toHaveBeenCalled()
+    expect(onClickMock).toHaveBeenCalled()
+    getByText("ProductBox").click()
+    expect(nostoJsSpy).toHaveBeenCalledTimes(2)
+    expect(onClickMock).toHaveBeenCalledTimes(2)
+  })
+
+  // custom component is not currently supported
+  it.skip("should call tracking request and original onclick on custom component", () => {
+    const onClickMock = vi.fn()
+    const { getByText } = render(
+      <AutocompleteElement hit={mockHit}>
+        <CustomComponent url={mockHit.url} onClickMock={onClickMock}>
+          Custom Component
+        </CustomComponent>
       </AutocompleteElement>
     )
     getByText("Custom Component").click()
@@ -61,7 +118,19 @@ describe("AutocompleteElement", () => {
 
   it("throws an error if children are invalid", () => {
     expect(() => render(<AutocompleteElement hit={mockHit}>{null}</AutocompleteElement>)).toThrow(
-      "AutocompleteElement expects a single valid VNode child element."
+      "AutocompleteElement expects a single valid HTML element as its child (e.g., <div>, <a>). Custom components are not supported."
+    )
+  })
+
+  it("throws an error if children are custom elements", () => {
+    expect(() =>
+      render(
+        <AutocompleteElement hit={mockHit}>
+          <CustomComponent url="#">Element</CustomComponent>
+        </AutocompleteElement>
+      )
+    ).toThrow(
+      "AutocompleteElement expects a single valid HTML element as its child (e.g., <div>, <a>). Custom components are not supported."
     )
   })
 })
