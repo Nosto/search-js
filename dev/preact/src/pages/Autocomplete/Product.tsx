@@ -19,8 +19,7 @@ export function Product({ product: baseProduct }: Props) {
       }}
     >
       <a
-        // href={product.url}
-        href={"#"}
+        href={product.url}
         aria-label={`Product ${product.name}`}
         style={{ display: "grid", gridTemplateColumns: "50px 1fr", gap: 8 }}
       >
