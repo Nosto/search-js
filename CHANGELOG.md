@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/Nosto/search-js/compare/v1.7.6...v1.8.0) (2025-04-11)
+
+
+### Features
+
+* added autocomplete component ([fc2c163](https://github.com/Nosto/search-js/commit/fc2c1633b744892ab333e9c6abaff7daaca49fd0))
+
 ## [1.7.6](https://github.com/Nosto/search-js/compare/v1.7.5...v1.7.6) (2025-04-08)
 
 
