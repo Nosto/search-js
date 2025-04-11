@@ -1,20 +1,27 @@
+import { useMemo } from "preact/hooks"
 import { useLocation } from "preact-iso"
 
 export function Header() {
-  const { url } = useLocation()
+  const { url: locationUrl } = useLocation()
+
+  const locations = useMemo(
+    () => [
+      { url: "/", name: "Home" },
+      { url: "/search", name: "Search" },
+      { url: "/search-infinite", name: "Search with infinite" },
+      { url: "/autocomplete", name: "Autocomplete" }
+    ],
+    []
+  )
 
   return (
     <header>
       <nav>
-        <a href="/" className={url == "/" ? "active" : ""}>
-          Home
-        </a>
-        <a href="/search" className={url == "/search" ? "active" : ""}>
-          Search
-        </a>
-        <a href="/search-infinite" className={url == "/search-infinite" ? "active" : ""}>
-          Search with infinite
-        </a>
+        {locations.map(({ url, name }) => (
+          <a key={url} href={url} className={url == locationUrl ? "active" : ""}>
+            {name}
+          </a>
+        ))}
       </nav>
     </header>
   )
