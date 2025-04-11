@@ -60,7 +60,8 @@
     "test:watch": "vitest",
     "lint": "eslint",
     "lint-fix": "eslint --fix",
-    "install:dev": "(cd dev/preact && npm i --ignore-scripts)"
+    "install:dev": "(cd dev/preact && npm i --ignore-scripts)",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@nosto/nosto-js": "^1.7.0",
@@ -77,6 +78,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unused-imports": "^4.1.4",
+    "husky": "^9.1.7",
     "isbot": "^5.1.25",
     "jsdom": "^26.0.0",
     "prettier": "^3.5.3",
