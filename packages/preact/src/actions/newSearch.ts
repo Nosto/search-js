@@ -8,8 +8,16 @@ import { measure } from "@utils/performance"
 
 import { cacheSearchResult, loadCachedResultIfApplicable } from "../search/resultCaching"
 import { ActionContext } from "./types"
+import { SearchResultTransformer } from "@preact/hooks/useLoadMore/transformSearchResult"
 
-export async function newSearch(context: ActionContext, query: SearchQuery, options?: SearchConfig): Promise<void> {
+export type NewSearchOptions = {
+  context: ActionContext
+  query: SearchQuery
+  options?: SearchConfig
+  transformer?: SearchResultTransformer
+}
+
+export async function newSearch({ context, query, options, transformer }:  NewSearchOptions): Promise<void> {
   const end = measure("newSearch")
 
   const pageType = context.config.pageType
@@ -47,7 +55,8 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
       response = cachedValue
     } else {
       const queryWithDefaults = applyQueryDefaults(pageType, fullQuery)
-      response = await search(queryWithDefaults, mergedConfig)
+      const result = await search(queryWithDefaults, mergedConfig)
+      response = transformer ? transformer(result) : result
       cacheSearchResult(usePersistentCache, fullQuery, response)
     }
 

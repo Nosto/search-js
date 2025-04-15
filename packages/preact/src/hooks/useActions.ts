@@ -7,6 +7,7 @@ import { newSearch } from "../actions/newSearch"
 import { replaceFilter } from "../actions/replaceFilter"
 import { toggleProductFilter } from "../actions/toggleProductFilter"
 import { updateSearch } from "../actions/updateSearch"
+import { SearchResultTransformer } from "./useLoadMore/transformSearchResult"
 
 /**
  * Preact hook that import current actions to the component.
@@ -46,14 +47,14 @@ export function useActions() {
 
   const newSearchCallback = useCallback(
     (query: SearchQuery, options?: SearchOptions) => {
-      return newSearch(context, query, options)
+      return newSearch({context, query, options})
     },
     [context]
   )
 
   const updateSearchCallback = useCallback(
-    (query: SearchQuery, options?: SearchOptions) => {
-      return updateSearch(context, query, options)
+    (query: SearchQuery, options?: SearchOptions, transformer?: SearchResultTransformer) => {
+      return updateSearch({context, query, options, transformer})
     },
     [context]
   )

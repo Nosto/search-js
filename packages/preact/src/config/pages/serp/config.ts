@@ -24,6 +24,12 @@ export interface SerpConfig extends BaseConfig {
    * If enabled, it's highly recommended to also enabled `persistentSearchCache` for best user experience.
    */
   preservePageScroll: boolean
+
+  /**
+     * Infinite scroll option fetches the all the products and renders them on page every time it's triggered.
+     * Using this option will override this default behavior and optimizes it to fetch and append only the next batch of products.
+     */
+  optimizedScrolling?: boolean
 }
 
 export type PublicSerpConfig = Omit<SerpConfig, keyof typeof defaultSerpConfig | "pageType"> &
