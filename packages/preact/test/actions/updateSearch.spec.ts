@@ -35,7 +35,7 @@ describe("updateSearch", () => {
 
   it("commits updates to state", async () => {
     const query = { query: "New query" }
-    const promise = updateSearch(context, query)
+    const promise = updateSearch({context, query})
     expect(context.store.getState().loading).toBe(true)
     expect(context.store.getState().response).toEqual({})
 
@@ -56,7 +56,7 @@ describe("updateSearch", () => {
 
   it("calls search with merged query", async () => {
     const query = { query: "New query" }
-    await updateSearch(context, query)
+    await updateSearch({context, query})
     expect(search).toHaveBeenCalledWith(
       expect.objectContaining({
         query: "New query",
