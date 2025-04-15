@@ -17,7 +17,7 @@ export function mergePaginatedProductResultIfNeeded({ newResult, previousResult 
       products: products?.hits.length
         ? {
             ...products,
-            hits: mergeArrays(products.hits, previousResult.products.hits)
+            hits: mergeArrays(previousResult.products.hits, products.hits)
           }
         : previousResult.products
     } satisfies SearchResult

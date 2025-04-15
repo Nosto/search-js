@@ -10,13 +10,11 @@ import { intersectionObserverSupported } from "./utils"
  * @param children - The children to render
  * @param loadMoreComponent - The component to render when more results are available
  * @param pageSize - The page size to use when loading more results
- * @param from - The starting index for the results
  */
 export interface InfiniteScrollProps {
   children: ComponentChildren
   loadMoreComponent?: ComponentType<{ pageSize?: number }>
   pageSize?: number
-  from?: number
 }
 
 /**
