@@ -25,7 +25,7 @@ export default defineConfig({
     lib: {
       name: "@nosto/search-js",
       formats: ["es", "cjs"],
-      entry: packages.flatMap(name => {
+      entry: packages.map(name => {
         return preactPackages.includes(name)
           ? resolve(import.meta.dirname, `packages/preact/${name}.ts`)
           : resolve(import.meta.dirname, `packages/${name}/${name}.ts`)
@@ -48,7 +48,11 @@ export default defineConfig({
       "@thumbnails": resolve(import.meta.dirname, "packages/thumbnails/src"),
       "@utils": resolve(import.meta.dirname, "packages/utils/src"),
       "@preact-legacy": resolve(import.meta.dirname, "packages/preact-legacy/src"),
-      "@common": resolve(import.meta.dirname, "packages/preact/common")
+      "@preact/common": resolve(import.meta.dirname, "packages/preact/common"),
+      "@preact/serp": resolve(import.meta.dirname, "packages/preact/serp"),
+      "@preact/category": resolve(import.meta.dirname, "packages/preact/category"),
+      "@preact/autocomplete": resolve(import.meta.dirname, "packages/preact/autocomplete"),
+      "@preact/hooks": resolve(import.meta.dirname, "packages/preact/hooks")
     }
   },
   test: {
