@@ -6,11 +6,10 @@ export type SearchResultTransformer = (props: SearchResult) => SearchResult
 export type MergePaginatedProductResultOptions = {
     newResult: SearchResult
     previousResult: SearchResult
-    optimizedScrolling?: boolean
 }
 
-export function mergePaginatedProductResultIfNeeded({ newResult, previousResult, optimizedScrolling }: MergePaginatedProductResultOptions) {
-    if (optimizedScrolling && previousResult?.products?.hits.length) {
+export function mergePaginatedProductResultIfNeeded({ newResult, previousResult }: MergePaginatedProductResultOptions) {
+    if (previousResult?.products?.hits.length) {
         const { products, ...rest } = newResult
 
         return {

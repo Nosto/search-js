@@ -3,7 +3,6 @@ import { useNostoAppState } from "@preact/hooks/useNostoAppState"
 import { useCallback } from "preact/hooks"
 
 import { getNextPageQuery } from "./getNextPageQuery"
-import { useSerpConfig } from "@preact/config/configContext"
 import { mergePaginatedProductResultIfNeeded } from "./transformSearchResult"
 import { SearchResult } from "@nosto/nosto-js/client"
 
@@ -35,11 +34,10 @@ export function useLoadMore(pageSize = 24) {
     previousResult: state.response
   }))
   const { updateSearch } = useActions()
-  const { optimizedScrolling } = useSerpConfig()
 
   const loadMore = useCallback(async () => {
     await updateSearch(getNextPageQuery({ from, size, pageSize }), undefined, (newResult: SearchResult) =>
-      mergePaginatedProductResultIfNeeded({ newResult, previousResult, optimizedScrolling })
+      mergePaginatedProductResultIfNeeded({ newResult, previousResult })
     )
   }, [from, size, pageSize, updateSearch])
 

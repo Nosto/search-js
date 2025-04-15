@@ -4,13 +4,12 @@ type NextPageQueryProps = {
   from: number
   size: number
   pageSize: number
-  optimizedScrolling?: boolean
 }
 
 /**
  * Function to calculate the new query values for loading more products
  */
-export function getNextPageQuery({ from, size, pageSize, optimizedScrolling = false }: NextPageQueryProps) {
+export function getNextPageQuery({ from, size, pageSize }: NextPageQueryProps) {
   if (isBot()) {
     // increase from value for bots to move to the next page instead of loading more products
     return {
@@ -18,6 +17,6 @@ export function getNextPageQuery({ from, size, pageSize, optimizedScrolling = fa
     }
   }
   return {
-    products: optimizedScrolling ? { size: size + pageSize } : { from: (from ?? 0) + size, size: size }
+    products: { from: (from ?? 0) + size, size: size }
   }
 }
