@@ -17,6 +17,6 @@ export function getNextPageQuery({ from, size, pageSize }: NextPageQueryProps) {
     }
   }
   return {
-    products: { from: from + size, size: size }
+    products: { from: from + pageSize, size: size }
   }
 }

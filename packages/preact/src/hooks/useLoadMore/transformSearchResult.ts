@@ -8,20 +8,33 @@ export type MergePaginatedProductResultOptions = {
   previousResult: SearchResult
 }
 
+/**
+ *
+ * @param param0
+ * @returns
+ */
 export function mergePaginatedProductResultIfNeeded({ newResult, previousResult }: MergePaginatedProductResultOptions) {
-  if (previousResult?.products?.hits.length) {
-    const { products, ...rest } = newResult
-
-    return {
-      ...rest,
-      products: products?.hits.length
-        ? {
-            ...products,
-            hits: mergeArrays(previousResult.products.hits, products.hits)
-          }
-        : previousResult.products
-    } satisfies SearchResult
+  if (!previousResult?.products?.hits.length) {
+    return newResult
   }
 
-  return newResult
+  const { products, ...rest } = newResult
+
+  if (!products?.hits?.length) {
+    return {
+      ...rest,
+      products: {
+        ...products,
+        hits: previousResult.products.hits
+      }
+    }
+  }
+
+  return {
+    ...rest,
+    products: {
+      ...products,
+      hits: mergeArrays(previousResult.products.hits, products.hits)
+    }
+  }
 }
