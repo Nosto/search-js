@@ -16,8 +16,6 @@
 			"@nosto/search-js": ["../../dist/core"],
 			"@nosto/search-js/currencies": ["../../dist/currencies"],
 			"@nosto/search-js/currencies/*": ["../../dist/currencies/*"],
-			"@nosto/search-js/preact": ["../../dist/preact"],
-			"@nosto/search-js/preact/*": ["../../dist/preact/*"],
 			"@nosto/search-js/thumbnails": ["../../dist/thumbnails"],
 			"@nosto/search-js/thumbnails/*": ["../../dist/thumbnails/*"],
 			"@nosto/search-js/utils": ["../../dist/utils"],

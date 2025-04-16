@@ -1,18 +1,7 @@
+import { AutocompletePageProvider, SearchInput } from "@nosto/search-js/preact/autocomplete"
+import { CategoryPageProvider } from "@nosto/search-js/preact/category"
+import { createExtendableStore, createStore, defaultState, State, StoreContext } from "@nosto/search-js/preact/common"
 import {
-  // Page Providers
-  AutocompletePageProvider,
-  CategoryPageProvider,
-  createExtendableStore,
-  // Store and Context
-  createStore,
-  defaultState,
-  // Components
-  SearchInput,
-  SearchPageProvider,
-  SerpElement,
-  State,
-  StoreContext,
-  // Hooks
   useActions,
   useDecoratedSearchResults,
   useFacet,
@@ -26,7 +15,8 @@ import {
   useSelectedFiltersCount,
   useSizeOptions,
   useSort
-} from "@nosto/search-js/preact"
+} from "@nosto/search-js/preact/hooks"
+import { SearchPageProvider, SerpElement } from "@nosto/search-js/preact/serp"
 import { renderHook } from "@testing-library/preact"
 import { describe, expect, it } from "vitest"
 

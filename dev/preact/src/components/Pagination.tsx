@@ -1,4 +1,4 @@
-import { useActions, usePagination } from "@nosto/search-js/preact"
+import { useActions, usePagination } from "@nosto/search-js/preact/hooks"
 import { type ComponentChildren } from "preact"
 import { useCallback } from "preact/hooks"
 

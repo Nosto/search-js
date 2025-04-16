@@ -1,6 +1,7 @@
 import "./style.css"
 
-import { StoreContext, useNostoAppState } from "@nosto/search-js/preact"
+import { StoreContext } from "@nosto/search-js/preact/common"
+import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { useContext } from "preact/hooks"
 
 export function Home() {
