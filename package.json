@@ -32,7 +32,7 @@
       "import": "./dist/thumbnails/thumbnails.es.js",
       "require": "./dist/thumbnails/thumbnails.cjs.js"
     },
-    "./preact-legacy": {
+    "./preact/legacy": {
       "types": "./dist/preact-legacy/preact-legacy.d.ts",
       "import": "./dist/preact-legacy/preact-legacy.es.js",
       "require": "./dist/preact-legacy/preact-legacy.cjs.js"
