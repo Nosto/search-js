@@ -1,4 +1,5 @@
 {
+	"name": "@nosto/search-js",
 	"entryPoints": ["packages/*/*.ts"],
 	"out": "docs",
 	"highlightLanguages": ["typescript", "bash", "js", "jsx"]
