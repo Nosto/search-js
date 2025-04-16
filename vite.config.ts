@@ -2,7 +2,7 @@ import { resolve } from "path"
 import dts from "vite-plugin-dts"
 import { defineConfig } from "vitest/config"
 
-const basePackages = ["core", "currencies", "preact", "thumbnails", "utils"]
+const basePackages = ["core", "currencies", "thumbnails", "utils"]
 const preactPackages = ["legacy", "common", "serp", "autocomplete", "category", "hooks"]
 const packages = [...basePackages, ...preactPackages]
 
