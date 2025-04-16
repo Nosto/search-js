@@ -48,11 +48,11 @@ export default defineConfig({
       "@thumbnails": resolve(import.meta.dirname, "packages/thumbnails/src"),
       "@utils": resolve(import.meta.dirname, "packages/utils/src"),
       "@preact-legacy": resolve(import.meta.dirname, "packages/preact-legacy/src"),
-      "@preact/common": resolve(import.meta.dirname, "packages/preact/common"),
-      "@preact/serp": resolve(import.meta.dirname, "packages/preact/serp"),
-      "@preact/category": resolve(import.meta.dirname, "packages/preact/category"),
-      "@preact/autocomplete": resolve(import.meta.dirname, "packages/preact/autocomplete"),
-      "@preact/hooks": resolve(import.meta.dirname, "packages/preact/hooks")
+      "@preact/common": resolve(import.meta.dirname, "packages/preact/common.ts"),
+      "@preact/serp": resolve(import.meta.dirname, "packages/preact/serp.ts"),
+      "@preact/category": resolve(import.meta.dirname, "packages/preact/category.ts"),
+      "@preact/autocomplete": resolve(import.meta.dirname, "packages/preact/autocomplete.ts"),
+      "@preact/hooks": resolve(import.meta.dirname, "packages/preact/hooks.ts")
     }
   },
   test: {

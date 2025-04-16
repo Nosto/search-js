@@ -32,6 +32,11 @@
       "@preact/*": ["packages/preact/src/*"],
       "@thumbnails/*": ["packages/thumbnails/src/*"],
       "@utils/*": ["packages/utils/src/*"],
+      "@preact/common": ["packages/preact/common.ts"],
+      "@preact/serp": ["packages/preact/serp.ts"],
+      "@preact/category": ["packages/preact/category.ts"],
+      "@preact/autocomplete": ["packages/preact/autocomplete.ts"],
+      "@preact/hooks": ["packages/preact/hooks.ts"],
     }
   },
   "exclude": ["dev"]

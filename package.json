@@ -53,24 +53,24 @@
       "require": "./dist/preact/common.cjs.js"
     },
     "./preact/serp": {
-      "types": "./dist/preact/common.d.ts",
-      "import": "./dist/preact/common.es.js",
-      "require": "./dist/preact/common.cjs.js"
+      "types": "./dist/preact/serp.d.ts",
+      "import": "./dist/preact/serp.es.js",
+      "require": "./dist/preact/serp.cjs.js"
     },
     "./preact/category": {
-      "types": "./dist/preact/common.d.ts",
-      "import": "./dist/preact/common.es.js",
-      "require": "./dist/preact/common.cjs.js"
+      "types": "./dist/preact/category.d.ts",
+      "import": "./dist/preact/category.es.js",
+      "require": "./dist/preact/category.cjs.js"
     },
     "./preact/autocomplete": {
-      "types": "./dist/preact/common.d.ts",
-      "import": "./dist/preact/common.es.js",
-      "require": "./dist/preact/common.cjs.js"
+      "types": "./dist/preact/autocomplete.d.ts",
+      "import": "./dist/preact/autocomplete.es.js",
+      "require": "./dist/preact/autocomplete.cjs.js"
     },
     "./preact/hooks": {
-      "types": "./dist/preact/common.d.ts",
-      "import": "./dist/preact/common.es.js",
-      "require": "./dist/preact/common.cjs.js"
+      "types": "./dist/preact/hooks.d.ts",
+      "import": "./dist/preact/hooks.es.js",
+      "require": "./dist/preact/hooks.cjs.js"
     }
   },
   "keywords": [],
