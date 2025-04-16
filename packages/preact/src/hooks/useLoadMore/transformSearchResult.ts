@@ -9,9 +9,9 @@ export type MergePaginatedProductResultOptions = {
 }
 
 /**
- *
- * @param param0
- * @returns
+ * Strictly for internal purpose only and not to be exported for public use.
+ * Search result is paginated when using infinite scrolling. 
+ * This function merges the product hits from current pagination request with the previous one.
  */
 export function mergePaginatedProductResultIfNeeded({ newResult, previousResult }: MergePaginatedProductResultOptions) {
   if (!previousResult?.products?.hits.length) {
@@ -24,7 +24,7 @@ export function mergePaginatedProductResultIfNeeded({ newResult, previousResult 
     return {
       ...rest,
       products: {
-        ...products,
+        ...(products ?? previousResult.products),
         hits: previousResult.products.hits
       }
     }
