@@ -1,4 +1,5 @@
-import { SearchInput, useActions, useNostoAppState } from "@nosto/search-js/preact"
+import { SearchInput } from "@nosto/search-js/preact/autocomplete"
+import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { useState } from "preact/hooks"
 
 import { Pagination } from "../../../components/Pagination"
