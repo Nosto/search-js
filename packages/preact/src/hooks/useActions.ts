@@ -1,5 +1,5 @@
 import type { InputSearchRangeFilter, SearchOptions, SearchQuery } from "@nosto/nosto-js/client"
-import { useCallback, useContext, useMemo } from "preact/hooks"
+import { useCallback } from "preact/hooks"
 
 import { newSearch } from "../actions/newSearch"
 import { replaceFilter } from "../actions/replaceFilter"

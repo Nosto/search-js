@@ -9,7 +9,7 @@ type NextPageQueryProps = {
 /**
  * Function to calculate the new query values for loading more products
  */
-export function getNextPageQuery({ from, size, pageSize }: NextPageQueryProps) {
+export function getNextPageQuery({ from, pageSize }: NextPageQueryProps) {
   if (isBot()) {
     // increase from value for bots to move to the next page instead of loading more products
     return {
@@ -17,6 +17,6 @@ export function getNextPageQuery({ from, size, pageSize }: NextPageQueryProps) {
     }
   }
   return {
-    products: { from: from + pageSize, size: size }
+    products: { from: from + pageSize, size: pageSize }
   }
 }
