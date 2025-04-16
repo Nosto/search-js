@@ -37,6 +37,7 @@
       "@preact/category": ["packages/preact/category.ts"],
       "@preact/autocomplete": ["packages/preact/autocomplete.ts"],
       "@preact/hooks": ["packages/preact/hooks.ts"],
+      "@preact/legacy": ["packages/preact/legacy.ts"],
     }
   },
   "exclude": ["dev"]
