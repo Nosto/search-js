@@ -1,3 +1,13 @@
+# [2.0.0](https://github.com/Nosto/search-js/compare/v1.8.0...v2.0.0) (2025-04-17)
+
+
+* feat!: organise exports ([#149](https://github.com/Nosto/search-js/issues/149)) ([ddcf92a](https://github.com/Nosto/search-js/commit/ddcf92a4141d702255034ef77b42a2f85919adf9))
+
+
+### BREAKING CHANGES
+
+* The `@preact` package is removed from the exports
+
 # [1.8.0](https://github.com/Nosto/search-js/compare/v1.7.6...v1.8.0) (2025-04-11)
 
 
