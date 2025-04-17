@@ -31,7 +31,7 @@ describe("newSearch", () => {
     }
 
     const query = { products: { from: 0 } }
-    const promise = newSearch(context, query)
+    const promise = newSearch({ context, query })
     expect(context.store.getState().loading).toBe(true)
     expect(context.store.getState().response).toEqual({})
 
@@ -55,7 +55,7 @@ describe("newSearch", () => {
         }),
         store: createStore()
       }
-      await newSearch(context, query)
+      await newSearch({ context, query })
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).not.toBeNull()
     })
 
@@ -69,7 +69,7 @@ describe("newSearch", () => {
         config,
         store: createStore()
       }
-      await newSearch(context, query)
+      await newSearch({ context, query })
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).not.toBeNull()
     })
 
@@ -78,7 +78,7 @@ describe("newSearch", () => {
         config: makeSerpConfig({ persistentSearchCache: false }),
         store: createStore()
       }
-      await newSearch(context, query)
+      await newSearch({ context, query })
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).toBeNull()
     })
   })
@@ -106,7 +106,7 @@ describe("newSearch", () => {
         query: "foo"
       } satisfies SearchQuery
 
-      await newSearch(context, query)
+      await newSearch({ context, query })
 
       expect(search).toHaveBeenCalledWith(
         {
@@ -136,7 +136,7 @@ describe("newSearch", () => {
       } satisfies SearchQuery
 
       const initialState = context.store.getInitialState()
-      await newSearch(context, query)
+      await newSearch({ context, query })
       expect(context.store.getInitialState()).toEqual(initialState)
     })
   })
@@ -157,7 +157,7 @@ describe("newSearch", () => {
         query: "foo"
       } satisfies SearchQuery
 
-      await newSearch(context, query)
+      await newSearch({ context, query })
       expect(search).toHaveBeenCalled()
 
       expect(context.store.getState().response).toEqual({
