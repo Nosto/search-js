@@ -1,5 +1,5 @@
 import { priceDecorator } from "@nosto/search-js/currencies"
-import { SearchPageProvider, SerpConfig } from "@nosto/search-js/preact"
+import { SearchPageProvider, SerpConfig } from "@nosto/search-js/preact/serp"
 import { thumbnailDecorator } from "@nosto/search-js/thumbnails"
 
 import { InfiniteScrolled as SearchContentInfinite } from "./Content/InfiniteScrolled"

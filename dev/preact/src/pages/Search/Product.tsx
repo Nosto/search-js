@@ -1,5 +1,6 @@
 import type { SearchProduct } from "@nosto/nosto-js/client"
-import { SerpElement, useDecoratedSearchResults } from "@nosto/search-js/preact"
+import { useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
+import { SerpElement } from "@nosto/search-js/preact/serp"
 
 import { productImagePlaceholder } from "./productImagePlaceholder"
 import { hitDecorators } from "./Search"

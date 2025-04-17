@@ -1,5 +1,5 @@
 import { priceDecorator } from "@nosto/search-js/currencies"
-import { AutocompleteConfig, AutocompletePageProvider } from "@nosto/search-js/preact"
+import { AutocompleteConfig, AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
 import { thumbnailDecorator } from "@nosto/search-js/thumbnails"
 
 import { Content } from "./Content"

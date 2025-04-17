@@ -32,20 +32,40 @@
       "import": "./dist/thumbnails/thumbnails.es.js",
       "require": "./dist/thumbnails/thumbnails.cjs.js"
     },
-    "./preact": {
-      "types": "./dist/preact/preact.d.ts",
-      "import": "./dist/preact/preact.es.js",
-      "require": "./dist/preact/preact.cjs.js"
-    },
-    "./preact-legacy": {
-      "types": "./dist/preact-legacy/preact-legacy.d.ts",
-      "import": "./dist/preact-legacy/preact-legacy.es.js",
-      "require": "./dist/preact-legacy/preact-legacy.cjs.js"
+    "./preact/legacy": {
+      "types": "./dist/preact/legacy.d.ts",
+      "import": "./dist/preact/legacy.es.js",
+      "require": "./dist/preact/legacy.cjs.js"
     },
     "./utils": {
       "types": "./dist/utils/utils.d.ts",
       "import": "./dist/utils/utils.es.js",
       "require": "./dist/utils/utils.cjs.js"
+    },
+    "./preact/common": {
+      "types": "./dist/preact/common.d.ts",
+      "import": "./dist/preact/common.es.js",
+      "require": "./dist/preact/common.cjs.js"
+    },
+    "./preact/serp": {
+      "types": "./dist/preact/serp.d.ts",
+      "import": "./dist/preact/serp.es.js",
+      "require": "./dist/preact/serp.cjs.js"
+    },
+    "./preact/category": {
+      "types": "./dist/preact/category.d.ts",
+      "import": "./dist/preact/category.es.js",
+      "require": "./dist/preact/category.cjs.js"
+    },
+    "./preact/autocomplete": {
+      "types": "./dist/preact/autocomplete.d.ts",
+      "import": "./dist/preact/autocomplete.es.js",
+      "require": "./dist/preact/autocomplete.cjs.js"
+    },
+    "./preact/hooks": {
+      "types": "./dist/preact/hooks.d.ts",
+      "import": "./dist/preact/hooks.es.js",
+      "require": "./dist/preact/hooks.cjs.js"
     }
   },
   "keywords": [],

@@ -1,4 +1,6 @@
-import { InfiniteScroll, SearchInput, useActions, useNostoAppState } from "@nosto/search-js/preact"
+import { SearchInput } from "@nosto/search-js/preact/autocomplete"
+import { InfiniteScroll } from "@nosto/search-js/preact/common"
+import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
 import { useState } from "preact/hooks"
 
 import { Product } from "../Product"
