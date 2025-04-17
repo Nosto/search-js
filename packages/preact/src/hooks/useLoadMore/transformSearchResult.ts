@@ -3,7 +3,7 @@ import { mergeArrays } from "@utils/mergeArrays"
 
 export type SearchResultTransformer = (props: SearchResult) => SearchResult
 
-export type MergePaginatedProductResultOptions = {
+export type MergeProductHitsOptions = {
   newResult: SearchResult
   previousResult: SearchResult
 }
@@ -13,8 +13,8 @@ export type MergePaginatedProductResultOptions = {
  * Search result is paginated when using infinite scrolling.
  * This function merges the product hits from current pagination request with the previous one.
  */
-export function mergePaginatedProductResultIfNeeded({ newResult, previousResult }: MergePaginatedProductResultOptions) {
-  if (!previousResult?.products?.hits.length) {
+export function mergeProductHits({ newResult, previousResult }: MergeProductHitsOptions) {
+  if (!previousResult.products?.hits.length) {
     return newResult
   }
 

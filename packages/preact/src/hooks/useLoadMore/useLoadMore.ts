@@ -5,7 +5,7 @@ import { useCallback } from "preact/hooks"
 
 import { useActionsContext } from "../useActionsContext"
 import { getNextPageQuery } from "./getNextPageQuery"
-import { mergePaginatedProductResultIfNeeded } from "./transformSearchResult"
+import { mergeProductHits } from "./transformSearchResult"
 
 /**
  * Hook for loading more results by specified pageSize value
@@ -41,7 +41,7 @@ export function useLoadMore(pageSize = 24) {
     await updateSearch({
       context,
       query: getNextPageQuery({ from, size, pageSize }),
-      transformer: (newResult: SearchResult) => mergePaginatedProductResultIfNeeded({ newResult, previousResult })
+      transformer: (newResult: SearchResult) => mergeProductHits({ newResult, previousResult })
     })
   }, [from, size, pageSize, previousResult, context])
 
