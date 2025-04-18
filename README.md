@@ -2,17 +2,18 @@
 
 Search JS is a wrapper for the Nosto Search functionality with some extended functionality such as:
 
-* **Nosto currency formatting**: Provides utilities for formatting prices according to Nosto's currency settings, ensuring consistent and localized price displays.
-* **Nosto product thumbnails**: Includes tools for generating and customizing product thumbnails, supporting various configurations like Shopify and Nosto-specific formats.
-* **Retry logic**: Implements robust retry mechanisms for handling transient errors in search queries, ensuring reliable and consistent search results.
-* **Preact components**: Offers a collection of reusable Preact components and hooks for building modern, interactive search interfaces.
-* **Autocomplete support**: Includes pre-built components and utilities for creating fast and responsive autocomplete experiences.
-* **Category-based search**: Provides tools for displaying and interacting with category-specific search results, including hierarchical structures and filtering.
-* **Search Engine Results Pages (SERPs)**: Features components for building full-featured SERPs with pagination, sorting, and result rendering.
-* **Utility functions**: Includes general-purpose utilities for simplifying common tasks like deep merging, equality checks, and unique value generation.
+Search JS is a wrapper for Nosto Search with features like:
 
+* **Currency formatting**: Format prices based on Nosto settings.
+* **Product thumbnails**: Create and customize product images.
+* **Retry logic**: Retry failed search queries automatically.
+* **Preact components**: Build modern search interfaces.
+* **Autocomplete**: Fast and responsive autocomplete tools.
+* **Category search**: Display and filter by categories.
+* **SERPs**: Build search result pages with sorting and pagination.
+* **Utilities**: Helpers for common tasks like merging and equality checks.
+  
 ## Installation
-
 To install the package, use your preferred package manager:
 
 ```bash
