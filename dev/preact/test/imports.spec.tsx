@@ -1,6 +1,14 @@
 import { AutocompletePageProvider, SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { CategoryPageProvider } from "@nosto/search-js/preact/category"
-import { createExtendableStore, createStore, defaultState, State, StoreContext } from "@nosto/search-js/preact/common"
+import {
+  createExtendableStore,
+  createStore,
+  defaultState,
+  InfiniteScroll,
+  InfiniteScrollWithLink,
+  State,
+  StoreContext
+} from "@nosto/search-js/preact/common"
 import {
   useActions,
   useDecoratedSearchResults,
@@ -16,6 +24,7 @@ import {
   useSizeOptions,
   useSort
 } from "@nosto/search-js/preact/hooks"
+import { InfiniteScrollWithObserver } from "@nosto/search-js/preact/legacy"
 import { SearchPageProvider, SerpElement } from "@nosto/search-js/preact/serp"
 import { renderHook } from "@testing-library/preact"
 import { describe, expect, it } from "vitest"
@@ -25,6 +34,9 @@ describe("imports", () => {
     // Components
     expect(SearchInput).toBeDefined()
     expect(SerpElement).toBeDefined()
+    expect(InfiniteScroll).toBeDefined()
+    expect(InfiniteScrollWithLink).toBeDefined()
+    expect(InfiniteScrollWithObserver).toBeDefined()
 
     // Page Providers
     expect(AutocompletePageProvider).toBeDefined()
