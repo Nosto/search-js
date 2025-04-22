@@ -2,6 +2,7 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { updateSearch } from "@preact/actions/updateSearch"
 import { makeSerpConfig } from "@preact/config/pages/serp/config"
 import { createStore } from "@preact/store"
+import { pick } from "@utils/pick"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("updateSearch", () => {
@@ -77,14 +78,31 @@ describe("updateSearch", () => {
     await updateSearch({
       context,
       query,
-      transformer: result => ({
-        ...result,
-        products: {
-          ...result.products,
-          hits: [{ productId: "product 1" }, { productId: "product 1" }],
-          total: 2
-        }
+      transformer: (query, result) => ({
+        transformedResult: {
+          ...result,
+          products: {
+            ...result.products,
+            hits: [{ productId: "product 1" }, { productId: "product 1" }],
+            total: 2
+          }
+        },
+        transformedQuery: query
       })
     })
+
+    context.store.onChange(
+      state => pick(state, "loading", "response"),
+      ({ loading, response }) => {
+        if (!loading) {
+          expect(response).toEqual({
+            products: {
+              hits: [{ productId: "product 1" }, { productId: "product 1" }],
+              total: 2
+            }
+          })
+        }
+      }
+    )
   })
 })

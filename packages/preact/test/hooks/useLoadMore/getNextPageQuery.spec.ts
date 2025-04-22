@@ -22,4 +22,13 @@ describe("queryChanges for useLoadMore hook", () => {
       products: { from: 15, size: 5 }
     })
   })
+
+  it("should return query for caching when cache parameter is true", () => {
+    isBot.mockReturnValue(false)
+    const result = getNextPageQuery({ from: 10, size: 20, pageSize: 5, cache: true })
+
+    expect(result).toEqual({
+      products: { size: 25 }
+    })
+  })
 })

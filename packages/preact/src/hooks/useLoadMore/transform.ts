@@ -1,7 +1,7 @@
 import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 
-import transformSearchQuery from "./transformSearchQuery"
-import transformSearchResult from "./transformSearchResult"
+import transformSearchQuery, { TransformSearchQueryProps } from "./transformSearchQuery"
+import transformSearchResult, { TransformSearchResultProps } from "./transformSearchResult"
 
 export type PageSearchQueryProps = {
   from: number
@@ -9,20 +9,21 @@ export type PageSearchQueryProps = {
   pageSize: number
 }
 
-export type TransformerResult = ReturnType<typeof transform>
+export type Transformer = (searchQuery: SearchQuery, newResult: SearchResult) => TransformResult
 
-export type Transformer = (searchQuery: SearchQuery, newResult: SearchResult) => TransformerResult
-
-export type TransformerProps = {
-  searchQuery: SearchQuery
-  newResult: SearchResult
-  previousResult: SearchResult
-  pageSearchQueryProps: PageSearchQueryProps
+type TransformerProps = {
+  query?: TransformSearchQueryProps
+  result?: TransformSearchResultProps
 }
 
-export default function transform({ searchQuery, newResult, previousResult, pageSearchQueryProps }: TransformerProps) {
+type TransformResult = {
+  transformedQuery?: ReturnType<typeof transformSearchQuery>
+  transformedResult?: ReturnType<typeof transformSearchResult>
+}
+
+export function transform<T extends TransformerProps>({ query, result }: T): TransformResult {
   return {
-    transformedQuery: transformSearchQuery(searchQuery, pageSearchQueryProps),
-    transformedResult: transformSearchResult(newResult, previousResult)
+    ...(query && { transformedQuery: transformSearchQuery(query) }),
+    ...(result && { transformedResult: transformSearchResult(result) })
   }
 }

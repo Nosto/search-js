@@ -4,7 +4,7 @@ import { useCallback, useMemo } from "preact/hooks"
 
 import { useActionsContext } from "../useActionsContext"
 import { getNextPageQuery } from "./getNextPageQuery"
-import transform from "./transform"
+import { transform } from "./transform"
 
 /**
  * Hook for loading more results by specified pageSize value
@@ -45,7 +45,7 @@ export function useLoadMore(pageSize = 24) {
       context,
       query,
       transformer: (searchQuery, newResult) =>
-        transform({ searchQuery, newResult, previousResult, pageSearchQueryProps })
+        transform({ query: { searchQuery, pageSearchQueryProps }, result: { newResult, previousResult } })
     })
   }, [previousResult, context, pageSearchQueryProps, query])
 
