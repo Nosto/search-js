@@ -3,7 +3,7 @@ import { SearchQuery } from "@nosto/nosto-js/client"
 
 import { applyDecorators } from "./applyDecorators"
 import { searchWithRetries } from "./searchWithRetries"
-import { HitDecorator, Options } from "./types"
+import { HitDecorator, SearchOptions } from "./types"
 
 /**
  * Performs a search operation using the provided query and options.
@@ -12,7 +12,7 @@ import { HitDecorator, Options } from "./types"
  * @param options - An object containing optional parameters for the search.
  * @returns A promise that resolves to the search result.
  */
-export async function search<HD extends readonly HitDecorator[]>(query: SearchQuery, options: Options<HD> = {}) {
+export async function search<HD extends readonly HitDecorator[]>(query: SearchQuery, options: SearchOptions<HD> = {}) {
   const { hitDecorators, ...rest } = options
   const api = await new Promise(nostojs)
   const searchResult = await searchWithRetries(api, query, rest)
