@@ -1,7 +1,5 @@
 # Search JS
 
-Search JS is a wrapper for the Nosto Search functionality with some extended functionality such as:
-
 Search JS is a wrapper for Nosto Search with features like:
 
 * **Currency formatting**: Format prices based on Nosto settings.
