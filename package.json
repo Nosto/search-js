@@ -84,7 +84,7 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@nosto/nosto-js": "^1.7.0",
+    "@nosto/nosto-js": "^2.0.0",
     "@testing-library/dom": "^10.4.0",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/node": "^22.14.1",
