@@ -1,2 +1,11 @@
 /** @module utils */
+export { deepMerge, deepMergePlain, type MergeTests } from "./src/deepMerge"
 export { isBot } from "./src/isBot"
+export { isEqual } from "./src/isEqual"
+export { isPlainObject } from "./src/isPlainObject"
+export { mergeArrays } from "./src/mergeArrays"
+export { parseNumber } from "./src/parseNumber"
+export { measure } from "./src/performance"
+export { pick } from "./src/pick"
+export type { Simplify, simplifyTests } from "./src/simplify"
+export { unique } from "./src/unique"
