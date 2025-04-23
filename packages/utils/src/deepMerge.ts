@@ -10,7 +10,7 @@ export function deepMerge<T extends unknown[]>(...objects: T): Merge<T> {
 }
 
 /**
- * Merges multiple objects into one object, but does not simplify the result.
+ * Merges multiple objects into one object, with different signature.
  */
 export function deepMergePlain<T extends unknown[]>(...objects: T): PlainMerge<T> {
   return objects.reduce((prev, current) => mergeRecursive(prev, current)) as unknown as PlainMerge<T>
