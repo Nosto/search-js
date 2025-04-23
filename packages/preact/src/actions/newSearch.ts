@@ -25,6 +25,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
     initialized: true
   })
 
+  const usePersistentCache = pageType !== "autocomplete" && context.config.persistentSearchCache
   const fullQuery = context.config.queryModifications(
     {
       ...mergedQuery,
@@ -40,14 +41,14 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   try {
     let response: SearchResult
 
-    const cachedValue = loadCachedResultIfApplicable(context, fullQuery)
+    const cachedValue = loadCachedResultIfApplicable(usePersistentCache, fullQuery)
 
     if (cachedValue) {
       response = cachedValue
     } else {
       const queryWithDefaults = applyQueryDefaults(pageType, fullQuery)
       response = await search(queryWithDefaults, mergedConfig)
-      cacheSearchResult(context, fullQuery, response)
+      cacheSearchResult(usePersistentCache, fullQuery, response)
     }
 
     context.store.updateState({

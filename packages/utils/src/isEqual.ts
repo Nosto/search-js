@@ -1,6 +1,6 @@
 import { isPlainObject } from "./isPlainObject"
 
-export function isEqual(a: unknown, b: unknown): boolean {
+export function isEqual(a: unknown, b: unknown, ignoreFields: string[] = []): boolean {
   if (a === b) {
     return true
   }
@@ -14,25 +14,13 @@ export function isEqual(a: unknown, b: unknown): boolean {
     return a.every((v, i) => isEqual(v, b[i]))
   }
   if (isPlainObject(a) && isPlainObject(b)) {
-    const entriesA = Object.entries(a)
+    const entriesA = Object.entries(a).filter(([k]) => !ignoreFields.includes(k))
+    const entriesB = Object.entries(b).filter(([k]) => !ignoreFields.includes(k))
 
-    if (entriesA.length !== Object.keys(b).length) {
+    if (entriesA.length !== entriesB.length) {
       return false
     }
-    return entriesA.every(([k, v]) => isEqual(v, b[k]))
+    return entriesA.every(([k, v]) => isEqual(v, b[k], ignoreFields))
   }
-  return false
-}
-
-export function isEqualIgnoringFields(a: unknown, b: unknown, ignored: string[] = []): boolean {
-  if (isPlainObject(a) && isPlainObject(b)) {
-    const entriesA = Object.entries(a).filter(([k]) => !ignored.includes(k))
-
-    if (entriesA.length !== Object.keys(b).length) {
-      return false
-    }
-    return entriesA.every(([k, v]) => isEqual(v, b[k]))
-  }
-
   return false
 }

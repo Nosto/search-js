@@ -1,9 +1,7 @@
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
-import { ActionContext } from "@preact/actions/types"
-import { Store } from "@preact/store"
-
-import { cachePaginatedResult, loadPaginatedResultFromCache } from "./pagedCaching"
-import { cacheResult, loadResultFromCache } from "./simpleCaching"
+import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
+import { mergeProductHits } from "@preact/hooks/useLoadMore/transformSearchResult"
+import { isEqual } from "@utils/isEqual"
 
 export const STORAGE_ENTRY_NAME = "nosto:search:searchResult"
 
@@ -12,28 +10,67 @@ export type SearchResultDto = {
   result: SearchResult
 }
 
-export function cacheSearchResult({ config, store }: ActionContext, query: SearchQuery, result: SearchResult) {
-  const usePersistentSearchCache = config.pageType !== "autocomplete" && config.persistentSearchCache
+const pageQueryFields = ["size", "from"]
 
-  if (isPaginatedResult(store, usePersistentSearchCache)) {
-    cachePaginatedResult(usePersistentSearchCache, query, result)
-  } else {
-    cacheResult(usePersistentSearchCache, query, result)
+export function cacheSearchResult(usePersistentCache: boolean, query: SearchQuery, result: SearchResult) {
+  if (!usePersistentCache) {
+    return
   }
+
+  const dto: SearchResultDto = { query, result }
+
+  if (isPaginatedResult(query)) {
+    const storageValue = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
+    const newQuery = convertToSimpleQuery(query)
+
+    if (!storageValue) {
+      setSessionStorageItem(STORAGE_ENTRY_NAME, { query: newQuery, result })
+      return
+    }
+
+    const cachedKey = getCacheKey(storageValue.query)
+    if (isEqual(getCacheKey(newQuery), cachedKey, pageQueryFields)) {
+      const merged = mergeProductHits(storageValue.result, result)
+      setSessionStorageItem(STORAGE_ENTRY_NAME, { query: newQuery, result: merged })
+      return
+    }
+  }
+
+  setSessionStorageItem(STORAGE_ENTRY_NAME, dto)
 }
 
-export function loadCachedResultIfApplicable({ config, store }: ActionContext, query: SearchQuery) {
-  const usePersistentSearchCache = config.pageType !== "autocomplete" && config.persistentSearchCache
-
-  if (isPaginatedResult(store, usePersistentSearchCache)) {
-    return loadPaginatedResultFromCache(usePersistentSearchCache, query)
+export function loadCachedResultIfApplicable(usePersistentCache: boolean, query: SearchQuery) {
+  if (!usePersistentCache) {
+    return null
   }
-  return loadResultFromCache(usePersistentSearchCache, query)
+
+  const storageValue = getSessionStorageItem(STORAGE_ENTRY_NAME)
+  if (!storageValue || !isValueShapeCorrect(storageValue)) {
+    return null
+  }
+
+  const cachedQuery = getCacheKey(storageValue.query)
+  const newQuery = isPaginatedResult(query) ? convertToSimpleQuery(query) : query
+  if (!isEqual(getCacheKey(newQuery), cachedQuery)) {
+    return null
+  }
+  return storageValue.result
 }
 
-function isPaginatedResult(store: Store, usePersistentCache: boolean) {
-  const queryFrom = store.getState().query.products?.from || 0
-  return usePersistentCache && queryFrom > 0
+function isPaginatedResult(query: SearchQuery) {
+  const queryFrom = query.products?.from || 0
+  return queryFrom > 0
+}
+
+function convertToSimpleQuery(query: SearchQuery): SearchQuery {
+  return {
+    ...query,
+    products: {
+      ...query.products,
+      size: (query.products?.from || 0) + (query.products?.size || 0),
+      from: 0
+    }
+  }
 }
 
 export function getCacheKey(query: SearchQuery): Omit<SearchQuery, "time"> {

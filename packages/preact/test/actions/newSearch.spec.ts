@@ -91,8 +91,24 @@ describe("newSearch", () => {
         store: createStore()
       }
       await newSearch(context, { products: { from: 1 } })
-      const storedData = getSessionStorageItem<SearchResultDto[]>(STORAGE_ENTRY_NAME)
-      expect(storedData).toEqual([{ products: { hits: [{ name: "product 1" }] } }])
+      const storedData = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
+      expect(storedData).toEqual({
+        query: {
+          products: {
+            from: 0,
+            size: 1
+          }
+        },
+        result: {
+          products: {
+            hits: [
+              {
+                name: "product 1"
+              }
+            ]
+          }
+        }
+      })
     })
   })
 
