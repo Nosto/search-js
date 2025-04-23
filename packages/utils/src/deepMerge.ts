@@ -3,7 +3,7 @@ import type { Simplify } from "./simplify"
 import type { Equals, Expect } from "./types"
 
 export function deepMerge<T extends unknown[]>(...objects: T): Merge<T> {
-  return objects.reduce((prev, current) => mergeRecursive(prev, current)) as unknown as Merge<T>
+  return deepMergePlain(...objects) as Merge<T>
 }
 
 export function deepMergePlain<T extends unknown[]>(...objects: T): PlainMerge<T> {
@@ -27,7 +27,7 @@ function mergeRecursive(target: unknown, overrides: unknown): unknown {
   return overrides
 }
 
-type Merge<T, U = unknown> = T extends [infer First, ...infer Rest] ? Merge<Rest, U & First> : Simplify<U>
+type Merge<T, U = unknown> = Simplify<PlainMerge<T, U>>
 type PlainMerge<T, U = unknown> = T extends [infer First, ...infer Rest] ? PlainMerge<Rest, U & First> : U
 
 export type MergeTests = [
