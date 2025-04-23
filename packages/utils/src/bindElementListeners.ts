@@ -2,7 +2,6 @@ export type InputBindingCallbacks = {
   onSubmit?: (value: string) => void
   onInput?: (value: string) => void
   onFocus?: (value: string) => void
-  onBlur?: (value: string) => void
   onKeyDown?: (value: string, key: string) => void
   onClick?: (value: string) => void
 }
@@ -21,7 +20,7 @@ export function bindElementListeners(
 } {
   const unbindCallbacks = [target].flatMap(el => {
     const cbs: Array<() => void> = []
-    const form = options.form !== undefined ? options.form : el.form
+    const form = options?.form !== undefined ? options.form : el.form
 
     if (callbacks.onSubmit) {
       const onKeyDown = (event: KeyboardEvent) => {
@@ -42,13 +41,11 @@ export function bindElementListeners(
         el.removeEventListener("keydown", onKeyDown)
       })
 
-      // TODO: Add allowNativeSubmit option
-      if (form) {
+      if (form && !options.allowNativeSubmit) {
         const onSubmit = (event: SubmitEvent) => {
           event.preventDefault()
           callbacks.onSubmit?.(el.value)
         }
-
         form.addEventListener("submit", onSubmit)
         cbs.push(() => form.removeEventListener("submit", onSubmit))
 

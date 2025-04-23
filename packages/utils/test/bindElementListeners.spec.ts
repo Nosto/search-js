@@ -1,5 +1,6 @@
+import { beforeEach, describe, expect, it, vi } from "vitest"
+
 import { bindElementListeners, InputBindingCallbacks } from "../src/bindElementListeners"
-import { describe, expect, it, vi, beforeEach } from "vitest"
 
 describe("bindElementListeners", () => {
   beforeEach(() => {
@@ -137,6 +138,28 @@ describe("bindElementListeners", () => {
     el.dispatchEvent(new Event("input"))
 
     expect(callbacks.onInput).toHaveBeenCalledWith(el.value)
+
+    destroy()
+  })
+
+  it("should allow native submit when allowNativeSubmit is true", () => {
+    const el = document.createElement("input")
+    el.value = "test"
+    const form = document.createElement("form")
+    form.appendChild(el)
+    document.body.appendChild(form)
+
+    const callbacks: InputBindingCallbacks = {
+      onSubmit: vi.fn()
+    }
+
+    const { destroy } = bindElementListeners(el, callbacks, { form, allowNativeSubmit: true })
+
+    const event = new SubmitEvent("submit", { bubbles: true, cancelable: true })
+    form.dispatchEvent(event)
+
+    expect(callbacks.onSubmit).not.toHaveBeenCalled()
+    expect(event.defaultPrevented).toBe(false)
 
     destroy()
   })
