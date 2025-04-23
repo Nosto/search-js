@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/Nosto/search-js/compare/v2.1.0...v2.1.1) (2025-04-23)
+
+
+### Bug Fixes
+
+* remove type and logic overlap ([3a556fa](https://github.com/Nosto/search-js/commit/3a556fad802f307fa8008a45696ee4595277c807))
+
 # [2.1.0](https://github.com/Nosto/search-js/compare/v2.0.0...v2.1.0) (2025-04-23)
 
 
