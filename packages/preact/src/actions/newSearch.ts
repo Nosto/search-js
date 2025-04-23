@@ -1,5 +1,5 @@
 import { search } from "@core/search"
-import { Options as SearchConfig } from "@core/types"
+import { SearchOptions } from "@core/types"
 import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { applyQueryDefaults } from "@preact/search/defaults"
 import { deepMerge } from "@utils/deepMerge"
@@ -9,7 +9,7 @@ import { measure } from "@utils/performance"
 import { cacheSearchResult, loadCachedResultIfApplicable } from "../search/resultCaching"
 import { ActionContext } from "./types"
 
-export async function newSearch(context: ActionContext, query: SearchQuery, options?: SearchConfig): Promise<void> {
+export async function newSearch(context: ActionContext, query: SearchQuery, options?: SearchOptions): Promise<void> {
   const end = measure("newSearch")
 
   const pageType = context.config.pageType
