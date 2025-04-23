@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/Nosto/search-js/compare/v2.0.0...v2.1.0) (2025-04-23)
+
+
+### Features
+
+* rename generic Options to SearchOptions ([165d213](https://github.com/Nosto/search-js/commit/165d2130d084ed86c2d0bf576ebab81fed9ea27a))
+
 # [2.0.0](https://github.com/Nosto/search-js/compare/v1.8.0...v2.0.0) (2025-04-17)
 
 
