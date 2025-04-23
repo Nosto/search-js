@@ -41,7 +41,7 @@ export function useLoadMore(pageSize = 24) {
     await updateSearch({
       context,
       query: getNextPageQuery({ from, size, pageSize }),
-      transformer: (newResult: SearchResult) => mergeProductHits({ newResult, previousResult })
+      transformer: (newResult: SearchResult) => mergeProductHits(newResult, previousResult)
     })
   }, [from, size, pageSize, previousResult, context])
 

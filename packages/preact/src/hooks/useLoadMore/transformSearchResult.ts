@@ -3,38 +3,39 @@ import { mergeArrays } from "@utils/mergeArrays"
 
 export type SearchResultTransformer = (props: SearchResult) => SearchResult
 
-export type MergeProductHitsOptions = {
-  newResult: SearchResult
-  previousResult: SearchResult
-}
-
 /**
  * Strictly for internal purpose only and not to be exported for public use.
  * Search result is paginated when using infinite scrolling.
  * This function merges the product hits from current pagination request with the previous one.
  */
-export function mergeProductHits({ newResult, previousResult }: MergeProductHitsOptions) {
-  if (!previousResult.products?.hits.length) {
-    return newResult
-  }
+export function mergeProductHits(...results: SearchResult[]): SearchResult {
+  const mergedResult = results.reduce((acc, result) => {
+    if (!result.products?.hits.length) {
+      return acc
+    }
 
-  const { products, ...rest } = newResult
+    const { products, ...rest } = result
 
-  if (!products?.hits?.length) {
-    return {
-      ...rest,
-      products: {
-        ...(products ?? previousResult.products),
-        hits: previousResult.products.hits
+    if (!products?.hits?.length) {
+      return {
+        ...acc,
+        ...rest,
+        products: {
+          ...(acc.products ?? products),
+          hits: acc.products?.hits ?? []
+        }
       }
     }
-  }
 
-  return {
-    ...rest,
-    products: {
-      ...products,
-      hits: mergeArrays(previousResult.products.hits, products.hits)
+    return {
+      ...acc,
+      ...rest,
+      products: {
+        ...products,
+        hits: mergeArrays(acc.products?.hits ?? [], products.hits)
+      }
     }
-  }
+  }, {})
+
+  return mergedResult
 }

@@ -23,3 +23,17 @@ export function isEqual(a: unknown, b: unknown): boolean {
   }
   return false
 }
+
+export function isEqualIgnoringFields(a: unknown, b: unknown, ignored: string[] = []): boolean {
+  if (isPlainObject(a) && isPlainObject(b)) {
+    const entriesA = Object.entries(a).filter(([k]) => !ignored.includes(k))
+
+    if (entriesA.length !== Object.keys(b).length) {
+      return false
+    }
+    return entriesA.every(([k, v]) => isEqual(v, b[k]))
+  }
+
+  return false
+}
+

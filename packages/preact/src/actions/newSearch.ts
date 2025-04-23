@@ -7,8 +7,8 @@ import { deepMerge } from "@utils/deepMerge"
 import { mergeArrays } from "@utils/mergeArrays"
 import { measure } from "@utils/performance"
 
-import { cacheSearchResult, loadCachedResultIfApplicable } from "../search/resultCaching"
 import { ActionContext } from "./types"
+import { cacheSearchResult, loadCachedResultIfApplicable } from "@preact/search/resultCaching"
 
 export type NewSearchOptions = {
   context: ActionContext
@@ -34,7 +34,6 @@ export async function newSearch({ context, query, options, transformer }: NewSea
     initialized: true
   })
 
-  const usePersistentCache = pageType !== "autocomplete" && context.config.persistentSearchCache
   const fullQuery = context.config.queryModifications(
     {
       ...mergedQuery,
@@ -50,14 +49,15 @@ export async function newSearch({ context, query, options, transformer }: NewSea
   try {
     let response: SearchResult
 
-    const cachedValue = loadCachedResultIfApplicable(usePersistentCache, fullQuery)
+    const cachedValue = loadCachedResultIfApplicable(context, fullQuery)
+
     if (cachedValue) {
       response = cachedValue
     } else {
       const queryWithDefaults = applyQueryDefaults(pageType, fullQuery)
       const result = await search(queryWithDefaults, mergedConfig)
       response = transformer ? transformer(result) : result
-      cacheSearchResult(usePersistentCache, fullQuery, response)
+      cacheSearchResult(context, fullQuery, response)
     }
 
     context.store.updateState({
