@@ -36,4 +36,3 @@ export function isEqualIgnoringFields(a: unknown, b: unknown, ignored: string[] 
 
   return false
 }
-

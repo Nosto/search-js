@@ -1,8 +1,9 @@
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { ActionContext } from "@preact/actions/types"
+import { Store } from "@preact/store"
+
 import { cachePaginatedResult, loadPaginatedResultFromCache } from "./pagedCaching"
 import { cacheResult, loadResultFromCache } from "./simpleCaching"
-import { Store } from "@preact/store"
 
 export function cacheSearchResult({ config, store }: ActionContext, query: SearchQuery, result: SearchResult) {
   const usePersistentSearchCache = config.pageType !== "autocomplete" && config.persistentSearchCache

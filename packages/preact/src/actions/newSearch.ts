@@ -3,12 +3,12 @@ import { Options as SearchConfig } from "@core/types"
 import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { type SearchResultTransformer } from "@preact/hooks/useLoadMore/transformSearchResult"
 import { applyQueryDefaults } from "@preact/search/defaults"
+import { cacheSearchResult, loadCachedResultIfApplicable } from "@preact/search/resultCaching"
 import { deepMerge } from "@utils/deepMerge"
 import { mergeArrays } from "@utils/mergeArrays"
 import { measure } from "@utils/performance"
 
 import { ActionContext } from "./types"
-import { cacheSearchResult, loadCachedResultIfApplicable } from "@preact/search/resultCaching"
 
 export type NewSearchOptions = {
   context: ActionContext

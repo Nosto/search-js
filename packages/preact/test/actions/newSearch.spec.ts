@@ -3,7 +3,7 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { newSearch } from "@preact/actions/newSearch"
 import { makeCategoryConfig } from "@preact/config/pages/category/config"
 import { makeSerpConfig } from "@preact/config/pages/serp/config"
-import { STORAGE_ENTRY_NAME } from "@preact/search/resultCaching"
+import { STORAGE_ENTRY_NAME } from "@preact/search/simpleCaching"
 import { createStore } from "@preact/store"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
