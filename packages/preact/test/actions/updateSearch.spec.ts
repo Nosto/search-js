@@ -9,7 +9,7 @@ describe("updateSearch", () => {
 
   beforeEach(() => {
     vi.resetAllMocks()
-    search.mockResolvedValue({ products: { hits: [{ name: "product 1" }] } })
+    search.mockResolvedValue({ products: { hits: [{ name: "product 1" }], total: 2 } })
 
     mockNostojs({
       search
@@ -35,7 +35,7 @@ describe("updateSearch", () => {
 
   it("commits updates to state", async () => {
     const query = { query: "New query" }
-    const promise = updateSearch(context, query)
+    const promise = updateSearch({ context, query })
     expect(context.store.getState().loading).toBe(true)
     expect(context.store.getState().response).toEqual({})
 
@@ -49,14 +49,15 @@ describe("updateSearch", () => {
     })
     expect(context.store.getState().response).toEqual({
       products: {
-        hits: [{ name: "product 1" }]
+        hits: [{ name: "product 1" }],
+        total: 2
       }
     })
   })
 
   it("calls search with merged query", async () => {
     const query = { query: "New query" }
-    await updateSearch(context, query)
+    await updateSearch({ context, query })
     expect(search).toHaveBeenCalledWith(
       expect.objectContaining({
         query: "New query",
@@ -67,5 +68,23 @@ describe("updateSearch", () => {
       }),
       expect.objectContaining({})
     )
+  })
+
+  it("merges product hits using the search result transformer", async () => {
+    const query = { query: "New query" }
+    await updateSearch({ context, query })
+
+    await updateSearch({
+      context,
+      query,
+      transformer: result => ({
+        ...result,
+        products: {
+          ...result.products,
+          hits: [{ productId: "product 1" }, { productId: "product 1" }],
+          total: 2
+        }
+      })
+    })
   })
 })
