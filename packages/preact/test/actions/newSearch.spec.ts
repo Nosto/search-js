@@ -3,8 +3,9 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { newSearch } from "@preact/actions/newSearch"
 import { makeCategoryConfig } from "@preact/config/pages/category/config"
 import { makeSerpConfig } from "@preact/config/pages/serp/config"
-import { STORAGE_ENTRY_NAME } from "@preact/search/simpleCaching"
+import { SearchResultDto, STORAGE_ENTRY_NAME } from "@preact/search/resultCaching"
 import { createStore } from "@preact/store"
+import { getSessionStorageItem } from "@utils/storage"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("newSearch", () => {
@@ -31,7 +32,7 @@ describe("newSearch", () => {
     }
 
     const query = { products: { from: 0 } }
-    const promise = newSearch({ context, query })
+    const promise = newSearch(context, query)
     expect(context.store.getState().loading).toBe(true)
     expect(context.store.getState().response).toEqual({})
 
@@ -55,7 +56,7 @@ describe("newSearch", () => {
         }),
         store: createStore()
       }
-      await newSearch({ context, query })
+      await newSearch(context, query)
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).not.toBeNull()
     })
 
@@ -69,7 +70,7 @@ describe("newSearch", () => {
         config,
         store: createStore()
       }
-      await newSearch({ context, query })
+      await newSearch(context, query)
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).not.toBeNull()
     })
 
@@ -78,8 +79,20 @@ describe("newSearch", () => {
         config: makeSerpConfig({ persistentSearchCache: false }),
         store: createStore()
       }
-      await newSearch({ context, query })
+      await newSearch(context, query)
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).toBeNull()
+    })
+
+    it("is applied for paginated queries", async () => {
+      const context = {
+        config: makeSerpConfig({
+          persistentSearchCache: true
+        }),
+        store: createStore()
+      }
+      await newSearch(context, { products: { from: 1 } })
+      const storedData = getSessionStorageItem<SearchResultDto[]>(STORAGE_ENTRY_NAME)
+      expect(storedData).toEqual([{ products: { hits: [{ name: "product 1" }] } }])
     })
   })
 
@@ -106,7 +119,7 @@ describe("newSearch", () => {
         query: "foo"
       } satisfies SearchQuery
 
-      await newSearch({ context, query })
+      await newSearch(context, query)
 
       expect(search).toHaveBeenCalledWith(
         {
@@ -136,7 +149,7 @@ describe("newSearch", () => {
       } satisfies SearchQuery
 
       const initialState = context.store.getInitialState()
-      await newSearch({ context, query })
+      await newSearch(context, query)
       expect(context.store.getInitialState()).toEqual(initialState)
     })
   })
@@ -157,7 +170,7 @@ describe("newSearch", () => {
         query: "foo"
       } satisfies SearchQuery
 
-      await newSearch({ context, query })
+      await newSearch(context, query)
       expect(search).toHaveBeenCalled()
 
       expect(context.store.getState().response).toEqual({

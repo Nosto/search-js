@@ -1,23 +1,14 @@
 import { search } from "@core/search"
 import { Options as SearchConfig } from "@core/types"
 import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
-import { type SearchResultTransformer } from "@preact/hooks/useLoadMore/transformSearchResult"
 import { applyQueryDefaults } from "@preact/search/defaults"
 import { cacheSearchResult, loadCachedResultIfApplicable } from "@preact/search/resultCaching"
 import { deepMerge } from "@utils/deepMerge"
 import { mergeArrays } from "@utils/mergeArrays"
 import { measure } from "@utils/performance"
-
 import { ActionContext } from "./types"
 
-export type NewSearchOptions = {
-  context: ActionContext
-  query: SearchQuery
-  options?: SearchConfig
-  transformer?: SearchResultTransformer
-}
-
-export async function newSearch({ context, query, options, transformer }: NewSearchOptions): Promise<void> {
+export async function newSearch(context: ActionContext, query: SearchQuery, options?: SearchConfig): Promise<void> {
   const end = measure("newSearch")
 
   const pageType = context.config.pageType
@@ -55,8 +46,7 @@ export async function newSearch({ context, query, options, transformer }: NewSea
       response = cachedValue
     } else {
       const queryWithDefaults = applyQueryDefaults(pageType, fullQuery)
-      const result = await search(queryWithDefaults, mergedConfig)
-      response = transformer ? transformer(result) : result
+      response = await search(queryWithDefaults, mergedConfig)
       cacheSearchResult(context, fullQuery, response)
     }
 

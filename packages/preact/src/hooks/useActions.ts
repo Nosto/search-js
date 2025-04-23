@@ -37,14 +37,14 @@ export function useActions() {
 
   const newSearchCallback = useCallback(
     (query: SearchQuery, options?: SearchOptions) => {
-      return newSearch({ context, query, options })
+      return newSearch(context, query, options)
     },
     [context]
   )
 
   const updateSearchCallback = useCallback(
     (query: SearchQuery, options?: SearchOptions) => {
-      return updateSearch({ context, query, options })
+      return updateSearch(context, query, options)
     },
     [context]
   )

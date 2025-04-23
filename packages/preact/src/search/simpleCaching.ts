@@ -1,13 +1,7 @@
 import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { isEqual } from "@utils/isEqual"
 import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
-
-export const STORAGE_ENTRY_NAME = "nosto:search:searchResult"
-
-type SearchResultDto = {
-  query: ReturnType<typeof getCacheKey>
-  result: SearchResult
-}
+import { getCacheKey, isValueShapeCorrect, SearchResultDto, STORAGE_ENTRY_NAME } from "./resultCaching"
 
 export function cacheResult(usePersistentCache: boolean, query: SearchQuery, result: SearchResult) {
   if (!usePersistentCache) {
@@ -33,24 +27,4 @@ export function loadResultFromCache(usePersistentCache: boolean, query: SearchQu
     return null
   }
   return storageValue.result
-}
-
-function getCacheKey(query: SearchQuery): Omit<SearchQuery, "time"> {
-  return {
-    accountId: query.accountId,
-    customRules: query.customRules,
-    explain: query.explain,
-    keywords: query.keywords,
-    products: query.products,
-    query: query.query,
-    redirect: query.redirect,
-    rules: query.rules,
-    segments: query.segments,
-    sessionParams: query.sessionParams
-  }
-}
-
-// TODO: Better validation with valibot
-function isValueShapeCorrect(value: unknown): value is SearchResultDto {
-  return typeof value === "object" && value !== null && "query" in value && "result" in value
 }

@@ -1,11 +1,7 @@
-import { SearchResult } from "@nosto/nosto-js/client"
-import { updateSearch } from "@preact/actions/updateSearch"
 import { useNostoAppState } from "@preact/hooks/useNostoAppState"
 import { useCallback } from "preact/hooks"
-
-import { useActionsContext } from "../useActionsContext"
 import { getNextPageQuery } from "./getNextPageQuery"
-import { mergeProductHits } from "./transformSearchResult"
+import { useActions } from "../useActions"
 
 /**
  * Hook for loading more results by specified pageSize value
@@ -35,15 +31,11 @@ export function useLoadMore(pageSize = 24) {
     previousResult: state.response
   }))
 
-  const context = useActionsContext()
+  const { updateSearch } = useActions()
 
   const loadMore = useCallback(async () => {
-    await updateSearch({
-      context,
-      query: getNextPageQuery({ from, size, pageSize }),
-      transformer: (newResult: SearchResult) => mergeProductHits(newResult, previousResult)
-    })
-  }, [from, size, pageSize, previousResult, context])
+    await updateSearch(getNextPageQuery({ from, size, pageSize }))
+  }, [from, size, pageSize, previousResult])
 
   return {
     loadMore

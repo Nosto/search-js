@@ -1,8 +1,6 @@
 import { SearchResult } from "@nosto/nosto-js/client"
 import { mergeArrays } from "@utils/mergeArrays"
 
-export type SearchResultTransformer = (props: SearchResult) => SearchResult
-
 /**
  * Strictly for internal purpose only and not to be exported for public use.
  * Search result is paginated when using infinite scrolling.
@@ -10,8 +8,8 @@ export type SearchResultTransformer = (props: SearchResult) => SearchResult
  */
 export function mergeProductHits(...results: SearchResult[]): SearchResult {
   const mergedResult = results.reduce((acc, result) => {
-    if (!result.products?.hits.length) {
-      return acc
+    if (!acc.products?.hits.length) {
+      return result
     }
 
     const { products, ...rest } = result
@@ -21,7 +19,7 @@ export function mergeProductHits(...results: SearchResult[]): SearchResult {
         ...acc,
         ...rest,
         products: {
-          ...(acc.products ?? products),
+          ...(products ?? acc.products),
           hits: acc.products?.hits ?? []
         }
       }

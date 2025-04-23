@@ -30,12 +30,9 @@ export async function toggleProductFilter(
         }
       : undefined
 
-  await updateSearch({
-    context,
-    query: {
-      products: {
-        filter: [...(filter?.filter(v => v !== activeFilter) ?? []), ...(newFilter?.value?.length ? [newFilter] : [])]
-      }
+  await updateSearch(context, {
+    products: {
+      filter: [...(filter?.filter(v => v !== activeFilter) ?? []), ...(newFilter?.value?.length ? [newFilter] : [])]
     }
   })
   end()

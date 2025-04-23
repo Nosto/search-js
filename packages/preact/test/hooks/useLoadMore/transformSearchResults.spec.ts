@@ -21,7 +21,7 @@ describe("transformSearchResults", () => {
       }
     }
 
-    const result = mergeProductHits(newResult, previousResult)
+    const result = mergeProductHits(previousResult, newResult)
 
     expect(result).toEqual({
       products: {
@@ -50,7 +50,7 @@ describe("transformSearchResults", () => {
       }
     }
 
-    const result = mergeProductHits(newResult, previousResult)
+    const result = mergeProductHits(previousResult, newResult)
 
     expect(result).toEqual({
       products: {
