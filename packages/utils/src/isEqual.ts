@@ -1,5 +1,8 @@
 import { isPlainObject } from "./isPlainObject"
 
+/**
+ * Compares two values for equality.
+ */
 export function isEqual(a: unknown, b: unknown): boolean {
   if (a === b) {
     return true

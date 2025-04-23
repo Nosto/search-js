@@ -1,3 +1,6 @@
+/**
+ * Takes a value and returns it as a number if possible.
+ */
 export function parseNumber(value: unknown): number | undefined {
   if (typeof value === "number") {
     return value
