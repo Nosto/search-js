@@ -1,3 +1,10 @@
+## [2.1.2](https://github.com/Nosto/search-js/compare/v2.1.1...v2.1.2) (2025-04-24)
+
+
+### Bug Fixes
+
+* added comments for utils ([#166](https://github.com/Nosto/search-js/issues/166)) ([b2532f1](https://github.com/Nosto/search-js/commit/b2532f1410c42dcf17c3c1a7fa07d3bc654594a9))
+
 ## [2.1.1](https://github.com/Nosto/search-js/compare/v2.1.0...v2.1.1) (2025-04-23)
 
 
