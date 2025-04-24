@@ -1,5 +1,5 @@
 /** @module utils */
-export { deepMerge, deepMergePlain, type MergeTests } from "./src/deepMerge"
+export { deepMerge, type MergeTests } from "./src/deepMerge"
 export { isBot } from "./src/isBot"
 export { isEqual } from "./src/isEqual"
 export { isPlainObject } from "./src/isPlainObject"

@@ -2,6 +2,9 @@ import { isPlainObject } from "./isPlainObject"
 import type { Simplify } from "./simplify"
 import type { Equals, Expect } from "./types"
 
+/**
+ * Merges multiple objects into one object.
+ */
 export function deepMerge<T extends unknown[]>(...objects: T): Merge<T> {
   return deepMergePlain(...objects) as Merge<T>
 }
