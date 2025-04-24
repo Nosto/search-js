@@ -19,7 +19,7 @@ describe("queryChanges for useLoadMore hook", () => {
     const result = getNextPageQuery({ from: 10, size: 20, pageSize: 5 })
 
     expect(result).toEqual({
-      products: { from: 15, size: 5 }
+      products: { size: 25 }
     })
   })
 })

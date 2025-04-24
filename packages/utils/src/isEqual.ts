@@ -14,8 +14,8 @@ export function isEqual(a: unknown, b: unknown, ignoreFields: string[] = []): bo
     return a.every((v, i) => isEqual(v, b[i]))
   }
   if (isPlainObject(a) && isPlainObject(b)) {
-    const entriesA = Object.entries(a).filter(([k]) => !ignoreFields.includes(k))
-    const entriesB = Object.entries(b).filter(([k]) => !ignoreFields.includes(k))
+    const entriesA = Object.entries(a).filter(([k, v]) => !ignoreFields.includes(k))
+    const entriesB = Object.entries(b).filter(([k, v]) => !ignoreFields.includes(k))
 
     if (entriesA.length !== entriesB.length) {
       return false

@@ -83,21 +83,78 @@ describe("newSearch", () => {
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).toBeNull()
     })
 
-    it("is applied for paginated queries", async () => {
+    it("backfill is applied when applicable", async () => {
       const context = {
         config: makeSerpConfig({
           persistentSearchCache: true
         }),
         store: createStore()
       }
-      await newSearch(context, { products: { from: 1 } })
+
+      await newSearch(context, { query: "dress", products: { from: 0, size: 24 } })
       const storedData = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
       expect(storedData).toEqual({
         query: {
           products: {
             from: 0,
-            size: 1
+            size: 24
+          },
+          query: "dress"
+        },
+        result: {
+          products: {
+            hits: [
+              {
+                name: "product 1"
+              }
+            ]
           }
+        }
+      })
+
+      await newSearch(context, { query: "dress", products: { from: 0, size: 48 } })
+      expect(search).toHaveBeenLastCalledWith(
+        expect.objectContaining({ products: expect.objectContaining({ from: 24, size: 24 }) }),
+        expect.anything()
+      )
+
+      const storeDataWithBackfill = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
+      expect(storeDataWithBackfill).toEqual({
+        query: {
+          products: {
+            from: 0,
+            size: 48
+          },
+          query: "dress"
+        },
+        result: {
+          products: {
+            hits: [
+              {
+                name: "product 1"
+              },
+              {
+                name: "product 1"
+              }
+            ]
+          }
+        }
+      })
+
+      // search query is different, so backfill should not be applied and cache refreshed
+      await newSearch(context, { query: "new dress", products: { from: 0, size: 48 } })
+      expect(search).toHaveBeenLastCalledWith(
+        expect.objectContaining({ products: expect.objectContaining({ from: 0, size: 48 }) }),
+        expect.anything()
+      )
+      const storeDataWithDifferentQuery = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
+      expect(storeDataWithDifferentQuery).toEqual({
+        query: {
+          products: {
+            from: 0,
+            size: 48
+          },
+          query: "new dress"
         },
         result: {
           products: {

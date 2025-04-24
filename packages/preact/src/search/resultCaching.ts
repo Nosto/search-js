@@ -1,42 +1,15 @@
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
-import { mergeProductHits } from "@preact/hooks/useLoadMore/transformSearchResult"
 import { isEqual } from "@utils/isEqual"
+import { isPlainObject } from "@utils/isPlainObject"
 
 export const STORAGE_ENTRY_NAME = "nosto:search:searchResult"
+
+const pageQueryFields = ["size", "from"]
 
 export type SearchResultDto = {
   query: ReturnType<typeof getCacheKey>
   result: SearchResult
-}
-
-const pageQueryFields = ["size", "from"]
-
-export function cacheSearchResult(usePersistentCache: boolean, query: SearchQuery, result: SearchResult) {
-  if (!usePersistentCache) {
-    return
-  }
-
-  const dto: SearchResultDto = { query, result }
-
-  if (isPaginatedResult(query)) {
-    const storageValue = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
-    const newQuery = convertToSimpleQuery(query)
-
-    if (!storageValue) {
-      setSessionStorageItem(STORAGE_ENTRY_NAME, { query: newQuery, result })
-      return
-    }
-
-    const cachedKey = getCacheKey(storageValue.query)
-    if (isEqual(getCacheKey(newQuery), cachedKey, pageQueryFields)) {
-      const merged = mergeProductHits(storageValue.result, result)
-      setSessionStorageItem(STORAGE_ENTRY_NAME, { query: newQuery, result: merged })
-      return
-    }
-  }
-
-  setSessionStorageItem(STORAGE_ENTRY_NAME, dto)
 }
 
 export function loadCachedResultIfApplicable(usePersistentCache: boolean, query: SearchQuery) {
@@ -44,48 +17,52 @@ export function loadCachedResultIfApplicable(usePersistentCache: boolean, query:
     return null
   }
 
-  const storageValue = getSessionStorageItem(STORAGE_ENTRY_NAME)
-  if (!storageValue || !isValueShapeCorrect(storageValue)) {
+  const storageValue = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
+  if (!storageValue) {
     return null
   }
 
   const cachedQuery = getCacheKey(storageValue.query)
-  const newQuery = isPaginatedResult(query) ? convertToSimpleQuery(query) : query
-  if (!isEqual(getCacheKey(newQuery), cachedQuery)) {
+  if (!isEqual(getCacheKey(query), cachedQuery, pageQueryFields)) {
     return null
   }
-  return storageValue.result
+  return storageValue
 }
 
-function isPaginatedResult(query: SearchQuery) {
-  const queryFrom = query.products?.from || 0
-  return queryFrom > 0
-}
-
-function convertToSimpleQuery(query: SearchQuery): SearchQuery {
-  return {
-    ...query,
-    products: {
-      ...query.products,
-      size: (query.products?.from || 0) + (query.products?.size || 0),
-      from: 0
-    }
+export function cacheSearchResult(usePersistentCache: boolean, query: SearchQuery, result: SearchResult) {
+  if (!usePersistentCache) {
+    return
   }
+
+  const dto: SearchResultDto = { query, result }
+  setSessionStorageItem(STORAGE_ENTRY_NAME, dto)
 }
 
-export function getCacheKey(query: SearchQuery): Omit<SearchQuery, "time"> {
-  return {
-    accountId: query.accountId,
-    customRules: query.customRules,
-    explain: query.explain,
-    keywords: query.keywords,
-    products: query.products,
-    query: query.query,
-    redirect: query.redirect,
-    rules: query.rules,
-    segments: query.segments,
-    sessionParams: query.sessionParams
-  }
+function getCacheKey<T extends object>(query: T): Omit<SearchQuery, "time"> {
+  return Object.entries(query)
+    .filter(([k, v]) => k !== "time" && v !== undefined)
+    .reduce((acc, [key, value]) => {
+      if (isPlainObject(value)) {
+        return {
+          ...acc,
+          [key]: getCacheKey(value)
+        }
+      }
+
+      if (Array.isArray(value)) {
+        return {
+          ...acc,
+          [key]: value.map(v => (isPlainObject(v) ? getCacheKey(v) : v))
+        }
+      }
+
+      return value !== undefined
+        ? {
+            ...acc,
+            [key]: value
+          }
+        : acc
+    }, {} as T)
 }
 
 // TODO: Better validation with valibot
