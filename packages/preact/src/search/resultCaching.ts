@@ -1,7 +1,7 @@
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
-import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
 import { isEqual } from "@utils/isEqual"
 import { isPlainObject } from "@utils/isPlainObject"
+import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
 
 export const STORAGE_ENTRY_NAME = "nosto:search:searchResult"
 

@@ -2,8 +2,9 @@ import { search } from "@core/search"
 import { Options as SearchConfig } from "@core/types"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { Config } from "@preact/config/config"
-import { applyQueryDefaults } from "./defaults"
 import { deepMerge } from "@utils/deepMerge"
+
+import { applyQueryDefaults } from "./defaults"
 import { cacheSearchResult, loadCachedResultIfApplicable } from "./resultCaching"
 
 type CacheContextOptions = {

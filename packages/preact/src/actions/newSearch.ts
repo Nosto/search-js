@@ -1,10 +1,11 @@
 import { Options as SearchConfig } from "@core/types"
 import type { SearchQuery } from "@nosto/nosto-js/client"
+import { searchWithCachePrefill } from "@preact/search/searchWithCachePrefill"
 import { deepMerge } from "@utils/deepMerge"
 import { mergeArrays } from "@utils/mergeArrays"
 import { measure } from "@utils/performance"
+
 import { ActionContext } from "./types"
-import { searchWithCachePrefill } from "@preact/search/searchWithCachePrefill"
 
 export async function newSearch(context: ActionContext, query: SearchQuery, options?: SearchConfig): Promise<void> {
   const end = measure("newSearch")

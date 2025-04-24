@@ -1,5 +1,5 @@
 import { cacheSearchResult, isValueShapeCorrect, loadCachedResultIfApplicable } from "@preact/search/resultCaching"
-import { describe, it, expect, vi, beforeEach } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("resultCaching", () => {
   beforeEach(() => {
