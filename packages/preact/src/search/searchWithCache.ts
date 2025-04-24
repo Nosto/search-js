@@ -15,6 +15,7 @@ export async function searchWithCache<HD extends readonly HitDecorator[]>(
       if (query.products?.size == cached.query.products?.size) {
         return cached.result
       } else if ((cached.query.products?.size ?? 0) < (query.products?.size ?? 0)) {
+        // TODO before fetching more results check if more results are actually available (total)
         const fullResult = await toFullResult<HD>(query, cached, options)
         cacheSearchResult(query, fullResult as SearchResult)
         return fullResult
