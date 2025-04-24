@@ -1,4 +1,4 @@
-import { Options as SearchConfig } from "@core/types"
+import { SearchOptions } from "@core/types"
 import { SearchQuery } from "@nosto/nosto-js/client"
 import { PageType } from "@preact/api/types"
 
@@ -16,7 +16,7 @@ export interface BaseConfig {
   /**
    * Configuration for the search queries
    */
-  search?: SearchConfig
+  search?: SearchOptions
 
   /**
    * Custom function, when provided, can be used to modify search query before sending it to the server.

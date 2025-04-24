@@ -1,5 +1,8 @@
 import { isPlainObject } from "./isPlainObject"
 
+/**
+ * Compares two values for equality ignoring specified fields when provided.
+ */
 export function isEqual(a: unknown, b: unknown, ignoreFields: string[] = []): boolean {
   if (a === b) {
     return true

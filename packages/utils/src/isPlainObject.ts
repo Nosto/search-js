@@ -1,5 +1,8 @@
 const isObject = (v: unknown): v is object => String(v) === "[object Object]"
 
+/**
+ * Checks if a value is a plain object.
+ */
 export function isPlainObject<T = Record<string, unknown>>(value: unknown): value is T {
   if (!isObject(value)) {
     return false

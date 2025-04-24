@@ -1,3 +1,24 @@
+## [2.1.2](https://github.com/Nosto/search-js/compare/v2.1.1...v2.1.2) (2025-04-24)
+
+
+### Bug Fixes
+
+* added comments for utils ([#166](https://github.com/Nosto/search-js/issues/166)) ([b2532f1](https://github.com/Nosto/search-js/commit/b2532f1410c42dcf17c3c1a7fa07d3bc654594a9))
+
+## [2.1.1](https://github.com/Nosto/search-js/compare/v2.1.0...v2.1.1) (2025-04-23)
+
+
+### Bug Fixes
+
+* remove type and logic overlap ([3a556fa](https://github.com/Nosto/search-js/commit/3a556fad802f307fa8008a45696ee4595277c807))
+
+# [2.1.0](https://github.com/Nosto/search-js/compare/v2.0.0...v2.1.0) (2025-04-23)
+
+
+### Features
+
+* rename generic Options to SearchOptions ([165d213](https://github.com/Nosto/search-js/commit/165d2130d084ed86c2d0bf576ebab81fed9ea27a))
+
 # [2.0.0](https://github.com/Nosto/search-js/compare/v1.8.0...v2.0.0) (2025-04-17)
 
 

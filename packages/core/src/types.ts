@@ -1,6 +1,6 @@
-import { SearchOptions, SearchProduct, SearchResult } from "@nosto/nosto-js/client"
+import { SearchOptions as BaseOptions, SearchProduct, SearchResult } from "@nosto/nosto-js/client"
 
-export type Options<HD extends readonly HitDecorator[] = readonly HitDecorator[]> = SearchOptions & {
+export type SearchOptions<HD extends readonly HitDecorator[] = readonly HitDecorator[]> = BaseOptions & {
   /**
    * Hit decorators to apply to the search results.
    */

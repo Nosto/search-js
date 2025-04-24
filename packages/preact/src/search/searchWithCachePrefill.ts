@@ -1,5 +1,5 @@
 import { search } from "@core/search"
-import { Options as SearchConfig } from "@core/types"
+import { SearchOptions } from "@core/types"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { Config } from "@preact/config/config"
 import { deepMerge } from "@utils/deepMerge"
@@ -12,7 +12,7 @@ type CacheContextOptions = {
   prefillQuery?: SearchQuery
 }
 
-export async function searchWithCachePrefill(config: Config, searchQuery: SearchQuery, options: SearchConfig) {
+export async function searchWithCachePrefill(config: Config, searchQuery: SearchQuery, options: SearchOptions) {
   const usePersistentCache = config.pageType !== "autocomplete" && config.persistentSearchCache
 
   const cacheContextOptions = getCachePrefillOptions(usePersistentCache, searchQuery)
@@ -88,7 +88,7 @@ function getCachePrefillOptions(
   }
 }
 
-async function performSearch(config: Config, options: SearchConfig, query: SearchQuery) {
+async function performSearch(config: Config, options: SearchOptions, query: SearchQuery) {
   const queryWithDefaults = applyQueryDefaults(config.pageType, query)
   const mergedConfig = deepMerge(search, options, {
     track: config.pageType,

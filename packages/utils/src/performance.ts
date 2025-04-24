@@ -11,6 +11,9 @@ function end(name: string) {
   window.performance?.measure(fullName, `${fullName}.start`, `${fullName}.end`)
 }
 
+/**
+ * Measure the performance of a function.
+ */
 export function measure(name: string) {
   start(name)
   return () => end(name)
