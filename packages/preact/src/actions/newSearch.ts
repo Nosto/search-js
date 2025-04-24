@@ -1,12 +1,11 @@
-import { search } from "@core/search"
 import { SearchOptions } from "@core/types"
-import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import type { SearchQuery } from "@nosto/nosto-js/client"
 import { applyQueryDefaults } from "@preact/search/defaults"
 import { deepMerge } from "@utils/deepMerge"
 import { mergeArrays } from "@utils/mergeArrays"
 import { measure } from "@utils/performance"
 
-import { cacheSearchResult, loadCachedResultIfApplicable } from "../search/resultCaching"
+import { searchWithCache } from "../search/searchWithCache"
 import { ActionContext } from "./types"
 
 export async function newSearch(context: ActionContext, query: SearchQuery, options?: SearchOptions): Promise<void> {
@@ -40,16 +39,8 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   )
 
   try {
-    let response: SearchResult
-
-    const cachedValue = loadCachedResultIfApplicable(usePersistentCache, fullQuery)
-    if (cachedValue) {
-      response = cachedValue
-    } else {
-      const queryWithDefaults = applyQueryDefaults(pageType, fullQuery)
-      response = await search(queryWithDefaults, mergedConfig)
-      cacheSearchResult(usePersistentCache, fullQuery, response)
-    }
+    const queryWithDefaults = applyQueryDefaults(pageType, fullQuery)
+    const response = await searchWithCache(queryWithDefaults, usePersistentCache, mergedConfig)
 
     context.store.updateState({
       response,
