@@ -12,10 +12,10 @@ type CacheContextOptions = {
   prefillQuery?: SearchQuery
 }
 
-export async function searchWithCachePrefill(config: Config, searchQuery: SearchQuery, options: SearchOptions) {
+export async function searchWithCache(config: Config, searchQuery: SearchQuery, options: SearchOptions) {
   const usePersistentCache = config.pageType !== "autocomplete" && config.persistentSearchCache
 
-  const cacheContextOptions = getCachePrefillOptions(usePersistentCache, searchQuery)
+  const cacheContextOptions = getCacheResult(usePersistentCache, searchQuery)
 
   if (cacheContextOptions?.cacheResult) {
     if (!cacheContextOptions?.prefillQuery) {
@@ -39,7 +39,7 @@ export async function searchWithCachePrefill(config: Config, searchQuery: Search
   return response
 }
 
-function getCachePrefillOptions(
+function getCacheResult(
   usePersistentCache: boolean,
   searchQuery: SearchQuery
 ): CacheContextOptions | undefined {

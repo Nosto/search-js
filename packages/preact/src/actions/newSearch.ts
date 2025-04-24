@@ -1,6 +1,6 @@
 import { SearchOptions } from "@core/types"
 import type { SearchQuery } from "@nosto/nosto-js/client"
-import { searchWithCachePrefill } from "@preact/search/searchWithCachePrefill"
+import { searchWithCache } from "@preact/search/searchWithCachePrefill"
 import { deepMerge } from "@utils/deepMerge"
 import { mergeArrays } from "@utils/mergeArrays"
 import { measure } from "@utils/performance"
@@ -37,7 +37,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   )
 
   try {
-    const response = await searchWithCachePrefill(context.config, fullQuery, mergedConfig)
+    const response = await searchWithCache(context.config, fullQuery, mergedConfig)
 
     context.store.updateState({
       response,
