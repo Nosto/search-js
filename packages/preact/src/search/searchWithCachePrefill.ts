@@ -39,10 +39,7 @@ export async function searchWithCache(config: Config, searchQuery: SearchQuery, 
   return response
 }
 
-function getCacheResult(
-  usePersistentCache: boolean,
-  searchQuery: SearchQuery
-): CacheContextOptions | undefined {
+function getCacheResult(usePersistentCache: boolean, searchQuery: SearchQuery): CacheContextOptions | undefined {
   const { from, size = 0 } = searchQuery.products || {}
 
   const cacheData = loadCachedResultIfApplicable(usePersistentCache, searchQuery)
