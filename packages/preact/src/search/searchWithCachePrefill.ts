@@ -15,18 +15,18 @@ type CacheContextOptions = {
 export async function searchWithCache(config: Config, searchQuery: SearchQuery, options: SearchOptions) {
   const usePersistentCache = config.pageType !== "autocomplete" && config.persistentSearchCache
 
-  const cacheContextOptions = getCacheResult(usePersistentCache, searchQuery)
+  const { cacheResult, prefillQuery } = getCacheResult(usePersistentCache, searchQuery) || {}
 
-  if (cacheContextOptions?.cacheResult) {
-    if (!cacheContextOptions?.prefillQuery) {
-      return cacheContextOptions.cacheResult
+  if (cacheResult) {
+    if (!prefillQuery) {
+      return cacheResult
     }
-    const backfillResponse = await performSearch(config, options, cacheContextOptions.prefillQuery)
+    const backfillResponse = await performSearch(config, options, prefillQuery)
     const mergedResponse = {
-      ...cacheContextOptions.cacheResult,
+      ...cacheResult,
       products: {
-        ...cacheContextOptions.cacheResult.products,
-        hits: [...(cacheContextOptions.cacheResult.products?.hits || []), ...(backfillResponse.products?.hits || [])],
+        ...cacheResult.products,
+        hits: [...(cacheResult.products?.hits || []), ...(backfillResponse.products?.hits || [])],
         total: backfillResponse.products?.total
       }
     }
