@@ -51,17 +51,12 @@ function getCacheResult(usePersistentCache: boolean, searchQuery: SearchQuery): 
 
   const { from: cacheFrom = 0, size: cacheSize = 0 } = cacheData.query.products || {}
 
-  // a regular pagination query
-  if (from && from > 0) {
-    if (from === cacheFrom && size === cacheSize) {
-      return { cacheResult: cacheData.result }
-    }
-    return undefined
-  }
-
   // cache size matches the requested size
-  // works for the first loaded result with all render modes (from = 0, size = DEFAULT_SIZE)
   if (size === cacheSize) {
+    // a regular pagination query
+    if (from && from > 0 && from !== cacheFrom) {
+      return undefined
+    }
     return { cacheResult: cacheData.result }
   }
 
@@ -69,19 +64,21 @@ function getCacheResult(usePersistentCache: boolean, searchQuery: SearchQuery): 
   const prefillFrom = size - cacheSize
   const prefillSize = size - prefillFrom
 
+  const prefillQuery =
+    prefillFrom > 0
+      ? {
+          ...searchQuery,
+          products: {
+            ...searchQuery.products,
+            from: prefillFrom,
+            size: prefillSize
+          }
+        }
+      : undefined
+
   return {
     cacheResult: cacheData.result,
-    prefillQuery:
-      prefillFrom > 0
-        ? {
-            ...searchQuery,
-            products: {
-              ...searchQuery.products,
-              from: prefillFrom,
-              size: prefillSize
-            }
-          }
-        : undefined
+    prefillQuery
   }
 }
 
