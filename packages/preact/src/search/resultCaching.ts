@@ -1,11 +1,9 @@
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { isEqual } from "@utils/isEqual"
-import { isPlainObject } from "@utils/isPlainObject"
+import { omitUndefined } from "@utils/omitUndefined"
 import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
 
 export const STORAGE_ENTRY_NAME = "nosto:search:searchResult"
-
-const pageQueryFields = ["size", "from"]
 
 export type SearchResultDto = {
   query: ReturnType<typeof getCacheKey>
@@ -23,7 +21,7 @@ export function loadCachedResultIfApplicable(usePersistentCache: boolean, query:
   }
 
   const cachedQuery = getCacheKey(storageValue.query)
-  if (!isEqual(getCacheKey(query), cachedQuery, pageQueryFields)) {
+  if (!isEqual(getCacheKey(query), cachedQuery)) {
     return null
   }
   return storageValue
@@ -38,31 +36,20 @@ export function cacheSearchResult(usePersistentCache: boolean, query: SearchQuer
   setSessionStorageItem(STORAGE_ENTRY_NAME, dto)
 }
 
-function getCacheKey<T extends object>(query: T): Omit<SearchQuery, "time"> {
-  return Object.entries(query)
-    .filter(([k, v]) => k !== "time" && v !== undefined)
-    .reduce((acc, [key, value]) => {
-      if (isPlainObject(value)) {
-        return {
-          ...acc,
-          [key]: getCacheKey(value)
-        }
-      }
+// This function is used to create a cache key for the search query.
+// It removes the time and size properties from the query object.
+function getCacheKey(query: SearchQuery): SearchQuery {
+  const params = {
+    ...query,
+    time: undefined,
+    products: {
+      ...query.products,
+      from: query.products?.from || 0,
+      size: undefined
+    }
+  }
 
-      if (Array.isArray(value)) {
-        return {
-          ...acc,
-          [key]: value.map(v => (isPlainObject(v) ? getCacheKey(v) : v))
-        }
-      }
-
-      return value !== undefined
-        ? {
-            ...acc,
-            [key]: value
-          }
-        : acc
-    }, {} as T)
+  return omitUndefined(params)
 }
 
 // TODO: Better validation with valibot

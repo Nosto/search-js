@@ -1,9 +1,9 @@
 import { isPlainObject } from "./isPlainObject"
 
 /**
- * Compares two values for equality ignoring specified fields when provided.
+ * Compares two values for equality.
  */
-export function isEqual(a: unknown, b: unknown, ignoreFields: string[] = []): boolean {
+export function isEqual(a: unknown, b: unknown): boolean {
   if (a === b) {
     return true
   }
@@ -17,13 +17,12 @@ export function isEqual(a: unknown, b: unknown, ignoreFields: string[] = []): bo
     return a.every((v, i) => isEqual(v, b[i]))
   }
   if (isPlainObject(a) && isPlainObject(b)) {
-    const entriesA = Object.entries(a).filter(([k]) => !ignoreFields.includes(k))
-    const entriesB = Object.entries(b).filter(([k]) => !ignoreFields.includes(k))
+    const entriesA = Object.entries(a)
 
-    if (entriesA.length !== entriesB.length) {
+    if (entriesA.length !== Object.keys(b).length) {
       return false
     }
-    return entriesA.every(([k, v]) => isEqual(v, b[k], ignoreFields))
+    return entriesA.every(([k, v]) => isEqual(v, b[k]))
   }
   return false
 }
