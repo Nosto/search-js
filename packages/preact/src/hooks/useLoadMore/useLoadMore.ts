@@ -30,7 +30,6 @@ export function useLoadMore(pageSize = 24) {
     from: state.query.products?.from ?? 0,
     size: state.query.products?.size ?? 0
   }))
-
   const { updateSearch } = useActions()
 
   const loadMore = useCallback(async () => {
