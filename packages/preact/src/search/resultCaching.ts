@@ -25,7 +25,7 @@ export function loadCachedResultIfApplicable(usePersistentCache: boolean, query:
   }
 
   const storageValue = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
-  if (!storageValue) {
+  if (!storageValue || !isValueShapeCorrect(storageValue)) {
     return null
   }
 
