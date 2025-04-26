@@ -16,85 +16,57 @@ export function disableNativeAutocomplete(target: HTMLInputElement) {
 
 export function bindInput(
   target: HTMLInputElement,
-  callbacks: InputBindingCallbacks,
-  { form = target.form! }: BindElementOptions = {}
+  { onClick, onFocus, onInput, onKeyDown, onSubmit }: InputBindingCallbacks,
+  { form = target.form ?? undefined }: BindElementOptions = {}
 ): {
   destroy: () => void
 } {
   const cbs: Array<() => void> = []
 
-  if (callbacks.onKeyDown || callbacks.onSubmit) {
-    const onKeyDown = (event: KeyboardEvent) => {
-      callbacks.onKeyDown?.(target.value, event.key)
-      if (callbacks.onKeyDown && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
+  function addEventListener<E extends Event>(target: EventTarget, event: string, handler: (e: E) => void) {
+    target.addEventListener(event, handler as EventListener)
+    cbs.push(() => target.removeEventListener(event, handler as EventListener))
+  }
+
+  if (onKeyDown || onSubmit) {
+    addEventListener(target, "keydown", (event: KeyboardEvent) => {
+      onKeyDown?.(target.value, event.key)
+      if (onKeyDown && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
         event.preventDefault()
-      } else if (callbacks.onSubmit && event.key === "Enter") {
+      } else if (onSubmit && event.key === "Enter") {
         if (target.value !== "" && !event.repeat) {
-          callbacks.onSubmit?.(target.value)
+          onSubmit(target.value)
         }
         event.preventDefault()
       }
-    }
-
-    target.addEventListener("keydown", onKeyDown)
-    cbs.push(() => {
-      target.removeEventListener("keydown", onKeyDown)
     })
   }
 
-  if (callbacks.onSubmit && form) {
-    const onSubmit = (event: SubmitEvent) => {
+  if (onSubmit && form) {
+    addEventListener(form, "submit", (event: SubmitEvent) => {
       event.preventDefault()
-      callbacks.onSubmit?.(target.value)
-    }
-    form.addEventListener("submit", onSubmit)
-    cbs.push(() => {
-      form?.removeEventListener("submit", onSubmit)
+      onSubmit(target.value)
     })
 
     const buttons = Array.from(form.querySelectorAll("[type=submit]"))
     buttons.forEach(button => {
-      const onClick = (event: Event) => {
+      addEventListener(button, "click", (event: Event) => {
         event.preventDefault()
-        callbacks.onSubmit?.(target.value)
-      }
-
-      button.addEventListener("click", onClick)
-      cbs.push(() => {
-        button.removeEventListener("click", onClick)
+        onSubmit(target.value)
       })
     })
   }
 
-  if (callbacks.onClick) {
-    const onClick = () => {
-      callbacks.onClick?.(target.value)
-    }
-    target.addEventListener("click", onClick)
-    cbs.push(() => {
-      target.removeEventListener("click", onClick)
-    })
+  if (onClick) {
+    addEventListener(target, "click", () => onClick(target.value))
   }
 
-  if (callbacks.onFocus) {
-    const onFocus = () => {
-      callbacks.onFocus?.(target.value)
-    }
-    target.addEventListener("focus", onFocus)
-    cbs.push(() => {
-      target.removeEventListener("focus", onFocus)
-    })
+  if (onFocus) {
+    addEventListener(target, "focus", () => onFocus(target.value))
   }
 
-  if (callbacks.onInput) {
-    const onInput = () => {
-      callbacks.onInput?.(target.value)
-    }
-
-    target.addEventListener("input", onInput)
-    cbs.push(() => {
-      target.removeEventListener("input", onInput)
-    })
+  if (onInput) {
+    addEventListener(target, "input", () => onInput(target.value))
   }
 
   return {
