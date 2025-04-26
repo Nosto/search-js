@@ -43,14 +43,13 @@ export function bindInput(
   }
 
   if (onSubmit && form) {
-    addEventListener(form, "submit", (event: SubmitEvent) => {
+    addEventListener(form, "submit", event => {
       event.preventDefault()
       onSubmit(target.value)
     })
 
-    const buttons = Array.from(form.querySelectorAll("[type=submit]"))
-    buttons.forEach(button => {
-      addEventListener(button, "click", (event: Event) => {
+    form.querySelectorAll("[type=submit]").forEach(button => {
+      addEventListener(button, "click", event => {
         event.preventDefault()
         onSubmit(target.value)
       })
