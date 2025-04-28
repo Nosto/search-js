@@ -1,3 +1,11 @@
+## [2.1.3](https://github.com/Nosto/search-js/compare/v2.1.2...v2.1.3) (2025-04-28)
+
+
+### Bug Fixes
+
+* drop categoryId and categoryPath params ([c140028](https://github.com/Nosto/search-js/commit/c140028cc345a001325ccfc5a7526f8d3df255cd))
+* pageType to be compatible with search-templates ([cc6b6be](https://github.com/Nosto/search-js/commit/cc6b6beae2d9f20b8be18a1a83ca63adbbac6325))
+
 ## [2.1.2](https://github.com/Nosto/search-js/compare/v2.1.1...v2.1.2) (2025-04-24)
 
 
