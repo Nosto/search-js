@@ -13,12 +13,14 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   const end = measure("newSearch")
 
   const pageType = context.config.pageType
+  const track = pageType === "search" ? "serp" : pageType
+
   const mergedQuery = deepMerge(context.store.getInitialState().query, query)
   const mergedConfig = deepMerge(context.config.search, options, {
-    track: pageType,
+    track,
     redirect: pageType !== "autocomplete",
     isKeyword: !!options?.isKeyword
-  })
+  } satisfies SearchOptions)
 
   context.store.updateState({
     query: mergedQuery,
