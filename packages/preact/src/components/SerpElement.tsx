@@ -23,7 +23,7 @@ export type SerpElementProps = {
  */
 export function SerpElement({ children, hit, onClick }: SerpElementProps) {
   const { pageType } = useConfig()
-  const track = pageType === "autocomplete" ? undefined : pageType
+  const track = pageType === "autocomplete" ? undefined : pageType === "search" ? "serp" : pageType
 
   return renderHeadless({
     children,
