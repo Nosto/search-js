@@ -71,4 +71,20 @@ describe("useSizeOptions", () => {
 
     expect(sizeOptions).toEqual([])
   })
+  it("handles size change correctly with string passed instead", () => {
+    const sizes = [24, 48, 72]
+    const serpSize = 5
+
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store })
+    const { handleSizeChange } = render.result.current
+
+    // Call handleSizeChange with a new size
+    handleSizeChange("48")
+
+    expect(actions.updateSearch).toHaveBeenCalledWith({
+      products: {
+        size: 48
+      }
+    })
+  })
 })
