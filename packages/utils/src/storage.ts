@@ -1,10 +1,12 @@
+import { logger } from "./logger"
+
 function setStorage(name: string, value: unknown, storage: Storage) {
   const stringValue = JSON.stringify(value)
   try {
-    console.info("Setting storage", name, stringValue)
+    logger.info("Setting storage", name, stringValue)
     storage.setItem(name, stringValue)
   } catch (error) {
-    console.warn(error)
+    logger.warn(error)
   }
 }
 
@@ -15,7 +17,7 @@ function getStorage<T>(name: string, storage: Storage) {
       return JSON.parse(dataString) as T
     }
   } catch (error) {
-    console.warn(error)
+    logger.warn(error)
   }
 }
 
@@ -23,7 +25,7 @@ function removeStorage(name: string, storage: Storage) {
   try {
     storage.removeItem(name)
   } catch (error) {
-    console.warn(error)
+    logger.warn(error)
   }
 }
 

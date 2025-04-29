@@ -1,4 +1,5 @@
 import type { API, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import { logger } from "@utils/logger"
 
 import { SearchOptions } from "./types"
 import { delay } from "./utils/delay"
@@ -17,7 +18,7 @@ export async function searchWithRetries(
       return result
     } catch (error) {
       if (!shouldRetry(error)) {
-        console.info("Skipping retry logic for", error)
+        logger.info("Skipping retry logic for", error)
         throw error
       }
 
