@@ -42,4 +42,9 @@ export interface BaseConfig {
    * ```
    */
   queryModifications: (query: SearchQuery, pageType: PageType | undefined) => SearchQuery
+
+  /**
+   * Custom error handler for search errors.
+   */
+  errorHandler?: (error: unknown, query: SearchQuery, options: SearchOptions) => void
 }
