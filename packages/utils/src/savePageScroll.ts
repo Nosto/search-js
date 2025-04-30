@@ -1,3 +1,5 @@
+import { logger } from "./logger"
+
 const scrollPosStorageKey = "nosto:search:scrollPos"
 
 export function savePageScroll() {
@@ -25,6 +27,6 @@ export function restoreSavedScroll() {
    */
   window.setTimeout(() => {
     window.clearInterval(interval)
-    console.warn("Scroll position couldn't be restored in 5 seconds, something may be wrong.")
+    logger.warn("Scroll position couldn't be restored in 5 seconds, something may be wrong.")
   }, 5000)
 }

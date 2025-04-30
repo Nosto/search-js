@@ -3,6 +3,7 @@ import { SearchOptions } from "@core/types"
 import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { applyQueryDefaults } from "@preact/search/defaults"
 import { deepMerge } from "@utils/deepMerge"
+import { logger } from "@utils/logger"
 import { mergeArrays } from "@utils/mergeArrays"
 import { measure } from "@utils/performance"
 
@@ -58,7 +59,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
       loading: false
     })
   } catch (error) {
-    console.error("Search action failed", error)
+    logger.error("Search action failed", error)
   }
   end()
 }
