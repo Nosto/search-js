@@ -62,9 +62,7 @@ describe("newSearch", () => {
 
     it("is applied for categories queries", async () => {
       const config = makeCategoryConfig({
-        persistentSearchCache: true,
-        categoryId: () => "123",
-        categoryPath: () => "foo"
+        persistentSearchCache: true
       })
       const context = {
         config,

@@ -9,14 +9,6 @@ export const defaultCategoryConfig = {
 export interface CategoryConfig extends BaseConfig {
   pageType: "category"
   /**
-   * returns current category id
-   */
-  categoryId: () => string
-  /**
-   * returns current category path
-   */
-  categoryPath: () => string
-  /**
    * Enable persistent caching for search results.
    *
    * If enabled, the search results will be restored from cache when returning to the search page,

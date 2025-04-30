@@ -3,6 +3,7 @@ import type { SearchQuery } from "@nosto/nosto-js/client"
 import { applyQueryDefaults } from "@preact/search/defaults"
 import { searchWithCache } from "@preact/search/searchWithCache"
 import { deepMerge } from "@utils/deepMerge"
+import { logger } from "@utils/logger"
 import { mergeArrays } from "@utils/mergeArrays"
 import { measure } from "@utils/performance"
 
@@ -12,12 +13,14 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   const end = measure("newSearch")
 
   const pageType = context.config.pageType
+  const track = pageType === "search" ? "serp" : pageType
+
   const mergedQuery = deepMerge(context.store.getInitialState().query, query)
   const mergedConfig = deepMerge(context.config.search, options, {
-    track: pageType,
+    track,
     redirect: pageType !== "autocomplete",
     isKeyword: !!options?.isKeyword
-  })
+  } satisfies SearchOptions)
 
   context.store.updateState({
     query: mergedQuery,
@@ -49,7 +52,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
       loading: false
     })
   } catch (error) {
-    console.error("Search action failed", error)
+    logger.error("Search action failed", error)
   }
   end()
 }

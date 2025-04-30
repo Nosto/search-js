@@ -1,3 +1,30 @@
+# [2.3.0](https://github.com/Nosto/search-js/compare/v2.2.0...v2.3.0) (2025-04-30)
+
+
+### Bug Fixes
+
+* string case included for useSizeOptions ([#177](https://github.com/Nosto/search-js/issues/177)) ([31fd034](https://github.com/Nosto/search-js/commit/31fd0341705a222d025ed601d81e8c4706eb2bc1))
+
+
+### Features
+
+* add logger abstraction ([667493b](https://github.com/Nosto/search-js/commit/667493b84903ab3a7a488179469339281112cd29))
+
+# [2.2.0](https://github.com/Nosto/search-js/compare/v2.1.3...v2.2.0) (2025-04-28)
+
+
+### Features
+
+* Fix shopify thumbnails ([cbecd93](https://github.com/Nosto/search-js/commit/cbecd93eb7bec98e763352419658facb493680c5))
+
+## [2.1.3](https://github.com/Nosto/search-js/compare/v2.1.2...v2.1.3) (2025-04-28)
+
+
+### Bug Fixes
+
+* drop categoryId and categoryPath params ([c140028](https://github.com/Nosto/search-js/commit/c140028cc345a001325ccfc5a7526f8d3df255cd))
+* pageType to be compatible with search-templates ([cc6b6be](https://github.com/Nosto/search-js/commit/cc6b6beae2d9f20b8be18a1a83ca63adbbac6325))
+
 ## [2.1.2](https://github.com/Nosto/search-js/compare/v2.1.1...v2.1.2) (2025-04-24)
 
 

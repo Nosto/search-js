@@ -10,13 +10,13 @@ export type Config = {
 const cdnUrlRegex = /cdn\.shopify\.com/
 
 const sizeMappings = {
-  "1": "170x170_crop_center",
-  "2": "100x100_crop_center",
-  "3": "90x70_crop_center",
-  "4": "50x50_crop_center",
-  "5": "30x30_crop_center",
-  "6": "100x140_crop_center",
-  "7": "200x200_crop_center",
+  "1": "170x170",
+  "2": "100x100",
+  "3": "90x70",
+  "4": "50x50",
+  "5": "30x30",
+  "6": "100x140",
+  "7": "200x200",
   "8": "400x400",
   "9": "750x750"
 } as const satisfies Record<NostoShopifySize, string>
