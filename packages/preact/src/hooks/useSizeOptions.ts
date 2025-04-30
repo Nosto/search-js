@@ -1,3 +1,5 @@
+import { parseNumber } from "@utils/parseNumber"
+
 import { useActions } from "./useActions"
 import { useNostoAppState } from "./useNostoAppState"
 
@@ -57,7 +59,7 @@ export function useSizeOptions(sizes: number[], serpSize: number) {
   const handleSizeChange = (size: number) => {
     updateSearch({
       products: {
-        size
+        size: parseNumber(size)
       }
     })
   }
