@@ -33,10 +33,12 @@ describe("InfiniteScroll", () => {
     resetStore(store)
   })
 
-  const InfiniteScrollComponent = ({ config }: { config?: PublicSerpConfig } = { config: {} }) => {
+  const InfiniteScrollComponent = (
+    { config, size }: { config?: PublicSerpConfig; size?: number } = { config: {}, size: 10 }
+  ) => {
     return (
       <SearchPageProvider config={makeSerpConfig(config)} store={store}>
-        <InfiniteScroll pageSize={10}>
+        <InfiniteScroll pageSize={size}>
           <div>Child 1</div>
           <div>Child 2</div>
         </InfiniteScroll>
@@ -81,7 +83,8 @@ describe("InfiniteScroll", () => {
     store.updateState({
       query: {
         products: {
-          from: 0
+          from: 0,
+          size: 1
         }
       },
       response: {
@@ -93,7 +96,7 @@ describe("InfiniteScroll", () => {
       }
     })
 
-    const result = render(<InfiniteScrollComponent config={{ persistentSearchCache: true }} />)
+    const result = render(<InfiniteScrollComponent config={{ persistentSearchCache: true }} size={1} />)
 
     expect(result.getByText("More results")).toBeDefined()
 
@@ -115,14 +118,10 @@ describe("InfiniteScroll", () => {
       ({ loading, response }) => {
         if (!loading) {
           expect(response).toEqual({
-            products: {
-              total: 2,
-              size: 1,
-              hits: [
-                { productId: "1", name: "Previous Product" },
-                { productId: "2", name: "New Product" }
-              ]
-            }
+            total: 2,
+            from: 1,
+            size: 1,
+            hits: [{ productId: "2", name: "New Product" }]
           })
         }
       }
