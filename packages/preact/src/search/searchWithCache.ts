@@ -17,21 +17,15 @@ export async function searchWithCache(config: Config, searchQuery: SearchQuery, 
 
 async function getSearchResultWithCache(searchQuery: SearchQuery, options: SearchOptions, usePersistentCache: boolean) {
   const { from = 0, size = 0 } = searchQuery.products || {}
-  const { result, query } = loadCachedResultIfApplicable(usePersistentCache, searchQuery) || {}
-  const cacheFrom = query?.products?.from || 0
+  const { result } = loadCachedResultIfApplicable(usePersistentCache, searchQuery) || {}
   const cacheHits = result?.products?.hits || []
 
   if (!result) {
     return await search(searchQuery, options)
   }
 
-  // pagination scenario, when from doesn't match the cache
-  if (from !== cacheFrom) {
-    return await search(searchQuery, options)
-  }
-
   // when request data (from & size) is already in cache
-  if (from === cacheFrom && size === cacheHits.length) {
+  if (size === cacheHits.length) {
     return result
   }
 
