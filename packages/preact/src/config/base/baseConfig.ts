@@ -45,6 +45,10 @@ export interface BaseConfig {
 
   /**
    * Custom error handler for search errors.
+   * 
+   * @param error The error object that occurred during the search operation. This can be of any type.
+   * @param query The search query that was being executed when the error occurred.
+   * @param options The search options that were used for the query.
    */
   errorHandler?: (error: unknown, query: SearchQuery, options: SearchOptions) => void
 }
