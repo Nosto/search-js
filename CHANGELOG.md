@@ -1,3 +1,15 @@
+# [2.3.0](https://github.com/Nosto/search-js/compare/v2.2.0...v2.3.0) (2025-04-30)
+
+
+### Bug Fixes
+
+* string case included for useSizeOptions ([#177](https://github.com/Nosto/search-js/issues/177)) ([31fd034](https://github.com/Nosto/search-js/commit/31fd0341705a222d025ed601d81e8c4706eb2bc1))
+
+
+### Features
+
+* add logger abstraction ([667493b](https://github.com/Nosto/search-js/commit/667493b84903ab3a7a488179469339281112cd29))
+
 # [2.2.0](https://github.com/Nosto/search-js/compare/v2.1.3...v2.2.0) (2025-04-28)
 
 
