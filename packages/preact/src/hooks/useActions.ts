@@ -1,11 +1,12 @@
 import type { InputSearchRangeFilter, SearchOptions, SearchQuery } from "@nosto/nosto-js/client"
-import { useCallback } from "preact/hooks"
+import { useConfig } from "@preact/config/configContext"
+import { StoreContext } from "@preact/storeContext"
+import { useCallback, useContext, useMemo } from "preact/hooks"
 
 import { newSearch } from "../actions/newSearch"
 import { replaceFilter } from "../actions/replaceFilter"
 import { toggleProductFilter } from "../actions/toggleProductFilter"
 import { updateSearch } from "../actions/updateSearch"
-import { useActionsContext } from "./useActionsContext"
 
 /**
  * Preact hook that import current actions to the component.
@@ -33,7 +34,15 @@ import { useActionsContext } from "./useActionsContext"
  * @group Hooks
  */
 export function useActions() {
-  const context = useActionsContext()
+  const config = useConfig()
+  const store = useContext(StoreContext)
+  const context = useMemo(
+    () => ({
+      config,
+      store
+    }),
+    [config, store]
+  )
 
   const newSearchCallback = useCallback(
     (query: SearchQuery, options?: SearchOptions) => {

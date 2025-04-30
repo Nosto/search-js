@@ -1,6 +1,5 @@
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { isEqual } from "@utils/isEqual"
-import { omitUndefined } from "@utils/omitUndefined"
 import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
 
 export const STORAGE_ENTRY_NAME = "nosto:search:searchResult"
@@ -44,12 +43,12 @@ function getCacheKey(query: SearchQuery): SearchQuery {
     time: undefined,
     products: {
       ...query.products,
-      from: query.products?.from || 0,
+      from: query.products?.from,
       size: undefined
     }
   }
 
-  return omitUndefined(params)
+  return JSON.parse(JSON.stringify(params))
 }
 
 // TODO: Better validation with valibot
