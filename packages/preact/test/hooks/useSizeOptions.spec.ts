@@ -78,8 +78,8 @@ describe("useSizeOptions", () => {
     const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store })
     const { handleSizeChange } = render.result.current
 
-    // Call handleSizeChange with a new size
-    handleSizeChange("48")
+    // Call handleSizeChange with a new size as forced string
+    handleSizeChange("48" as unknown as number)
 
     expect(actions.updateSearch).toHaveBeenCalledWith({
       products: {
