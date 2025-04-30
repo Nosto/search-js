@@ -25,18 +25,13 @@ async function getSearchResultWithCache(searchQuery: SearchQuery, options: Searc
     return await search(searchQuery, options)
   }
 
-  // pagination scenario
-  if (from > 0) {
-    // when request data (from & size) is already in cache
-    if (from === cacheFrom && size === cacheHits.length) {
-      return result
-    }
-    // a new pagination request, so fetch from server
-    if (from !== cacheFrom) {
-      return await search(searchQuery, options)
-    }
-  } else if (size === cacheHits.length) {
-    // non-pagination scenario, when requested size is equal to the cache size
+  // pagination scenario, when from doesn't match the cache
+  if (from !== cacheFrom) {
+    return await search(searchQuery, options)
+  }
+
+  // when request data (from & size) is already in cache
+  if (from === cacheFrom && size === cacheHits.length) {
     return result
   }
 

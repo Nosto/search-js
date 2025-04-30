@@ -43,7 +43,6 @@ function getCacheKey(query: SearchQuery): SearchQuery {
     time: undefined,
     products: {
       ...query.products,
-      from: query.products?.from,
       size: undefined
     }
   }
