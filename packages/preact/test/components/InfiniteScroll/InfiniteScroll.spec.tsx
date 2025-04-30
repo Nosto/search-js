@@ -118,10 +118,17 @@ describe("InfiniteScroll", () => {
       ({ loading, response }) => {
         if (!loading) {
           expect(response).toEqual({
-            total: 2,
-            from: 1,
-            size: 1,
-            hits: [{ productId: "2", name: "New Product" }]
+            products: {
+              total: 2,
+              from: 1,
+              size: 1,
+              hits: [
+                {
+                  productId: "2",
+                  name: "New Product"
+                }
+              ]
+            }
           })
         }
       }
