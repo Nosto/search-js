@@ -17,7 +17,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   const track = pageType === "search" ? "serp" : pageType
 
   const mergedQuery = deepMerge(context.store.getInitialState().query, query)
-  const mergedConfig = deepMerge(context.config.search, options, {
+  const mergedOptions = deepMerge(context.config.search, options, {
     track,
     redirect: pageType !== "autocomplete",
     isKeyword: !!options?.isKeyword
@@ -50,7 +50,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
       response = cachedValue
     } else {
       const queryWithDefaults = applyQueryDefaults(pageType, fullQuery)
-      response = await search(queryWithDefaults, mergedConfig)
+      response = await search(queryWithDefaults, mergedOptions)
       cacheSearchResult(usePersistentCache, fullQuery, response)
     }
 
@@ -60,6 +60,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
     })
   } catch (error) {
     logger.error("Search action failed", error)
+    context.config.errorHandler?.(error, fullQuery, mergedOptions)
   }
   end()
 }

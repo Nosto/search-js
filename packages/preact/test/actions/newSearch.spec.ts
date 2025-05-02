@@ -45,6 +45,23 @@ describe("newSearch", () => {
     })
   })
 
+  it("invokes error handler on error", async () => {
+    const errorHandler = vi.fn()
+    const context = {
+      config: makeSerpConfig({
+        errorHandler
+      }),
+      store: createStore({
+        loading: false
+      })
+    }
+
+    const query = { products: { from: 0 } }
+    search.mockRejectedValue(new Error("Search error"))
+    await newSearch(context, query)
+    expect(errorHandler).toHaveBeenCalled()
+  })
+
   describe("caching", () => {
     const query = { products: { from: 0 } }
 
