@@ -1,9 +1,9 @@
 import { nostojs } from "@nosto/nosto-js"
 import { SearchQuery } from "@nosto/nosto-js/client"
 
-import { applyDecorators } from "./applyDecorators"
-import { searchWithRetries } from "./searchWithRetries"
-import { HitDecorator, SearchOptions } from "./types"
+import { DecoratedResult, HitDecorator, SearchFn, SearchOptions, SearchWithNext } from "./types"
+import { searchWithDecorators } from "./withDecorators"
+import { searchWithRetries } from "./withRetries"
 
 /**
  * Performs a search operation using the provided query and options.
@@ -13,8 +13,14 @@ import { HitDecorator, SearchOptions } from "./types"
  * @returns A promise that resolves to the search result.
  */
 export async function search<HD extends readonly HitDecorator[]>(query: SearchQuery, options: SearchOptions<HD> = {}) {
-  const { hitDecorators, ...rest } = options
   const api = await new Promise(nostojs)
-  const searchResult = await searchWithRetries(api, query, rest)
-  return applyDecorators(searchResult, hitDecorators)
+  // TODO add searchWithCache wrapping between retries and decorators
+  const searchFn = wrap(api.search, searchWithRetries, searchWithDecorators)
+  return searchFn(query, options) as Promise<DecoratedResult<HD>>
+}
+
+function wrap<HD extends readonly HitDecorator[]>(inner: SearchFn<HD>, ...wrappers: SearchWithNext<HD>[]) {
+  return wrappers.reduce<SearchFn<HD>>((inner, outer) => {
+    return (query, options) => outer(query, options, inner)
+  }, inner)
 }

@@ -1,4 +1,4 @@
-import { shouldRetry } from "@core/searchWithRetries"
+import { shouldRetry } from "@core/withRetries"
 import { describe, expect, it } from "vitest"
 
 describe("shouldRetry", () => {

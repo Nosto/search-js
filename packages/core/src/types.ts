@@ -1,4 +1,4 @@
-import { SearchOptions as BaseOptions, SearchProduct, SearchResult } from "@nosto/nosto-js/client"
+import { SearchOptions as BaseOptions, SearchProduct, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 
 export type SearchOptions<HD extends readonly HitDecorator[] = readonly HitDecorator[]> = BaseOptions & {
   /**
@@ -14,6 +14,17 @@ export type SearchOptions<HD extends readonly HitDecorator[] = readonly HitDecor
    */
   retryInterval?: number
 }
+
+export type SearchFn<HD extends readonly HitDecorator[]> = (
+  query: SearchQuery,
+  options: SearchOptions<HD>
+) => Promise<SearchResult>
+
+export type SearchWithNext<HD extends readonly HitDecorator[]> = (
+  query: SearchQuery,
+  options: SearchOptions<HD>,
+  next: SearchFn<HD>
+) => Promise<SearchResult>
 
 export type HitDecorator = (hit: SearchProduct) => SearchProduct
 

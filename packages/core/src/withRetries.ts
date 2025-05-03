@@ -1,28 +1,28 @@
-import type { API, SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { logger } from "@utils/logger"
 
-import { SearchOptions } from "./types"
+import { HitDecorator, SearchFn, SearchOptions } from "./types"
 import { delay } from "./utils/delay"
 
-export async function searchWithRetries(
-  api: API,
+export async function searchWithRetries<HD extends readonly HitDecorator[]>(
   query: SearchQuery,
-  options: SearchOptions<[]>
+  { maxRetries = 0, retryInterval = 0, ...options }: SearchOptions<HD>,
+  next: SearchFn<HD>
 ): Promise<SearchResult> {
-  const { maxRetries = 0, retryInterval = 1000 } = options
+  if (maxRetries <= 0) {
+    return next(query, options)
+  }
   let retries = 0
 
   while (true) {
     try {
-      const result = await api.search(query, options)
-      return result
+      return await next(query, options)
     } catch (error) {
-      if (!shouldRetry(error)) {
-        logger.info("Skipping retry logic for", error)
+      if (retries >= maxRetries) {
         throw error
       }
-
-      if (retries >= maxRetries) {
+      if (!shouldRetry(error)) {
+        logger.info("Skipping retry logic for", error)
         throw error
       }
 
