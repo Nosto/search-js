@@ -1,3 +1,28 @@
+# [2.4.0](https://github.com/Nosto/search-js/compare/v2.3.0...v2.4.0) (2025-05-05)
+
+
+### Bug Fixes
+
+* address comments ([dc459c9](https://github.com/Nosto/search-js/commit/dc459c9510b86231b0a1e601c5045a1b6923bb70))
+* adress lint issues and fix tests ([3d87601](https://github.com/Nosto/search-js/commit/3d87601fff5fa4bb6a3107f91504e8e589d0dce5))
+* improve caching logic and add tests ([ce5d798](https://github.com/Nosto/search-js/commit/ce5d798f52568b31242f32c4d8a239d0c5cace79))
+* infinite scroll test ([7708ce6](https://github.com/Nosto/search-js/commit/7708ce6464c12356656d1180e5dc1ee7727db20d))
+* infinite scroll test assertion ([3513eb2](https://github.com/Nosto/search-js/commit/3513eb2dd83aa4fcae430096ba2ea51038725355))
+* lint issues ([47e8ee4](https://github.com/Nosto/search-js/commit/47e8ee4be11fe7a227b09f3ba1c734110a84e42d))
+* remove from checks from caching logic ([aece16e](https://github.com/Nosto/search-js/commit/aece16e5bc9dbfbd1a675710061f812ea2f74831))
+* review comments and suggestions ([a41ac40](https://github.com/Nosto/search-js/commit/a41ac40bbb13fde2eba84dc2857377bfdb570da4))
+* update parameters for newSearch/updateSearch ([9cb1ccb](https://github.com/Nosto/search-js/commit/9cb1ccb7598985806011706e094b2f6c3b3a1104))
+
+
+### Features
+
+* improve paginated caching technique ([4c76662](https://github.com/Nosto/search-js/commit/4c7666283bc5a3eed7924712490c951b6773b128))
+* input bindings for autocomplete ([689ce85](https://github.com/Nosto/search-js/commit/689ce85e097cb896cdd2423f43af826660db9cb3))
+* load merged result from cache ([ae79d64](https://github.com/Nosto/search-js/commit/ae79d64ef5a344daa7b4aec6255b5468d0fb7b79))
+* merge infinite scrolling result in persistance layer ([52f72aa](https://github.com/Nosto/search-js/commit/52f72aa9ddfca0e56d9fc69911d38b104559c4bb))
+* optimized infinite scroling ([ca7fdd0](https://github.com/Nosto/search-js/commit/ca7fdd045fa0ba45c85b066697bdbf64dd39b748))
+* search with cache prefill ([fe95107](https://github.com/Nosto/search-js/commit/fe95107e06cd1d8eb656d42b1cde07132567a6ab))
+
 # [2.3.0](https://github.com/Nosto/search-js/compare/v2.2.0...v2.3.0) (2025-04-30)
 
 
