@@ -23,7 +23,7 @@ export type SearchFn<HD extends readonly HitDecorator[]> = (
 export type SearchWithNext<HD extends readonly HitDecorator[]> = (
   query: SearchQuery,
   options: SearchOptions<HD>,
-  next: SearchFn<HD>
+  searchFn: SearchFn<HD>
 ) => Promise<SearchResult>
 
 export type HitDecorator = (hit: SearchProduct) => SearchProduct

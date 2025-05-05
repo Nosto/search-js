@@ -5,9 +5,9 @@ import { DecoratedProduct, DecoratedResult, HitDecorator, SearchFn, SearchOption
 export async function searchWithDecorators<HD extends readonly HitDecorator[]>(
   query: SearchQuery,
   { hitDecorators, ...options }: SearchOptions<HD>,
-  next: SearchFn<HD>
+  searchFn: SearchFn<HD>
 ): Promise<DecoratedResult<HD>> {
-  const response = await next(query, options)
+  const response = await searchFn(query, options)
   if (!response.products?.hits?.length || !hitDecorators?.length) {
     return response as DecoratedResult<HD>
   }

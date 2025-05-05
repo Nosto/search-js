@@ -7,16 +7,13 @@ import { delay } from "./utils/delay"
 export async function searchWithRetries<HD extends readonly HitDecorator[]>(
   query: SearchQuery,
   { maxRetries = 0, retryInterval = 0, ...options }: SearchOptions<HD>,
-  next: SearchFn<HD>
+  searchFn: SearchFn<HD>
 ): Promise<SearchResult> {
-  if (maxRetries <= 0) {
-    return next(query, options)
-  }
   let retries = 0
 
   while (true) {
     try {
-      return await next(query, options)
+      return await searchFn(query, options)
     } catch (error) {
       if (retries >= maxRetries) {
         throw error
