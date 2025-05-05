@@ -24,7 +24,7 @@ async function getSearchResultWithCache(searchQuery: SearchQuery, options: Searc
     return await search(searchQuery, options)
   }
 
-  // when request data (from & size) is already in cache
+  // when request data is already in cache
   if (size === cacheHits.length) {
     return result
   }
