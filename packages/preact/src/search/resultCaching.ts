@@ -1,10 +1,10 @@
-import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { isEqual } from "@utils/isEqual"
 import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
 
 export const STORAGE_ENTRY_NAME = "nosto:search:searchResult"
 
-type SearchResultDto = {
+export type SearchResultDto = {
   query: ReturnType<typeof getCacheKey>
   result: SearchResult
 }
@@ -18,12 +18,12 @@ export function cacheSearchResult(usePersistentCache: boolean, query: SearchQuer
   setSessionStorageItem(STORAGE_ENTRY_NAME, dto)
 }
 
-export function loadCachedResultIfApplicable(usePersistentCache: boolean, query: SearchQuery): SearchResult | null {
+export function loadCachedResultIfApplicable(usePersistentCache: boolean, query: SearchQuery) {
   if (!usePersistentCache) {
     return null
   }
 
-  const storageValue = getSessionStorageItem(STORAGE_ENTRY_NAME)
+  const storageValue = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
   if (!storageValue || !isValueShapeCorrect(storageValue)) {
     return null
   }
@@ -32,25 +32,25 @@ export function loadCachedResultIfApplicable(usePersistentCache: boolean, query:
   if (!isEqual(getCacheKey(query), cachedQuery)) {
     return null
   }
-  return storageValue.result
+  return storageValue
 }
 
-function getCacheKey(query: SearchQuery): Omit<SearchQuery, "time"> {
-  return {
-    accountId: query.accountId,
-    customRules: query.customRules,
-    explain: query.explain,
-    keywords: query.keywords,
-    products: query.products,
-    query: query.query,
-    redirect: query.redirect,
-    rules: query.rules,
-    segments: query.segments,
-    sessionParams: query.sessionParams
+// This function is used to create a cache key for the search query.
+// It removes the time and size properties from the query object.
+function getCacheKey(query: SearchQuery): SearchQuery {
+  const params = {
+    ...query,
+    time: undefined,
+    products: {
+      ...query.products,
+      size: undefined
+    }
   }
+
+  return JSON.parse(JSON.stringify(params))
 }
 
 // TODO: Better validation with valibot
-function isValueShapeCorrect(value: unknown): value is SearchResultDto {
+export function isValueShapeCorrect(value: unknown): value is SearchResultDto {
   return typeof value === "object" && value !== null && "query" in value && "result" in value
 }
