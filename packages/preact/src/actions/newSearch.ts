@@ -1,7 +1,7 @@
+import { search } from "@core/search"
 import { SearchOptions } from "@core/types"
 import type { SearchQuery } from "@nosto/nosto-js/client"
 import { applyQueryDefaults } from "@preact/search/defaults"
-import { searchWithCache } from "@preact/search/searchWithCache"
 import { deepMerge } from "@utils/deepMerge"
 import { logger } from "@utils/logger"
 import { mergeArrays } from "@utils/mergeArrays"
@@ -19,7 +19,8 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   const mergedOptions = deepMerge(context.config.search, options, {
     track,
     redirect: pageType !== "autocomplete",
-    isKeyword: !!options?.isKeyword
+    isKeyword: !!options?.isKeyword,
+    usePersistentCache: context.config.pageType !== "autocomplete" && context.config.persistentSearchCache
   } satisfies SearchOptions)
 
   context.config.onBeforeSearch?.(context, mergedOptions)
@@ -43,11 +44,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   )
 
   try {
-    const response = await searchWithCache(
-      context.config,
-      applyQueryDefaults(context.config.pageType, fullQuery),
-      mergedOptions
-    )
+    const response = await search(applyQueryDefaults(context.config.pageType, fullQuery), mergedOptions)
 
     context.store.updateState({
       response,

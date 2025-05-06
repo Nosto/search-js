@@ -9,20 +9,12 @@ export type SearchResultDto = {
   result: SearchResult
 }
 
-export function cacheSearchResult(usePersistentCache: boolean, query: SearchQuery, result: SearchResult) {
-  if (!usePersistentCache) {
-    return
-  }
-
+export function cacheSearchResult(query: SearchQuery, result: SearchResult) {
   const dto: SearchResultDto = { query, result }
   setSessionStorageItem(STORAGE_ENTRY_NAME, dto)
 }
 
-export function loadCachedResultIfApplicable(usePersistentCache: boolean, query: SearchQuery) {
-  if (!usePersistentCache) {
-    return null
-  }
-
+export function loadCachedResult(query: SearchQuery) {
   const storageValue = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
   if (!storageValue || !isValueShapeCorrect(storageValue)) {
     return null
@@ -32,7 +24,7 @@ export function loadCachedResultIfApplicable(usePersistentCache: boolean, query:
   if (!isEqual(getCacheKey(query), cachedQuery)) {
     return null
   }
-  return storageValue
+  return storageValue.result
 }
 
 // This function is used to create a cache key for the search query.

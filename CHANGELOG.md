@@ -1,3 +1,10 @@
+# [2.7.0](https://github.com/Nosto/search-js/compare/v2.6.0...v2.7.0) (2025-05-06)
+
+
+### Features
+
+* make searchWithCache a middleware ([0d2888d](https://github.com/Nosto/search-js/commit/0d2888da647b610779df75f1797bb336776a3c1e))
+
 # [2.6.0](https://github.com/Nosto/search-js/compare/v2.5.0...v2.6.0) (2025-05-06)
 
 
