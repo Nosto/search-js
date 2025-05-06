@@ -1,9 +1,21 @@
+import { SearchOptions } from "@core/types"
 import { InputSearchFilter } from "@nosto/nosto-js/client"
+import { Config } from "@preact/config/config"
 import { isEqual } from "@utils/isEqual"
 import { measure } from "@utils/performance"
 
 import { ActionContext } from "./types"
 import { updateSearch } from "./updateSearch"
+
+// This function is used to extract search options from the provided config object.
+// with backward compatibility with legacy configuration structure.
+function searchOptionsFromConfig(config: Config) {
+  return {
+    hitDecorators: "hitDecorators" in config ? config.hitDecorators : config.search?.hitDecorators,
+    maxRetries: "retries" in config ? config.retries : config.search?.maxRetries,
+    retryInterval: "retryInterval" in config ? config.retryInterval : config.search?.retryInterval
+  } as SearchOptions
+}
 
 export async function toggleProductFilter(
   context: ActionContext,
@@ -30,10 +42,14 @@ export async function toggleProductFilter(
         }
       : undefined
 
-  await updateSearch(context, {
-    products: {
-      filter: [...(filter?.filter(v => v !== activeFilter) ?? []), ...(newFilter?.value?.length ? [newFilter] : [])]
-    }
-  })
+  await updateSearch(
+    context,
+    {
+      products: {
+        filter: [...(filter?.filter(v => v !== activeFilter) ?? []), ...(newFilter?.value?.length ? [newFilter] : [])]
+      }
+    },
+    searchOptionsFromConfig(context.config)
+  )
   end()
 }
