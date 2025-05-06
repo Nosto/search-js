@@ -9,7 +9,7 @@ describe("updateSearch", () => {
 
   beforeEach(() => {
     vi.resetAllMocks()
-    search.mockResolvedValue({ products: { hits: [{ name: "product 1" }] } })
+    search.mockResolvedValue({ products: { hits: [{ name: "product 1" }], total: 2 } })
 
     mockNostojs({
       search
@@ -49,7 +49,8 @@ describe("updateSearch", () => {
     })
     expect(context.store.getState().response).toEqual({
       products: {
-        hits: [{ name: "product 1" }]
+        hits: [{ name: "product 1" }],
+        total: 2
       }
     })
   })

@@ -3,8 +3,9 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { newSearch } from "@preact/actions/newSearch"
 import { makeCategoryConfig } from "@preact/config/pages/category/config"
 import { makeSerpConfig } from "@preact/config/pages/serp/config"
-import { STORAGE_ENTRY_NAME } from "@preact/search/resultCaching"
+import { SearchResultDto, STORAGE_ENTRY_NAME } from "@preact/search/resultCaching"
 import { createStore } from "@preact/store"
+import { getSessionStorageItem } from "@utils/storage"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("newSearch", () => {
@@ -111,6 +112,91 @@ describe("newSearch", () => {
       }
       await newSearch(context, query)
       expect(sessionStorage.getItem(STORAGE_ENTRY_NAME)).toBeNull()
+    })
+
+    it("backfill is applied when applicable", async () => {
+      const context = {
+        config: makeSerpConfig({
+          persistentSearchCache: true
+        }),
+        store: createStore()
+      }
+
+      await newSearch(context, { query: "dress", products: { from: 0, size: 1 } })
+      const storedData = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
+      expect(storedData).toEqual({
+        query: {
+          products: expect.objectContaining({
+            from: 0,
+            size: 1
+          }),
+          query: "dress"
+        },
+        result: {
+          products: {
+            hits: [
+              {
+                name: "product 1"
+              }
+            ]
+          }
+        }
+      })
+
+      await newSearch(context, { query: "dress", products: { from: 0, size: 2 } })
+      expect(search).toHaveBeenLastCalledWith(
+        expect.objectContaining({ products: expect.objectContaining({ from: 1, size: 1 }) }),
+        expect.anything()
+      )
+
+      const storeDataWithBackfill = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
+      expect(storeDataWithBackfill).toEqual({
+        query: {
+          products: expect.objectContaining({
+            from: 0,
+            size: 2
+          }),
+          query: "dress"
+        },
+        result: {
+          products: {
+            hits: [
+              {
+                name: "product 1"
+              },
+              {
+                name: "product 1"
+              }
+            ]
+          }
+        }
+      })
+
+      // search query is different, so backfill should not be applied and cache refreshed
+      await newSearch(context, { query: "new dress", products: { from: 0, size: 2 } })
+      expect(search).toHaveBeenLastCalledWith(
+        expect.objectContaining({ products: expect.objectContaining({ from: 0, size: 2 }) }),
+        expect.anything()
+      )
+      const storeDataWithDifferentQuery = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
+      expect(storeDataWithDifferentQuery).toEqual({
+        query: {
+          products: expect.objectContaining({
+            from: 0,
+            size: 2
+          }),
+          query: "new dress"
+        },
+        result: {
+          products: {
+            hits: [
+              {
+                name: "product 1"
+              }
+            ]
+          }
+        }
+      })
     })
   })
 

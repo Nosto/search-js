@@ -1,7 +1,7 @@
-import { useActions } from "@preact/hooks/useActions"
 import { useNostoAppState } from "@preact/hooks/useNostoAppState"
 import { useCallback } from "preact/hooks"
 
+import { useActions } from "../useActions"
 import { getNextPageQuery } from "./getNextPageQuery"
 
 /**
