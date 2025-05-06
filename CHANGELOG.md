@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/Nosto/search-js/compare/v2.4.0...v2.5.0) (2025-05-06)
+
+
+### Features
+
+* add exports ([d82c357](https://github.com/Nosto/search-js/commit/d82c357928636be7a0f62677ff4ecf5a366da637))
+
 # [2.4.0](https://github.com/Nosto/search-js/compare/v2.3.0...v2.4.0) (2025-05-05)
 
 
