@@ -13,6 +13,10 @@ export type SearchOptions<HD extends readonly HitDecorator[] = readonly HitDecor
    * Interval (in ms) between retry attempts. Default: 1000 ms.
    */
   retryInterval?: number
+  /**
+   * Whether to use a persistent cache for the search results. Default: false.
+   */
+  usePersistentCache?: boolean
 }
 
 export type SearchFn<HD extends readonly HitDecorator[]> = (

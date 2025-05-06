@@ -1,15 +1,13 @@
+import { SearchResultDto, STORAGE_ENTRY_NAME } from "@core/resultCaching"
+import { searchWithCache } from "@core/withCache"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { mockNostojs } from "@nosto/nosto-js/testing"
-import { Config } from "@preact/config/config"
-import { SearchResultDto, STORAGE_ENTRY_NAME } from "@preact/search/resultCaching"
-import { searchWithCache } from "@preact/search/searchWithCache"
 import { getSessionStorageItem } from "@utils/storage"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("searchWithCache", () => {
   const search = vi.fn()
 
-  const config = { pageType: "serp", persistentSearchCache: true }
   const resultDefault = { products: { hits: [{ name: "product 1" }], total: 2 } }
 
   type TestSearchOptiopns = {
@@ -20,7 +18,7 @@ describe("searchWithCache", () => {
   }
 
   async function testSearch({ query, expectedCache, expectedResult: searchResult }: TestSearchOptiopns) {
-    const response = await searchWithCache(config as Config, query, {})
+    const response = await searchWithCache(query, { usePersistentCache: true }, search)
     expect(response).toEqual(searchResult)
     expect(getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)).toEqual(expectedCache)
   }
