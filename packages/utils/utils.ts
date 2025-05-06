@@ -1,4 +1,5 @@
 /** @module utils */
+export { bindInput, disableNativeAutocomplete, type InputBindingCallbacks } from "./src/bindInput"
 export { deepMerge, type MergeTests } from "./src/deepMerge"
 export { isBot } from "./src/isBot"
 export { isEqual } from "./src/isEqual"
