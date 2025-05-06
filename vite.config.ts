@@ -56,6 +56,16 @@ export default defineConfig({
     }
   },
   test: {
+    coverage: {
+      include: ["packages/*/src/**/*.{js,ts}"],
+      skipFull: true,
+      thresholds: {
+        statements: 80,
+        branches: 80,
+        lines: 80,
+        functions: 80
+      }
+    },
     globals: true,
     environment: "jsdom",
     include: ["packages/**/*.spec.ts", "packages/**/*.test.ts", "packages/**/*.spec.tsx", "packages/**/*.test.tsx"]
