@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/Nosto/search-js/compare/v2.5.0...v2.6.0) (2025-05-06)
+
+
+### Features
+
+* use middleware stacking for search calls ([12723e7](https://github.com/Nosto/search-js/commit/12723e7a03e5943ddc02a755230d37df8aa63b46))
+
 # [2.5.0](https://github.com/Nosto/search-js/compare/v2.4.0...v2.5.0) (2025-05-06)
 
 
