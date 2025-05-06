@@ -23,6 +23,12 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
     isKeyword: !!options?.isKeyword
   } satisfies SearchOptions)
 
+  try {
+    context.config.onBeforeSearch?.(context, mergedOptions)
+  } catch (error) {
+    return Promise.reject(error)
+  }
+
   context.store.updateState({
     query: mergedQuery,
     loading: true,
@@ -60,7 +66,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
     })
   } catch (error) {
     logger.error("Search action failed", error)
-    context.config.errorHandler?.(error, fullQuery, mergedOptions)
+    context.config.onSearchError?.(error, fullQuery, mergedOptions, pageType)
   }
   end()
 }

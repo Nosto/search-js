@@ -45,11 +45,27 @@ describe("newSearch", () => {
     })
   })
 
-  it("invokes error handler on error", async () => {
-    const errorHandler = vi.fn()
+  it("invokes onBeforeSearch on error", async () => {
+    const onBeforeSearch = vi.fn()
     const context = {
       config: makeSerpConfig({
-        errorHandler
+        onBeforeSearch
+      }),
+      store: createStore({
+        loading: false
+      })
+    }
+
+    const query = { products: { from: 0 } }
+    await newSearch(context, query)
+    expect(onBeforeSearch).toHaveBeenCalled()
+  })
+
+  it("invokes onSearchError on error", async () => {
+    const onSearchError = vi.fn()
+    const context = {
+      config: makeSerpConfig({
+        onSearchError
       }),
       store: createStore({
         loading: false
@@ -59,7 +75,7 @@ describe("newSearch", () => {
     const query = { products: { from: 0 } }
     search.mockRejectedValue(new Error("Search error"))
     await newSearch(context, query)
-    expect(errorHandler).toHaveBeenCalled()
+    expect(onSearchError).toHaveBeenCalled()
   })
 
   describe("caching", () => {
