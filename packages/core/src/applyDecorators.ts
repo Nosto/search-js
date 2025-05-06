@@ -2,7 +2,7 @@ import { SearchProduct, SearchQuery } from "@nosto/nosto-js/client"
 
 import { DecoratedProduct, DecoratedResult, HitDecorator, SearchFn, SearchOptions } from "./types"
 
-export async function searchWithDecorators<HD extends readonly HitDecorator[]>(
+export async function applyDecorators<HD extends readonly HitDecorator[]>(
   query: SearchQuery,
   { hitDecorators, ...options }: SearchOptions<HD>,
   searchFn: SearchFn<HD>
