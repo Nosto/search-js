@@ -1,5 +1,6 @@
 import { SearchOptions } from "@core/types"
 import { SearchQuery } from "@nosto/nosto-js/client"
+import { ActionContext } from "@preact/actions/types"
 import { PageType } from "@preact/api/types"
 
 export const defaultBaseConfig = {
@@ -42,4 +43,23 @@ export interface BaseConfig {
    * ```
    */
   queryModifications: (query: SearchQuery, pageType: PageType | undefined) => SearchQuery
+
+  /**
+   * Custom callback invoked before the search query is executed.
+   *
+   * To cancel the search action, throw an error in this callback.
+   *
+   * @param context The action context containing the store and config.
+   * @param options The search options that would be used for the query.
+   */
+  onBeforeSearch?: (context: ActionContext, options: SearchOptions) => void
+
+  /**
+   * Custom error handler for search errors.
+   *
+   * @param error The error object that occurred during the search operation. This can be of any type.
+   * @param query The search query that was being executed when the error occurred.
+   * @param options The search options that were used for the query.
+   */
+  onSearchError?: (error: unknown, query: SearchQuery, options: SearchOptions, pageType: PageType) => void
 }

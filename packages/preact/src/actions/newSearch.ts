@@ -23,6 +23,8 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
     usePersistentCache: context.config.pageType !== "autocomplete" && context.config.persistentSearchCache
   } satisfies SearchOptions)
 
+  context.config.onBeforeSearch?.(context, mergedOptions)
+
   context.store.updateState({
     query: mergedQuery,
     loading: true,
@@ -50,6 +52,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
     })
   } catch (error) {
     logger.error("Search action failed", error)
+    context.config.onSearchError?.(error, fullQuery, mergedOptions, pageType)
   }
   end()
 }

@@ -46,6 +46,39 @@ describe("newSearch", () => {
     })
   })
 
+  it("invokes onBeforeSearch before the operation", async () => {
+    const onBeforeSearch = vi.fn()
+    const context = {
+      config: makeSerpConfig({
+        onBeforeSearch
+      }),
+      store: createStore({
+        loading: false
+      })
+    }
+
+    const query = { products: { from: 0 } }
+    await newSearch(context, query)
+    expect(onBeforeSearch).toHaveBeenCalled()
+  })
+
+  it("invokes onSearchError on error", async () => {
+    const onSearchError = vi.fn()
+    const context = {
+      config: makeSerpConfig({
+        onSearchError
+      }),
+      store: createStore({
+        loading: false
+      })
+    }
+
+    const query = { products: { from: 0 } }
+    search.mockRejectedValue(new Error("Search error"))
+    await newSearch(context, query)
+    expect(onSearchError).toHaveBeenCalled()
+  })
+
   describe("caching", () => {
     const query = { products: { from: 0 } }
 
