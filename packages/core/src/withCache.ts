@@ -1,28 +1,30 @@
 import { search } from "@core/search"
-import { SearchOptions } from "@core/types"
-import { SearchQuery } from "@nosto/nosto-js/client"
-import { Config } from "@preact/config/config"
+import { HitDecorator, SearchFn, SearchOptions } from "@core/types"
+import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 
-import { cacheSearchResult, loadCachedResultIfApplicable } from "./resultCaching"
+import { cacheSearchResult, loadCachedResult } from "./resultCaching"
 
-export async function searchWithCache(config: Config, searchQuery: SearchQuery, options: SearchOptions) {
-  const usePersistentCache = config.pageType !== "autocomplete" && config.persistentSearchCache
-
-  const response = usePersistentCache
-    ? await getSearchResultWithCache(searchQuery, options, usePersistentCache)
-    : await search(searchQuery, options)
-  cacheSearchResult(usePersistentCache, searchQuery, response)
+export async function searchWithCache<HD extends readonly HitDecorator[]>(
+  query: SearchQuery,
+  { usePersistentCache, ...options }: SearchOptions<HD>,
+  searchFn: SearchFn<HD>
+): Promise<SearchResult> {
+  if (!usePersistentCache) {
+    return searchFn(query, options)
+  }
+  const response = await getSearchResultWithCache(query, options)
+  cacheSearchResult(query, response)
   return response
 }
 
-async function getSearchResultWithCache(searchQuery: SearchQuery, options: SearchOptions, usePersistentCache: boolean) {
+async function getSearchResultWithCache(searchQuery: SearchQuery, options: SearchOptions) {
   const { from = 0, size = 0 } = searchQuery.products || {}
-  const { result } = loadCachedResultIfApplicable(usePersistentCache, searchQuery) || {}
-  const cacheHits = result?.products?.hits || []
-
+  const result = loadCachedResult(searchQuery)
   if (!result) {
     return await search(searchQuery, options)
   }
+
+  const cacheHits = result?.products?.hits || []
 
   // when request data is already in cache
   if (size === cacheHits.length) {
