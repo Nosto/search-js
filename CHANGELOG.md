@@ -1,3 +1,18 @@
+# [2.8.0](https://github.com/Nosto/search-js/compare/v2.7.0...v2.8.0) (2025-05-06)
+
+
+### Bug Fixes
+
+* simplify onBeforeSearch ([732e6cc](https://github.com/Nosto/search-js/commit/732e6ccb4f6caa8d5ce05e5193cd3683e52fe039))
+* test name ([0da1061](https://github.com/Nosto/search-js/commit/0da106104d74f9a46fde556f7e38896aec79c53c))
+
+
+### Features
+
+* add error handler support ([4c70138](https://github.com/Nosto/search-js/commit/4c70138aa3dd621cc53a3984f48ee840598b415b))
+* add legacy exports ([029fe63](https://github.com/Nosto/search-js/commit/029fe635f4155fe84f8d6400b467064090b5cc32))
+* add onBeforeSearch callback ([df2d4a0](https://github.com/Nosto/search-js/commit/df2d4a08638b9be89c46941a319c0f5836608687))
+
 # [2.7.0](https://github.com/Nosto/search-js/compare/v2.6.0...v2.7.0) (2025-05-06)
 
 
