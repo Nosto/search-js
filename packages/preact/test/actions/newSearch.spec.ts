@@ -46,7 +46,7 @@ describe("newSearch", () => {
     })
   })
 
-  it("invokes onBeforeSearch on error", async () => {
+  it("invokes onBeforeSearch before the operation", async () => {
     const onBeforeSearch = vi.fn()
     const context = {
       config: makeSerpConfig({
