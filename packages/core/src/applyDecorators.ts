@@ -1,13 +1,18 @@
-import { SearchProduct, SearchResult } from "@nosto/nosto-js/client"
+import { SearchProduct, SearchQuery } from "@nosto/nosto-js/client"
 
-import { DecoratedProduct, DecoratedResult, HitDecorator } from "./types"
+import { DecoratedProduct, DecoratedResult, HitDecorator, SearchFn, SearchOptions } from "./types"
 
-export function applyDecorators<HD extends readonly HitDecorator[]>(response: SearchResult, decorators?: HD) {
-  if (!response.products || !decorators?.length) {
+export async function applyDecorators<HD extends readonly HitDecorator[]>(
+  query: SearchQuery,
+  { hitDecorators, ...options }: SearchOptions<HD>,
+  searchFn: SearchFn<HD>
+): Promise<DecoratedResult<HD>> {
+  const response = await searchFn(query, options)
+  if (!response.products?.hits?.length || !hitDecorators?.length) {
     return response as DecoratedResult<HD>
   }
   const decorator = (product: SearchProduct) => {
-    return decorators.reduce((acc, decorator) => {
+    return hitDecorators.reduce((acc, decorator) => {
       return decorator(acc)
     }, product) as DecoratedProduct<HD>
   }
@@ -18,5 +23,5 @@ export function applyDecorators<HD extends readonly HitDecorator[]>(response: Se
       ...response.products,
       hits: response.products.hits.map(decorator)
     }
-  }
+  } as DecoratedResult<HD>
 }
