@@ -22,11 +22,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
     isKeyword: !!options?.isKeyword
   } satisfies SearchOptions)
 
-  try {
-    context.config.onBeforeSearch?.(context, mergedOptions)
-  } catch (error) {
-    return Promise.reject(error)
-  }
+  context.config.onBeforeSearch?.(context, mergedOptions)
 
   context.store.updateState({
     query: mergedQuery,

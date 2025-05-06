@@ -47,7 +47,10 @@ export interface BaseConfig {
   /**
    * Custom callback invoked before the search query is executed.
    *
-   * Any thrown error will be caught gracefully, and the search will be cancelled.
+   * To cancel the search action, throw an error in this callback.
+   *
+   * @param context The action context containing the store and config.
+   * @param options The search options that would be used for the query.
    */
   onBeforeSearch?: (context: ActionContext, options: SearchOptions) => void
 
