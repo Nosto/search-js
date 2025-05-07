@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ComponentChildren, ComponentProps, ComponentType, JSX } from "preact"
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AsComponent = keyof JSX.IntrinsicElements | ComponentType<any>
 
 type Props<C extends AsComponent> = {
