@@ -1,7 +1,6 @@
 import { SearchResultDto, STORAGE_ENTRY_NAME } from "@core/resultCaching"
 import { searchWithCache } from "@core/withCache"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
-import { mockNostojs } from "@nosto/nosto-js/testing"
 import { getSessionStorageItem } from "@utils/storage"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -43,10 +42,6 @@ describe("searchWithCache", () => {
   beforeEach(() => {
     vi.resetAllMocks()
     search.mockResolvedValue(resultDefault)
-
-    mockNostojs({
-      search
-    })
 
     sessionStorage.clear()
     vi.spyOn(console, "info").mockImplementation(() => {})

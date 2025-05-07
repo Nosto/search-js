@@ -1,4 +1,3 @@
-import { search } from "@core/search"
 import { HitDecorator, SearchFn, SearchOptions } from "@core/types"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 
@@ -12,16 +11,20 @@ export async function searchWithCache<HD extends readonly HitDecorator[]>(
   if (!usePersistentCache) {
     return searchFn(query, options)
   }
-  const response = await getSearchResultWithCache(query, options)
+  const response = await getSearchResultWithCache<HD>(query, options, searchFn)
   cacheSearchResult(query, response)
   return response
 }
 
-async function getSearchResultWithCache(searchQuery: SearchQuery, options: SearchOptions) {
+async function getSearchResultWithCache<HD extends readonly HitDecorator[]>(
+  searchQuery: SearchQuery,
+  options: SearchOptions<HD>,
+  searchFn: SearchFn<HD>
+): Promise<SearchResult> {
   const { from = 0, size = 0 } = searchQuery.products || {}
   const result = loadCachedResult(searchQuery)
   if (!result) {
-    return await search(searchQuery, options)
+    return await searchFn(searchQuery, options)
   }
 
   const cacheHits = result?.products?.hits || []
@@ -57,7 +60,7 @@ async function getSearchResultWithCache(searchQuery: SearchQuery, options: Searc
     }
   }
 
-  const backfillResponse = await search(backfillQuery, options)
+  const backfillResponse = await searchFn(backfillQuery, options)
 
   return {
     ...result,
