@@ -9,32 +9,29 @@ describe("searchWithCache", () => {
 
   const resultDefault = { products: { hits: [{ name: "product 1" }], total: 2 } }
 
-  type TestSearchOptiopns = {
+  type TestSearchOptions = {
     query: SearchQuery
+    result: SearchResult
     triggeredQuery?: SearchQuery
-    expectedCache: SearchResultDto
-    expectedResult: SearchResult
   }
 
-  async function testSearch({ query, expectedCache, expectedResult: searchResult }: TestSearchOptiopns) {
+  async function testSearch({ query, result }: TestSearchOptions) {
     const response = await searchWithCache(query, { usePersistentCache: true }, search)
-    expect(response).toEqual(searchResult)
-    expect(getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)).toEqual(expectedCache)
+    expect(response).toEqual(result)
+    expect(getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)).toEqual({
+      query,
+      result
+    })
   }
 
-  async function testSearchTrigger({
-    query,
-    triggeredQuery,
-    expectedCache,
-    expectedResult: searchResult
-  }: TestSearchOptiopns) {
-    await testSearch({ query, expectedCache, expectedResult: searchResult })
-    expect(search).toHaveBeenCalledWith(triggeredQuery ?? query, expect.anything())
+  async function testSearchTrigger({ triggeredQuery, ...options }: TestSearchOptions) {
+    await testSearch(options)
+    expect(search).toHaveBeenCalledWith(triggeredQuery ?? options.query, expect.anything())
     search.mockClear()
   }
 
-  async function testSearchNoTrigger({ query, expectedCache, expectedResult: searchResult }: TestSearchOptiopns) {
-    await testSearch({ query, expectedCache, expectedResult: searchResult })
+  async function testSearchNoTrigger(options: TestSearchOptions) {
+    await testSearch(options)
     expect(search).not.toHaveBeenCalled()
     search.mockClear()
   }
@@ -51,60 +48,24 @@ describe("searchWithCache", () => {
     it("should call search when existing cache not found", async () => {
       await testSearchTrigger({
         query: { products: { from: 0, size: 1 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 0,
-              size: 1
-            }
-          },
-          result: resultDefault
-        },
-        expectedResult: resultDefault
+        result: resultDefault
       })
 
       await testSearchTrigger({
         query: { products: { from: 1, size: 1 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 1,
-              size: 1
-            }
-          },
-          result: resultDefault
-        },
-        expectedResult: resultDefault
+        result: resultDefault
       })
     })
 
     it("should not call search when existing cache found", async () => {
       await testSearchTrigger({
         query: { products: { from: 0, size: 1 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 0,
-              size: 1
-            }
-          },
-          result: resultDefault
-        },
-        expectedResult: resultDefault
+        result: resultDefault
       })
 
       await testSearchNoTrigger({
         query: { products: { from: 0, size: 1 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 0,
-              size: 1
-            }
-          },
-          result: resultDefault
-        },
-        expectedResult: resultDefault
+        result: resultDefault
       })
     })
 
@@ -120,46 +81,19 @@ describe("searchWithCache", () => {
 
       await testSearchTrigger({
         query: { products: { from: 0, size: 2 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 0,
-              size: 2
-            }
-          },
-          result: multipleResults
-        },
-        expectedResult: multipleResults
+        result: multipleResults
       })
 
       await testSearchNoTrigger({
         query: { products: { from: 0, size: 1 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 0,
-              size: 1
-            }
-          },
-          result: resultDefault
-        },
-        expectedResult: resultDefault
+        result: resultDefault
       })
     })
 
     it("should prefill from cache when requested size is more than cache size", async () => {
       await testSearchTrigger({
         query: { products: { from: 1, size: 1 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 1,
-              size: 1
-            }
-          },
-          result: resultDefault
-        },
-        expectedResult: resultDefault
+        result: resultDefault
       })
 
       const newResult = {
@@ -182,16 +116,7 @@ describe("searchWithCache", () => {
       await testSearchTrigger({
         query: { products: { from: 1, size: 2 } },
         triggeredQuery: { products: { from: 2, size: 1 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 1,
-              size: 2
-            }
-          },
-          result: mergedResult
-        },
-        expectedResult: mergedResult
+        result: mergedResult
       })
     })
   })
@@ -200,16 +125,7 @@ describe("searchWithCache", () => {
     it("should prefill result from cache on scroll", async () => {
       await testSearchTrigger({
         query: { products: { from: 0, size: 1 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 0,
-              size: 1
-            }
-          },
-          result: resultDefault
-        },
-        expectedResult: resultDefault
+        result: resultDefault
       })
 
       const newResult = { products: { hits: [{ name: "product 2" }], total: 2 } }
@@ -226,16 +142,7 @@ describe("searchWithCache", () => {
       await testSearchTrigger({
         query: { products: { from: 0, size: 2 } },
         triggeredQuery: { products: { from: 1, size: 1 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 0,
-              size: 2
-            }
-          },
-          result: mergedResult
-        },
-        expectedResult: mergedResult
+        result: mergedResult
       })
     })
 
@@ -251,30 +158,12 @@ describe("searchWithCache", () => {
 
       await testSearchTrigger({
         query: { products: { from: 0, size: 2 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 0,
-              size: 2
-            }
-          },
-          result: multipleResults
-        },
-        expectedResult: multipleResults
+        result: multipleResults
       })
 
       await testSearchNoTrigger({
         query: { products: { from: 0, size: 1 } },
-        expectedCache: {
-          query: {
-            products: {
-              from: 0,
-              size: 1
-            }
-          },
-          result: resultDefault
-        },
-        expectedResult: resultDefault
+        result: resultDefault
       })
     })
   })
