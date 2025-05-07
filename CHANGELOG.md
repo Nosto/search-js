@@ -1,3 +1,10 @@
+## [2.8.1](https://github.com/Nosto/search-js/compare/v2.8.0...v2.8.1) (2025-05-07)
+
+
+### Bug Fixes
+
+* use provided function ([1dcc4b1](https://github.com/Nosto/search-js/commit/1dcc4b1b81c82cea66b5f5cbbe25169f0aff6eeb))
+
 # [2.8.0](https://github.com/Nosto/search-js/compare/v2.7.0...v2.8.0) (2025-05-06)
 
 
