@@ -28,7 +28,7 @@ describe("SerpElement", () => {
       })
       const result = render(
         <ConfigContext value={makeAutocompleteConfig({})}>
-          <SerpElement hit={hit} onClick={onClick}>
+          <SerpElement hit={hit} componentProps={{ onClick }}>
             {children}
           </SerpElement>
         </ConfigContext>
@@ -93,6 +93,22 @@ describe("SerpElement", () => {
       )
 
       result.getByText("Anchor").click()
+      expect(onClick).toHaveBeenCalledTimes(1)
+    })
+
+    it("accepts the 'as' prop", () => {
+      const children = <div>Button text</div>
+
+      const onClick = vi.fn()
+      const result = render(
+        <ConfigContext value={makeAutocompleteConfig({})}>
+          <SerpElement as={"button"} componentProps={{ onClick }} hit={hit}>
+            {children}
+          </SerpElement>
+        </ConfigContext>
+      )
+
+      result.getByText("Button text").click()
       expect(onClick).toHaveBeenCalledTimes(1)
     })
   })
