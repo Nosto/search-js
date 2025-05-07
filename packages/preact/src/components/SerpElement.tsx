@@ -16,7 +16,6 @@ export type SerpElementProps<C extends AsComponent> = {
     url?: string
   }
   as?: C
-  onClick?: (event: JSX.TargetedMouseEvent<HTMLElement>) => void
   componentProps?: JSX.LibraryManagedAttributes<C, ComponentProps<C>>
   children?: ComponentChildren
 }
@@ -26,13 +25,7 @@ export type SerpElementProps<C extends AsComponent> = {
  *
  * @group Components
  */
-export function SerpElement<C extends AsComponent>({
-  as,
-  children,
-  hit,
-  onClick,
-  componentProps
-}: SerpElementProps<C>) {
+export function SerpElement<C extends AsComponent>({ as, children, hit, componentProps }: SerpElementProps<C>) {
   const { pageType } = useConfig()
   const track = pageType === "autocomplete" ? undefined : pageType === "search" ? "serp" : pageType
 
@@ -42,14 +35,11 @@ export function SerpElement<C extends AsComponent>({
         nostojs(api => api.recordSearchClick(track, hit))
       }
       savePageScroll()
-      if (typeof onClick === "function") {
-        onClick(event)
-      }
       if (componentProps && "onClick" in componentProps && typeof componentProps.onClick === "function") {
         componentProps.onClick(event)
       }
     },
-    [hit, onClick, componentProps, track]
+    [hit, componentProps, track]
   )
 
   const adjustedComponentProps = {
