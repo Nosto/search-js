@@ -3,7 +3,6 @@ import { logger } from "./logger"
 function setStorage(name: string, value: unknown, storage: Storage) {
   const stringValue = JSON.stringify(value)
   try {
-    logger.info("Setting storage", name, stringValue)
     storage.setItem(name, stringValue)
   } catch (error) {
     logger.warn(error)
