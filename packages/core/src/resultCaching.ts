@@ -5,7 +5,7 @@ import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
 export const STORAGE_ENTRY_NAME = "nosto:search:searchResult"
 
 export type SearchResultDto = {
-  query: ReturnType<typeof getCacheKey>
+  query: SearchQuery
   result: SearchResult
 }
 
