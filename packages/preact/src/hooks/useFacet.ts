@@ -8,7 +8,7 @@ import { useActions } from "./useActions"
  * @param facet
  * @example
  * ```jsx
- * import { useFacet } from '@nosto/search-js/preact'
+ * import { useFacet } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
  *     const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)

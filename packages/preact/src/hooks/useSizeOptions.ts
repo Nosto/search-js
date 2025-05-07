@@ -13,7 +13,7 @@ function normalize(value: number) {
  * @param serpSize
  * @example
  * ```jsx
- * import { useSizeOptions } from "@nosto/search-js/preact"
+ * import { useSizeOptions } from "@nosto/search-js/preact/hooks"
  * import { defaultConfig, sizes } from "../config"
  *
  * export default () => {

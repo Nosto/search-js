@@ -8,7 +8,7 @@ import { getNextPageQuery } from "./getNextPageQuery"
  * Hook for loading more results by specified pageSize value
  * @example
  * ```jsx
- *  import { useLoadMore } from '@nosto/search-js/preact'
+ *  import { useLoadMore } from '@nosto/search-js/preact/hooks'
  *
  *  function LoadMoreButton({ pageSize }) {
  *     const { loadMore } = useLoadMore(pageSize)

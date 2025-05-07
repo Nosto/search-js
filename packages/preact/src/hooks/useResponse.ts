@@ -6,7 +6,7 @@ import { useNostoAppState } from "./useNostoAppState"
  * Preact hook that imports response data to the component.
  * @example
  * ```jsx
- * import { useResponse } from '@nosto/search-js/preact'
+ * import { useResponse } from '@nosto/search-js/preact/hooks'
  * import { defaultConfig } from "../config"
  *
  * export default () => {

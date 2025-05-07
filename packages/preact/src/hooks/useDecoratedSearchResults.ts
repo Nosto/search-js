@@ -10,7 +10,7 @@ import { useNostoAppState } from "./useNostoAppState"
  *
  * @example
  * ```jsx
- * import { useDecoratedSearchResults } from '@nosto/search-js/preact'
+ * import { useDecoratedSearchResults } from '@nosto/search-js/preact/hooks'
  * import { priceDecorator } from '@nosto/search-js/currencies'
  *
  * export default () => {
@@ -28,7 +28,7 @@ import { useNostoAppState } from "./useNostoAppState"
  */
 export function useDecoratedSearchResults<T extends readonly HitDecorator[]>(): DecoratedResult<T>
 export function useDecoratedSearchResults<T extends readonly HitDecorator[]>(
-  products: SearchProduct
+  product: SearchProduct
 ): DecoratedProduct<T>
 export function useDecoratedSearchResults<T extends readonly HitDecorator[]>(products: SearchResult): DecoratedResult<T>
 export function useDecoratedSearchResults<T extends readonly HitDecorator[]>(products?: SearchProduct | SearchResult) {
