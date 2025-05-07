@@ -167,7 +167,8 @@ describe("newSearch", () => {
               {
                 name: "product 1"
               }
-            ]
+            ],
+            total: 0
           }
         }
       })

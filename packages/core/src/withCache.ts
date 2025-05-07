@@ -67,7 +67,7 @@ async function getSearchResultWithCache<HD extends readonly HitDecorator[]>(
     products: {
       ...result.products,
       hits: [...(result.products?.hits || []), ...(backfillResponse.products?.hits || [])],
-      total: backfillResponse.products?.total
+      total: backfillResponse.products?.total || 0
     }
   }
 }
