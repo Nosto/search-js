@@ -19,16 +19,9 @@ export type SearchOptions<HD extends readonly HitDecorator[] = readonly HitDecor
   usePersistentCache?: boolean
 }
 
-export type SearchFn<HD extends readonly HitDecorator[]> = (
-  query: SearchQuery,
-  options: SearchOptions<HD>
-) => Promise<SearchResult>
+export type SearchFn = (query: SearchQuery, options: SearchOptions) => Promise<SearchResult>
 
-export type SearchWithNext<HD extends readonly HitDecorator[]> = (
-  query: SearchQuery,
-  options: SearchOptions<HD>,
-  searchFn: SearchFn<HD>
-) => Promise<SearchResult>
+export type SearchWithNext = (query: SearchQuery, options: SearchOptions, searchFn: SearchFn) => Promise<SearchResult>
 
 export type HitDecorator = (hit: SearchProduct) => SearchProduct
 

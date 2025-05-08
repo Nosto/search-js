@@ -1,4 +1,4 @@
-import { SearchResultDto, STORAGE_ENTRY_NAME } from "@core/resultCaching"
+import { STORAGE_ENTRY_NAME } from "@core/resultCaching"
 import { searchWithCache } from "@core/withCache"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { getSessionStorageItem } from "@utils/storage"
@@ -18,7 +18,7 @@ describe("searchWithCache", () => {
   async function testSearch({ query, result }: TestSearchOptions) {
     const response = await searchWithCache(query, { usePersistentCache: true }, search)
     expect(response).toEqual(result)
-    expect(getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)).toEqual({
+    expect(getSessionStorageItem(STORAGE_ENTRY_NAME)).toEqual({
       query,
       result
     })

@@ -1,25 +1,25 @@
-import { HitDecorator, SearchFn, SearchOptions } from "@core/types"
+import { SearchFn, SearchOptions } from "@core/types"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 
 import { cacheSearchResult, loadCachedResult } from "./resultCaching"
 
-export async function searchWithCache<HD extends readonly HitDecorator[]>(
+export async function searchWithCache(
   query: SearchQuery,
-  { usePersistentCache, ...options }: SearchOptions<HD>,
-  searchFn: SearchFn<HD>
+  { usePersistentCache, ...options }: SearchOptions,
+  searchFn: SearchFn
 ): Promise<SearchResult> {
   if (!usePersistentCache) {
     return searchFn(query, options)
   }
-  const response = await getSearchResultWithCache<HD>(query, options, searchFn)
+  const response = await getSearchResultWithCache(query, options, searchFn)
   cacheSearchResult(query, response)
   return response
 }
 
-async function getSearchResultWithCache<HD extends readonly HitDecorator[]>(
+async function getSearchResultWithCache(
   searchQuery: SearchQuery,
-  options: SearchOptions<HD>,
-  searchFn: SearchFn<HD>
+  options: SearchOptions,
+  searchFn: SearchFn
 ): Promise<SearchResult> {
   const { from = 0, size = 0 } = searchQuery.products || {}
   const result = loadCachedResult(searchQuery)

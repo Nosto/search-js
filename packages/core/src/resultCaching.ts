@@ -4,18 +4,17 @@ import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
 
 export const STORAGE_ENTRY_NAME = "nosto:search:searchResult"
 
-export type SearchResultDto = {
+type CacheEntry = {
   query: SearchQuery
   result: SearchResult
 }
 
 export function cacheSearchResult(query: SearchQuery, result: SearchResult) {
-  const dto: SearchResultDto = { query, result }
-  setSessionStorageItem(STORAGE_ENTRY_NAME, dto)
+  setSessionStorageItem(STORAGE_ENTRY_NAME, { query, result })
 }
 
 export function loadCachedResult(query: SearchQuery) {
-  const storageValue = getSessionStorageItem<SearchResultDto>(STORAGE_ENTRY_NAME)
+  const storageValue = getSessionStorageItem<CacheEntry>(STORAGE_ENTRY_NAME)
   if (!storageValue || !isValueShapeCorrect(storageValue)) {
     return null
   }
@@ -43,6 +42,6 @@ function getCacheKey(query: SearchQuery): SearchQuery {
 }
 
 // TODO: Better validation with valibot
-export function isValueShapeCorrect(value: unknown): value is SearchResultDto {
+function isValueShapeCorrect(value: unknown): value is CacheEntry {
   return typeof value === "object" && value !== null && "query" in value && "result" in value
 }
