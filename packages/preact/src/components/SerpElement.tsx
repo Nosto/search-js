@@ -1,19 +1,23 @@
 import { nostojs } from "@nosto/nosto-js"
 import { useConfig } from "@preact/config/configContext"
-import { renderHeadless } from "@preact/dom/renderHeadless"
 import { savePageScroll } from "@utils/savePageScroll"
-import { ComponentChildren } from "preact"
+import { ComponentChildren, ComponentProps, ComponentType, JSX } from "preact"
+import { useCallback } from "preact/hooks"
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AsComponent = keyof JSX.IntrinsicElements | ComponentType<any>
 
 /**
  * @group Components
  */
-export type SerpElementProps = {
-  children: ComponentChildren
+export type SerpElementProps<C extends AsComponent> = {
   hit: {
     productId: string
     url?: string
   }
-  onClick?: (event: Event) => void
+  as?: C
+  componentProps?: JSX.LibraryManagedAttributes<C, ComponentProps<C>>
+  children?: ComponentChildren
 }
 
 /**
@@ -21,30 +25,29 @@ export type SerpElementProps = {
  *
  * @group Components
  */
-export function SerpElement({ children, hit, onClick }: SerpElementProps) {
+export function SerpElement<C extends AsComponent>({ as, children, hit, componentProps }: SerpElementProps<C>) {
   const { pageType } = useConfig()
   const track = pageType === "autocomplete" ? undefined : pageType === "search" ? "serp" : pageType
 
-  return renderHeadless({
-    children,
-    updateElement: (vnode, ctx) => {
-      if (ctx.depth > 0) {
-        return vnode
+  const onAnchorClick = useCallback(
+    (event: JSX.TargetedMouseEvent<HTMLElement>) => {
+      if (hit && track) {
+        nostojs(api => api.recordSearchClick(track, hit))
       }
+      savePageScroll()
+      if (componentProps && "onClick" in componentProps && typeof componentProps.onClick === "function") {
+        componentProps.onClick(event)
+      }
+    },
+    [hit, componentProps, track]
+  )
 
-      vnode.props = {
-        ...vnode.props,
-        onClick: (event: MouseEvent) => {
-          if (hit && track) {
-            nostojs(api => api.recordSearchClick(track, hit))
-          }
-          savePageScroll()
-          if (typeof onClick === "function") {
-            onClick(event)
-          }
-        }
-      }
-      return vnode
-    }
-  })
+  const adjustedComponentProps = {
+    ...componentProps!,
+    onClick: onAnchorClick
+  }
+
+  const Comp = as ?? "a"
+
+  return <Comp {...adjustedComponentProps}>{children}</Comp>
 }
