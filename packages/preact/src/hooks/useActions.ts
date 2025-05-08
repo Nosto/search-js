@@ -14,7 +14,7 @@ import { updateSearch } from "../actions/updateSearch"
  *
  * @example
  * ```jsx
- * import { useActions } from '@nosto/search-js/preact'
+ * import { useActions } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
  *     const { newSearch } = useActions()

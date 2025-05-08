@@ -19,7 +19,7 @@ export type Page = {
  *
  * @example
  * ```jsx
- * import { usePagination } from '@nosto/search-js/preact'
+ * import { usePagination } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
  *     const { pages } = usePagination()
