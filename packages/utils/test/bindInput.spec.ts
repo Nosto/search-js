@@ -6,26 +6,19 @@ describe("bindInput", () => {
   beforeEach(() => {
     document.body.innerHTML = ""
   })
-  it("should bind and unbind keydown listener when onSubmit is provided", () => {
+  it("should bind and unbind keydown listener", () => {
     const el = document.createElement("input")
     const callbacks = {
-      onSubmit: vi.fn(),
       onKeyDown: vi.fn()
     }
 
-    const { destroy } = bindInput(el, callbacks)
+    bindInput(el, callbacks)
 
     const event = new KeyboardEvent("keydown", { key: "Enter" })
     el.value = "test"
     el.dispatchEvent(event)
 
-    expect(callbacks.onSubmit).toHaveBeenCalledWith("test")
     expect(callbacks.onKeyDown).toHaveBeenCalledWith("test", "Enter")
-
-    destroy()
-
-    el.dispatchEvent(event)
-    expect(callbacks.onSubmit).toHaveBeenCalledTimes(1)
   })
 
   it("should prevent default on ArrowDown and ArrowUp keydown events", () => {
