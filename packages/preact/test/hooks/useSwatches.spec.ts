@@ -69,7 +69,6 @@ describe("useSwatches", () => {
   it("should return empty swatches if no SKUs are provided", () => {
     const { result } = renderHook(() => useSwatches([], ["color", "size"]))
     expect(result.current.swatches).toEqual([])
-    expect(result.current.selectedOptions).toEqual({})
   })
 
   it("should aggregate swatches correctly based on fields", () => {
@@ -101,7 +100,6 @@ describe("useSwatches", () => {
         })
       }
     ])
-    expect(result.current.selectedOptions).toEqual({})
   })
 
   it("should toggle options correctly", () => {
@@ -109,11 +107,54 @@ describe("useSwatches", () => {
 
     result.current.toggleOption("color", "Red")
     rerender()
-    expect(result.current.selectedOptions).toStrictEqual({ color: "Red" })
+    expect(result.current.swatches).toEqual([
+      {
+        field: "color",
+        options: createSwatchOptions(
+          {
+            Red: ["SKU-001", "SKU-002"],
+            Blue: ["SKU-003", "SKU-004"],
+            Green: ["SKU-005", "SKU-006"]
+          },
+          "Red"
+        )
+      },
+      {
+        field: "size",
+        options: createSwatchOptions(
+          {
+            S: ["SKU-001", "SKU-005"],
+            M: ["SKU-002", "SKU-003"],
+            L: ["SKU-004"],
+            XL: ["SKU-006"]
+          },
+          undefined,
+          ["L", "XL"]
+        )
+      }
+    ])
 
     result.current.toggleOption("color", "Red")
     rerender()
-    expect(result.current.selectedOptions).toStrictEqual({})
+    expect(result.current.swatches).toEqual([
+      {
+        field: "color",
+        options: createSwatchOptions({
+          Red: ["SKU-001", "SKU-002"],
+          Blue: ["SKU-003", "SKU-004"],
+          Green: ["SKU-005", "SKU-006"]
+        })
+      },
+      {
+        field: "size",
+        options: createSwatchOptions({
+          S: ["SKU-001", "SKU-005"],
+          M: ["SKU-002", "SKU-003"],
+          L: ["SKU-004"],
+          XL: ["SKU-006"]
+        })
+      }
+    ])
   })
 
   it("should handle multiple selections correctly", () => {
@@ -121,19 +162,10 @@ describe("useSwatches", () => {
 
     result.current.toggleOption("color", "Red")
     rerender()
-    expect(result.current.selectedOptions).toStrictEqual({ color: "Red" })
-
     result.current.toggleOption("size", "M")
     rerender()
-    expect(result.current.selectedOptions).toStrictEqual({ color: "Red", size: "M" })
-
     result.current.toggleOption("material", "Silk")
     rerender()
-    expect(result.current.selectedOptions).toStrictEqual({
-      color: "Red",
-      size: "M",
-      material: "Silk"
-    })
 
     expect(result.current.swatches).toEqual([
       {

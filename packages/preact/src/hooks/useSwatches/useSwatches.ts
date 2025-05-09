@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from "preact/hooks"
 
-import { aggregateSwatches, filterSwatches, SKU } from "./utils"
+import { aggregateSwatches, SKU } from "./aggregateSwatches"
+import { filterSwatches } from "./filterSwatches"
 
 /**
  * Preact hook for managing swatch options and selection.
@@ -13,7 +14,7 @@ import { aggregateSwatches, filterSwatches, SKU } from "./utils"
  * import { useSwatches } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
- *   const { swatches, selectedOptions, toggleOption } = useSwatches(skus, ["color", "size"])
+ *   const { swatches, toggleOption } = useSwatches(skus, ["color", "size"])
  *
  *   return (
  *     <div>
@@ -64,5 +65,5 @@ export function useSwatches(skus: SKU[] = [], fields: string[] = []) {
     })
   }, [])
 
-  return { swatches: filteredSwatches, selectedOptions, toggleOption }
+  return { swatches: filteredSwatches, toggleOption }
 }

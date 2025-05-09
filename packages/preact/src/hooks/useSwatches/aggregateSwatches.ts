@@ -3,14 +3,32 @@ import { SearchProductSku } from "@nosto/nosto-js/client"
 export type SKU = Pick<SearchProductSku, "id" | "customFields">
 
 export interface SwatchOption {
+  /**
+   * The value of the swatch option (e.g., "Red", "L").
+   */
   value: string
+  /**
+   * An array of SKU IDs associated with this option.
+   */
   skus: string[]
+  /**
+   * Indicates whether the option is unavailable.
+   */
   unavailable?: boolean
+  /**
+   * Indicates whether the option is selected.
+   */
   selected?: boolean
 }
 
 export interface SwatchField {
+  /**
+   * The name of the field (e.g., "color", "size").
+   */
   field: string
+  /**
+   * An array of swatch options for this field.
+   */
   options: SwatchOption[]
 }
 
@@ -42,30 +60,5 @@ export function aggregateSwatches(skus: SKU[], fields: string[]): SwatchField[] 
       unavailable: false,
       selected: false
     }))
-  }))
-}
-
-export function filterSwatches(swatches: SwatchField[], selectedOptions: Record<string, string>): SwatchField[] {
-  if (!swatches.length) return []
-
-  return swatches.map(({ field, options }) => ({
-    field,
-    options: options.map(option => {
-      const unavailable = !option.skus.some(sku =>
-        Object.entries(selectedOptions).every(([selectedField, selectedValue]) => {
-          if (selectedField === field) return true
-          const matchingSwatch = swatches.find(sw => sw.field === selectedField)
-          return matchingSwatch?.options.some(opt => opt.value === selectedValue && opt.skus.includes(sku))
-        })
-      )
-
-      const selected = selectedOptions[field] === option.value
-
-      return {
-        ...option,
-        unavailable,
-        selected
-      }
-    })
   }))
 }
