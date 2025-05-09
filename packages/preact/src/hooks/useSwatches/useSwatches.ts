@@ -1,6 +1,7 @@
+import { SearchProductSku } from "@nosto/nosto-js/client"
 import { useCallback, useMemo, useState } from "preact/hooks"
 
-import { aggregateSwatches, SKU } from "./aggregateSwatches"
+import { aggregateSwatches } from "./aggregateSwatches"
 import { filterSwatches } from "./filterSwatches"
 
 /**
@@ -42,7 +43,7 @@ import { filterSwatches } from "./filterSwatches"
  *
  * @group Hooks
  */
-export function useSwatches(skus: SKU[] = [], fields: string[] = []) {
+export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
 
   const swatches = useMemo(() => {

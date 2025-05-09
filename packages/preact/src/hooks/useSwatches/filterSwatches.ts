@@ -6,13 +6,13 @@ export function filterSwatches(swatches: SwatchField[], selectedOptions: Record<
   return swatches.map(({ field, options }) => ({
     field,
     options: options.map(option => {
-      const unavailable = !option.skus.some(sku =>
-        Object.entries(selectedOptions).every(([selectedField, selectedValue]) => {
+      const unavailable = !option.skus?.some(sku => {
+        return Object.entries(selectedOptions).every(([selectedField, selectedValue]) => {
           if (selectedField === field) return true
-          const matchingSwatch = swatches.find(sw => sw.field === selectedField)
-          return matchingSwatch?.options.some(opt => opt.value === selectedValue && opt.skus.includes(sku))
+          const skuFieldValue = sku.customFields?.find(field => field.key.toLowerCase() === selectedField)?.value
+          return skuFieldValue === selectedValue
         })
-      )
+      })
 
       const selected = selectedOptions[field] === option.value
 

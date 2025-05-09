@@ -1,3 +1,4 @@
+import { SearchProductSku } from "@nosto/nosto-js/client"
 import { useSwatches } from "@preact/hooks/useSwatches/useSwatches"
 import { renderHook } from "@testing-library/preact"
 import { describe, expect, it } from "vitest"
@@ -8,7 +9,7 @@ function createSwatchOptions(fields: Record<string, string>): { key: string; val
 
 function createTestSwatchField(
   field: string,
-  values: Record<string, string[]>,
+  values: Record<string, SearchProductSku[]>,
   selectedValue?: string,
   unavailableValues: string[] = []
 ) {
@@ -26,20 +27,20 @@ function createTestSwatchField(
 function createExpectedSwatches() {
   return [
     createTestSwatchField("color", {
-      Red: ["SKU-001", "SKU-002"],
-      Blue: ["SKU-003", "SKU-004"],
-      Green: ["SKU-005", "SKU-006"]
+      Red: [testSKUs[0], testSKUs[1]],
+      Blue: [testSKUs[2], testSKUs[3]],
+      Green: [testSKUs[4], testSKUs[5]]
     }),
     createTestSwatchField("size", {
-      S: ["SKU-001", "SKU-005"],
-      M: ["SKU-002", "SKU-003"],
-      L: ["SKU-004"],
-      XL: ["SKU-006"]
+      S: [testSKUs[0], testSKUs[4]],
+      M: [testSKUs[1], testSKUs[2]],
+      L: [testSKUs[3]],
+      XL: [testSKUs[5]]
     }),
     createTestSwatchField("material", {
-      Cotton: ["SKU-001", "SKU-003"],
-      Silk: ["SKU-002", "SKU-005"],
-      Wool: ["SKU-004", "SKU-006"]
+      Cotton: [testSKUs[0], testSKUs[2]],
+      Silk: [testSKUs[1], testSKUs[4]],
+      Wool: [testSKUs[3], testSKUs[5]]
     })
   ]
 }
@@ -115,19 +116,19 @@ describe("useSwatches", () => {
       createTestSwatchField(
         "color",
         {
-          Red: ["SKU-001", "SKU-002"],
-          Blue: ["SKU-003", "SKU-004"],
-          Green: ["SKU-005", "SKU-006"]
+          Red: [testSKUs[0], testSKUs[1]],
+          Blue: [testSKUs[2], testSKUs[3]],
+          Green: [testSKUs[4], testSKUs[5]]
         },
         "Red"
       ),
       createTestSwatchField(
         "size",
         {
-          S: ["SKU-001", "SKU-005"],
-          M: ["SKU-002", "SKU-003"],
-          L: ["SKU-004"],
-          XL: ["SKU-006"]
+          S: [testSKUs[0], testSKUs[4]],
+          M: [testSKUs[1], testSKUs[2]],
+          L: [testSKUs[3]],
+          XL: [testSKUs[5]]
         },
         undefined,
         ["L", "XL"]
@@ -135,9 +136,9 @@ describe("useSwatches", () => {
       createTestSwatchField(
         "material",
         {
-          Cotton: ["SKU-001", "SKU-003"],
-          Silk: ["SKU-002", "SKU-005"],
-          Wool: ["SKU-004", "SKU-006"]
+          Cotton: [testSKUs[0], testSKUs[2]],
+          Silk: [testSKUs[1], testSKUs[4]],
+          Wool: [testSKUs[3], testSKUs[5]]
         },
         undefined,
         ["Wool"]
@@ -163,9 +164,9 @@ describe("useSwatches", () => {
       createTestSwatchField(
         "color",
         {
-          Red: ["SKU-001", "SKU-002"],
-          Blue: ["SKU-003", "SKU-004"],
-          Green: ["SKU-005", "SKU-006"]
+          Red: [testSKUs[0], testSKUs[1]],
+          Blue: [testSKUs[2], testSKUs[3]],
+          Green: [testSKUs[4], testSKUs[5]]
         },
         "Red",
         ["Blue", "Green"]
@@ -173,10 +174,10 @@ describe("useSwatches", () => {
       createTestSwatchField(
         "size",
         {
-          S: ["SKU-001", "SKU-005"],
-          M: ["SKU-002", "SKU-003"],
-          L: ["SKU-004"],
-          XL: ["SKU-006"]
+          S: [testSKUs[0], testSKUs[4]],
+          M: [testSKUs[1], testSKUs[2]],
+          L: [testSKUs[3]],
+          XL: [testSKUs[5]]
         },
         "M",
         ["S", "L", "XL"]
@@ -184,9 +185,9 @@ describe("useSwatches", () => {
       createTestSwatchField(
         "material",
         {
-          Cotton: ["SKU-001", "SKU-003"],
-          Silk: ["SKU-002", "SKU-005"],
-          Wool: ["SKU-004", "SKU-006"]
+          Cotton: [testSKUs[0], testSKUs[2]],
+          Silk: [testSKUs[1], testSKUs[4]],
+          Wool: [testSKUs[3], testSKUs[5]]
         },
         "Silk",
         ["Cotton", "Wool"]
