@@ -75,13 +75,10 @@ export function useSwatches(skus: SKU[] = [], fields: string[] = []) {
   const swatches = useMemo(() => {
     if (!skus.length || !fields.length) return []
 
-    const aggregated = fields.reduce(
-      (acc, field) => {
-        acc[field] = {}
-        return acc
-      },
-      {} as Record<string, Record<string, string[]>>
-    )
+    const aggregated = fields.reduce<Record<string, Record<string, string[]>>>((acc, field) => {
+      acc[field] = {}
+      return acc
+    }, {})
 
     skus.forEach(({ id, customFields }) => {
       customFields?.forEach(({ key, value }) => {
