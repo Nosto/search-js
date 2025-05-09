@@ -46,13 +46,10 @@ import { filterSwatches } from "./filterSwatches"
 export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
 
-  const swatches = useMemo(() => {
-    return aggregateSwatches(skus, fields)
-  }, [skus, fields])
-
   const filteredSwatches = useMemo(() => {
+    const swatches = aggregateSwatches(skus, fields)
     return filterSwatches(swatches, selectedOptions)
-  }, [swatches, selectedOptions])
+  }, [skus, fields, selectedOptions])
 
   const toggleOption = useCallback((field: string, value: string) => {
     setSelectedOptions(prev => {
