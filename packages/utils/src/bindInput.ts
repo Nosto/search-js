@@ -31,7 +31,9 @@ export function bindInput(
   if (onKeyDown || onSubmit) {
     addEventListener(target, "keydown", (event: KeyboardEvent) => {
       onKeyDown?.(target.value, event.key)
-      if (event.key === "ArrowDown" || event.key === "ArrowUp" || (onSubmit && event.key === "Enter")) {
+      if (onKeyDown && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
+        event.preventDefault()
+      } else if (onSubmit && event.key === "Enter") {
         event.preventDefault()
       }
     })

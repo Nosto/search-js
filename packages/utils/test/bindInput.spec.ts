@@ -2,6 +2,11 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { bindInput } from "../src/bindInput"
 
+const eventOptions = {
+  bubbles: true,
+  cancelable: true
+}
+
 describe("bindInput", () => {
   beforeEach(() => {
     document.body.innerHTML = ""
@@ -30,17 +35,23 @@ describe("bindInput", () => {
     }
     bindInput(el, callbacks)
 
-    const keyDownEventOptions = {
-      bubbles: true,
-      cancelable: true
-    }
-
-    const arrowDownEvent = new KeyboardEvent("keydown", { ...keyDownEventOptions, key: "ArrowDown" })
-    const arrowUpEvent = new KeyboardEvent("keydown", { ...keyDownEventOptions, key: "ArrowUp" })
+    const arrowDownEvent = new KeyboardEvent("keydown", { ...eventOptions, key: "ArrowDown" })
+    const arrowUpEvent = new KeyboardEvent("keydown", { ...eventOptions, key: "ArrowUp" })
     el.dispatchEvent(arrowDownEvent)
     el.dispatchEvent(arrowUpEvent)
     expect(arrowDownEvent.defaultPrevented).toBe(true)
     expect(arrowUpEvent.defaultPrevented).toBe(true)
+  })
+
+  it("should prevent default on Enter keydown event when onSubmit is provided", () => {
+    const el = document.createElement("input")
+    const callbacks = {
+      onSubmit: vi.fn()
+    }
+    bindInput(el, callbacks)
+    const event = new KeyboardEvent("keydown", { ...eventOptions, key: "Enter" })
+    el.dispatchEvent(event)
+    expect(event.defaultPrevented).toBe(true)
   })
 
   it("should bind and unbind submit listener to the form", () => {
@@ -55,7 +66,7 @@ describe("bindInput", () => {
 
     bindInput(el, callbacks, { form })
 
-    const event = new SubmitEvent("submit", { bubbles: true, cancelable: true })
+    const event = new SubmitEvent("submit", eventOptions)
     form.dispatchEvent(event)
 
     expect(callbacks.onSubmit).toHaveBeenCalledWith(el.value)
@@ -77,7 +88,7 @@ describe("bindInput", () => {
 
     bindInput(el, callbacks, { form })
 
-    const event = new Event("click", { bubbles: true, cancelable: true })
+    const event = new Event("click", eventOptions)
     button.dispatchEvent(event)
 
     expect(callbacks.onSubmit).toHaveBeenCalledWith(el.value)
