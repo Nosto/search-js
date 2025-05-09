@@ -3,6 +3,7 @@ import { useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
 import { SerpElement } from "@nosto/search-js/preact/serp"
 
 import { productImagePlaceholder } from "./productImagePlaceholder"
+import ProductSwatches from "./ProductSwatches"
 import { hitDecorators } from "./Search"
 
 type Props = {
@@ -19,6 +20,63 @@ export function Product({ product: baseProduct }: Props) {
         }
       : undefined
   ].filter(v => !!v)
+
+  const testSKUs = [
+    {
+      id: "SKU-001",
+      image: "https://via.placeholder.com/150?text=Red+Cotton",
+      price: 19.99,
+      customFields: [
+        { key: "color", value: "Red" },
+        { key: "size", value: "S" },
+        { key: "material", value: "Cotton" }
+      ]
+    },
+    {
+      id: "SKU-002",
+      image: "https://via.placeholder.com/150?text=Red+Silk",
+      price: 24.99,
+      customFields: [
+        { key: "color", value: "Red" },
+        { key: "size", value: "M" },
+        { key: "material", value: "Silk" }
+      ]
+    },
+    {
+      id: "SKU-003",
+      image: "https://via.placeholder.com/150?text=Blue+Cotton",
+      price: 22.99,
+      customFields: [
+        { key: "color", value: "Blue" },
+        { key: "size", value: "M" },
+        { key: "material", value: "Cotton" }
+      ]
+    },
+    {
+      id: "SKU-004",
+      customFields: [
+        { key: "color", value: "Blue" },
+        { key: "size", value: "L" },
+        { key: "material", value: "Wool" }
+      ]
+    },
+    {
+      id: "SKU-005",
+      customFields: [
+        { key: "color", value: "Green" },
+        { key: "size", value: "S" },
+        { key: "material", value: "Silk" }
+      ]
+    },
+    {
+      id: "SKU-006",
+      customFields: [
+        { key: "color", value: "Green" },
+        { key: "size", value: "XL" },
+        { key: "material", value: "Wool" }
+      ]
+    }
+  ]
 
   return (
     <SerpElement
@@ -63,6 +121,7 @@ export function Product({ product: baseProduct }: Props) {
           </div>
         </div>
       </a>
+      <ProductSwatches skus={testSKUs} />
     </SerpElement>
   )
 }
