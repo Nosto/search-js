@@ -51,7 +51,7 @@ export function filterSwatches(swatches: SwatchField[], selectedOptions: Record<
   return swatches.map(({ field, options }) => ({
     field,
     options: options.map(option => {
-      const isUnavailable = !option.skus.some(sku =>
+      const unavailable = !option.skus.some(sku =>
         Object.entries(selectedOptions).every(([selectedField, selectedValue]) => {
           if (selectedField === field) return true
           const matchingSwatch = swatches.find(sw => sw.field === selectedField)
@@ -59,12 +59,12 @@ export function filterSwatches(swatches: SwatchField[], selectedOptions: Record<
         })
       )
 
-      const isSelected = selectedOptions[field] === option.value
+      const selected = selectedOptions[field] === option.value
 
       return {
         ...option,
-        unavailable: isUnavailable,
-        selected: isSelected
+        unavailable,
+        selected
       }
     })
   }))
