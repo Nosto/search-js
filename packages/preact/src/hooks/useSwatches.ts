@@ -1,14 +1,10 @@
+import { SearchProductSku } from "@nosto/nosto-js/client"
 import { useCallback, useMemo, useState } from "preact/hooks"
 
 /**
  * SKU type representing a product variant.
  */
-export interface SKU {
-  /** Unique identifier for the SKU. */
-  id: string
-  /** Array of custom fields associated with this SKU (e.g., color, size). */
-  customFields: { key: string; value: string }[]
-}
+export type SKU = Pick<SearchProductSku, "id" | "customFields">
 
 /**
  * SwatchOption type representing a selectable swatch value.
@@ -35,18 +31,6 @@ export interface SwatchField {
 }
 
 /**
- * Result type for the useSwatches hook.
- */
-export interface UseSwatchesResult {
-  /** Array of swatch fields with their options. */
-  swatches: SwatchField[]
-  /** Object representing the currently selected options (field-value pairs). */
-  selectedOptions: Record<string, string>
-  /** Function to toggle a swatch option (select or deselect). */
-  toggleOption: (field: string, value: string) => void
-}
-
-/**
  * Preact hook for managing swatch options and selection.
  *
  * This hook aggregates SKU data by specified fields (e.g., "color", "size"),
@@ -63,13 +47,17 @@ export interface UseSwatchesResult {
  *     <div>
  *       {swatches.map(({ field, options }) => (
  *         <div key={field}>
- *           {options.map(option => (
+ *           {options.map(({ value, unavailable, selected }) => (
  *             <button
- *               key={option.value}
- *               disabled={option.unavailable}
- *               onClick={() => toggleOption(field, option.value)}
+ *               key={value}
+ *               disabled={unavailable}
+ *               onClick={() => toggleOption(field, value)}
+ *               style={{
+ *                 background: selected ? "#0070f3" : "transparent",
+ *                 color: selected ? "#fff" : "#000",
+ *               }}
  *             >
- *               {option.value}
+ *               {value}
  *             </button>
  *           ))}
  *         </div>
@@ -81,43 +69,44 @@ export interface UseSwatchesResult {
  *
  * @group Hooks
  */
-export function useSwatches(items: SKU[] = [], fields: string[] = []): UseSwatchesResult {
+export function useSwatches(skus: SKU[] = [], fields: string[] = []) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
 
   const swatches = useMemo(() => {
-    if (!items.length || !fields.length) return []
+    if (!skus.length || !fields.length) return []
 
-    const aggregated: Record<string, Record<string, string[]>> = {}
+    const aggregated = fields.reduce(
+      (acc, field) => {
+        acc[field] = {}
+        return acc
+      },
+      {} as Record<string, Record<string, string[]>>
+    )
 
-    items.forEach(item => {
-      const fieldValues = item.customFields.reduce(
-        (acc, field) => {
-          acc[field.key.toLowerCase()] = field.value
-          return acc
-        },
-        {} as Record<string, string>
-      )
-
-      fields.forEach(field => {
-        const value = fieldValues[field.toLowerCase()]
-        if (!value) return
-
-        if (!aggregated[field]) aggregated[field] = {}
-        if (!aggregated[field][value]) aggregated[field][value] = []
-        aggregated[field][value].push(item.id)
+    skus.forEach(({ id, customFields }) => {
+      customFields?.forEach(({ key, value }) => {
+        const field = key.toLowerCase()
+        if (fields.includes(field)) {
+          if (!aggregated[field][value]) {
+            aggregated[field][value] = []
+          }
+          if (id) {
+            aggregated[field][value].push(id)
+          }
+        }
       })
     })
 
     return Object.entries(aggregated).map(([field, values]) => ({
       field,
-      options: Object.entries(values).map(([value, skuList]) => ({
+      options: Object.entries(values).map(([value, skus]) => ({
         value,
-        skus: skuList,
+        skus,
         unavailable: false,
         selected: false
       }))
     }))
-  }, [items, fields])
+  }, [skus, fields])
 
   const filteredSwatches = useMemo(() => {
     if (!swatches.length) return []
