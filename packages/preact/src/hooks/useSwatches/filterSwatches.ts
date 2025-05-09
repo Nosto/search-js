@@ -1,4 +1,4 @@
-import { SwatchField } from "./aggregateSwatches"
+import { SwatchField } from "../types"
 
 export function filterSwatches(swatches: SwatchField[], selectedOptions: Record<string, string>): SwatchField[] {
   if (!swatches.length) return []
