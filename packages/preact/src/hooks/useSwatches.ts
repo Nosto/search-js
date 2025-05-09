@@ -20,6 +20,8 @@ export interface SwatchOption {
   skus: string[]
   /** Indicates if this swatch option is unavailable based on selected options. */
   unavailable?: boolean
+  /** Indicates if this swatch option is selected. */
+  selected?: boolean
 }
 
 /**
@@ -111,33 +113,39 @@ export function useSwatches(items: SKU[] = [], fields: string[] = []): UseSwatch
       options: Object.entries(values).map(([value, skuList]) => ({
         value,
         skus: skuList,
-        unavailable: false
+        unavailable: false,
+        selected: false
       }))
     }))
   }, [items, fields])
 
   const filteredSwatches = useMemo(() => {
-    if (!swatches || swatches.length === 0) {
-      return []
-    }
+    if (!swatches.length) return []
 
-    return swatches.map(({ field, options }) => ({
-      field,
-      options: options.map(option => ({
-        ...option,
-        unavailable: Object.entries(selectedOptions).some(
-          ([selectedField, selectedValue]) =>
-            selectedField !== field &&
-            !option.skus.some(
-              sku =>
-                selectedValue &&
-                swatches
-                  .find(sw => sw.field === selectedField)
-                  ?.options.some(opt => opt.value === selectedValue && opt.skus.includes(sku))
-            )
-        )
-      }))
-    }))
+    return swatches.map(({ field, options }) => {
+      return {
+        field,
+        options: options.map(option => {
+          const isUnavailable = selectedOptions
+            ? !option.skus.some(sku =>
+                Object.entries(selectedOptions).every(([selectedField, selectedValue]) => {
+                  if (selectedField === field) return true
+                  const matchingSwatch = swatches.find(sw => sw.field === selectedField)
+                  return matchingSwatch?.options.some(opt => opt.value === selectedValue && opt.skus.includes(sku))
+                })
+              )
+            : false
+
+          const isSelected = selectedOptions[field] === option.value
+
+          return {
+            ...option,
+            unavailable: isUnavailable,
+            selected: isSelected
+          }
+        })
+      }
+    })
   }, [swatches, selectedOptions])
 
   const toggleOption = useCallback((field: string, value: string) => {

@@ -66,26 +66,26 @@ describe("useSwatches", () => {
       {
         field: "color",
         options: [
-          { value: "Red", skus: ["SKU-001", "SKU-002"], unavailable: false },
-          { value: "Blue", skus: ["SKU-003", "SKU-004"], unavailable: false },
-          { value: "Green", skus: ["SKU-005", "SKU-006"], unavailable: false }
+          { value: "Red", skus: ["SKU-001", "SKU-002"], unavailable: false, selected: false },
+          { value: "Blue", skus: ["SKU-003", "SKU-004"], unavailable: false, selected: false },
+          { value: "Green", skus: ["SKU-005", "SKU-006"], unavailable: false, selected: false }
         ]
       },
       {
         field: "size",
         options: [
-          { value: "S", skus: ["SKU-001", "SKU-005"], unavailable: false },
-          { value: "M", skus: ["SKU-002", "SKU-003"], unavailable: false },
-          { value: "L", skus: ["SKU-004"], unavailable: false },
-          { value: "XL", skus: ["SKU-006"], unavailable: false }
+          { value: "S", skus: ["SKU-001", "SKU-005"], unavailable: false, selected: false },
+          { value: "M", skus: ["SKU-002", "SKU-003"], unavailable: false, selected: false },
+          { value: "L", skus: ["SKU-004"], unavailable: false, selected: false },
+          { value: "XL", skus: ["SKU-006"], unavailable: false, selected: false }
         ]
       },
       {
         field: "material",
         options: [
-          { value: "Cotton", skus: ["SKU-001", "SKU-003"], unavailable: false },
-          { value: "Silk", skus: ["SKU-002", "SKU-005"], unavailable: false },
-          { value: "Wool", skus: ["SKU-004", "SKU-006"], unavailable: false }
+          { value: "Cotton", skus: ["SKU-001", "SKU-003"], unavailable: false, selected: false },
+          { value: "Silk", skus: ["SKU-002", "SKU-005"], unavailable: false, selected: false },
+          { value: "Wool", skus: ["SKU-004", "SKU-006"], unavailable: false, selected: false }
         ]
       }
     ])
@@ -105,7 +105,7 @@ describe("useSwatches", () => {
   })
 
   it("should handle multiple selections correctly", () => {
-    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size"]))
+    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
 
     result.current.toggleOption("color", "Red")
     rerender()
@@ -127,26 +127,26 @@ describe("useSwatches", () => {
       {
         field: "color",
         options: [
-          { value: "Red", skus: ["SKU-001", "SKU-002"], unavailable: false },
-          { value: "Blue", skus: ["SKU-003", "SKU-004"], unavailable: true },
-          { value: "Green", skus: ["SKU-005", "SKU-006"], unavailable: true }
+          { value: "Red", skus: ["SKU-001", "SKU-002"], unavailable: false, selected: true },
+          { value: "Blue", skus: ["SKU-003", "SKU-004"], unavailable: true, selected: false },
+          { value: "Green", skus: ["SKU-005", "SKU-006"], unavailable: true, selected: false }
         ]
       },
       {
         field: "size",
         options: [
-          { value: "S", skus: ["SKU-001", "SKU-005"], unavailable: true },
-          { value: "M", skus: ["SKU-002", "SKU-003"], unavailable: false },
-          { value: "L", skus: ["SKU-004"], unavailable: true },
-          { value: "XL", skus: ["SKU-006"], unavailable: true }
+          { value: "S", skus: ["SKU-001", "SKU-005"], unavailable: true, selected: false },
+          { value: "M", skus: ["SKU-002", "SKU-003"], unavailable: false, selected: true },
+          { value: "L", skus: ["SKU-004"], unavailable: true, selected: false },
+          { value: "XL", skus: ["SKU-006"], unavailable: true, selected: false }
         ]
       },
       {
         field: "material",
         options: [
-          { value: "Cotton", skus: ["SKU-001", "SKU-003"], unavailable: true },
-          { value: "Silk", skus: ["SKU-002", "SKU-005"], unavailable: false },
-          { value: "Wool", skus: ["SKU-004", "SKU-006"], unavailable: true }
+          { value: "Cotton", skus: ["SKU-001", "SKU-003"], unavailable: true, selected: false },
+          { value: "Silk", skus: ["SKU-002", "SKU-005"], unavailable: false, selected: true },
+          { value: "Wool", skus: ["SKU-004", "SKU-006"], unavailable: true, selected: false }
         ]
       }
     ])
