@@ -1,3 +1,11 @@
+## [2.8.2](https://github.com/Nosto/search-js/compare/v2.8.1...v2.8.2) (2025-05-09)
+
+
+### Bug Fixes
+
+* remove onSubmit triggering in onKeyDown ([150aec2](https://github.com/Nosto/search-js/commit/150aec287877ffbc7ff6c332618b49cb0ce93a5c))
+* review comments ([c3f2646](https://github.com/Nosto/search-js/commit/c3f2646fc40803a12904ecfa92ee3637da77228f))
+
 ## [2.8.1](https://github.com/Nosto/search-js/compare/v2.8.0...v2.8.1) (2025-05-07)
 
 
