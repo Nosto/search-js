@@ -1,6 +1,8 @@
 import { logger } from "./logger"
 
-function setStorage(name: string, value: unknown, storage: Storage) {
+type Key = `nosto:search-js:${string}`
+
+function setStorage(name: Key, value: unknown, storage: Storage) {
   const stringValue = JSON.stringify(value)
   try {
     storage.setItem(name, stringValue)
@@ -9,7 +11,7 @@ function setStorage(name: string, value: unknown, storage: Storage) {
   }
 }
 
-function getStorage<T>(name: string, storage: Storage) {
+function getStorage<T>(name: Key, storage: Storage) {
   try {
     const dataString = storage.getItem(name)
     if (dataString) {
@@ -20,7 +22,7 @@ function getStorage<T>(name: string, storage: Storage) {
   }
 }
 
-function removeStorage(name: string, storage: Storage) {
+function removeStorage(name: Key, storage: Storage) {
   try {
     storage.removeItem(name)
   } catch (error) {
@@ -28,26 +30,26 @@ function removeStorage(name: string, storage: Storage) {
   }
 }
 
-export function setLocalStorageItem(name: string, value: unknown) {
+export function setLocalStorageItem(name: Key, value: unknown) {
   setStorage(name, value, localStorage)
 }
 
-export function setSessionStorageItem(name: string, value: unknown) {
+export function setSessionStorageItem(name: Key, value: unknown) {
   setStorage(name, value, sessionStorage)
 }
 
-export function getLocalStorageItem<T>(name: string) {
+export function getLocalStorageItem<T>(name: Key) {
   return getStorage<T>(name, localStorage)
 }
 
-export function getSessionStorageItem<T>(name: string) {
+export function getSessionStorageItem<T>(name: Key) {
   return getStorage<T>(name, sessionStorage)
 }
 
-export function removeLocalStorageItem(name: string) {
+export function removeLocalStorageItem(name: Key) {
   removeStorage(name, localStorage)
 }
 
-export function removeSessionStorageItem(name: string) {
+export function removeSessionStorageItem(name: Key) {
   removeStorage(name, sessionStorage)
 }

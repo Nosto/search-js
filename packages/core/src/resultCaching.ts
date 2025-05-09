@@ -2,7 +2,7 @@ import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { isEqual } from "@utils/isEqual"
 import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
 
-export const STORAGE_ENTRY_NAME = "nosto:search:searchResult"
+export const STORAGE_ENTRY_NAME = "nosto:search-js:cache"
 
 type CacheEntry = {
   query: SearchQuery
