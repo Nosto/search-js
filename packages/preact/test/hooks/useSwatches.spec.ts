@@ -2,6 +2,18 @@ import { useSwatches } from "@preact/hooks/useSwatches/useSwatches"
 import { renderHook } from "@testing-library/preact"
 import { describe, expect, it } from "vitest"
 
+function createSwatchOptions<T>(
+  options: Record<string, T[]>,
+  selectedValue?: string,
+  unavailableValues: string[] = []
+) {
+  return Object.entries(options).map(([value, skus]) => ({
+    value,
+    skus,
+    selected: selectedValue === value,
+    unavailable: unavailableValues.includes(value)
+  }))
+}
 const testSKUs = [
   {
     id: "SKU-001",
@@ -65,28 +77,28 @@ describe("useSwatches", () => {
     expect(result.current.swatches).toEqual([
       {
         field: "color",
-        options: [
-          { value: "Red", skus: ["SKU-001", "SKU-002"], unavailable: false, selected: false },
-          { value: "Blue", skus: ["SKU-003", "SKU-004"], unavailable: false, selected: false },
-          { value: "Green", skus: ["SKU-005", "SKU-006"], unavailable: false, selected: false }
-        ]
+        options: createSwatchOptions({
+          Red: ["SKU-001", "SKU-002"],
+          Blue: ["SKU-003", "SKU-004"],
+          Green: ["SKU-005", "SKU-006"]
+        })
       },
       {
         field: "size",
-        options: [
-          { value: "S", skus: ["SKU-001", "SKU-005"], unavailable: false, selected: false },
-          { value: "M", skus: ["SKU-002", "SKU-003"], unavailable: false, selected: false },
-          { value: "L", skus: ["SKU-004"], unavailable: false, selected: false },
-          { value: "XL", skus: ["SKU-006"], unavailable: false, selected: false }
-        ]
+        options: createSwatchOptions({
+          S: ["SKU-001", "SKU-005"],
+          M: ["SKU-002", "SKU-003"],
+          L: ["SKU-004"],
+          XL: ["SKU-006"]
+        })
       },
       {
         field: "material",
-        options: [
-          { value: "Cotton", skus: ["SKU-001", "SKU-003"], unavailable: false, selected: false },
-          { value: "Silk", skus: ["SKU-002", "SKU-005"], unavailable: false, selected: false },
-          { value: "Wool", skus: ["SKU-004", "SKU-006"], unavailable: false, selected: false }
-        ]
+        options: createSwatchOptions({
+          Cotton: ["SKU-001", "SKU-003"],
+          Silk: ["SKU-002", "SKU-005"],
+          Wool: ["SKU-004", "SKU-006"]
+        })
       }
     ])
     expect(result.current.selectedOptions).toEqual({})
@@ -126,28 +138,40 @@ describe("useSwatches", () => {
     expect(result.current.swatches).toEqual([
       {
         field: "color",
-        options: [
-          { value: "Red", skus: ["SKU-001", "SKU-002"], unavailable: false, selected: true },
-          { value: "Blue", skus: ["SKU-003", "SKU-004"], unavailable: true, selected: false },
-          { value: "Green", skus: ["SKU-005", "SKU-006"], unavailable: true, selected: false }
-        ]
+        options: createSwatchOptions(
+          {
+            Red: ["SKU-001", "SKU-002"],
+            Blue: ["SKU-003", "SKU-004"],
+            Green: ["SKU-005", "SKU-006"]
+          },
+          "Red",
+          ["Blue", "Green"]
+        )
       },
       {
         field: "size",
-        options: [
-          { value: "S", skus: ["SKU-001", "SKU-005"], unavailable: true, selected: false },
-          { value: "M", skus: ["SKU-002", "SKU-003"], unavailable: false, selected: true },
-          { value: "L", skus: ["SKU-004"], unavailable: true, selected: false },
-          { value: "XL", skus: ["SKU-006"], unavailable: true, selected: false }
-        ]
+        options: createSwatchOptions(
+          {
+            S: ["SKU-001", "SKU-005"],
+            M: ["SKU-002", "SKU-003"],
+            L: ["SKU-004"],
+            XL: ["SKU-006"]
+          },
+          "M",
+          ["S", "L", "XL"]
+        )
       },
       {
         field: "material",
-        options: [
-          { value: "Cotton", skus: ["SKU-001", "SKU-003"], unavailable: true, selected: false },
-          { value: "Silk", skus: ["SKU-002", "SKU-005"], unavailable: false, selected: true },
-          { value: "Wool", skus: ["SKU-004", "SKU-006"], unavailable: true, selected: false }
-        ]
+        options: createSwatchOptions(
+          {
+            Cotton: ["SKU-001", "SKU-003"],
+            Silk: ["SKU-002", "SKU-005"],
+            Wool: ["SKU-004", "SKU-006"]
+          },
+          "Silk",
+          ["Cotton", "Wool"]
+        )
       }
     ])
   })
