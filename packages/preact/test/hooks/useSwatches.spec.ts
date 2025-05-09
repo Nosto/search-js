@@ -1,4 +1,4 @@
-import { useSwatches } from "@preact/hooks/useSwatches"
+import { useSwatches } from "@preact/hooks/useSwatches/useSwatches"
 import { renderHook } from "@testing-library/preact"
 import { describe, expect, it } from "vitest"
 

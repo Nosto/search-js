@@ -1,0 +1,68 @@
+import { useCallback, useMemo, useState } from "preact/hooks"
+
+import { aggregateSwatches, filterSwatches, SKU } from "./utils"
+
+/**
+ * Preact hook for managing swatch options and selection.
+ *
+ * This hook aggregates SKU data by specified fields (e.g., "color", "size"),
+ * generates swatch options, and manages the selection state for those options.
+ *
+ * @example
+ * ```tsx
+ * import { useSwatches } from '@nosto/search-js/preact/hooks'
+ *
+ * export default () => {
+ *   const { swatches, selectedOptions, toggleOption } = useSwatches(skus, ["color", "size"])
+ *
+ *   return (
+ *     <div>
+ *       {swatches.map(({ field, options }) => (
+ *         <div key={field}>
+ *           {options.map(({ value, unavailable, selected }) => (
+ *             <button
+ *               key={value}
+ *               disabled={unavailable}
+ *               onClick={() => toggleOption(field, value)}
+ *               style={{
+ *                 background: selected ? "#0070f3" : "transparent",
+ *                 color: selected ? "#fff" : "#000",
+ *               }}
+ *             >
+ *               {value}
+ *             </button>
+ *           ))}
+ *         </div>
+ *       ))}
+ *     </div>
+ *   )
+ * }
+ * ```
+ *
+ * @group Hooks
+ */
+export function useSwatches(skus: SKU[] = [], fields: string[] = []) {
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
+
+  const swatches = useMemo(() => {
+    return aggregateSwatches(skus, fields)
+  }, [skus, fields])
+
+  const filteredSwatches = useMemo(() => {
+    return filterSwatches(swatches, selectedOptions)
+  }, [swatches, selectedOptions])
+
+  const toggleOption = useCallback((field: string, value: string) => {
+    setSelectedOptions(prev => {
+      const newOptions = { ...prev }
+      if (newOptions[field] === value) {
+        delete newOptions[field]
+      } else {
+        newOptions[field] = value
+      }
+      return newOptions
+    })
+  }, [])
+
+  return { swatches: filteredSwatches, selectedOptions, toggleOption }
+}
