@@ -11,7 +11,7 @@ import { filterSwatches } from "./filterSwatches"
  * generates swatch options, and manages the selection state for those options.
  *
  * @example
- * ```tsx
+ * ```jsx
  * import { useSwatches } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
