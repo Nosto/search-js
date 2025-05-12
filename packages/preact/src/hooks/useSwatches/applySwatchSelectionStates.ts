@@ -1,6 +1,9 @@
 import { SwatchField } from "../types"
 
-export function filterSwatches(swatches: SwatchField[], selectedOptions: Record<string, string>): SwatchField[] {
+export function applySwatchSelectionStates(
+  swatches: SwatchField[],
+  selectedOptions: Record<string, string>
+): SwatchField[] {
   if (!swatches.length) return []
 
   return swatches.map(({ field, options }) => ({
