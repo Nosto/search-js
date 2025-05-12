@@ -1,3 +1,10 @@
+## [2.8.3](https://github.com/Nosto/search-js/compare/v2.8.2...v2.8.3) (2025-05-12)
+
+
+### Bug Fixes
+
+* use better persistence key scoping ([3108057](https://github.com/Nosto/search-js/commit/3108057650d838c6ad5a5cff5ab0d9811d3d6311))
+
 ## [2.8.2](https://github.com/Nosto/search-js/compare/v2.8.1...v2.8.2) (2025-05-09)
 
 
