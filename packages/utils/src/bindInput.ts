@@ -34,9 +34,6 @@ export function bindInput(
       if (onKeyDown && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
         event.preventDefault()
       } else if (onSubmit && event.key === "Enter") {
-        if (target.value !== "" && !event.repeat) {
-          onSubmit(target.value)
-        }
         event.preventDefault()
       }
     })
