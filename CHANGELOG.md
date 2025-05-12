@@ -1,3 +1,21 @@
+# [2.9.0](https://github.com/Nosto/search-js/compare/v2.8.3...v2.9.0) (2025-05-12)
+
+
+### Bug Fixes
+
+* avoid type assertion ([2c3f9e0](https://github.com/Nosto/search-js/commit/2c3f9e0edf18c8cb7a165fddcff076d1cfc5f891))
+* fix type ([860c2f8](https://github.com/Nosto/search-js/commit/860c2f8da57c771313bde783f86b10a33490c699))
+* fix typedoc ([725e1ed](https://github.com/Nosto/search-js/commit/725e1ed1b71f875efd0726bbb289ced87976ff3e))
+* use correct file path ([98ec041](https://github.com/Nosto/search-js/commit/98ec041a69be49666f1b53bfe81fd8ece3a14daa))
+* use full sku ([a2bc4fd](https://github.com/Nosto/search-js/commit/a2bc4fd15bef7efbf76c40ebed4203e01394e17b))
+
+
+### Features
+
+* add selected field and update tests ([54b594d](https://github.com/Nosto/search-js/commit/54b594d83e7c169e78974e0104814594b5c769e8))
+* create useSwatches hook ([d46cf97](https://github.com/Nosto/search-js/commit/d46cf97289430de44dd8d7feefb611c88abc0063))
+* updates ([e2d58c0](https://github.com/Nosto/search-js/commit/e2d58c0fe92f7ff3badc1f6183a4c4ee11ba38b0))
+
 ## [2.8.3](https://github.com/Nosto/search-js/compare/v2.8.2...v2.8.3) (2025-05-12)
 
 
