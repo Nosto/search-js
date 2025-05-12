@@ -8,7 +8,7 @@ export interface SwatchOption {
   /**
    * An array of full SKU objects associated with this option.
    */
-  skus?: SearchProductSku[]
+  skus: SearchProductSku[]
   /**
    * Indicates whether the option is unavailable.
    */
