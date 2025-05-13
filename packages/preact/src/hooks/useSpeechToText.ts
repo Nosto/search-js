@@ -88,7 +88,7 @@ export function useSpeechToText(options?: SpeechToTextOptions) {
   const stopListening = useCallback(() => {
     recognizerRef.current?.stop()
     setIsListening(false)
-  }, [])
+  }, [recognizerRef])
 
   useEffect(() => {
     if (!recognitionConstructor) {
