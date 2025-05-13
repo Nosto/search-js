@@ -194,4 +194,17 @@ describe("useSwatches", () => {
       )
     ])
   })
+
+  it("should return the correct selectedSku when all options match", () => {
+    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
+
+    result.current.toggleOption("color", "Red")
+    rerender()
+    result.current.toggleOption("size", "S")
+    rerender()
+    result.current.toggleOption("material", "Cotton")
+    rerender()
+
+    expect(result.current.selectedSku?.id).toBe("SKU-001")
+  })
 })
