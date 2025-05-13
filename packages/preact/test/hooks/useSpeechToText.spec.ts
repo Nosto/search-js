@@ -44,37 +44,18 @@ beforeAll(async () => {
 // Import the module after mocking
 // This is to ensure the mock is used in the module
 // and not the original implementation
-let useSpeechToText: typeof import("@preact/hooks/useSpeechToText/useSpeechToText").useSpeechToText
-let renderHookWithProviders: typeof import("../../mocks/renderHookWithProviders").renderHookWithProviders
-let mockStore: typeof import("../../mocks/mocks").mockStore
+let useSpeechToText: typeof import("@preact/hooks/useSpeechToText").useSpeechToText
+let renderHook: typeof import("@testing-library/preact").renderHook
 
 beforeAll(async () => {
   // Lazy-load modules AFTER mocks are set up
-  useSpeechToText = (await import("@preact/hooks/useSpeechToText/useSpeechToText")).useSpeechToText
-  renderHookWithProviders = (await import("../../mocks/renderHookWithProviders")).renderHookWithProviders
-  mockStore = (await import("../../mocks/mocks")).mockStore
+  useSpeechToText = (await import("@preact/hooks/useSpeechToText")).useSpeechToText
+  renderHook = (await import("@testing-library/preact")).renderHook
 })
 
 describe("useSpeechToText", () => {
   it("calls start on SpeechRecognition", () => {
-    const store = mockStore({
-      loading: false,
-      initialized: true,
-      query: {
-        products: {
-          from: 0
-        }
-      },
-      response: {
-        products: {
-          size: 10,
-          total: 100,
-          hits: []
-        }
-      }
-    })
-
-    const { startListening, stopListening } = renderHookWithProviders(() => useSpeechToText(), { store }).result.current
+    const { startListening, stopListening } = renderHook(() => useSpeechToText()).result.current
 
     expect(startMock).not.toHaveBeenCalled()
 

@@ -1,7 +1,5 @@
 import { useCallback, useRef, useState } from "preact/hooks"
 
-import { SpeechRecognition, speechToTextSupported } from "./utils"
-
 interface SpeechToTextOptions {
   language?: string
   interimResults?: boolean
@@ -12,13 +10,16 @@ interface StartListeningOptions {
   onError?: (error: string) => void
 }
 
-type SpeechToTextReturn = {
+export type SpeechToText = {
   listening: boolean
   startListening: (options: StartListeningOptions) => void
   stopListening: () => void
 }
 
-function useSpeechToTextUnsupported(): SpeechToTextReturn {
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+export const speechToTextSupported = !!(SpeechRecognition && typeof SpeechRecognition === "function")
+
+function useSpeechToTextUnsupported(): SpeechToText {
   return {
     listening: false,
     startListening: () => {},
@@ -29,7 +30,7 @@ function useSpeechToTextUnsupported(): SpeechToTextReturn {
 function useSpeechToTextSupported({
   language = "en-US",
   interimResults = false
-}: SpeechToTextOptions = {}): SpeechToTextReturn {
+}: SpeechToTextOptions = {}): SpeechToText {
   const [listening, setListening] = useState(false)
 
   const recognizerRef = useRef<SpeechRecognition | null>(null)
