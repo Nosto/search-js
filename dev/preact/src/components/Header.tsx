@@ -9,8 +9,7 @@ export function Header() {
       { url: "/", name: "Home" },
       { url: "/search", name: "Search" },
       { url: "/search-infinite", name: "Search with infinite" },
-      { url: "/autocomplete", name: "Autocomplete" },
-      { url: "/tts", name: "Text to speech" }
+      { url: "/autocomplete", name: "Autocomplete" }
     ],
     []
   )

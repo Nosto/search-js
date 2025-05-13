@@ -5,7 +5,7 @@ import { useState } from "preact/hooks"
 import { Pagination } from "../../../components/Pagination"
 import { Product } from "../Product"
 
-function TTSButton() {
+function STTButton() {
   const { newSearch } = useActions()
   const { startListening, isListening, stopListening, isSupported } = useSpeechToText()
 
@@ -54,7 +54,7 @@ export function Paginated() {
           <div style={{ display: "flex", gap: 4, width: "100%", justifyContent: "center" }}>
             <input type="search" placeholder="Search" />
             <input type="button" value="Search" onClick={onSearch} />
-            <TTSButton />
+            <STTButton />
           </div>
         </SearchInput>
       </div>

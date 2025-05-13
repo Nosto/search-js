@@ -21,7 +21,6 @@ export function App() {
           <Route path="/" component={Home} />
           <Route path="/autocomplete" component={Autocomplete} />
           <Route path="/search" component={Search} />
-          <Route path="/tts" component={Search} />
           <Route path="/search-infinite" component={() => <Search infinite />} />
           <Route default component={NotFound} />
         </Router>
