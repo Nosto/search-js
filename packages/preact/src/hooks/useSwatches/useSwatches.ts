@@ -63,17 +63,12 @@ export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []
   }, [])
 
   const selectedSku = useMemo(() => {
-    return (
-      skus.find(sku => {
-        return fields.every(field => {
-          const selectedValue = selectedOptions[field]
-          if (!selectedValue) return false
-          const skuFieldValue = sku.customFields?.find(f => f.key.toLowerCase() === field.toLowerCase())?.value
-          return skuFieldValue === selectedValue
-        })
-      }) || null
+    const matchedSkuLists = swatches.map(
+      ({ field, options }) => options.find(o => o.value === selectedOptions[field])?.skus ?? []
     )
-  }, [skus, fields, selectedOptions])
+
+    return matchedSkuLists.reduce((acc, list) => acc.filter(sku => list.includes(sku)))[0] ?? null
+  }, [swatches, selectedOptions])
 
   return { swatches, toggleOption, selectedSku }
 }
