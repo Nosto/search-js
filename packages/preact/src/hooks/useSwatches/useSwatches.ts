@@ -62,5 +62,18 @@ export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []
     })
   }, [])
 
-  return { swatches, toggleOption }
+  const selectedSku = useMemo(() => {
+    return (
+      skus.find(sku => {
+        return fields.every(field => {
+          const selectedValue = selectedOptions[field]
+          if (!selectedValue) return false
+          const skuFieldValue = sku.customFields?.find(f => f.key.toLowerCase() === field)?.value
+          return skuFieldValue === selectedValue
+        })
+      }) || null
+    )
+  }, [skus, fields, selectedOptions])
+
+  return { swatches, toggleOption, selectedSku }
 }
