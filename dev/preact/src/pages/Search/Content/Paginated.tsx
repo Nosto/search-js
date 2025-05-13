@@ -1,5 +1,5 @@
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
-import { useActions, useNostoAppState, useSpeechToText } from "@nosto/search-js/preact/hooks"
+import { speechToTextSupported, useActions, useNostoAppState, useSpeechToText } from "@nosto/search-js/preact/hooks"
 import { useState } from "preact/hooks"
 
 import { Pagination } from "../../../components/Pagination"
@@ -7,9 +7,9 @@ import { Product } from "../Product"
 
 function STTButton() {
   const { newSearch } = useActions()
-  const { startListening, listening, stopListening, supported } = useSpeechToText()
+  const { startListening, listening, stopListening } = useSpeechToText()
 
-  if (!supported) {
+  if (!speechToTextSupported) {
     return null
   }
 
