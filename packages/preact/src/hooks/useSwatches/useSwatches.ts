@@ -68,7 +68,7 @@ export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []
         return fields.every(field => {
           const selectedValue = selectedOptions[field]
           if (!selectedValue) return false
-          const skuFieldValue = sku.customFields?.find(f => f.key.toLowerCase() === field)?.value
+          const skuFieldValue = sku.customFields?.find(f => f.key.toLowerCase() === field.toLowerCase())?.value
           return skuFieldValue === selectedValue
         })
       }) || null
