@@ -20,9 +20,9 @@ function STTButton() {
           stopListening()
         } else {
           startListening({
-            onResult: result => {
+            onResult: ({ value }) => {
               newSearch({
-                query: result
+                query: value
               })
             }
           })

@@ -1,60 +1,110 @@
-import { useEffect, useState } from "preact/hooks"
+import { useCallback, useEffect, useRef, useState } from "preact/hooks"
 
 interface SpeechToTextOptions {
   language?: string
   interimResults?: boolean
 }
 
+interface StartListeningOptions {
+  onResult: ({ value, confidence }: { value: string; confidence: number }) => void
+  onError?: (error: string) => void
+}
+
+/**
+ * Preact hook that provides speech-to-text functionality using the Web Speech API.
+ * @example
+ * ```jsx
+ * import { useNostoAppState, useSpeechToText } from "@nosto/search-js/preact/hooks"
+ *
+ * export default function MyComponent() {
+ *  const { newSearch } = useActions()
+ *  const { startListening, stopListening, isListening, isSupported } = useSpeechToText()
+ *  if (!isSupported) {
+ *    return null
+ *  }
+ *
+ *  return (
+ *    <button
+ *     onClick={() => {
+ *       if (isListening) {
+ *         stopListening()
+ *       } else {
+ *         startListening({
+ *           onResult: ({ value }) => {
+ *             newSearch({
+ *               query: value
+ *             })
+ *           }
+ *         })
+ *       }
+ *     }}
+ *    >
+ *     🎤︎︎
+ *    </button>
+ *  )
+ * }
+ * ```
+ */
 export function useSpeechToText(options?: SpeechToTextOptions) {
   const { language = "en-US", interimResults = false } = options || {}
 
   const [isListening, setIsListening] = useState(false)
   const [isSupported, setIsSupported] = useState(true)
 
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
+  const recognizerRef = useRef<SpeechRecognition | null>(null)
+  const recognitionConstructor =
+    typeof window !== "undefined" ? window.SpeechRecognition || window.webkitSpeechRecognition : null
 
-  const startListening = ({
-    onResult,
-    onError
-  }: {
-    onResult: (result: string) => void
-    onError?: (error: string) => void
-  }) => {
-    if (!isSupported) {
-      return
-    }
-    const recognizer = new SpeechRecognition()
-    recognizer.lang = language
-    recognizer.interimResults = interimResults
-    recognizer.onstart = () => setIsListening(true)
-    recognizer.onresult = event => onResult(event.results?.[0]?.[0]?.transcript)
+  const startListening = useCallback(
+    ({ onResult, onError }: StartListeningOptions) => {
+      if (!recognitionConstructor) {
+        setIsSupported(false)
+        return
+      }
 
-    if (onError) {
-      recognizer.onerror = event => onError(event.error)
-    }
+      const recognizer = new recognitionConstructor()
+      recognizer.lang = language
+      recognizer.interimResults = interimResults
 
-    recognizer.onend = () => setIsListening(false)
-    recognizer.start()
-  }
+      recognizer.onstart = () => setIsListening(true)
 
-  const stopListening = () => {
-    if (isSupported) {
-      const recognizer = new SpeechRecognition()
-      recognizer.stop()
-      setIsListening(false)
-    }
-  }
+      recognizer.onresult = event => {
+        const { transcript, confidence } = event.results?.[0]?.[0]
+        onResult({ value: transcript, confidence })
+      }
+
+      recognizer.onerror = event => {
+        if (onError) onError(event.error)
+      }
+
+      recognizer.onend = () => setIsListening(false)
+
+      recognizerRef.current = recognizer
+      recognizer.start()
+    },
+    [language, interimResults, recognitionConstructor]
+  )
+
+  const stopListening = useCallback(() => {
+    recognizerRef.current?.stop()
+    setIsListening(false)
+  }, [])
 
   useEffect(() => {
-    if (!SpeechRecognition) {
+    if (!recognitionConstructor) {
       setIsSupported(false)
     }
-  }, [SpeechRecognition])
+
+    return () => {
+      recognizerRef.current?.stop()
+      recognizerRef.current = null
+    }
+  }, [recognitionConstructor])
 
   return {
     isListening,
+    isSupported,
     startListening,
-    stopListening,
-    isSupported
+    stopListening
   }
 }
