@@ -67,6 +67,8 @@ export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []
       ({ field, options }) => options.find(o => o.value === selectedOptions[field])?.skus ?? []
     )
 
+    if (matchedSkuLists.length === 0) return null
+
     return matchedSkuLists.reduce((acc, list) => acc.filter(sku => list.includes(sku)))[0] ?? null
   }, [swatches, selectedOptions])
 
