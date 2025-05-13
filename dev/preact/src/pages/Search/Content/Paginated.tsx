@@ -1,9 +1,38 @@
 import { SearchInput } from "@nosto/search-js/preact/autocomplete"
-import { useActions, useNostoAppState } from "@nosto/search-js/preact/hooks"
+import { useActions, useNostoAppState, useSpeechToText } from "@nosto/search-js/preact/hooks"
 import { useState } from "preact/hooks"
 
 import { Pagination } from "../../../components/Pagination"
 import { Product } from "../Product"
+
+function TTSButton() {
+  const { newSearch } = useActions()
+  const { startListening, isListening, stopListening, isSupported } = useSpeechToText()
+
+  if (!isSupported) {
+    return null
+  }
+
+  return (
+    <button
+      onClick={() => {
+        if (isListening) {
+          stopListening()
+        } else {
+          startListening({
+            onResult: result => {
+              newSearch({
+                query: result
+              })
+            }
+          })
+        }
+      }}
+    >
+      🎤︎︎
+    </button>
+  )
+}
 
 export function Paginated() {
   const [input, setInput] = useState("")
@@ -25,6 +54,7 @@ export function Paginated() {
           <div style={{ display: "flex", gap: 4, width: "100%", justifyContent: "center" }}>
             <input type="search" placeholder="Search" />
             <input type="button" value="Search" onClick={onSearch} />
+            <TTSButton />
           </div>
         </SearchInput>
       </div>
