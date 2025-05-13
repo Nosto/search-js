@@ -67,7 +67,6 @@ describe("usePagination", () => {
   it("first is covered in pages array", () => {
     const { first, pages, last } = mockUsePagination(50, 100, 10)
     expect(first).toBeUndefined()
-    expect(last).toBeUndefined()
     expect(pages).toEqual([
       { page: 1, from: 0, current: false },
       { page: 2, from: 10, current: false },
@@ -80,12 +79,28 @@ describe("usePagination", () => {
       { page: 9, from: 80, current: false },
       { page: 10, from: 90, current: false }
     ])
+    expect(last).toBeUndefined()
+  })
+
+  it("first is detached", () => {
+    const { first, pages, last } = mockUsePagination(60, 100, 10)
+    expect(first).toEqual({ current: false, from: 0, page: 1 })
+    expect(pages).toEqual([
+      { page: 3, from: 20, current: false },
+      { page: 4, from: 30, current: false },
+      { page: 5, from: 40, current: false },
+      { page: 6, from: 50, current: false },
+      { page: 7, from: 60, current: true }, // current
+      { page: 8, from: 70, current: false },
+      { page: 9, from: 80, current: false },
+      { page: 10, from: 90, current: false }
+    ])
+    expect(last).toBeUndefined()
   })
 
   it("last is covered in pages array", () => {
     const { first, pages, last } = mockUsePagination(40, 100, 10)
     expect(first).toBeUndefined()
-    expect(last).toBeUndefined()
     expect(pages).toEqual([
       { page: 1, from: 0, current: false },
       { page: 2, from: 10, current: false },
@@ -98,5 +113,22 @@ describe("usePagination", () => {
       { page: 9, from: 80, current: false },
       { page: 10, from: 90, current: false }
     ])
+    expect(last).toBeUndefined()
+  })
+
+  it("last is detached", () => {
+    const { first, pages, last } = mockUsePagination(30, 100, 10)
+    expect(first).toBeUndefined()
+    expect(pages).toEqual([
+      { page: 1, from: 0, current: false },
+      { page: 2, from: 10, current: false },
+      { page: 3, from: 20, current: false },
+      { page: 4, from: 30, current: true }, // current
+      { page: 5, from: 40, current: false },
+      { page: 6, from: 50, current: false },
+      { page: 7, from: 60, current: false },
+      { page: 8, from: 70, current: false }
+    ])
+    expect(last).toEqual({ current: false, from: 90, page: 10 })
   })
 })
