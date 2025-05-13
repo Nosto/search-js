@@ -30,7 +30,7 @@ describe("useSpeechToText", () => {
 
     const { result } = renderHookWithProviders(() => useSpeechToText(), { store })
 
-    expect(result.current.isSupported).toBe(false)
+    expect(result.current.supported).toBe(false)
   })
 
   it("should set isSupported to true if SpeechRecognition is available", () => {
@@ -40,6 +40,6 @@ describe("useSpeechToText", () => {
 
     const { result } = renderHookWithProviders(() => useSpeechToText(), { store })
 
-    expect(result.current.isSupported).toBe(true)
+    expect(result.current.supported).toBe(true)
   })
 })

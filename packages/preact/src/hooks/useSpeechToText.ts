@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "preact/hooks"
+import { useCallback, useRef, useState } from "preact/hooks"
 
 interface SpeechToTextOptions {
   language?: string
@@ -18,15 +18,15 @@ interface StartListeningOptions {
  *
  * export default function MyComponent() {
  *  const { newSearch } = useActions()
- *  const { startListening, stopListening, isListening, isSupported } = useSpeechToText()
- *  if (!isSupported) {
+ *  const { startListening, stopListening, listening, supported } = useSpeechToText()
+ *  if (!supported) {
  *    return null
  *  }
  *
  *  return (
  *    <button
  *     onClick={() => {
- *       if (isListening) {
+ *       if (listening) {
  *         stopListening()
  *       } else {
  *         startListening({
@@ -45,28 +45,26 @@ interface StartListeningOptions {
  * }
  * ```
  */
-export function useSpeechToText(options?: SpeechToTextOptions) {
-  const { language = "en-US", interimResults = false } = options || {}
-
-  const [isListening, setIsListening] = useState(false)
-  const [isSupported, setIsSupported] = useState(true)
+export function useSpeechToText({ language = "en-US", interimResults = false }: SpeechToTextOptions = {}) {
+  const [listening, setListening] = useState(false)
 
   const recognizerRef = useRef<SpeechRecognition | null>(null)
-  const recognitionConstructor =
+  const SpeechRecognition =
     typeof window !== "undefined" ? window.SpeechRecognition || window.webkitSpeechRecognition : null
+
+  const supported = SpeechRecognition && typeof SpeechRecognition === "function"
 
   const startListening = useCallback(
     ({ onResult, onError }: StartListeningOptions) => {
-      if (!recognitionConstructor) {
-        setIsSupported(false)
+      if (!supported) {
         return
       }
 
-      const recognizer = new recognitionConstructor()
+      const recognizer = new SpeechRecognition()
       recognizer.lang = language
       recognizer.interimResults = interimResults
 
-      recognizer.onstart = () => setIsListening(true)
+      recognizer.onstart = () => setListening(true)
 
       recognizer.onresult = event => {
         const { transcript, confidence } = event.results?.[0]?.[0]
@@ -77,33 +75,22 @@ export function useSpeechToText(options?: SpeechToTextOptions) {
         if (onError) onError(event.error)
       }
 
-      recognizer.onend = () => setIsListening(false)
+      recognizer.onend = () => setListening(false)
 
       recognizerRef.current = recognizer
       recognizer.start()
     },
-    [language, interimResults, recognitionConstructor]
+    [language, interimResults, SpeechRecognition, supported]
   )
 
   const stopListening = useCallback(() => {
     recognizerRef.current?.stop()
-    setIsListening(false)
+    setListening(false)
   }, [recognizerRef])
 
-  useEffect(() => {
-    if (!recognitionConstructor) {
-      setIsSupported(false)
-    }
-
-    return () => {
-      recognizerRef.current?.stop()
-      recognizerRef.current = null
-    }
-  }, [recognitionConstructor])
-
   return {
-    isListening,
-    isSupported,
+    listening,
+    supported,
     startListening,
     stopListening
   }
