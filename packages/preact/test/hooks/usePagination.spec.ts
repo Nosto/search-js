@@ -41,16 +41,18 @@ describe("usePagination", () => {
     return renderHookWithProviders(() => usePagination({ width }), { store }).result.current
   }
 
-  it("previous for first page is undefined", () => {
-    const { prev, next } = mockUsePagination(0, 100)
+  it("previous and first for first page is undefined", () => {
+    const { prev, first, next } = mockUsePagination(0, 100)
     expect(prev).toBeUndefined()
+    expect(first).toBeUndefined()
     expect(next).toEqual({ current: false, from: 10, page: 2 })
   })
 
-  it("next for last page is undefined", () => {
-    const { prev, next } = mockUsePagination(90, 100)
+  it("next and last for last page is undefined", () => {
+    const { prev, next, last } = mockUsePagination(90, 100)
     expect(prev).toEqual({ current: false, from: 80, page: 9 })
     expect(next).toBeUndefined()
+    expect(last).toBeUndefined()
   })
 
   it("pages content is valid", () => {
@@ -59,6 +61,42 @@ describe("usePagination", () => {
       { page: 1, from: 0, current: true },
       { page: 2, from: 10, current: false },
       { page: 3, from: 20, current: false }
+    ])
+  })
+
+  it("first is covered in pages array", () => {
+    const { first, pages, last } = mockUsePagination(50, 100, 10)
+    expect(first).toBeUndefined()
+    expect(last).toBeUndefined()
+    expect(pages).toEqual([
+      { page: 1, from: 0, current: false },
+      { page: 2, from: 10, current: false },
+      { page: 3, from: 20, current: false },
+      { page: 4, from: 30, current: false },
+      { page: 5, from: 40, current: false },
+      { page: 6, from: 50, current: true }, // current
+      { page: 7, from: 60, current: false },
+      { page: 8, from: 70, current: false },
+      { page: 9, from: 80, current: false },
+      { page: 10, from: 90, current: false }
+    ])
+  })
+
+  it("last is covered in pages array", () => {
+    const { first, pages, last } = mockUsePagination(40, 100, 10)
+    expect(first).toBeUndefined()
+    expect(last).toBeUndefined()
+    expect(pages).toEqual([
+      { page: 1, from: 0, current: false },
+      { page: 2, from: 10, current: false },
+      { page: 3, from: 20, current: false },
+      { page: 4, from: 30, current: false },
+      { page: 5, from: 40, current: true }, // current
+      { page: 6, from: 50, current: false },
+      { page: 7, from: 60, current: false },
+      { page: 8, from: 70, current: false },
+      { page: 9, from: 80, current: false },
+      { page: 10, from: 90, current: false }
     ])
   })
 })
