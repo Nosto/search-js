@@ -7,16 +7,16 @@ import { Product } from "../Product"
 
 function STTButton() {
   const { newSearch } = useActions()
-  const { startListening, isListening, stopListening, isSupported } = useSpeechToText()
+  const { startListening, listening, stopListening, supported } = useSpeechToText()
 
-  if (!isSupported) {
+  if (!supported) {
     return null
   }
 
   return (
     <button
       onClick={() => {
-        if (isListening) {
+        if (listening) {
           stopListening()
         } else {
           startListening({
