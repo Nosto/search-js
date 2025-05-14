@@ -1,3 +1,18 @@
+# [2.10.0](https://github.com/Nosto/search-js/compare/v2.9.2...v2.10.0) (2025-05-14)
+
+
+### Bug Fixes
+
+* go over the swatches instead of skus ([79bf816](https://github.com/Nosto/search-js/commit/79bf816eeb819682205d6c9461efa00773019f91))
+* handle empty case ([fbaf9d5](https://github.com/Nosto/search-js/commit/fbaf9d5645a182a6ef51a3eed69908671fb60d70))
+* return matching SKUS for partial swatch selection ([3679b70](https://github.com/Nosto/search-js/commit/3679b70b0f38d8cfbf5f6b885e3647668cc8da10))
+* update after review ([1e649e9](https://github.com/Nosto/search-js/commit/1e649e9c19ddd8f2d941b635bf62bb8a19efdca9))
+
+
+### Features
+
+* expose selected sku ([7f0c653](https://github.com/Nosto/search-js/commit/7f0c653944eb0757b14268ed43e9440b2b8d65fa))
+
 ## [2.9.2](https://github.com/Nosto/search-js/compare/v2.9.1...v2.9.2) (2025-05-14)
 
 
