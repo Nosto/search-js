@@ -40,6 +40,7 @@ async function getSearchResultWithCache(
       ...result,
       products: {
         ...result.products,
+        size,
         hits: cacheHits.slice(0, size),
         total: result.products?.total || 0
       }
@@ -66,6 +67,7 @@ async function getSearchResultWithCache(
     ...result,
     products: {
       ...result.products,
+      size,
       hits: [...(result.products?.hits || []), ...(backfillResponse.products?.hits || [])],
       total: backfillResponse.products?.total || 0
     }
