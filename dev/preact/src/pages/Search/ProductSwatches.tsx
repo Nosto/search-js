@@ -1,9 +1,11 @@
-import { SearchProduct } from "@nosto/nosto-js/client"
 import { useSwatches } from "@nosto/search-js/preact/hooks"
 
-export default function ProductSwatches({ skus = [] }: SearchProduct) {
-  const { swatches, toggleOption } = useSwatches(skus, ["color", "size", "material"])
+type Props = {
+  swatches: ReturnType<typeof useSwatches>["swatches"]
+  toggleOption: ReturnType<typeof useSwatches>["toggleOption"]
+}
 
+export default function ProductSwatches({ swatches, toggleOption }: Props) {
   if (!swatches || swatches.length === 0) {
     return
   }

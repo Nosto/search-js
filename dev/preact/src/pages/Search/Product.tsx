@@ -1,5 +1,5 @@
-import type { SearchProduct } from "@nosto/nosto-js/client"
-import { useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
+import type { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
+import { useDecoratedSearchResults, useSwatches } from "@nosto/search-js/preact/hooks"
 import { SerpElement } from "@nosto/search-js/preact/serp"
 
 import { productImagePlaceholder } from "./productImagePlaceholder"
@@ -24,7 +24,7 @@ export function Product({ product: baseProduct }: Props) {
   const testSKUs = [
     {
       id: "SKU-001",
-      image: "https://via.placeholder.com/150?text=Red+Cotton",
+      imageUrl: "https://via.placeholder.com/150?text=Red+Cotton",
       price: 19.99,
       customFields: [
         { key: "color", value: "Red" },
@@ -34,7 +34,7 @@ export function Product({ product: baseProduct }: Props) {
     },
     {
       id: "SKU-002",
-      image: "https://via.placeholder.com/150?text=Red+Silk",
+      imageUrl: "https://via.placeholder.com/150?text=Red+Silk",
       price: 24.99,
       customFields: [
         { key: "color", value: "Red" },
@@ -44,7 +44,7 @@ export function Product({ product: baseProduct }: Props) {
     },
     {
       id: "SKU-003",
-      image: "https://via.placeholder.com/150?text=Blue+Cotton",
+      imageUrl: "https://via.placeholder.com/150?text=Blue+Cotton",
       price: 22.99,
       customFields: [
         { key: "color", value: "Blue" },
@@ -54,6 +54,7 @@ export function Product({ product: baseProduct }: Props) {
     },
     {
       id: "SKU-004",
+      imageUrl: "https://via.placeholder.com/150?text=Blue+Wool",
       customFields: [
         { key: "color", value: "Blue" },
         { key: "size", value: "L" },
@@ -62,6 +63,7 @@ export function Product({ product: baseProduct }: Props) {
     },
     {
       id: "SKU-005",
+      imageUrl: "https://via.placeholder.com/150?text=Green+Silk",
       customFields: [
         { key: "color", value: "Green" },
         { key: "size", value: "S" },
@@ -70,6 +72,7 @@ export function Product({ product: baseProduct }: Props) {
     },
     {
       id: "SKU-006",
+      imageUrl: "https://via.placeholder.com/150?text=Green+Wool",
       customFields: [
         { key: "color", value: "Green" },
         { key: "size", value: "XL" },
@@ -77,6 +80,14 @@ export function Product({ product: baseProduct }: Props) {
       ]
     }
   ]
+  const { matchedSkus, swatches, toggleOption } = useSwatches(testSKUs, ["color", "size", "material"])
+  const previewImage = matchedSkus[0]?.imageUrl || productImagePlaceholder
+
+  const handleAddToCart = (sku: SearchProductSku) => {
+    console.log(sku)
+  }
+
+  const skuToAdd = matchedSkus[0]
 
   return (
     <SerpElement
@@ -92,7 +103,7 @@ export function Product({ product: baseProduct }: Props) {
       >
         <img
           className="ns-w-100 ns-h-auto"
-          src={product.imageUrl ?? productImagePlaceholder}
+          src={product.imageUrl ?? previewImage}
           alt={product.name}
           width="600"
           height="400"
@@ -121,7 +132,11 @@ export function Product({ product: baseProduct }: Props) {
           </div>
         </div>
       </a>
-      <ProductSwatches skus={testSKUs} />
+      <div>
+        {" "}
+        <ProductSwatches swatches={swatches} toggleOption={toggleOption} />
+        {matchedSkus.length === 1 && <button onClick={() => handleAddToCart(skuToAdd)}>Add to Cart</button>}
+      </div>
     </SerpElement>
   )
 }
