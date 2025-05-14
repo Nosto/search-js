@@ -207,4 +207,36 @@ describe("useSwatches", () => {
 
     expect(result.current.selectedSku?.id).toBe("SKU-001")
   })
+  it("should return null if only one option is selected", () => {
+    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
+
+    result.current.toggleOption("color", "Red")
+    rerender()
+
+    expect(result.current.selectedSku).toBe(null)
+  })
+
+  it("should return null if two options are selected but combination is incomplete", () => {
+    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
+
+    result.current.toggleOption("color", "Red")
+    rerender()
+    result.current.toggleOption("size", "M")
+    rerender()
+
+    expect(result.current.selectedSku).toBe(null)
+  })
+
+  it("should return null if selected combination does not match any SKU", () => {
+    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
+
+    result.current.toggleOption("color", "Green")
+    rerender()
+    result.current.toggleOption("size", "M")
+    rerender()
+    result.current.toggleOption("material", "Wool")
+    rerender()
+
+    expect(result.current.selectedSku).toBe(null)
+  })
 })
