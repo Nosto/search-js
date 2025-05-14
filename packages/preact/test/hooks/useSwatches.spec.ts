@@ -195,48 +195,37 @@ describe("useSwatches", () => {
     ])
   })
 
-  it("should return the correct selectedSku when all options match", () => {
-    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
-
-    result.current.toggleOption("color", "Red")
-    rerender()
-    result.current.toggleOption("size", "S")
-    rerender()
-    result.current.toggleOption("material", "Cotton")
-    rerender()
-
-    expect(result.current.selectedSku?.id).toBe("SKU-001")
-  })
-  it("should return null if only one option is selected", () => {
-    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
-
-    result.current.toggleOption("color", "Red")
-    rerender()
-
-    expect(result.current.selectedSku).toBe(null)
-  })
-
-  it("should return null if two options are selected but combination is incomplete", () => {
-    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
-
-    result.current.toggleOption("color", "Red")
-    rerender()
-    result.current.toggleOption("size", "M")
-    rerender()
-
-    expect(result.current.selectedSku).toBe(null)
-  })
-
-  it("should return null if selected combination does not match any SKU", () => {
+  it("should return one matchedSku when full selection matches exactly one SKU", () => {
     const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
 
     result.current.toggleOption("color", "Green")
     rerender()
-    result.current.toggleOption("size", "M")
+    result.current.toggleOption("size", "S")
     rerender()
-    result.current.toggleOption("material", "Wool")
+    result.current.toggleOption("material", "Silk")
     rerender()
 
-    expect(result.current.selectedSku).toBe(null)
+    expect(result.current.matchedSkus.map(s => s.id)).toEqual(["SKU-005"])
+  })
+
+  it("should return matching SKUs for partial selection", () => {
+    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
+
+    result.current.toggleOption("color", "Red")
+    rerender()
+
+    expect(result.current.matchedSkus.map(s => s.id)).toEqual(["SKU-001", "SKU-002"])
+  })
+
+  it("should return one matchedSku even if not all fields are selected, if only one SKU matches", () => {
+    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
+
+    result.current.toggleOption("color", "Green")
+    rerender()
+    result.current.toggleOption("size", "S")
+    rerender()
+    // material not selected yet, but only SKU-005 fits so far
+
+    expect(result.current.matchedSkus.map(s => s.id)).toEqual(["SKU-005"])
   })
 })
