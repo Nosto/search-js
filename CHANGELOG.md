@@ -1,3 +1,10 @@
+# [2.11.0](https://github.com/Nosto/search-js/compare/v2.10.0...v2.11.0) (2025-05-14)
+
+
+### Features
+
+* voice to text support ([#208](https://github.com/Nosto/search-js/issues/208)) ([a227c0e](https://github.com/Nosto/search-js/commit/a227c0ecf1fed17c291ac5cdccb6bfc746c1a99b))
+
 # [2.10.0](https://github.com/Nosto/search-js/compare/v2.9.2...v2.10.0) (2025-05-14)
 
 
