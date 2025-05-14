@@ -48,6 +48,7 @@ function createExpectedSwatches() {
 const testSKUs = [
   {
     id: "SKU-001",
+    imageUrl: "/images/sku-001.jpg",
     customFields: createSwatchOptions({
       color: "Red",
       size: "S",
@@ -56,6 +57,7 @@ const testSKUs = [
   },
   {
     id: "SKU-002",
+    imageUrl: "/images/sku-002.jpg",
     customFields: createSwatchOptions({
       color: "Red",
       size: "M",
@@ -64,6 +66,7 @@ const testSKUs = [
   },
   {
     id: "SKU-003",
+    imageUrl: "/images/sku-003.jpg",
     customFields: createSwatchOptions({
       color: "Blue",
       size: "M",
@@ -72,6 +75,7 @@ const testSKUs = [
   },
   {
     id: "SKU-004",
+    imageUrl: "/images/sku-004.jpg",
     customFields: createSwatchOptions({
       color: "Blue",
       size: "L",
@@ -80,6 +84,7 @@ const testSKUs = [
   },
   {
     id: "SKU-005",
+    imageUrl: "/images/sku-005.jpg",
     customFields: createSwatchOptions({
       color: "Green",
       size: "S",
@@ -88,6 +93,7 @@ const testSKUs = [
   },
   {
     id: "SKU-006",
+    imageUrl: "/images/sku-006.jpg",
     customFields: createSwatchOptions({
       color: "Green",
       size: "XL",
@@ -227,5 +233,6 @@ describe("useSwatches", () => {
     // material not selected yet, but only SKU-005 fits so far
 
     expect(result.current.matchedSkus.map(s => s.id)).toEqual(["SKU-005"])
+    expect(result.current.matchedSkus[0].imageUrl).toBe("/images/sku-005.jpg")
   })
 })
