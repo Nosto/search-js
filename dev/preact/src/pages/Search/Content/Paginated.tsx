@@ -20,7 +20,7 @@ function SpeechToTextButton() {
           stopListening()
         } else {
           startListening({
-            onResult: ({ value }) => {
+            onResult: value => {
               newSearch({
                 query: value
               })
