@@ -10,15 +10,23 @@ import { applySwatchSelectionStates } from "./applySwatchSelectionStates"
  * This hook aggregates SKU data by specified fields (e.g., "color", "size"),
  * generates swatch options, and manages the selection state for those options.
  *
+ *  * Use `matchedSkus` to:
+ * - Display preview data like images or prices from partial selections.
+ * - Enable actions like "Add to Cart" when exactly one matching SKU remains.
+ *
  * @example
  * ```jsx
  * import { useSwatches } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
- *   const { swatches, toggleOption } = useSwatches(skus, ["color", "size"])
+ *   const { swatches, toggleOption, matchedSkus } = useSwatches(skus, ["color", "size"])
+ *
+const canAddToCart = matchedSkus.length === 1
+ *   const previewImage = matchedSkus[0]?.image || "/fallback.jpg"
  *
  *   return (
  *     <div>
+ *       <img src={previewImage} alt="Product preview" width={200} />
  *       {swatches.map(({ field, options }) => (
  *         <div key={field}>
  *           {options.map(({ value, unavailable, selected }) => (
@@ -27,8 +35,11 @@ import { applySwatchSelectionStates } from "./applySwatchSelectionStates"
  *               disabled={unavailable}
  *               onClick={() => toggleOption(field, value)}
  *               style={{
- *                 background: selected ? "#0070f3" : "transparent",
+ *                 margin: "4px",
+ *                 padding: "8px 12px",
+ *                 background: selected ? "#0070f3" : "#eee",
  *                 color: selected ? "#fff" : "#000",
+ *                 opacity: unavailable ? 0.3 : 1
  *               }}
  *             >
  *               {value}
@@ -36,6 +47,10 @@ import { applySwatchSelectionStates } from "./applySwatchSelectionStates"
  *           ))}
  *         </div>
  *       ))}
+ *
+ *       <button disabled={!canAddToCart}>
+ *         Add to Cart
+ *       </button>
  *     </div>
  *   )
  * }
@@ -67,11 +82,11 @@ export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []
 
     if (selectedFields.length === 0) return []
 
-    const matchedLists = swatches
+    const matchedLists: SearchProductSku[][] = swatches
       .map(({ field, options }) =>
         selectedOptions[field] ? (options.find(opt => opt.value === selectedOptions[field])?.skus ?? []) : null
       )
-      .filter(Boolean) as SearchProductSku[][]
+      .filter(Array.isArray)
 
     return matchedLists.reduce((acc, list) => acc.filter(sku => list.includes(sku)))
   }, [swatches, selectedOptions])
