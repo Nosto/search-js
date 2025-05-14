@@ -1,3 +1,10 @@
+## [2.9.2](https://github.com/Nosto/search-js/compare/v2.9.1...v2.9.2) (2025-05-14)
+
+
+### Bug Fixes
+
+* adjust response size in merge ([b3c877a](https://github.com/Nosto/search-js/commit/b3c877ae7d55d51c0106629bab8515b7d66cf7dd))
+
 ## [2.9.1](https://github.com/Nosto/search-js/compare/v2.9.0...v2.9.1) (2025-05-14)
 
 
