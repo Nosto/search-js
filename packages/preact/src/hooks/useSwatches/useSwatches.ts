@@ -18,7 +18,7 @@ import { applySwatchSelectionStates } from "./applySwatchSelectionStates"
  * ```jsx
  * import { useSwatches } from '@nosto/search-js/preact/hooks'
  *
- * export default function ProductView({ skus }) {
+ * export default () => {
  *   const { swatches, toggleOption, matchedSkus } = useSwatches(skus, ["color", "size"])
  *
  *   const canAddToCart = matchedSkus.length === 1
