@@ -75,12 +75,12 @@ function useSpeechToTextSupported({
  * Preact hook that provides speech-to-text functionality using the Web Speech API.
  * @example
  * ```jsx
- * import { useNostoAppState, useSpeechToText } from "@nosto/search-js/preact/hooks"
+ * import { useNostoAppState, useSpeechToText, speechToTextSupported } from "@nosto/search-js/preact/hooks"
  *
  * export default function MyComponent() {
  *  const { newSearch } = useActions()
- *  const { startListening, stopListening, listening, supported } = useSpeechToText()
- *  if (!supported) {
+ *  const { startListening, stopListening, listening } = useSpeechToText()
+ *  if (!speechToTextSupported) {
  *    return null
  *  }
  *
@@ -91,7 +91,7 @@ function useSpeechToTextSupported({
  *         stopListening()
  *       } else {
  *         startListening({
- *           onResult: ({ value }) => {
+ *           onResult: value => {
  *             newSearch({
  *               query: value
  *             })
