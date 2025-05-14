@@ -1,3 +1,10 @@
+## [2.9.1](https://github.com/Nosto/search-js/compare/v2.9.0...v2.9.1) (2025-05-14)
+
+
+### Bug Fixes
+
+* add first and last page to pages array ([fd03465](https://github.com/Nosto/search-js/commit/fd03465df2672112df98c01d07677ed176bd2c97))
+
 # [2.9.0](https://github.com/Nosto/search-js/compare/v2.8.3...v2.9.0) (2025-05-12)
 
 
