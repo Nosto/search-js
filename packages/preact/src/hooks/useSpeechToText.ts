@@ -44,8 +44,8 @@ function useSpeechToTextSupported({
       recognizer.onstart = () => setListening(true)
 
       recognizer.onresult = event => {
-        const { transcript, confidence } = event.results?.[0]?.[0]
-        onResult({ value: transcript, confidence })
+        const { transcript } = event.results?.[0]?.[0]
+        onResult(transcript)
       }
 
       if (onError) {
