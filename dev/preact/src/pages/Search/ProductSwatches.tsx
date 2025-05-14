@@ -1,16 +1,13 @@
-import { SearchProduct } from "@nosto/nosto-js/client"
 import { useSwatches } from "@nosto/search-js/preact/hooks"
 
-export default function ProductSwatches({ skus = [] }: SearchProduct) {
-  const { swatches, toggleOption, matchedSkus } = useSwatches(skus, ["color", "size", "material"])
+type Props = {
+  swatches: ReturnType<typeof useSwatches>["swatches"]
+  toggleOption: ReturnType<typeof useSwatches>["toggleOption"]
+}
 
+export default function ProductSwatches({ swatches, toggleOption }: Props) {
   if (!swatches || swatches.length === 0) {
     return
-  }
-
-  const handleAddToCart = () => {
-    const skuToAdd = matchedSkus[0]
-    console.log(skuToAdd)
   }
 
   return (
@@ -39,7 +36,6 @@ export default function ProductSwatches({ skus = [] }: SearchProduct) {
           </div>
         </div>
       ))}
-      {matchedSkus.length === 1 && <button onClick={handleAddToCart}>Add to Cart</button>}
     </div>
   )
 }
