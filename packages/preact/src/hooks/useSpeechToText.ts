@@ -62,7 +62,6 @@ function useSpeechToTextSupported({
 
   const stopListening = useCallback(() => {
     recognizerRef.current?.stop()
-    setListening(false)
   }, [recognizerRef])
 
   return {
