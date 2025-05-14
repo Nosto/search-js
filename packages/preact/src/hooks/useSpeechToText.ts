@@ -6,7 +6,7 @@ interface SpeechToTextOptions {
 }
 
 interface StartListeningOptions {
-  onResult: ({ value, confidence }: { value: string; confidence: number }) => void
+  onResult: (value: string) => void
   onError?: (error: string) => void
 }
 
@@ -48,8 +48,8 @@ function useSpeechToTextSupported({
         onResult({ value: transcript, confidence })
       }
 
-      recognizer.onerror = event => {
-        if (onError) onError(event.error)
+      if (onError) {
+        recognizer.onerror = event => onError(event.error)
       }
 
       recognizer.onend = () => setListening(false)
