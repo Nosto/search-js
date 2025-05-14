@@ -84,10 +84,12 @@ export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []
     if (selectedFields.length === 0) return []
 
     const matchedLists: SearchProductSku[][] = swatches
-      .map(({ field, options }) =>
-        selectedOptions[field] ? (options.find(opt => opt.value === selectedOptions[field])?.skus ?? []) : null
-      )
-      .filter(Array.isArray)
+      .filter(({ field }) => selectedOptions[field])
+      .map(({ field, options }) => {
+        const selectedValue = selectedOptions[field]
+        const option = options.find(opt => opt.value === selectedValue)
+        return option?.skus ?? []
+      })
 
     return matchedLists.reduce((acc, list) => acc.filter(sku => list.includes(sku)))
   }, [swatches, selectedOptions])
