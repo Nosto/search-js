@@ -7,7 +7,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 describe("searchWithCache", () => {
   const search = vi.fn()
 
-  const resultDefault = { products: { hits: [{ name: "product 1" }], total: 2 } }
+  const resultDefault = { products: { hits: [{ name: "product 1" }], size: 1, total: 2 } }
 
   type TestSearchOptions = {
     query: SearchQuery
@@ -73,6 +73,7 @@ describe("searchWithCache", () => {
       const multipleResults = {
         products: {
           hits: [{ name: "product 1" }, { name: "product 2" }],
+          size: 2,
           total: 2
         }
       }
@@ -109,6 +110,7 @@ describe("searchWithCache", () => {
         ...newResult,
         products: {
           ...newResult.products,
+          size: 2,
           hits: [{ name: "product 1" }, ...newResult.products.hits]
         }
       }
@@ -135,6 +137,7 @@ describe("searchWithCache", () => {
       const mergedResult = {
         products: {
           hits: [{ name: "product 1" }, { name: "product 2" }],
+          size: 2,
           total: 2
         }
       }
