@@ -18,15 +18,16 @@ import { applySwatchSelectionStates } from "./applySwatchSelectionStates"
  * ```jsx
  * import { useSwatches } from '@nosto/search-js/preact/hooks'
  *
- * export default () => {
+ * export default function ProductView({ skus }) {
  *   const { swatches, toggleOption, matchedSkus } = useSwatches(skus, ["color", "size"])
  *
-const canAddToCart = matchedSkus.length === 1
- *   const previewImage = matchedSkus[0]?.image || "/fallback.jpg"
+ *   const canAddToCart = matchedSkus.length === 1
+ *   const previewImage = matchedSkus[0]?.imageUrl || "/fallback.jpg"
  *
  *   return (
  *     <div>
  *       <img src={previewImage} alt="Product preview" width={200} />
+ *
  *       {swatches.map(({ field, options }) => (
  *         <div key={field}>
  *           {options.map(({ value, unavailable, selected }) => (
