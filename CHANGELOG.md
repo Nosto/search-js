@@ -1,3 +1,15 @@
+# [2.12.0](https://github.com/Nosto/search-js/compare/v2.11.1...v2.12.0) (2025-05-15)
+
+
+### Bug Fixes
+
+* export UseFacetOptions ([3268b61](https://github.com/Nosto/search-js/commit/3268b617d395706c09b54883973bcc7ae6b3dcff))
+
+
+### Features
+
+* add options to useFacet hook ([def2aa9](https://github.com/Nosto/search-js/commit/def2aa9942d6cc23fe7cb768417c2f4107cc0523))
+
 ## [2.11.1](https://github.com/Nosto/search-js/compare/v2.11.0...v2.11.1) (2025-05-15)
 
 
