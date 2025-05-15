@@ -1,7 +1,7 @@
 /** @module preact/hooks */
 export { useActions } from "./src/hooks/useActions"
 export { useDecoratedSearchResults } from "./src/hooks/useDecoratedSearchResults"
-export { useFacet } from "./src/hooks/useFacet"
+export { useFacet, type UseFacetOptions } from "./src/hooks/useFacet"
 export { useFacets } from "./src/hooks/useFacets"
 export { useLoadMore } from "./src/hooks/useLoadMore/useLoadMore"
 export { useNostoAppState } from "./src/hooks/useNostoAppState"

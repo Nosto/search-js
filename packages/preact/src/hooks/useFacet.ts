@@ -3,7 +3,10 @@ import { useCallback, useState } from "preact/hooks"
 
 import { useActions } from "./useActions"
 
-export interface FacetOptions {
+/**
+ * Extra options for the useFacet hook.
+ */
+export interface UseFacetOptions {
   active?: boolean
 }
 
@@ -56,13 +59,13 @@ export interface FacetOptions {
  * ```
  * @group Hooks
  */
-export function useFacet(facet: SearchTermsFacet, options?: FacetOptions) {
+export function useFacet(facet: SearchTermsFacet, options?: UseFacetOptions) {
   const selectedFiltersCount = facet.data?.filter(v => v.selected).length ?? 0
 
   const { active: initialActive } = {
     active: selectedFiltersCount > 0,
     ...options
-  } satisfies FacetOptions
+  } satisfies UseFacetOptions
 
   const [active, setActive] = useState(initialActive)
   const { toggleProductFilter } = useActions()
