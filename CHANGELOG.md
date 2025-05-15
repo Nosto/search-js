@@ -1,3 +1,10 @@
+## [2.11.1](https://github.com/Nosto/search-js/compare/v2.11.0...v2.11.1) (2025-05-15)
+
+
+### Bug Fixes
+
+* add missing cache ttl ([bc0052e](https://github.com/Nosto/search-js/commit/bc0052e069458597b6c8a58fa96c951d75dc6b35))
+
 # [2.11.0](https://github.com/Nosto/search-js/compare/v2.10.0...v2.11.0) (2025-05-14)
 
 
