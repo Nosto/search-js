@@ -20,17 +20,18 @@ describe("searchWithCache", () => {
     expect(response).toEqual(result)
     expect(getSessionStorageItem(STORAGE_ENTRY_NAME)).toEqual({
       query,
-      result
+      result,
+      created: expect.any(Number)
     })
   }
 
-  async function testSearchTrigger({ triggeredQuery, ...options }: TestSearchOptions) {
+  async function testSearchTriggered({ triggeredQuery, ...options }: TestSearchOptions) {
     await testSearch(options)
     expect(search).toHaveBeenCalledWith(triggeredQuery ?? options.query, expect.anything())
     search.mockClear()
   }
 
-  async function testSearchNoTrigger(options: TestSearchOptions) {
+  async function testSearchNotTriggered(options: TestSearchOptions) {
     await testSearch(options)
     expect(search).not.toHaveBeenCalled()
     search.mockClear()
@@ -46,24 +47,38 @@ describe("searchWithCache", () => {
 
   describe("pagination", () => {
     it("should call search when existing cache not found", async () => {
-      await testSearchTrigger({
+      await testSearchTriggered({
         query: { products: { from: 0, size: 1 } },
         result: resultDefault
       })
 
-      await testSearchTrigger({
+      await testSearchTriggered({
         query: { products: { from: 1, size: 1 } },
         result: resultDefault
       })
     })
 
     it("should not call search when existing cache found", async () => {
-      await testSearchTrigger({
+      await testSearchTriggered({
         query: { products: { from: 0, size: 1 } },
         result: resultDefault
       })
 
-      await testSearchNoTrigger({
+      await testSearchNotTriggered({
+        query: { products: { from: 0, size: 1 } },
+        result: resultDefault
+      })
+    })
+
+    it("should call search when existing cache entry is expired", async () => {
+      vi.spyOn(Date, "now").mockReturnValue(0)
+      await testSearchTriggered({
+        query: { products: { from: 0, size: 1 } },
+        result: resultDefault
+      })
+
+      vi.spyOn(Date, "now").mockReturnValue(120 * 1000) // 2 minutes later
+      await testSearchTriggered({
         query: { products: { from: 0, size: 1 } },
         result: resultDefault
       })
@@ -80,19 +95,19 @@ describe("searchWithCache", () => {
 
       search.mockResolvedValue(multipleResults)
 
-      await testSearchTrigger({
+      await testSearchTriggered({
         query: { products: { from: 0, size: 2 } },
         result: multipleResults
       })
 
-      await testSearchNoTrigger({
+      await testSearchNotTriggered({
         query: { products: { from: 0, size: 1 } },
         result: resultDefault
       })
     })
 
     it("should prefill from cache when requested size is more than cache size", async () => {
-      await testSearchTrigger({
+      await testSearchTriggered({
         query: { products: { from: 1, size: 1 } },
         result: resultDefault
       })
@@ -115,7 +130,7 @@ describe("searchWithCache", () => {
         }
       }
 
-      await testSearchTrigger({
+      await testSearchTriggered({
         query: { products: { from: 1, size: 2 } },
         triggeredQuery: { products: { from: 2, size: 1 } },
         result: mergedResult
@@ -125,7 +140,7 @@ describe("searchWithCache", () => {
 
   describe("infinite scroll", () => {
     it("should prefill result from cache on scroll", async () => {
-      await testSearchTrigger({
+      await testSearchTriggered({
         query: { products: { from: 0, size: 1 } },
         result: resultDefault
       })
@@ -142,7 +157,7 @@ describe("searchWithCache", () => {
         }
       }
 
-      await testSearchTrigger({
+      await testSearchTriggered({
         query: { products: { from: 0, size: 2 } },
         triggeredQuery: { products: { from: 1, size: 1 } },
         result: mergedResult
@@ -159,12 +174,12 @@ describe("searchWithCache", () => {
 
       search.mockResolvedValue(multipleResults)
 
-      await testSearchTrigger({
+      await testSearchTriggered({
         query: { products: { from: 0, size: 2 } },
         result: multipleResults
       })
 
-      await testSearchNoTrigger({
+      await testSearchNotTriggered({
         query: { products: { from: 0, size: 1 } },
         result: resultDefault
       })
