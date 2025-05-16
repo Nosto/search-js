@@ -57,7 +57,6 @@ export function Paginated() {
             componentProps={{ placeholder: "Search" }}
             onSearchInput={target => setInput(target.value)}
           />
-          <input type="search" placeholder="Search" />
           <input type="button" value="Search" onClick={onSearch} />
           <SpeechToTextButton />
         </div>
