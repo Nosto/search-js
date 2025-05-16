@@ -1,29 +1,26 @@
-import { isHTMLInput } from "@preact/dom/utils"
-import { ComponentChildren } from "preact"
+import { ComponentChildren, ComponentProps, ComponentType, JSX } from "preact"
 
-import { renderHeadless } from "../dom/renderHeadless"
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AsComponent = keyof JSX.IntrinsicElements | ComponentType<any>
 
-type Props = {
-  children: ComponentChildren
+type Props<C extends AsComponent> = {
+  as?: C
   onSearchInput: (target: HTMLInputElement) => void
+  children?: ComponentChildren
+  componentProps?: JSX.LibraryManagedAttributes<C, ComponentProps<C>>
 }
 
-export function SearchInput({ children, onSearchInput }: Props) {
-  return renderHeadless({
-    children,
-    updateElement: vnode => {
-      if (!isHTMLInput(vnode) || vnode.props.type !== "search") {
-        return vnode
-      }
-      vnode.props = {
-        ...vnode.props,
-        onInput: event => {
-          if (event.target instanceof HTMLInputElement) {
-            onSearchInput(event.target)
-          }
-        }
-      }
-      return vnode
+export function SearchInput<C extends AsComponent>({ as, componentProps, onSearchInput, children }: Props<C>) {
+  const adjustedComponentProps = {
+    ...componentProps!,
+    onInput: (event: JSX.TargetedEvent<HTMLInputElement>) => {
+      onSearchInput(event.target as HTMLInputElement)
     }
-  })
+  }
+
+  const Comp = as ?? "input"
+  if (!as) {
+    adjustedComponentProps.type = "search"
+  }
+  return <Comp {...adjustedComponentProps}>{children}</Comp>
 }
