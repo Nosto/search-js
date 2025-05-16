@@ -14,7 +14,7 @@ import { useEffect, useState } from "preact/hooks"
  *
  * @example
  * ```jsx
- * import { usePersonalization } from '@nosto/preact'
+ * import { usePersonalization } from '@nosto/preact/hooks'
  *
  * export default () => {
  *   const { segments, boost } = usePersonalization()

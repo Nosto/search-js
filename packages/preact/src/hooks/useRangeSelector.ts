@@ -11,7 +11,7 @@ import { useRange } from "./useRange"
  * @param id - Id of the range Selector
  * @example
  * ```jsx
- * import { useRangeCheckboxes } from "@nosto/search-js/preact"
+ * import { useRangeCheckboxes } from "@nosto/search-js/preact/hooks"
  * import { useState } from "preact/hooks"
  * import RadioButton from "./elements/RadioButton"
  * import RangeInput from "./elements/RangeInput"

@@ -1,13 +1,13 @@
 import type { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { logger } from "@utils/logger"
 
-import { HitDecorator, SearchFn, SearchOptions } from "./types"
+import { SearchFn, SearchOptions } from "./types"
 import { delay } from "./utils/delay"
 
-export async function searchWithRetries<HD extends readonly HitDecorator[]>(
+export async function searchWithRetries(
   query: SearchQuery,
-  { maxRetries = 0, retryInterval = 0, ...options }: SearchOptions<HD>,
-  searchFn: SearchFn<HD>
+  { maxRetries = 0, retryInterval = 0, ...options }: SearchOptions,
+  searchFn: SearchFn
 ): Promise<SearchResult> {
   let retries = 0
 

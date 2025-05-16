@@ -12,7 +12,7 @@ import { useNostoAppState } from "./useNostoAppState"
  * @example
  * General usage with `useRange`:
  * ```jsx
- * import { useRange } from "@nosto/search-js/preact";
+ * import { useRange } from "@nosto/search-js/preact/hooks";
  * import { useState } from "react";
  *
  * const Component = ({ facetId }) => {

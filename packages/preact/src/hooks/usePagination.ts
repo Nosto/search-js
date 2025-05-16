@@ -19,7 +19,7 @@ export type Page = {
  *
  * @example
  * ```jsx
- * import { usePagination } from '@nosto/search-js/preact'
+ * import { usePagination } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
  *     const { pages } = usePagination()
@@ -87,12 +87,20 @@ export function usePagination(options?: { width?: number }): {
 
     const prev = currentPage > 1 ? pageToPosition(currentPage - 1) : undefined
     const next = currentPage < totalPages ? pageToPosition(currentPage + 1) : undefined
-    const first = pagesToShow === Infinity || currentPage - pagesToShow - 1 > 1 ? pageToPosition(1) : undefined
-    const last =
-      pagesToShow === Infinity || currentPage + pagesToShow + 1 < totalPages ? pageToPosition(totalPages) : undefined
+    const first = currentPage - pagesToShow - 1 > 1 ? pageToPosition(1) : undefined
+    const last = currentPage + pagesToShow + 1 < totalPages ? pageToPosition(totalPages) : undefined
     const pages = range(1, totalPages + 1)
       .filter(showPage)
       .map(pageToPosition)
+
+    if (!first && pages[0]?.page === 2) {
+      // add first page to extended pages array
+      pages.unshift(pageToPosition(1))
+    }
+    if (!last && pages[pages.length - 1]?.page === totalPages - 1) {
+      // add last page to extended pages array
+      pages.push(pageToPosition(totalPages))
+    }
 
     return {
       totalPages,

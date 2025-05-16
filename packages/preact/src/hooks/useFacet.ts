@@ -1,14 +1,21 @@
 import type { SearchTermsFacet } from "@nosto/nosto-js/client"
-import { useState } from "preact/hooks"
+import { useCallback, useState } from "preact/hooks"
 
 import { useActions } from "./useActions"
+
+/**
+ * Extra options for the useFacet hook.
+ */
+export interface UseFacetOptions {
+  active?: boolean
+}
 
 /**
  * Preact hook that provides facet state to the component.
  * @param facet
  * @example
  * ```jsx
- * import { useFacet } from '@nosto/search-js/preact'
+ * import { useFacet } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
  *     const { active, selectedFiltersCount, toggleActive, toggleProductFilter } = useFacet(facet)
@@ -52,14 +59,20 @@ import { useActions } from "./useActions"
  * ```
  * @group Hooks
  */
-export function useFacet(facet: SearchTermsFacet) {
+export function useFacet(facet: SearchTermsFacet, options?: UseFacetOptions) {
   const selectedFiltersCount = facet.data?.filter(v => v.selected).length ?? 0
-  const [active, setActive] = useState(selectedFiltersCount > 0)
+
+  const { active: initialActive } = {
+    active: selectedFiltersCount > 0,
+    ...options
+  } satisfies UseFacetOptions
+
+  const [active, setActive] = useState(initialActive)
   const { toggleProductFilter } = useActions()
 
-  const toggleActive = () => {
+  const toggleActive = useCallback(() => {
     setActive(!active)
-  }
+  }, [active])
 
   return {
     /** Active value */

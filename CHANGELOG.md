@@ -1,3 +1,91 @@
+# [2.12.0](https://github.com/Nosto/search-js/compare/v2.11.1...v2.12.0) (2025-05-15)
+
+
+### Bug Fixes
+
+* export UseFacetOptions ([3268b61](https://github.com/Nosto/search-js/commit/3268b617d395706c09b54883973bcc7ae6b3dcff))
+
+
+### Features
+
+* add options to useFacet hook ([def2aa9](https://github.com/Nosto/search-js/commit/def2aa9942d6cc23fe7cb768417c2f4107cc0523))
+
+## [2.11.1](https://github.com/Nosto/search-js/compare/v2.11.0...v2.11.1) (2025-05-15)
+
+
+### Bug Fixes
+
+* add missing cache ttl ([bc0052e](https://github.com/Nosto/search-js/commit/bc0052e069458597b6c8a58fa96c951d75dc6b35))
+
+# [2.11.0](https://github.com/Nosto/search-js/compare/v2.10.0...v2.11.0) (2025-05-14)
+
+
+### Features
+
+* voice to text support ([#208](https://github.com/Nosto/search-js/issues/208)) ([a227c0e](https://github.com/Nosto/search-js/commit/a227c0ecf1fed17c291ac5cdccb6bfc746c1a99b))
+
+# [2.10.0](https://github.com/Nosto/search-js/compare/v2.9.2...v2.10.0) (2025-05-14)
+
+
+### Bug Fixes
+
+* go over the swatches instead of skus ([79bf816](https://github.com/Nosto/search-js/commit/79bf816eeb819682205d6c9461efa00773019f91))
+* handle empty case ([fbaf9d5](https://github.com/Nosto/search-js/commit/fbaf9d5645a182a6ef51a3eed69908671fb60d70))
+* return matching SKUS for partial swatch selection ([3679b70](https://github.com/Nosto/search-js/commit/3679b70b0f38d8cfbf5f6b885e3647668cc8da10))
+* update after review ([1e649e9](https://github.com/Nosto/search-js/commit/1e649e9c19ddd8f2d941b635bf62bb8a19efdca9))
+
+
+### Features
+
+* expose selected sku ([7f0c653](https://github.com/Nosto/search-js/commit/7f0c653944eb0757b14268ed43e9440b2b8d65fa))
+
+## [2.9.2](https://github.com/Nosto/search-js/compare/v2.9.1...v2.9.2) (2025-05-14)
+
+
+### Bug Fixes
+
+* adjust response size in merge ([b3c877a](https://github.com/Nosto/search-js/commit/b3c877ae7d55d51c0106629bab8515b7d66cf7dd))
+
+## [2.9.1](https://github.com/Nosto/search-js/compare/v2.9.0...v2.9.1) (2025-05-14)
+
+
+### Bug Fixes
+
+* add first and last page to pages array ([fd03465](https://github.com/Nosto/search-js/commit/fd03465df2672112df98c01d07677ed176bd2c97))
+
+# [2.9.0](https://github.com/Nosto/search-js/compare/v2.8.3...v2.9.0) (2025-05-12)
+
+
+### Bug Fixes
+
+* avoid type assertion ([2c3f9e0](https://github.com/Nosto/search-js/commit/2c3f9e0edf18c8cb7a165fddcff076d1cfc5f891))
+* fix type ([860c2f8](https://github.com/Nosto/search-js/commit/860c2f8da57c771313bde783f86b10a33490c699))
+* fix typedoc ([725e1ed](https://github.com/Nosto/search-js/commit/725e1ed1b71f875efd0726bbb289ced87976ff3e))
+* use correct file path ([98ec041](https://github.com/Nosto/search-js/commit/98ec041a69be49666f1b53bfe81fd8ece3a14daa))
+* use full sku ([a2bc4fd](https://github.com/Nosto/search-js/commit/a2bc4fd15bef7efbf76c40ebed4203e01394e17b))
+
+
+### Features
+
+* add selected field and update tests ([54b594d](https://github.com/Nosto/search-js/commit/54b594d83e7c169e78974e0104814594b5c769e8))
+* create useSwatches hook ([d46cf97](https://github.com/Nosto/search-js/commit/d46cf97289430de44dd8d7feefb611c88abc0063))
+* updates ([e2d58c0](https://github.com/Nosto/search-js/commit/e2d58c0fe92f7ff3badc1f6183a4c4ee11ba38b0))
+
+## [2.8.3](https://github.com/Nosto/search-js/compare/v2.8.2...v2.8.3) (2025-05-12)
+
+
+### Bug Fixes
+
+* use better persistence key scoping ([3108057](https://github.com/Nosto/search-js/commit/3108057650d838c6ad5a5cff5ab0d9811d3d6311))
+
+## [2.8.2](https://github.com/Nosto/search-js/compare/v2.8.1...v2.8.2) (2025-05-09)
+
+
+### Bug Fixes
+
+* remove onSubmit triggering in onKeyDown ([150aec2](https://github.com/Nosto/search-js/commit/150aec287877ffbc7ff6c332618b49cb0ce93a5c))
+* review comments ([c3f2646](https://github.com/Nosto/search-js/commit/c3f2646fc40803a12904ecfa92ee3637da77228f))
+
 ## [2.8.1](https://github.com/Nosto/search-js/compare/v2.8.0...v2.8.1) (2025-05-07)
 
 

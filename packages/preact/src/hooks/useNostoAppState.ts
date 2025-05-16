@@ -7,7 +7,7 @@ import { useContext, useEffect, useState } from "preact/hooks"
  *
  * @example
  * ```jsx
- * import { useNostoAppState } from '@nosto/search-js/preact'
+ * import { useNostoAppState } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
  *     const pageType = useNostoAppState(state => state.pageType)
@@ -25,7 +25,7 @@ import { useContext, useEffect, useState } from "preact/hooks"
  *
  * @example
  * ```jsx
- * import { useNostoAppState } from '@nosto/search-js/preact'
+ * import { useNostoAppState } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
  *     const state = useNostoAppState()

@@ -17,7 +17,7 @@ export interface SortOption {
  * @param sortOptions
  * @example
  * ```jsx
- * import { useSort } from '@nosto/search-js/preact'
+ * import { useSort } from '@nosto/search-js/preact/hooks'
  * import { sortOptions } from '../config'
  *
  * export default () => {

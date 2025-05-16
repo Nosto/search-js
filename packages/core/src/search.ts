@@ -19,8 +19,8 @@ export async function search<HD extends readonly HitDecorator[]>(query: SearchQu
   return searchFn(query, options) as Promise<DecoratedResult<HD>>
 }
 
-function wrap<HD extends readonly HitDecorator[]>(inner: SearchFn<HD>, ...wrappers: SearchWithNext<HD>[]) {
-  return wrappers.reduce<SearchFn<HD>>((inner, outer) => {
+function wrap(inner: SearchFn, ...wrappers: SearchWithNext[]) {
+  return wrappers.reduce<SearchFn>((inner, outer) => {
     return (query, options) => outer(query, options, inner)
   }, inner)
 }

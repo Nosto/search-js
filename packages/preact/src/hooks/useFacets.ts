@@ -4,7 +4,7 @@ import { useNostoAppState } from "./useNostoAppState"
  * Preact hook that imports the facets to the component.
  * @example
  * ```jsx
- * import { useFacets } from '@nosto/search-js/preact'
+ * import { useFacets } from '@nosto/search-js/preact/hooks'
  * import { defaultConfig } from "../config"
  *
  * export default () => {

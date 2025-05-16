@@ -9,7 +9,7 @@ import { useProductFiltersUtils } from "./useProductFiltersUtils"
  *
  * @example
  * ```jsx
- * import { useProductFilters, useActions } from '@nosto/search-js/preact'
+ * import { useProductFilters, useActions } from '@nosto/search-js/preact/hooks'
  *
  * export default () => {
  *     const { filters } = useProductFilters()

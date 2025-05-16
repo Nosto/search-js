@@ -7,7 +7,7 @@ import { useNostoAppState } from "./useNostoAppState"
  * @returns The number of selected filters.
  * @example
  * ```jsx
- * import { useSelectedFiltersCount } from '@nosto/search-js/preact'
+ * import { useSelectedFiltersCount } from '@nosto/search-js/preact/hooks'
  * export default () => {
  *    const selectedFiltersCount = useSelectedFiltersCount()
  *    return (
