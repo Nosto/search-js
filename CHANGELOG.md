@@ -1,3 +1,11 @@
+## [2.12.1](https://github.com/Nosto/search-js/compare/v2.12.0...v2.12.1) (2025-05-16)
+
+
+### Bug Fixes
+
+* drop extra onClick ([1b38611](https://github.com/Nosto/search-js/commit/1b38611f8a5b762232baee7434b36127b3c249a1))
+* rewrite headless components ([0b36096](https://github.com/Nosto/search-js/commit/0b360969513959c113a82ec0a5899fce06241672))
+
 # [2.12.0](https://github.com/Nosto/search-js/compare/v2.11.1...v2.12.0) (2025-05-15)
 
 
