@@ -27,15 +27,16 @@ async function getSearchResultWithCache(
     return await searchFn(searchQuery, options)
   }
 
-  const cacheHits = result?.products?.hits || []
+  const resultSize = result.products?.size ?? 0
+  const cacheHits = result?.products?.hits ?? []
 
   // when request data is already in cache
-  if (size === cacheHits.length) {
+  if (size === resultSize) {
     return result
   }
 
   // requested size is less than the cache size
-  if (size < cacheHits.length) {
+  if (size < resultSize) {
     return {
       ...result,
       products: {

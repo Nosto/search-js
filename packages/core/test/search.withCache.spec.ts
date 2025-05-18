@@ -168,6 +168,7 @@ describe("searchWithCache", () => {
       const multipleResults = {
         products: {
           hits: [{ name: "product 1" }, { name: "product 2" }],
+          size: 2,
           total: 2
         }
       }
