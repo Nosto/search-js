@@ -8,11 +8,11 @@ export async function searchWithCache(
   { usePersistentCache, ...options }: SearchOptions,
   searchFn: SearchFn
 ): Promise<SearchResult> {
-  if (!usePersistentCache) {
+  if (!usePersistentCache || !window.caches) {
     return searchFn(query, options)
   }
   const response = await getSearchResultWithCache(query, options, searchFn)
-  cacheSearchResult(query, response)
+  await cacheSearchResult(query, response)
   return response
 }
 
@@ -22,7 +22,7 @@ async function getSearchResultWithCache(
   searchFn: SearchFn
 ): Promise<SearchResult> {
   const { from = 0, size = 0 } = searchQuery.products || {}
-  const result = loadCachedResult(searchQuery)
+  const result = await loadCachedResult(searchQuery)
   if (!result) {
     return await searchFn(searchQuery, options)
   }
