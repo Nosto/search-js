@@ -58,7 +58,7 @@ describe("searchWithCache", () => {
       })
     })
 
-    it("should not call search when existing cache found", async () => {
+    it("should not call search when existing cache found, full page", async () => {
       await testSearchTriggered({
         query: { products: { from: 0, size: 1 } },
         result: resultDefault
@@ -67,6 +67,27 @@ describe("searchWithCache", () => {
       await testSearchNotTriggered({
         query: { products: { from: 0, size: 1 } },
         result: resultDefault
+      })
+    })
+
+    it("should not call search when existing cache found, partial page", async () => {
+      const multipleResults = {
+        products: {
+          hits: [{ name: "product 1" }, { name: "product 2" }, { name: "product 3" }],
+          size: 5,
+          total: 3
+        }
+      }
+      search.mockResolvedValue(multipleResults)
+
+      await testSearchTriggered({
+        query: { products: { from: 0, size: 5 } },
+        result: multipleResults
+      })
+
+      await testSearchNotTriggered({
+        query: { products: { from: 0, size: 5 } },
+        result: multipleResults
       })
     })
 
@@ -92,7 +113,6 @@ describe("searchWithCache", () => {
           total: 2
         }
       }
-
       search.mockResolvedValue(multipleResults)
 
       await testSearchTriggered({
