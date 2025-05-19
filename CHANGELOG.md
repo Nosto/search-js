@@ -1,3 +1,10 @@
+## [2.12.2](https://github.com/Nosto/search-js/compare/v2.12.1...v2.12.2) (2025-05-19)
+
+
+### Bug Fixes
+
+* use result size instead of hits.length ([0ee04b5](https://github.com/Nosto/search-js/commit/0ee04b58be2c26a9b6f279bee13f8894bcc5e767))
+
 ## [2.12.1](https://github.com/Nosto/search-js/compare/v2.12.0...v2.12.1) (2025-05-16)
 
 
