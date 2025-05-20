@@ -1,3 +1,10 @@
+# [2.13.0](https://github.com/Nosto/search-js/compare/v2.12.2...v2.13.0) (2025-05-20)
+
+
+### Features
+
+* skip empty options ([61db159](https://github.com/Nosto/search-js/commit/61db159235e3d8688e729d84c8b00391346609a1))
+
 ## [2.12.2](https://github.com/Nosto/search-js/compare/v2.12.1...v2.12.2) (2025-05-19)
 
 
