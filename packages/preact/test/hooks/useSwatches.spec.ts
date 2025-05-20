@@ -45,61 +45,25 @@ function createExpectedSwatches() {
   ]
 }
 
-const testSKUs = [
-  {
-    id: "SKU-001",
-    imageUrl: "/images/sku-001.jpg",
+function createSKU(color: string, size: string, material: string) {
+  return {
+    id: `${color}-${size}-${material}`,
+    imageUrl: `/images/${color}-${size}-${material}.jpg`,
     customFields: createSwatchOptions({
-      color: "Red",
-      size: "S",
-      material: "Cotton"
-    })
-  },
-  {
-    id: "SKU-002",
-    imageUrl: "/images/sku-002.jpg",
-    customFields: createSwatchOptions({
-      color: "Red",
-      size: "M",
-      material: "Silk"
-    })
-  },
-  {
-    id: "SKU-003",
-    imageUrl: "/images/sku-003.jpg",
-    customFields: createSwatchOptions({
-      color: "Blue",
-      size: "M",
-      material: "Cotton"
-    })
-  },
-  {
-    id: "SKU-004",
-    imageUrl: "/images/sku-004.jpg",
-    customFields: createSwatchOptions({
-      color: "Blue",
-      size: "L",
-      material: "Wool"
-    })
-  },
-  {
-    id: "SKU-005",
-    imageUrl: "/images/sku-005.jpg",
-    customFields: createSwatchOptions({
-      color: "Green",
-      size: "S",
-      material: "Silk"
-    })
-  },
-  {
-    id: "SKU-006",
-    imageUrl: "/images/sku-006.jpg",
-    customFields: createSwatchOptions({
-      color: "Green",
-      size: "XL",
-      material: "Wool"
+      color,
+      size,
+      material
     })
   }
+}
+
+const testSKUs = [
+  createSKU("Red", "S", "Cotton"),
+  createSKU("Red", "M", "Silk"),
+  createSKU("Blue", "M", "Cotton"),
+  createSKU("Blue", "L", "Wool"),
+  createSKU("Green", "S", "Silk"),
+  createSKU("Green", "XL", "Wool")
 ]
 
 describe("useSwatches", () => {
@@ -110,6 +74,11 @@ describe("useSwatches", () => {
 
   it("should aggregate swatches correctly based on fields", () => {
     const { result } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
+    expect(result.current.swatches).toEqual(createExpectedSwatches())
+  })
+
+  it("should ignore custom fields that are not present in SKUs", () => {
+    const { result } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material", "nonexistent"]))
     expect(result.current.swatches).toEqual(createExpectedSwatches())
   })
 
@@ -211,7 +180,7 @@ describe("useSwatches", () => {
     result.current.toggleOption("material", "Silk")
     rerender()
 
-    expect(result.current.matchedSkus.map(s => s.id)).toEqual(["SKU-005"])
+    expect(result.current.matchedSkus.map(s => s.id)).toEqual(["Green-S-Silk"])
   })
 
   it("should return matching SKUs for partial selection", () => {
@@ -220,7 +189,7 @@ describe("useSwatches", () => {
     result.current.toggleOption("color", "Red")
     rerender()
 
-    expect(result.current.matchedSkus.map(s => s.id)).toEqual(["SKU-001", "SKU-002"])
+    expect(result.current.matchedSkus.map(s => s.id)).toEqual(["Red-S-Cotton", "Red-M-Silk"])
   })
 
   it("should return one matchedSku even if not all fields are selected, if only one SKU matches", () => {
@@ -232,7 +201,7 @@ describe("useSwatches", () => {
     rerender()
     // material not selected yet, but only SKU-005 fits so far
 
-    expect(result.current.matchedSkus.map(s => s.id)).toEqual(["SKU-005"])
-    expect(result.current.matchedSkus[0].imageUrl).toBe("/images/sku-005.jpg")
+    expect(result.current.matchedSkus.map(s => s.id)).toEqual(["Green-S-Silk"])
+    expect(result.current.matchedSkus[0].imageUrl).toBe("/images/Green-S-Silk.jpg")
   })
 })
