@@ -20,13 +20,15 @@ export function aggregateSwatches(skus: SearchProductSku[], fields: string[]): S
     })
   })
 
-  return Object.entries(aggregated).map(([field, values]) => ({
-    field,
-    options: Object.entries(values).map(([value, skus]) => ({
-      value,
-      skus,
-      unavailable: false,
-      selected: false
+  return Object.entries(aggregated)
+    .filter(agg => Object.keys(agg[1]).length)
+    .map(([field, values]) => ({
+      field,
+      options: Object.entries(values).map(([value, skus]) => ({
+        value,
+        skus,
+        unavailable: false,
+        selected: false
+      }))
     }))
-  }))
 }
