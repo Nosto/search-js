@@ -12,7 +12,7 @@ type CacheEntry = {
 
 function getRequestForQuery(query: SearchQuery) {
   const cacheKey = getCacheKey(query)
-  return new Request(`http://${CACHE_NAME}/${encodeURIComponent(cacheKey)}`)
+  return new Request(`https://${CACHE_NAME}/${encodeURIComponent(cacheKey)}`)
 }
 
 export async function cacheSearchResult(query: SearchQuery, result: SearchResult) {
