@@ -3,10 +3,9 @@ import { AsComponent, BaseElement, BaseElementProps } from "./BaseElement"
 /**
  * @group Components
  */
-export type AutocompleteElementProps = Omit<BaseElementProps<AsComponent>, "hit"> & {
+export type KeywordElementProps = Omit<BaseElementProps<AsComponent>, "hit"> & {
   hit: {
-    productId: string
-    url: string
+    keyword: string
   }
 }
 
@@ -27,4 +26,4 @@ export type AutocompleteElementProps = Omit<BaseElementProps<AsComponent>, "hit"
  *
  * @group Components
  */
-export const AutocompleteElement = (props: AutocompleteElementProps) => BaseElement(props)
+export const KeywordElement = (props: KeywordElementProps) => BaseElement(props)
