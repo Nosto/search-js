@@ -101,8 +101,7 @@ describe("AutocompleteElement", () => {
     expect(onClickMock).toHaveBeenCalledTimes(2)
   })
 
-  // custom component is not currently supported
-  it.skip("should call tracking request and original onclick on custom component", () => {
+  it("should call tracking request and original onclick on custom component", () => {
     const onClickMock = vi.fn()
     const { getByText } = render(
       <AutocompleteElement hit={mockHit}>
@@ -116,21 +115,13 @@ describe("AutocompleteElement", () => {
     expect(onClickMock).toHaveBeenCalled()
   })
 
-  it("throws an error if children are invalid", () => {
-    expect(() => render(<AutocompleteElement hit={mockHit}>{null}</AutocompleteElement>)).toThrow(
-      "AutocompleteElement expects a single valid HTML element as its child (e.g., <div>, <a>). Custom components are not supported."
-    )
-  })
-
-  it("throws an error if children are custom elements", () => {
+  it("allows custom elements", () => {
     expect(() =>
       render(
         <AutocompleteElement hit={mockHit}>
           <CustomComponent url="#">Element</CustomComponent>
         </AutocompleteElement>
       )
-    ).toThrow(
-      "AutocompleteElement expects a single valid HTML element as its child (e.g., <div>, <a>). Custom components are not supported."
-    )
+    ).not.toThrowError()
   })
 })

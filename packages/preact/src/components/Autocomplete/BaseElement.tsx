@@ -1,5 +1,4 @@
 import { nostojs } from "@nosto/nosto-js"
-import { useConfig } from "@preact/config/configContext"
 import { ComponentChildren, ComponentProps, ComponentType } from "preact"
 import { useCallback } from "preact/hooks"
 import { JSX } from "preact/jsx-runtime"
@@ -19,20 +18,17 @@ export type BaseElementProps<C extends AsComponent> = {
 }
 
 export function BaseElement<C extends AsComponent>({ as, children, hit, componentProps }: BaseElementProps<C>) {
-  const { pageType } = useConfig()
-  const track = pageType !== "autocomplete" ? undefined : pageType
-
   const onAnchorClick = useCallback(
     (event: JSX.TargetedMouseEvent<HTMLElement>) => {
       const { productId, url } = hit
-      if (track && productId && url) {
+      if (productId && url) {
         nostojs(api => api.recordSearchClick("autocomplete", { productId, url }))
       }
       if (componentProps && "onClick" in componentProps && typeof componentProps.onClick === "function") {
         componentProps.onClick(event)
       }
     },
-    [hit, componentProps, track]
+    [hit, componentProps]
   )
 
   const adjustedComponentProps = {
