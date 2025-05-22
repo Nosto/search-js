@@ -18,35 +18,32 @@ const SIZE_ORDER = [
   "One Size"
 ]
 
-export function sortOptions(field: string, options: SwatchOption[]): SwatchOption[] {
-  const isNumeric = (value: string) => /^\d+$/.test(value)
+function normalize(value: string, field: string): [number, number | string] {
   if (field === "size") {
-    return [...options].sort((a, b) => {
-      const aIsNumeric = isNumeric(a.value)
-      const bIsNumeric = isNumeric(b.value)
+    const numeric = parseFloat(value)
+    if (!isNaN(numeric)) {
+      return [0, numeric] // numeric values or numeric prefixes come first
+    }
 
-      if (aIsNumeric && bIsNumeric) {
-        return parseInt(a.value) - parseInt(b.value)
-      }
+    const index = SIZE_ORDER.indexOf(value)
+    if (index !== -1) {
+      return [1, index] // known sizes come next, sorted by index
+    }
 
-      if (aIsNumeric) return -1
-      if (bIsNumeric) return 1
-
-      const aIndex = SIZE_ORDER.indexOf(a.value)
-      const bIndex = SIZE_ORDER.indexOf(b.value)
-
-      const maxIndex = SIZE_ORDER.length
-
-      const safeA = aIndex === -1 ? maxIndex : aIndex
-      const safeB = bIndex === -1 ? maxIndex : bIndex
-
-      return safeA - safeB
-    })
+    return [2, value] // unknown strings last, optionally sorted alphabetically
   }
 
-  if (options.every(opt => isNumeric(opt.value))) {
-    return [...options].sort((a, b) => parseInt(a.value) - parseInt(b.value))
-  }
+  const parsed = parseFloat(value)
+  return [0, isNaN(parsed) ? Infinity : parsed]
+}
 
-  return options
+export function sortOptions(field: string, options: SwatchOption[]): SwatchOption[] {
+  return [...options].sort((a, b) => {
+    const [aGroup, aVal] = normalize(a.value, field)
+    const [bGroup, bVal] = normalize(b.value, field)
+
+    if (aGroup !== bGroup) return aGroup - bGroup
+    if (typeof aVal === "number" && typeof bVal === "number") return aVal - bVal
+    return String(aVal).localeCompare(String(bVal))
+  })
 }

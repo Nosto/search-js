@@ -66,19 +66,6 @@ const testSKUs = [
   createSKU("Green", "XL", "Wool")
 ]
 
-const allSizeVariantsSKUs = [
-  { id: "SKU-001", imageUrl: "/images/sku-001.jpg", customFields: createSwatchOptions({ size: "164" }) },
-  { id: "SKU-002", imageUrl: "/images/sku-002.jpg", customFields: createSwatchOptions({ size: "S" }) },
-  { id: "SKU-003", imageUrl: "/images/sku-003.jpg", customFields: createSwatchOptions({ size: "M" }) },
-  { id: "SKU-004", imageUrl: "/images/sku-004.jpg", customFields: createSwatchOptions({ size: "34" }) },
-  { id: "SKU-005", imageUrl: "/images/sku-005.jpg", customFields: createSwatchOptions({ size: "XS" }) },
-  { id: "SKU-006", imageUrl: "/images/sku-006.jpg", customFields: createSwatchOptions({ size: "L" }) },
-  { id: "SKU-007", imageUrl: "/images/sku-007.jpg", customFields: createSwatchOptions({ size: "38" }) },
-  { id: "SKU-008", imageUrl: "/images/sku-008.jpg", customFields: createSwatchOptions({ size: "One Size" }) },
-  { id: "SKU-009", imageUrl: "/images/sku-009.jpg", customFields: createSwatchOptions({ size: "Free Size" }) },
-  { id: "SKU-010", imageUrl: "/images/sku-010.jpg", customFields: createSwatchOptions({ size: "152" }) }
-]
-
 describe("useSwatches", () => {
   it("should return empty swatches if no SKUs are provided", () => {
     const { result } = renderHook(() => useSwatches([], ["color", "size"]))
@@ -218,22 +205,42 @@ describe("useSwatches", () => {
     expect(result.current.matchedSkus[0].imageUrl).toBe("/images/Green-S-Silk.jpg")
   })
 
-  it("should sort all size variants: numbers first, then size codes, then unknowns", () => {
-    const { result } = renderHook(() => useSwatches(allSizeVariantsSKUs, ["size"]))
+  it("should sort all size variants: numbers (incl. decimals/prefixes) first, then size codes, then unknowns", () => {
+    const skus = [
+      createSKU("", "164", ""),
+      createSKU("", "S", ""),
+      createSKU("", "M", ""),
+      createSKU("", "34", ""),
+      createSKU("", "XS", ""),
+      createSKU("", "L", ""),
+      createSKU("", "38", ""),
+      createSKU("", "One Size", ""),
+      createSKU("", "Free Size", ""),
+      createSKU("", "152", ""),
+      createSKU("", "1.5", ""),
+      createSKU("", "10mm", ""),
+      createSKU("", "9", ""),
+      createSKU("", "40.5", "")
+    ]
 
+    const { result } = renderHook(() => useSwatches(skus as SearchProductSku[], ["size"]))
     const sortedValues = result.current.swatches.find(s => s.field === "size")?.options.map(o => o.value)
 
     expect(sortedValues).toEqual([
+      "1.5",
+      "9",
+      "10mm",
       "34",
       "38",
+      "40.5",
       "152",
-      "164", // numeric first
+      "164",
       "XS",
       "S",
       "M",
-      "L", // standard size codes
+      "L",
       "One Size",
-      "Free Size" // unknowns (at end)
+      "Free Size"
     ])
   })
 })
