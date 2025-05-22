@@ -3,7 +3,7 @@ import { useCallback } from "preact/hooks"
 
 import { AsComponent, BaseElement, BaseElementProps } from "./BaseElement"
 
-export type AutocompleteElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, "clickHandler"> & {
+export type AutocompleteElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, "onClick"> & {
   hit: {
     productId: string
     url?: string

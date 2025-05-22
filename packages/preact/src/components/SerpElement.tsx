@@ -8,7 +8,7 @@ import { AsComponent, BaseElement, BaseElementProps } from "./BaseElement"
 /**
  * @group Components
  */
-export type SerpElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, "clickHandler"> & {
+export type SerpElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, "onClick"> & {
   hit: {
     productId: string
     url?: string
