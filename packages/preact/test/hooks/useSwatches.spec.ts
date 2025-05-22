@@ -205,7 +205,7 @@ describe("useSwatches", () => {
     expect(result.current.matchedSkus[0].imageUrl).toBe("/images/Green-S-Silk.jpg")
   })
 
-  it("should sort all size variants: numbers (incl. decimals/prefixes) first, then size codes, then unknowns", () => {
+  it("should sort size swatch options by number, known size order, then fallback", () => {
     const skus = [
       createSKU("", "164", ""),
       createSKU("", "S", ""),
