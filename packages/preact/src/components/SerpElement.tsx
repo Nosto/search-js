@@ -20,7 +20,7 @@ export type SerpElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, 
  *
  * @group Components
  */
-export function SerpElement<C extends AsComponent>({ as, children, hit, componentProps }: SerpElementProps<C>) {
+export function SerpElement<C extends AsComponent>({ children, hit, ...rest }: SerpElementProps<C>) {
   const { pageType } = useConfig()
   const track = pageType === "autocomplete" ? undefined : pageType === "search" ? "serp" : pageType
 
@@ -32,7 +32,7 @@ export function SerpElement<C extends AsComponent>({ as, children, hit, componen
   }, [hit, track])
 
   return (
-    <BaseElement as={as} clickHandler={onAnchorClick} componentProps={componentProps}>
+    <BaseElement clickHandler={onAnchorClick} {...rest}>
       {children}
     </BaseElement>
   )

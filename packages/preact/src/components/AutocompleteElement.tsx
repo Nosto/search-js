@@ -11,12 +11,7 @@ export type AutocompleteElementProps<C extends AsComponent> = Omit<BaseElementPr
   }
 }
 
-export function AutocompleteElement<C extends AsComponent>({
-  as,
-  children,
-  hit,
-  componentProps
-}: AutocompleteElementProps<C>) {
+export function AutocompleteElement<C extends AsComponent>({ children, hit, ...rest }: AutocompleteElementProps<C>) {
   const onAnchorClick = useCallback(() => {
     const { productId, url } = hit
     if (productId && url) {
@@ -25,7 +20,7 @@ export function AutocompleteElement<C extends AsComponent>({
   }, [hit])
 
   return (
-    <BaseElement as={as} clickHandler={onAnchorClick} componentProps={componentProps}>
+    <BaseElement clickHandler={onAnchorClick} {...rest}>
       {children}
     </BaseElement>
   )
