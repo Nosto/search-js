@@ -63,10 +63,6 @@ import { sortOptions } from "./sortOptions"
 export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
 
-  const aggregatedSwatches = useMemo(() => {
-    return aggregateSwatches(skus, fields)
-  }, [skus, fields])
-
   const swatches = useMemo(() => {
     const raw = aggregateSwatches(skus, fields)
     const sorted = raw.map(({ field, options }) => ({
