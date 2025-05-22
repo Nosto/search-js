@@ -4,11 +4,14 @@ import { useCallback } from "preact/hooks"
 import { AsComponent, BaseElement, BaseElementProps } from "./BaseElement"
 
 export type AutocompleteElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, "onClick"> & {
-  hit: {
-    productId: string
-    url?: string
-    keyword?: string
-  }
+  hit:
+    | {
+        productId: string
+        url?: string
+      }
+    | {
+        keyword: string
+      }
 }
 
 export function AutocompleteElement<C extends AsComponent>({
@@ -18,7 +21,7 @@ export function AutocompleteElement<C extends AsComponent>({
   componentProps
 }: AutocompleteElementProps<C>) {
   const onAnchorClick = useCallback(() => {
-    if (hit) {
+    if (hit && "productId" in hit) {
       nostojs(api => api.recordSearchClick("autocomplete", hit))
     }
   }, [hit])
