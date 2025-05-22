@@ -24,7 +24,7 @@ export function SerpElement<C extends AsComponent>({ children, hit, componentPro
   const { pageType } = useConfig()
   const track = pageType === "autocomplete" ? undefined : pageType === "search" ? "serp" : pageType
 
-  const onAnchorClick = useCallback(() => {
+  const onClick = useCallback(() => {
     if (hit && track) {
       nostojs(api => api.recordSearchClick(track, hit))
     }
@@ -32,7 +32,7 @@ export function SerpElement<C extends AsComponent>({ children, hit, componentPro
   }, [hit, track])
 
   return (
-    <BaseElement as={as} onClick={onAnchorClick} componentProps={componentProps}>
+    <BaseElement as={as} onClick={onClick} componentProps={componentProps}>
       {children}
     </BaseElement>
   )

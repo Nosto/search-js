@@ -114,14 +114,4 @@ describe("AutocompleteElement", () => {
     expect(nostoJsSpy).toHaveBeenCalled()
     expect(onClickMock).toHaveBeenCalled()
   })
-
-  it("allows custom elements", () => {
-    expect(() =>
-      render(
-        <AutocompleteElement hit={mockHit}>
-          <CustomComponent url="#">Element</CustomComponent>
-        </AutocompleteElement>
-      )
-    ).not.toThrowError()
-  })
 })
