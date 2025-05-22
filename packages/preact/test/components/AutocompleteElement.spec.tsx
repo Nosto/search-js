@@ -1,5 +1,5 @@
 import * as nostojs from "@nosto/nosto-js"
-import { AutocompleteElement } from "@preact/components/Autocomplete/AutocompleteElement"
+import { AutocompleteElement } from "@preact/components/AutocompleteElement"
 import { render } from "@testing-library/preact"
 import { ComponentChildren } from "preact"
 import { beforeEach, describe, expect, it, vi, vitest } from "vitest"
