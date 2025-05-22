@@ -8,7 +8,7 @@ export type AsComponent = keyof JSX.IntrinsicElements | ComponentType<any>
  * @group Components
  */
 export type BaseElementProps<C extends AsComponent> = {
-  clickHandler: () => void
+  onClick: () => void
   as?: C
   componentProps?: JSX.LibraryManagedAttributes<C, ComponentProps<C>>
   children?: ComponentChildren
@@ -19,20 +19,15 @@ export type BaseElementProps<C extends AsComponent> = {
  *
  * @group Components
  */
-export function BaseElement<C extends AsComponent>({
-  clickHandler,
-  as,
-  children,
-  componentProps
-}: BaseElementProps<C>) {
+export function BaseElement<C extends AsComponent>({ onClick, as, children, componentProps }: BaseElementProps<C>) {
   const onAnchorClick = useCallback(
     (event: JSX.TargetedMouseEvent<HTMLElement>) => {
-      clickHandler()
+      onClick()
       if (componentProps && "onClick" in componentProps && typeof componentProps.onClick === "function") {
         componentProps.onClick(event)
       }
     },
-    [clickHandler, componentProps]
+    [onClick, componentProps]
   )
 
   const adjustedComponentProps = {
