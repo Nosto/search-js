@@ -1,13 +1,9 @@
 import { nostojs } from "@nosto/nosto-js"
 import { useConfig } from "@preact/config/configContext"
 import { savePageScroll } from "@utils/savePageScroll"
-import { ComponentType, JSX } from "preact"
 import { useCallback } from "preact/hooks"
 
-import { BaseElement, BaseElementProps } from "./BaseElement"
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AsComponent = keyof JSX.IntrinsicElements | ComponentType<any>
+import { AsComponent, BaseElement, BaseElementProps } from "./BaseElement"
 
 /**
  * @group Components
