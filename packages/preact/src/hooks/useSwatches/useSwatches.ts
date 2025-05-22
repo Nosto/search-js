@@ -2,7 +2,7 @@ import { SearchProductSku } from "@nosto/nosto-js/client"
 import { useCallback, useMemo, useState } from "preact/hooks"
 
 import { aggregateSwatches } from "./aggregateSwatches"
-import { applySwatchSelectionStates } from "./applySwatchSelectionStates"
+import { applySelectionStates } from "./applySelectionStates"
 import { sortOptions } from "./sortOptions"
 
 /**
@@ -63,13 +63,17 @@ import { sortOptions } from "./sortOptions"
 export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
 
+  const aggregatedSwatches = useMemo(() => {
+    return aggregateSwatches(skus, fields)
+  }, [skus, fields])
+
   const swatches = useMemo(() => {
     const raw = aggregateSwatches(skus, fields)
     const sorted = raw.map(({ field, options }) => ({
       field,
       options: sortOptions(field, options)
     }))
-    return applySwatchSelectionStates(sorted, selectedOptions)
+    return applySelectionStates(sorted, selectedOptions)
   }, [skus, fields, selectedOptions])
 
   const toggleOption = useCallback((field: string, value: string) => {
