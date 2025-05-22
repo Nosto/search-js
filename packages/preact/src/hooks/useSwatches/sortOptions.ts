@@ -18,37 +18,22 @@ const SIZE_ORDER = [
   "One Size"
 ]
 
-function getSortIndex(value: string, field: string) {
+function getSortValue(value: string, field: string) {
   const num = parseFloat(value)
   if (!isNaN(num)) return num
 
   if (field === "size") {
     const index = SIZE_ORDER.indexOf(value)
-    return index === -1 ? SIZE_ORDER.length : index
+    if (index !== -1) return 1000 + index
   }
 
   return Number.MAX_SAFE_INTEGER
 }
 
 export function sortOptions(field: string, options: SwatchOption[]) {
-  if (field === "size") {
-    return [...options].sort((a, b) => {
-      const aNum = parseFloat(a.value)
-      const bNum = parseFloat(b.value)
-
-      const aIsNum = !isNaN(aNum)
-      const bIsNum = !isNaN(bNum)
-
-      if (aIsNum && bIsNum) return aNum - bNum
-      if (aIsNum) return -1
-      if (bIsNum) return 1
-
-      const aIndex = getSortIndex(a.value, field)
-      const bIndex = getSortIndex(b.value, field)
-
-      return aIndex - bIndex
-    })
-  }
-
-  return [...options].sort((a, b) => parseFloat(a.value) - parseFloat(b.value))
+  return [...options].sort((a, b) => {
+    const aVal = getSortValue(a.value, field)
+    const bVal = getSortValue(b.value, field)
+    return aVal - bVal
+  })
 }
