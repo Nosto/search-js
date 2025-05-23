@@ -3,11 +3,14 @@ import { SwatchOption } from "../types"
 const SIZE_ORDER = ["4XS", "3XS", "2XS", "XXS", "XS", "S", "M", "L", "XL", "XXL", "2XL", "XXXL", "3XL", "4XL"]
 
 function normalize(value: string): number | string {
-  const num = parseFloat(value)
-  if (!isNaN(num)) return num
+  if (SIZE_ORDER.includes(value)) {
+    return 1000 + SIZE_ORDER.indexOf(value)
+  }
 
-  const index = SIZE_ORDER.indexOf(value)
-  if (index !== -1) return 1000 + index
+  const num = parseFloat(value)
+  if (!isNaN(num)) {
+    return num
+  }
 
   return value
 }
