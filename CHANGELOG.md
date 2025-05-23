@@ -1,3 +1,23 @@
+# [2.15.0](https://github.com/Nosto/search-js/compare/v2.14.0...v2.15.0) (2025-05-23)
+
+
+### Bug Fixes
+
+* asComponentImport ([c2ff757](https://github.com/Nosto/search-js/commit/c2ff7574640879fdee3a553ff7d435eb9288a3e4))
+* omit ([039527e](https://github.com/Nosto/search-js/commit/039527efc956e8fc17f036758e095e654076e870))
+* props add ([a79c703](https://github.com/Nosto/search-js/commit/a79c7034644bc28ffae36969a0803ff5f5321394))
+* reviews ([4185265](https://github.com/Nosto/search-js/commit/4185265203806decc789de7b820178d11104b632))
+* reviews ([1c68a6e](https://github.com/Nosto/search-js/commit/1c68a6e0ff1d6ac62df5679d0fbf0e365b1f8dfd))
+* reviews ([4fe6e64](https://github.com/Nosto/search-js/commit/4fe6e64f6fc956720a518b69b43e21ca520ca2bb))
+* tests fixes ([0902097](https://github.com/Nosto/search-js/commit/09020974d0a346c9032e4693fbe4bb4cafdd7d8e))
+* type export ([6c28d40](https://github.com/Nosto/search-js/commit/6c28d40844374b2e67b27e0f4b4ebaadcb155f1d))
+* union type ([780e6ef](https://github.com/Nosto/search-js/commit/780e6efb6e790795350175e9b05a1d54eda1b244))
+
+
+### Features
+
+* autocomplete component ([053ee60](https://github.com/Nosto/search-js/commit/053ee6062e5c1db7ff8890df4b1a060f8176a8ce))
+
 # [2.14.0](https://github.com/Nosto/search-js/compare/v2.13.0...v2.14.0) (2025-05-23)
 
 
