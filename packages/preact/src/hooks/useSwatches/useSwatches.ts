@@ -3,6 +3,7 @@ import { useCallback, useMemo, useState } from "preact/hooks"
 
 import { aggregateSwatches } from "./aggregateSwatches"
 import { applySelectionStates } from "./applySelectionStates"
+import { sortOptions } from "./sortOptions"
 
 /**
  * Preact hook for managing swatch options and selection.
@@ -62,13 +63,17 @@ import { applySelectionStates } from "./applySelectionStates"
 export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
 
-  const aggregatedSwatches = useMemo(() => {
-    return aggregateSwatches(skus, fields)
+  const aggregatedAndSorted = useMemo(() => {
+    const raw = aggregateSwatches(skus, fields)
+    return raw.map(({ field, options }) => ({
+      field,
+      options: sortOptions(field, options)
+    }))
   }, [skus, fields])
 
   const swatches = useMemo(() => {
-    return applySelectionStates(aggregatedSwatches, selectedOptions)
-  }, [aggregatedSwatches, selectedOptions])
+    return applySelectionStates(aggregatedAndSorted, selectedOptions)
+  }, [aggregatedAndSorted, selectedOptions])
 
   const toggleOption = useCallback((field: string, value: string) => {
     setSelectedOptions(prev => {
