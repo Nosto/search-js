@@ -27,9 +27,9 @@ function createTestSwatchField(
 function createExpectedSwatches() {
   return [
     createTestSwatchField("color", {
-      Red: [testSKUs[0], testSKUs[1]],
       Blue: [testSKUs[2], testSKUs[3]],
-      Green: [testSKUs[4], testSKUs[5]]
+      Green: [testSKUs[4], testSKUs[5]],
+      Red: [testSKUs[0], testSKUs[1]]
     }),
     createTestSwatchField("size", {
       S: [testSKUs[0], testSKUs[4]],
@@ -91,9 +91,9 @@ describe("useSwatches", () => {
       createTestSwatchField(
         "color",
         {
-          Red: [testSKUs[0], testSKUs[1]],
           Blue: [testSKUs[2], testSKUs[3]],
-          Green: [testSKUs[4], testSKUs[5]]
+          Green: [testSKUs[4], testSKUs[5]],
+          Red: [testSKUs[0], testSKUs[1]]
         },
         "Red"
       ),
@@ -139,9 +139,9 @@ describe("useSwatches", () => {
       createTestSwatchField(
         "color",
         {
-          Red: [testSKUs[0], testSKUs[1]],
           Blue: [testSKUs[2], testSKUs[3]],
-          Green: [testSKUs[4], testSKUs[5]]
+          Green: [testSKUs[4], testSKUs[5]],
+          Red: [testSKUs[0], testSKUs[1]]
         },
         "Red",
         ["Blue", "Green"]
@@ -239,8 +239,8 @@ describe("useSwatches", () => {
       "S",
       "M",
       "L",
-      "One Size",
-      "Free Size"
+      "Free Size",
+      "One Size"
     ])
   })
 })

@@ -63,14 +63,17 @@ import { sortOptions } from "./sortOptions"
 export function useSwatches(skus: SearchProductSku[] = [], fields: string[] = []) {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
 
-  const swatches = useMemo(() => {
+  const aggregatedAndSorted = useMemo(() => {
     const raw = aggregateSwatches(skus, fields)
-    const sorted = raw.map(({ field, options }) => ({
+    return raw.map(({ field, options }) => ({
       field,
       options: sortOptions(field, options)
     }))
-    return applySelectionStates(sorted, selectedOptions)
-  }, [skus, fields, selectedOptions])
+  }, [skus, fields])
+
+  const swatches = useMemo(() => {
+    return applySelectionStates(aggregatedAndSorted, selectedOptions)
+  }, [aggregatedAndSorted, selectedOptions])
 
   const toggleOption = useCallback((field: string, value: string) => {
     setSelectedOptions(prev => {
