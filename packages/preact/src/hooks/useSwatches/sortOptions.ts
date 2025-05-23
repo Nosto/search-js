@@ -15,6 +15,6 @@ function normalize(value: string): number | string {
 export function sortOptions(_: string, options: SwatchOption[]): SwatchOption[] {
   return [...options].sort((a, b) => {
     const [aa, bb] = [a.value, b.value].map(normalize)
-    return aa < bb ? -1 : aa > bb ? 1 : 0
+    return aa < bb ? -1 : 1
   })
 }
