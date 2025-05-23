@@ -1,3 +1,21 @@
+# [2.14.0](https://github.com/Nosto/search-js/compare/v2.13.0...v2.14.0) (2025-05-23)
+
+
+### Bug Fixes
+
+* fix after main merge ([9b63599](https://github.com/Nosto/search-js/commit/9b63599e29139c866682e15d32faf4c6635a675e))
+* update sortOptions ([a53e9b6](https://github.com/Nosto/search-js/commit/a53e9b60dae0dffb23e9a8128f2c55790e743334))
+* update sortOptions ([0290870](https://github.com/Nosto/search-js/commit/0290870e9fa692291d8374b02ae4d0f34615d4a0))
+* update sortOptions and test ([3066b69](https://github.com/Nosto/search-js/commit/3066b697fefaab85d4e99ad77df13b74d9ea565b))
+* update sortOptions and test ([11c2212](https://github.com/Nosto/search-js/commit/11c22125381fb0063412f85a7b8af1beb8d2df50))
+* update sortOptions and test ([e1b7e68](https://github.com/Nosto/search-js/commit/e1b7e68b20096ebca482e5b8edb56810b8b0d1d2))
+* update sortOptions, tests and useSwatches ([7014e03](https://github.com/Nosto/search-js/commit/7014e03293a95e6f407ae436aa2d8d2590bc7fa9))
+
+
+### Features
+
+* add sortOptions ([6401a25](https://github.com/Nosto/search-js/commit/6401a25208979730a0d38a8ee4dfb7f065ad7ad1))
+
 # [2.13.0](https://github.com/Nosto/search-js/compare/v2.12.2...v2.13.0) (2025-05-20)
 
 
