@@ -20,20 +20,14 @@ describe("AutocompleteElement", () => {
     nostoJsSpy.mockClear()
   })
 
-  function CustomComponent({
-    url,
-    children,
-    onClickMock
-  }: {
+  type CustomComponentProps = {
     url: string
     children: ComponentChildren
-    onClickMock?: () => void
-  }) {
-    return (
-      <a href={url} onClick={onClickMock}>
-        {children}
-      </a>
-    )
+    onClick?: () => void
+  }
+
+  function CustomComponent({ url, ...props }: CustomComponentProps) {
+    return <a href={url} {...props}></a>
   }
 
   it("renders children correctly", () => {
@@ -83,7 +77,7 @@ describe("AutocompleteElement", () => {
     const { getByText } = render(
       <AutocompleteElement hit={mockHit}>
         <>
-          <CustomComponent url={mockHit.url} onClickMock={onClickMock}>
+          <CustomComponent url={mockHit.url} onClick={onClickMock}>
             Custom Component
           </CustomComponent>
           <a href={mockHit.url} onClick={onClickMock}>
@@ -105,7 +99,7 @@ describe("AutocompleteElement", () => {
     const onClickMock = vi.fn()
     const { getByText } = render(
       <AutocompleteElement hit={mockHit}>
-        <CustomComponent url={mockHit.url} onClickMock={onClickMock}>
+        <CustomComponent url={mockHit.url} onClick={onClickMock}>
           Custom Component
         </CustomComponent>
       </AutocompleteElement>

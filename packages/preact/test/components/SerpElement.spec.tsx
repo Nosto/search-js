@@ -48,7 +48,7 @@ describe("SerpElement", () => {
       const onClick = vi.fn()
       const result = render(
         <ConfigContext value={makeAutocompleteConfig({})}>
-          <SerpElement as={"a"} hit={hit} componentProps={{ onClick }}>
+          <SerpElement hit={hit} componentProps={{ onClick }}>
             {children}
           </SerpElement>
         </ConfigContext>
@@ -68,7 +68,7 @@ describe("SerpElement", () => {
       const onClick = vi.fn()
       const result = render(
         <ConfigContext value={makeAutocompleteConfig({})}>
-          <SerpElement as={"a"} hit={hit} componentProps={{ onClick }}>
+          <SerpElement hit={hit} componentProps={{ onClick }}>
             {children}
           </SerpElement>
         </ConfigContext>
@@ -86,7 +86,7 @@ describe("SerpElement", () => {
       })
       const result = render(
         <ConfigContext value={makeAutocompleteConfig({})}>
-          <SerpElement as={"a"} hit={hit} componentProps={{ onClick }}>
+          <SerpElement hit={hit} componentProps={{ onClick }}>
             {children}
           </SerpElement>
         </ConfigContext>
@@ -124,7 +124,7 @@ describe("SerpElement", () => {
 
     const result = render(
       <ConfigContext value={makeAutocompleteConfig({})}>
-        <SerpElement as={"a"} hit={hit} componentProps={{ onClick: vi.fn() }}>
+        <SerpElement hit={hit} componentProps={{ onClick: vi.fn() }}>
           {children}
         </SerpElement>
       </ConfigContext>

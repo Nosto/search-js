@@ -1,36 +1,33 @@
 import { nostojs } from "@nosto/nosto-js"
 import { useCallback } from "preact/hooks"
+import { JSX } from "preact/jsx-runtime"
 
-import { AsComponent, BaseElement, BaseElementProps } from "./BaseElement"
+import { AsComponent, KeywordHit, ProductHit, WrapperProps } from "./types"
 
-type AutocompleteHit =
-  | {
-      productId: string
-      url?: string
-    }
-  | {
-      keyword: string
-    }
-
-export type AutocompleteElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, "onClick"> & {
-  hit: AutocompleteHit
+export type AutocompleteElementProps<C extends AsComponent> = WrapperProps<C> & {
+  hit: ProductHit | KeywordHit
 }
 
 export function AutocompleteElement<C extends AsComponent>({
-  children,
   hit,
   as,
+  children,
   componentProps
 }: AutocompleteElementProps<C>) {
-  const onClick = useCallback(() => {
-    if (hit && "productId" in hit) {
-      nostojs(api => api.recordSearchClick("autocomplete", hit))
-    }
-  }, [hit])
+  const props = {
+    ...componentProps,
+    onClick: useCallback(
+      (event: JSX.TargetedMouseEvent<HTMLElement>) => {
+        if (hit && "productId" in hit) {
+          nostojs(api => api.recordSearchClick("autocomplete", hit))
+        }
+        componentProps?.onClick?.(event)
+      },
+      [componentProps, hit]
+    )
+  }
 
-  return (
-    <BaseElement onClick={onClick} as={as} componentProps={componentProps}>
-      {children}
-    </BaseElement>
-  )
+  const Comp = as ?? (componentProps && "href" in componentProps ? "a" : "span")
+
+  return <Comp {...props}>{children}</Comp>
 }
