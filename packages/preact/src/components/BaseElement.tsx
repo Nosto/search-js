@@ -20,22 +20,18 @@ export type BaseElementProps<C extends AsComponent> = {
  * @group Components
  */
 export function BaseElement<C extends AsComponent>({ onClick, as, children, componentProps }: BaseElementProps<C>) {
-  const onAnchorClick = useCallback(
-    (event: JSX.TargetedMouseEvent<HTMLElement>) => {
-      onClick()
-      if (componentProps && "onClick" in componentProps && typeof componentProps.onClick === "function") {
-        componentProps.onClick(event)
-      }
-    },
-    [onClick, componentProps]
-  )
-
-  const adjustedComponentProps = {
-    ...componentProps!,
-    onClick: onAnchorClick
+  const props = {
+    ...componentProps,
+    onClick: useCallback(
+      (event: JSX.TargetedMouseEvent<HTMLElement>) => {
+        onClick()
+        componentProps?.onClick?.(event)
+      },
+      [onClick, componentProps]
+    )
   }
 
-  const Comp = as ?? "a"
+  const Comp = as ?? (componentProps && "href" in componentProps ? "a" : "span")
 
-  return <Comp {...adjustedComponentProps}>{children}</Comp>
+  return <Comp {...props}>{children}</Comp>
 }
