@@ -8,11 +8,13 @@ export async function searchWithMemoryCache(
   { track, ...options }: SearchOptions,
   searchFn: SearchFn
 ): Promise<SearchResult> {
+  // For autocomplete only
   if (track !== "autocomplete") {
     return searchFn(query, { track, ...options })
   }
 
-  const cacheKey = JSON.stringify(query)
+  const queryKey = typeof query.query === "string" ? query.query.trim().toLowerCase() : ""
+  const cacheKey = `autocomplete:${queryKey}`
   const cached = getFromCache<SearchResult>(cacheKey)
   if (cached) return cached
 
