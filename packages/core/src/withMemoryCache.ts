@@ -17,6 +17,6 @@ export async function searchWithMemoryCache(
   if (cached) return cached
 
   const response = await searchFn(query, { track, ...options })
-  setCache(cacheKey, response, 30_000) // TTL 30 seconds
+  setCache(cacheKey, response, 30000) // TTL 30 seconds
   return response
 }
