@@ -1,4 +1,3 @@
-import { clearCache } from "@core/utils/memoryCache"
 import { SearchQuery } from "@nosto/nosto-js/client"
 import { mockNostojs } from "@nosto/nosto-js/testing"
 import { newSearch } from "@preact/actions/newSearch"
@@ -133,20 +132,5 @@ describe("newSearch", () => {
       await newSearch(context, query)
       expect(context.store.getInitialState()).toEqual(initialState)
     })
-  })
-})
-
-describe("memory cache (autocomplete only)", () => {
-  const search = vi.fn()
-
-  beforeEach(() => {
-    search.mockReset()
-    search.mockResolvedValue({ products: { hits: [{ name: "product 1" }] } })
-
-    mockNostojs({
-      search
-    })
-
-    clearCache()
   })
 })
