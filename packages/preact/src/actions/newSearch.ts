@@ -7,6 +7,7 @@ import { logger } from "@utils/logger"
 import { mergeArrays } from "@utils/mergeArrays"
 import { measure } from "@utils/performance"
 
+import { getFromCache, setCache } from "./memoryCache"
 import { ActionContext } from "./types"
 
 export async function newSearch(context: ActionContext, query: SearchQuery, options?: SearchOptions): Promise<void> {
@@ -44,7 +45,26 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   )
 
   try {
+    if (pageType === "autocomplete") {
+      const cacheKey = JSON.stringify(fullQuery)
+      const cached = getFromCache<typeof response>(cacheKey)
+
+      if (cached) {
+        context.store.updateState({
+          response: cached,
+          loading: false
+        })
+        end()
+        return
+      }
+    }
+
     const response = await search(applyQueryDefaults(context.config.pageType, fullQuery), mergedOptions)
+
+    if (pageType === "autocomplete") {
+      const cacheKey = JSON.stringify(fullQuery)
+      setCache(cacheKey, response, 30000) // 30 sec TTL
+    }
 
     context.store.updateState({
       response,
