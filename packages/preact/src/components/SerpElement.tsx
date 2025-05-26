@@ -4,15 +4,13 @@ import { savePageScroll } from "@utils/savePageScroll"
 import { useCallback } from "preact/hooks"
 
 import { AsComponent, BaseElement, BaseElementProps } from "./BaseElement"
+import { ProductHit } from "./types"
 
 /**
  * @group Components
  */
 export type SerpElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, "onClick"> & {
-  hit: {
-    productId: string
-    url?: string
-  }
+  hit: ProductHit
 }
 
 /**

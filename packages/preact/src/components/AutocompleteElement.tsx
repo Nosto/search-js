@@ -2,18 +2,10 @@ import { nostojs } from "@nosto/nosto-js"
 import { useCallback } from "preact/hooks"
 
 import { AsComponent, BaseElement, BaseElementProps } from "./BaseElement"
-
-type AutocompleteHit =
-  | {
-      productId: string
-      url?: string
-    }
-  | {
-      keyword: string
-    }
+import { KeywordHit, ProductHit } from "./types"
 
 export type AutocompleteElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, "onClick"> & {
-  hit: AutocompleteHit
+  hit: ProductHit | KeywordHit
 }
 
 export function AutocompleteElement<C extends AsComponent>({
