@@ -4,6 +4,7 @@ import { SearchQuery } from "@nosto/nosto-js/client"
 import { applyDecorators } from "./applyDecorators"
 import { DecoratedResult, HitDecorator, SearchFn, SearchOptions, SearchWithNext } from "./types"
 import { searchWithCache } from "./withCache"
+import { searchWithMemoryCache } from "./withMemoryCache"
 import { searchWithRetries } from "./withRetries"
 
 /**
@@ -15,7 +16,7 @@ import { searchWithRetries } from "./withRetries"
  */
 export async function search<HD extends readonly HitDecorator[]>(query: SearchQuery, options: SearchOptions<HD> = {}) {
   const api = await new Promise(nostojs)
-  const searchFn = wrap(api.search, searchWithRetries, searchWithCache, applyDecorators)
+  const searchFn = wrap(api.search, searchWithRetries, searchWithMemoryCache, searchWithCache, applyDecorators)
   return searchFn(query, options) as Promise<DecoratedResult<HD>>
 }
 

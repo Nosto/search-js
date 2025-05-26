@@ -1,8 +1,7 @@
+import { clearCache } from "@core/utils/memoryCache"
 import { SearchQuery } from "@nosto/nosto-js/client"
 import { mockNostojs } from "@nosto/nosto-js/testing"
-import { clearCache } from "@preact/actions/memoryCache"
 import { newSearch } from "@preact/actions/newSearch"
-import { makeAutocompleteConfig } from "@preact/config/pages/autocomplete/config"
 import { makeSerpConfig } from "@preact/config/pages/serp/config"
 import { createStore } from "@preact/store"
 import { beforeEach, describe, expect, it, vi } from "vitest"
@@ -149,46 +148,5 @@ describe("memory cache (autocomplete only)", () => {
     })
 
     clearCache()
-  })
-
-  it("returns cached autocomplete results and skips calling search again", async () => {
-    const query = { products: { from: 0 }, query: "shoes" }
-
-    const context = {
-      config: makeAutocompleteConfig({}),
-      store: createStore()
-    }
-
-    await newSearch(context, query)
-    expect(search).toHaveBeenCalledTimes(1)
-
-    await newSearch(context, query)
-    expect(search).toHaveBeenCalledTimes(1)
-
-    expect(context.store.getState().response).toEqual({
-      products: { hits: [{ name: "product 1" }] }
-    })
-  })
-
-  it("expires cached result after TTL", async () => {
-    const query = { products: { from: 0 }, query: "shoes" }
-
-    vi.useFakeTimers()
-    const now = Date.now()
-    vi.setSystemTime(now)
-
-    const context = {
-      config: makeAutocompleteConfig({}),
-      store: createStore()
-    }
-
-    await newSearch(context, query)
-    expect(search).toHaveBeenCalledTimes(1)
-
-    vi.setSystemTime(now + 31000)
-    await newSearch(context, query)
-    expect(search).toHaveBeenCalledTimes(2)
-
-    vi.useRealTimers()
   })
 })
