@@ -44,11 +44,7 @@ export function clearMemoryCache() {
   cache.clear()
 }
 
-export async function searchWithMemoryCache(
-  query: SearchQuery,
-  options: SearchOptions,
-  searchFn: SearchFn
-): Promise<SearchResult> {
+export async function searchWithMemoryCache(query: SearchQuery, options: SearchOptions, searchFn: SearchFn) {
   if (!options.enableMemoryCache) {
     return searchFn(query, options)
   }
