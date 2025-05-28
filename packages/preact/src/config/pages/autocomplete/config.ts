@@ -6,6 +6,7 @@ export const defaultAutocompleteConfig = {
 
 export interface AutocompleteConfig extends BaseConfig {
   pageType: "autocomplete"
+  memoryCache: boolean
 }
 
 export type PublicAutocompleteConfig = Omit<AutocompleteConfig, keyof typeof defaultAutocompleteConfig | "pageType"> &

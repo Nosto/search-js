@@ -43,7 +43,7 @@ export async function searchWithMemoryCache(query: SearchQuery, options: SearchO
     return searchFn(query, options)
   }
 
-  const cacheKey = `${JSON.stringify(query)}`
+  const cacheKey = JSON.stringify(query)
   const cached = getFromCache(cacheKey, query)
   if (cached) return cached
 
