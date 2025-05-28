@@ -11,12 +11,6 @@ type CacheEntry = {
 const TTL = 30000
 const cache = new Map<string, CacheEntry>()
 
-function serializeQuery(query: SearchQuery) {
-  return JSON.stringify({
-    ...query
-  })
-}
-
 function getFromCache(key: string, currentQuery: SearchQuery) {
   const entry = cache.get(key)
   if (!entry) return undefined
@@ -44,12 +38,12 @@ export function clearMemoryCache() {
   cache.clear()
 }
 
-export async function searchWithMemoryCache(query: SearchQuery, options: SearchOptions, searchFn: SearchFn) {
-  if (!options.enableMemoryCache) {
+export async function autocompleteWithMemoryCache(query: SearchQuery, options: SearchOptions, searchFn: SearchFn) {
+  if (!options.useAutocompleteMemoryCache) {
     return searchFn(query, options)
   }
 
-  const cacheKey = `autocomplete:${serializeQuery(query)}`
+  const cacheKey = `${JSON.stringify(query)}`
   const cached = getFromCache(cacheKey, query)
   if (cached) return cached
 
