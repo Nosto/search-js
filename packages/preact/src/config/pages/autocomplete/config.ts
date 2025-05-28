@@ -6,6 +6,9 @@ export const defaultAutocompleteConfig = {
 
 export interface AutocompleteConfig extends BaseConfig {
   pageType: "autocomplete"
+  /**
+   * Enable in-memory caching
+   */
   memoryCache: boolean
 }
 
