@@ -1,3 +1,24 @@
+# [2.16.0](https://github.com/Nosto/search-js/compare/v2.15.0...v2.16.0) (2025-05-28)
+
+
+### Bug Fixes
+
+* add default memoryCache value ([1881043](https://github.com/Nosto/search-js/commit/18810437ca5bad1bf07f90967b26cc366f8565dc))
+* clean up ([5210a54](https://github.com/Nosto/search-js/commit/5210a54854ed760c70a7681b860d2df6527fbbf6))
+* clean up and add test ([b68dfcd](https://github.com/Nosto/search-js/commit/b68dfcdc8e80bd7c609e4688b3efdc309648a4b4))
+* cleanup ([c2bf2ff](https://github.com/Nosto/search-js/commit/c2bf2ff73b36d6fc2352376c70c99d5ed90c8ff0))
+* cleanup ([6735527](https://github.com/Nosto/search-js/commit/6735527d5dd325e5ac497a01113524d1e535074c))
+* update after review ([5bc8f72](https://github.com/Nosto/search-js/commit/5bc8f72c5f53c08e4ff2760e3476f3c3a7bee2d7))
+* update after review ([6a25b2c](https://github.com/Nosto/search-js/commit/6a25b2cfbcd7d6f73d0a02981ed1a6295eea364d))
+* update after review ([54b6157](https://github.com/Nosto/search-js/commit/54b615791008c1c19f1f4575532061a9882c9880))
+* update after review ([7a4a276](https://github.com/Nosto/search-js/commit/7a4a276a34fc44a7a2e9c766c6780866466249bb))
+* updates after review ([54b159d](https://github.com/Nosto/search-js/commit/54b159d5dd8a9d5c7baeeee38b2f0fa5c81e1a0c))
+
+
+### Features
+
+* add in-memory caching for autocomplete results ([5b498c9](https://github.com/Nosto/search-js/commit/5b498c954afa9d19798a1bbaab526caed1cfc27b))
+
 # [2.15.0](https://github.com/Nosto/search-js/compare/v2.14.0...v2.15.0) (2025-05-23)
 
 
