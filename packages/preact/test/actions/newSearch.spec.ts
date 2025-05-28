@@ -117,7 +117,8 @@ describe("newSearch", () => {
         {
           isKeyword: false,
           redirect: true,
-          track: "serp"
+          track: "serp",
+          useMemoryCache: false
         }
       )
     })

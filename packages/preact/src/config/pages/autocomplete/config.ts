@@ -1,11 +1,16 @@
 import { BaseConfig, defaultBaseConfig } from "../../base/baseConfig"
 
 export const defaultAutocompleteConfig = {
-  ...defaultBaseConfig
+  ...defaultBaseConfig,
+  memoryCache: false
 } satisfies Partial<AutocompleteConfig>
 
 export interface AutocompleteConfig extends BaseConfig {
   pageType: "autocomplete"
+  /**
+   * Enable in-memory caching
+   */
+  memoryCache: boolean
 }
 
 export type PublicAutocompleteConfig = Omit<AutocompleteConfig, keyof typeof defaultAutocompleteConfig | "pageType"> &

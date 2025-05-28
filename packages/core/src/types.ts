@@ -17,6 +17,10 @@ export type SearchOptions<HD extends readonly HitDecorator[] = readonly HitDecor
    * Whether to use a persistent cache for the search results. Default: false.
    */
   usePersistentCache?: boolean
+  /**
+   * Whether to use a in-memory cache
+   */
+  useMemoryCache?: boolean
 }
 
 export type SearchFn = (query: SearchQuery, options: SearchOptions) => Promise<SearchResult>

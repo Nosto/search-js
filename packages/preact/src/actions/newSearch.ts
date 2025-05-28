@@ -20,7 +20,8 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
     track,
     redirect: pageType !== "autocomplete",
     isKeyword: !!options?.isKeyword,
-    usePersistentCache: context.config.pageType !== "autocomplete" && context.config.persistentSearchCache
+    usePersistentCache: context.config.pageType !== "autocomplete" && context.config.persistentSearchCache,
+    useMemoryCache: context.config.pageType === "autocomplete" && context.config.memoryCache
   } satisfies SearchOptions)
 
   context.config.onBeforeSearch?.(context, mergedOptions)
