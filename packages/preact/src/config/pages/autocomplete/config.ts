@@ -1,7 +1,8 @@
 import { BaseConfig, defaultBaseConfig } from "../../base/baseConfig"
 
 export const defaultAutocompleteConfig = {
-  ...defaultBaseConfig
+  ...defaultBaseConfig,
+  memoryCache: false
 } satisfies Partial<AutocompleteConfig>
 
 export interface AutocompleteConfig extends BaseConfig {
