@@ -1,8 +1,8 @@
-import { autocompleteWithMemoryCache, clearMemoryCache } from "@core/withMemoryCache"
+import { clearMemoryCache, searchWithMemoryCache } from "@core/withMemoryCache"
 import { SearchQuery } from "@nosto/nosto-js/client"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-describe("autocompleteWithMemoryCache", () => {
+describe("searchWithMemoryCache", () => {
   const search = vi.fn()
 
   const query: SearchQuery = { query: "shoes" }
@@ -21,19 +21,19 @@ describe("autocompleteWithMemoryCache", () => {
     clearMemoryCache()
   })
 
-  it("should cache and reuse response if useAutocompleteMemoryCache is true", async () => {
-    const response = await autocompleteWithMemoryCache(query, { useAutocompleteMemoryCache: true }, search)
+  it("should cache and reuse response if useMemoryCache is true", async () => {
+    const response = await searchWithMemoryCache(query, { useMemoryCache: true }, search)
     expect(response).toEqual(result)
     expect(search).toHaveBeenCalledTimes(1)
 
-    const cached = await autocompleteWithMemoryCache(query, { useAutocompleteMemoryCache: true }, search)
+    const cached = await searchWithMemoryCache(query, { useMemoryCache: true }, search)
     expect(cached).toEqual(result)
     expect(search).toHaveBeenCalledTimes(1)
   })
 
-  it("should not cache if useAutocompleteMemoryCache is false", async () => {
-    await autocompleteWithMemoryCache(query, { useAutocompleteMemoryCache: false }, search)
-    await autocompleteWithMemoryCache(query, { useAutocompleteMemoryCache: false }, search)
+  it("should not cache if useMemoryCache is false", async () => {
+    await searchWithMemoryCache(query, { useMemoryCache: false }, search)
+    await searchWithMemoryCache(query, { useMemoryCache: false }, search)
     expect(search).toHaveBeenCalledTimes(2)
   })
 
@@ -42,17 +42,17 @@ describe("autocompleteWithMemoryCache", () => {
     const now = Date.now()
     vi.setSystemTime(now)
 
-    await autocompleteWithMemoryCache(query, { useAutocompleteMemoryCache: true }, search)
+    await searchWithMemoryCache(query, { useMemoryCache: true }, search)
     expect(search).toHaveBeenCalledTimes(1)
 
     vi.setSystemTime(now + 25000)
     vi.advanceTimersByTime(0)
-    await autocompleteWithMemoryCache(query, { useAutocompleteMemoryCache: true }, search)
+    await searchWithMemoryCache(query, { useMemoryCache: true }, search)
     expect(search).toHaveBeenCalledTimes(1)
 
     vi.setSystemTime(now + 31000)
     vi.advanceTimersByTime(0)
-    await autocompleteWithMemoryCache(query, { useAutocompleteMemoryCache: true }, search)
+    await searchWithMemoryCache(query, { useMemoryCache: true }, search)
     expect(search).toHaveBeenCalledTimes(2)
 
     vi.useRealTimers()
@@ -61,13 +61,13 @@ describe("autocompleteWithMemoryCache", () => {
   it("should treat different queries independently", async () => {
     const otherQuery: SearchQuery = { query: "shirts" }
 
-    await autocompleteWithMemoryCache(query, { useAutocompleteMemoryCache: true }, search)
-    await autocompleteWithMemoryCache(otherQuery, { useAutocompleteMemoryCache: true }, search)
+    await searchWithMemoryCache(query, { useMemoryCache: true }, search)
+    await searchWithMemoryCache(otherQuery, { useMemoryCache: true }, search)
 
     expect(search).toHaveBeenCalledTimes(2)
 
-    await autocompleteWithMemoryCache(query, { useAutocompleteMemoryCache: true }, search)
-    await autocompleteWithMemoryCache(otherQuery, { useAutocompleteMemoryCache: true }, search)
+    await searchWithMemoryCache(query, { useMemoryCache: true }, search)
+    await searchWithMemoryCache(otherQuery, { useMemoryCache: true }, search)
 
     expect(search).toHaveBeenCalledTimes(2)
   })

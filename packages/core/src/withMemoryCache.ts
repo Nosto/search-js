@@ -38,8 +38,8 @@ export function clearMemoryCache() {
   cache.clear()
 }
 
-export async function autocompleteWithMemoryCache(query: SearchQuery, options: SearchOptions, searchFn: SearchFn) {
-  if (!options.useAutocompleteMemoryCache) {
+export async function searchWithMemoryCache(query: SearchQuery, options: SearchOptions, searchFn: SearchFn) {
+  if (!options.useMemoryCache) {
     return searchFn(query, options)
   }
 

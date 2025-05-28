@@ -20,7 +20,7 @@ export type SearchOptions<HD extends readonly HitDecorator[] = readonly HitDecor
   /**
    * Whether to use a in-memory cache
    */
-  useAutocompleteMemoryCache?: boolean
+  useMemoryCache?: boolean
 }
 
 export type SearchFn = (query: SearchQuery, options: SearchOptions) => Promise<SearchResult>
