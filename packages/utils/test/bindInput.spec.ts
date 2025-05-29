@@ -69,6 +69,25 @@ describe("bindInput", () => {
     expect(event.defaultPrevented).toBe(true)
   })
 
+  it("should bind and unbind submit listener with native submit to the form", () => {
+    const el = document.createElement("input")
+    const form = document.createElement("form")
+    form.appendChild(el)
+    document.body.appendChild(form)
+
+    const callbacks = {
+      onSubmit: vi.fn()
+    }
+
+    bindInput(el, callbacks, { form, nativeSubmit: true })
+
+    const event = new SubmitEvent("submit", { bubbles: true, cancelable: true })
+    form.dispatchEvent(event)
+
+    expect(callbacks.onSubmit).toHaveBeenCalledWith(el.value)
+    expect(event.defaultPrevented).toBe(false)
+  })
+
   it("should bind and unbind click listener to submit buttons in the form", () => {
     const el = document.createElement("input")
     const form = document.createElement("form")
