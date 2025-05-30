@@ -1,3 +1,10 @@
+# [2.17.0](https://github.com/Nosto/search-js/compare/v2.16.0...v2.17.0) (2025-05-30)
+
+
+### Features
+
+* add nativeSubmit option ([e439c3d](https://github.com/Nosto/search-js/commit/e439c3d5aaf9a2b7ca35afb50ee3e211953809aa))
+
 # [2.16.0](https://github.com/Nosto/search-js/compare/v2.15.0...v2.16.0) (2025-05-28)
 
 
