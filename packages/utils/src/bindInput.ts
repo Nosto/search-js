@@ -8,6 +8,7 @@ export type InputBindingCallbacks = {
 
 export interface BindElementOptions {
   form?: HTMLFormElement
+  nativeSubmit?: boolean
 }
 
 export function disableNativeAutocomplete(target: HTMLInputElement) {
@@ -17,7 +18,7 @@ export function disableNativeAutocomplete(target: HTMLInputElement) {
 export function bindInput(
   target: HTMLInputElement,
   { onClick, onFocus, onInput, onKeyDown, onSubmit }: InputBindingCallbacks,
-  { form = target.form ?? undefined }: BindElementOptions = {}
+  { form = target.form ?? undefined, nativeSubmit }: BindElementOptions = {}
 ): {
   destroy: () => void
 } {
@@ -37,20 +38,26 @@ export function bindInput(
         if (target.value !== "" && !event.repeat) {
           onSubmit(target.value)
         }
-        event.preventDefault()
+        if (!nativeSubmit) {
+          event.preventDefault()
+        }
       }
     })
   }
 
   if (onSubmit && form) {
     addEventListener(form, "submit", event => {
-      event.preventDefault()
+      if (!nativeSubmit) {
+        event.preventDefault()
+      }
       onSubmit(target.value)
     })
 
     form.querySelectorAll("[type=submit]").forEach(button => {
       addEventListener(button, "click", event => {
-        event.preventDefault()
+        if (!nativeSubmit) {
+          event.preventDefault()
+        }
         onSubmit(target.value)
       })
     })
