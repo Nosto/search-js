@@ -77,7 +77,10 @@ function useSpeechToTextSupported({
  *
  * export default function MyComponent() {
  *  const { newSearch } = useActions()
- *  const { startListening, stopListening, listening } = useSpeechToText(query => newSearch({ query }))
+ *  const { startListening, stopListening, listening } = useSpeechToText({
+ *    onResult: query => newSearch({ query }),
+ *    onError: error => console.error("Speech recognition error:", error)
+ *  })
  *  if (!speechToTextSupported) {
  *    return null
  *  }
