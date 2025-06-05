@@ -8,7 +8,13 @@ import { Product } from "../Product"
 
 function SpeechToTextButton() {
   const { newSearch } = useActions()
-  const { startListening, listening, stopListening } = useSpeechToText()
+  const { startListening, listening, stopListening } = useSpeechToText({
+    onResult: value => {
+      newSearch({
+        query: value
+      })
+    }
+  })
 
   if (!speechToTextSupported) {
     return null
@@ -20,13 +26,7 @@ function SpeechToTextButton() {
         if (listening) {
           stopListening()
         } else {
-          startListening({
-            onResult: value => {
-              newSearch({
-                query: value
-              })
-            }
-          })
+          startListening()
         }
       }}
     >

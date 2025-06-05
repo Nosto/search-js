@@ -13,12 +13,16 @@ describe("useSpeechToText", async () => {
   })
 
   it("calls start and stop methods of SpeechRecognition", () => {
-    const { result } = renderHook(() => useSpeechToText())
+    const { result } = renderHook(() =>
+      useSpeechToText({
+        onResult: vi.fn()
+      })
+    )
 
     expect(startMock).not.toHaveBeenCalled()
     expect(stopMock).not.toHaveBeenCalled()
 
-    result.current.startListening({ onResult: vi.fn() })
+    result.current.startListening()
 
     expect(startMock).toHaveBeenCalled()
 
