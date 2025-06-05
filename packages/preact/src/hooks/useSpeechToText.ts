@@ -77,7 +77,7 @@ function useSpeechToTextSupported({
  *
  * export default function MyComponent() {
  *  const { newSearch } = useActions()
- *  const { startListening, stopListening, listening } = useSpeechToText()
+ *  const { startListening, stopListening, listening } = useSpeechToText(query => newSearch({ query }))
  *  if (!speechToTextSupported) {
  *    return null
  *  }
@@ -88,13 +88,7 @@ function useSpeechToTextSupported({
  *       if (listening) {
  *         stopListening()
  *       } else {
- *         startListening({
- *           onResult: value => {
- *             newSearch({
- *               query: value
- *             })
- *           }
- *         })
+ *         startListening()
  *       }
  *     }}
  *    >
