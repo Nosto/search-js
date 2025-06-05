@@ -3,16 +3,13 @@ import { useCallback, useRef, useState } from "preact/hooks"
 interface SpeechToTextOptions {
   language?: string
   interimResults?: boolean
-}
-
-interface StartListeningOptions {
-  onResult: (value: string) => void
+  onResult?: (value: string) => void
   onError?: (error: string) => void
 }
 
 export type SpeechToText = {
   listening: boolean
-  startListening: (options: StartListeningOptions) => void
+  startListening: () => void
   stopListening: () => void
 }
 
@@ -29,36 +26,37 @@ function useSpeechToTextUnsupported(): SpeechToText {
 
 function useSpeechToTextSupported({
   language = "en-US",
-  interimResults = false
+  interimResults = false,
+  onResult,
+  onError
 }: SpeechToTextOptions = {}): SpeechToText {
   const [listening, setListening] = useState(false)
 
   const recognizerRef = useRef<SpeechRecognition | null>(null)
 
-  const startListening = useCallback(
-    ({ onResult, onError }: StartListeningOptions) => {
-      const recognizer = new SpeechRecognition()
-      recognizer.lang = language
-      recognizer.interimResults = interimResults
+  const startListening = useCallback(() => {
+    const recognizer = new SpeechRecognition()
+    recognizer.lang = language
+    recognizer.interimResults = interimResults
 
-      recognizer.onstart = () => setListening(true)
+    recognizer.onstart = () => setListening(true)
 
+    if (onResult) {
       recognizer.onresult = event => {
         const { transcript } = event.results?.[0]?.[0]
         onResult(transcript)
       }
+    }
 
-      if (onError) {
-        recognizer.onerror = event => onError(event.error)
-      }
+    if (onError) {
+      recognizer.onerror = event => onError(event.error)
+    }
 
-      recognizer.onend = () => setListening(false)
+    recognizer.onend = () => setListening(false)
 
-      recognizerRef.current = recognizer
-      recognizer.start()
-    },
-    [language, interimResults]
-  )
+    recognizerRef.current = recognizer
+    recognizer.start()
+  }, [language, interimResults, onError, onResult])
 
   const stopListening = useCallback(() => {
     recognizerRef.current?.stop()
