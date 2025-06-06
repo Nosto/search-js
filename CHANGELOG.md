@@ -1,3 +1,16 @@
+# [3.0.0](https://github.com/Nosto/search-js/compare/v2.17.0...v3.0.0) (2025-06-06)
+
+
+### Bug Fixes
+
+* comment fixes ([336e132](https://github.com/Nosto/search-js/commit/336e1326954cb19e09f8c5ec1da7e6fa7c85eee6))
+* fixed comment examples ([e61ff06](https://github.com/Nosto/search-js/commit/e61ff06981c6016286589aa2415cd115da6bd10c))
+
+
+### BREAKING CHANGES
+
+* Handler callbacks are now passed as props to the useSpeechToText hook
+
 # [2.17.0](https://github.com/Nosto/search-js/compare/v2.16.0...v2.17.0) (2025-05-30)
 
 
