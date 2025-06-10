@@ -86,7 +86,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@nosto/nosto-js": "^2.1.0",
+    "@nosto/nosto-js": "^2.2.0",
     "@testing-library/dom": "^10.4.0",
     "@types/dom-speech-recognition": "^0.0.6",
     "@types/eslint-config-prettier": "^6.11.3",
