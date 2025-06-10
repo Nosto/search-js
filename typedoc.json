@@ -2,5 +2,10 @@
 	"name": "@nosto/search-js",
 	"entryPoints": ["packages/*/*.ts"],
 	"out": "docs",
-	"highlightLanguages": ["typescript", "bash", "js", "jsx"]
+	"highlightLanguages": ["typescript", "bash", "js", "jsx"],
+	"excludeExternals": true,
+	"plugin": ["typedoc-plugin-missing-exports"],
+	"excludeReferences": true,
+	"placeInternalsInOwningModule": true,
+	"excludeInternal": true
 }
