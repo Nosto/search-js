@@ -1,4 +1,4 @@
-import { RefObject } from "preact";
+import { RefObject } from "preact"
 
 export function EndMarker({ resultEndRef }: { resultEndRef: RefObject<HTMLDivElement> }) {
   return (
