@@ -4,6 +4,7 @@ import { pick } from "@utils/pick"
 import { JSX } from "preact"
 import { useEffect, useRef } from "preact/hooks"
 
+import { EndMarker } from "./EndMarker"
 import { type InfiniteScrollProps } from "./InfiniteScroll"
 import { hasMoreResults } from "./utils"
 
@@ -46,8 +47,7 @@ export function InfiniteScrollWithObserver({ children, pageSize }: InfiniteScrol
   return (
     <>
       {children}
-      {/* Inlining height style for Safari support, so the IntersectionObserver sees the element. */}
-      <div ref={endResultsRef} style={{ height: "1px" }} />
+      <EndMarker resultEndRef={endResultsRef} />
     </>
   )
 }
