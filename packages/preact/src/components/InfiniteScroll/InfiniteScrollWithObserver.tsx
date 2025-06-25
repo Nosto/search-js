@@ -11,7 +11,12 @@ import { hasMoreResults } from "./utils"
  * Infinite scroll component that loads more results when user scrolls to the end of the page.
  * @group Components
  */
-export function InfiniteScrollWithObserver({ children, pageSize }: InfiniteScrollProps): JSX.Element {
+export function InfiniteScrollWithObserver({
+  children,
+  pageSize,
+  rootContiner,
+  rootMargin
+}: InfiniteScrollProps): JSX.Element {
   const endResultsRef = useRef<HTMLDivElement>(null)
   const { query, response } = useNostoAppState(state => pick(state, "query", "response"))
 
@@ -23,12 +28,18 @@ export function InfiniteScrollWithObserver({ children, pageSize }: InfiniteScrol
 
     if (hasMoreResults(query, response)) {
       loader = endResultsRef.current
-      observer = new IntersectionObserver(entries => {
-        const target = entries[0]
-        if (target?.isIntersecting) {
-          loadMore()
+      observer = new IntersectionObserver(
+        entries => {
+          const target = entries[0]
+          if (target?.isIntersecting) {
+            loadMore()
+          }
+        },
+        {
+          rootMargin,
+          root: rootContiner
         }
-      })
+      )
 
       if (loader) {
         observer.observe(loader)
@@ -41,7 +52,7 @@ export function InfiniteScrollWithObserver({ children, pageSize }: InfiniteScrol
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response])
+  }, [response, rootMargin, rootContiner])
 
   return (
     <>
