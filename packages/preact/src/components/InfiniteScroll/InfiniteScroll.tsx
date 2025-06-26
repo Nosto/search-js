@@ -15,6 +15,13 @@ export interface InfiniteScrollProps {
   children: ComponentChildren
   loadMoreComponent?: ComponentType<{ pageSize?: number }>
   pageSize?: number
+  /**
+   * Options for the IntersectionObserver.
+   * This can be used to adjust the root margin, threshold, etc.
+   * For example, to trigger the observer when the user scrolls to the bottom of the page, you can set `rootMargin: "100% 0"`.
+   * @default { rootMargin: "0px", threshold: 0 }
+   */
+  observerOptions?: IntersectionObserverInit
 }
 
 /**
