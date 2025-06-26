@@ -1,3 +1,15 @@
+# [3.1.0](https://github.com/Nosto/search-js/compare/v3.0.0...v3.1.0) (2025-06-26)
+
+
+### Bug Fixes
+
+* observer options as object pass ([98581e2](https://github.com/Nosto/search-js/commit/98581e2ce1748a9cee9a48faecd1886081badba0))
+
+
+### Features
+
+* infinite scroll improvements ([74220fe](https://github.com/Nosto/search-js/commit/74220fe1ae6bc4dab6f0ba924903b9cc5e4eb400))
+
 # [3.0.0](https://github.com/Nosto/search-js/compare/v2.17.0...v3.0.0) (2025-06-06)
 
 
