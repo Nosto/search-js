@@ -18,7 +18,9 @@ export function InfiniteScrolled() {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: 16, marginTop: 16 }}>
+    <div
+      style={{ display: "flex", position: "relative", flexDirection: "column", width: "100%", gap: 16, marginTop: 16 }}
+    >
       <div>
         <div>Totally working search with infinite scrolling:</div>
         <div style={{ display: "flex", gap: 4, width: "100%", justifyContent: "center" }}>
@@ -30,7 +32,7 @@ export function InfiniteScrolled() {
         Searching for: <b>{input}</b>
       </div>
       <div>Results: {hits.map(hit => hit.name).join(", ")}</div>
-      <InfiniteScroll rootMargin="100% 0px" pageSize={5}>
+      <InfiniteScroll observerOptions={{ rootMargin: "100% 0" }} pageSize={5}>
         {hits.map(hit => (
           <Product key={hit.productId} product={hit} />
         ))}

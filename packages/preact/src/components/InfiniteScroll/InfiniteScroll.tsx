@@ -16,17 +16,12 @@ export interface InfiniteScrollProps {
   loadMoreComponent?: ComponentType<{ pageSize?: number }>
   pageSize?: number
   /**
-   * The margin around the root element for the IntersectionObserver.
-   * This can be used to trigger the loading of more results before the user reaches the end of the page.
-   * @default "0px"
-   * @example "500px 0px" - this will trigger loading more results when the user is 500px away from the end of the page.
+   * Options for the IntersectionObserver.
+   * This can be used to adjust the root margin, threshold, etc.
+   * For example, to trigger the observer when the user scrolls to the bottom of the page, you can set `rootMargin: "100% 0"`.
+   * @default { rootMargin: "0px", threshold: 0 }
    */
-  rootMargin?: string
-  /**
-   * The root element for the IntersectionObserver.
-   * If not provided, the observer will use the viewport as the root.
-   */
-  rootContiner?: Element
+  observerOptions?: IntersectionObserverInit
 }
 
 /**

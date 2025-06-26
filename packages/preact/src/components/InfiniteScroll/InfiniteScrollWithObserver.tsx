@@ -14,8 +14,7 @@ import { hasMoreResults } from "./utils"
 export function InfiniteScrollWithObserver({
   children,
   pageSize,
-  rootContiner,
-  rootMargin
+  observerOptions = {}
 }: InfiniteScrollProps): JSX.Element {
   const endResultsRef = useRef<HTMLDivElement>(null)
   const { query, response } = useNostoAppState(state => pick(state, "query", "response"))
@@ -28,18 +27,12 @@ export function InfiniteScrollWithObserver({
 
     if (hasMoreResults(query, response)) {
       loader = endResultsRef.current
-      observer = new IntersectionObserver(
-        entries => {
-          const target = entries[0]
-          if (target?.isIntersecting) {
-            loadMore()
-          }
-        },
-        {
-          rootMargin,
-          root: rootContiner
+      observer = new IntersectionObserver(entries => {
+        const target = entries[0]
+        if (target?.isIntersecting) {
+          loadMore()
         }
-      )
+      }, observerOptions)
 
       if (loader) {
         observer.observe(loader)
@@ -52,7 +45,7 @@ export function InfiniteScrollWithObserver({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response, rootMargin, rootContiner])
+  }, [response, observerOptions])
 
   return (
     <>
