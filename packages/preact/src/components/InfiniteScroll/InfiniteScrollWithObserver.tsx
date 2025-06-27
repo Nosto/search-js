@@ -3,7 +3,7 @@ import { useNostoAppState } from "@preact/hooks/useNostoAppState"
 import { isEqual } from "@utils/isEqual"
 import { pick } from "@utils/pick"
 import { memo } from "preact/compat"
-import { useEffect, useMemo, useRef } from "preact/hooks"
+import { useEffect, useRef } from "preact/hooks"
 
 import { type InfiniteScrollProps } from "./InfiniteScroll"
 import { hasMoreResults } from "./utils"
@@ -13,14 +13,6 @@ function BaseInfiniteScrollWithObserver({ children, pageSize, observerOptions }:
   const { query, response } = useNostoAppState(state => pick(state, "query", "response"))
 
   const { loadMore } = useLoadMore(pageSize)
-
-  const lastSeenObserverOptions = useRef<IntersectionObserverInit | undefined>()
-  const safeObserverOptions = useMemo(() => {
-    if (!isEqual(observerOptions, lastSeenObserverOptions.current)) {
-      lastSeenObserverOptions.current = observerOptions
-    }
-    return lastSeenObserverOptions.current
-  }, [observerOptions])
 
   useEffect(() => {
     let loader: HTMLDivElement | null
@@ -33,7 +25,7 @@ function BaseInfiniteScrollWithObserver({ children, pageSize, observerOptions }:
         if (target?.isIntersecting) {
           loadMore()
         }
-      }, safeObserverOptions)
+      }, observerOptions)
 
       if (loader) {
         observer.observe(loader)
@@ -46,7 +38,7 @@ function BaseInfiniteScrollWithObserver({ children, pageSize, observerOptions }:
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response, safeObserverOptions])
+  }, [response])
 
   return (
     <>
