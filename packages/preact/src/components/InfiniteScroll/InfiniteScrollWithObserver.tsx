@@ -1,21 +1,14 @@
 import { useLoadMore } from "@preact/hooks/useLoadMore/useLoadMore"
 import { useNostoAppState } from "@preact/hooks/useNostoAppState"
+import { isEqual } from "@utils/isEqual"
 import { pick } from "@utils/pick"
-import { JSX } from "preact"
+import { memo } from "preact/compat"
 import { useEffect, useRef } from "preact/hooks"
 
 import { type InfiniteScrollProps } from "./InfiniteScroll"
 import { hasMoreResults } from "./utils"
 
-/**
- * Infinite scroll component that loads more results when user scrolls to the end of the page.
- * @group Components
- */
-export function InfiniteScrollWithObserver({
-  children,
-  pageSize,
-  observerOptions = {}
-}: InfiniteScrollProps): JSX.Element {
+function BaseInfiniteScrollWithObserver({ children, pageSize, observerOptions }: InfiniteScrollProps) {
   const endResultsRef = useRef<HTMLDivElement>(null)
   const { query, response } = useNostoAppState(state => pick(state, "query", "response"))
 
@@ -45,7 +38,7 @@ export function InfiniteScrollWithObserver({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response, observerOptions])
+  }, [response])
 
   return (
     <>
@@ -55,3 +48,9 @@ export function InfiniteScrollWithObserver({
     </>
   )
 }
+
+/**
+ * Infinite scroll component that loads more results when user scrolls to the end of the page.
+ * @group Components
+ */
+export const InfiniteScrollWithObserver = memo(BaseInfiniteScrollWithObserver, isEqual)

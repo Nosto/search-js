@@ -32,7 +32,7 @@ export function InfiniteScrolled() {
         Searching for: <b>{input}</b>
       </div>
       <div>Results: {hits.map(hit => hit.name).join(", ")}</div>
-      <InfiniteScroll observerOptions={{ rootMargin: "100% 0" }} pageSize={5}>
+      <InfiniteScroll observerOptions={{ rootMargin: "100% 0px" }} pageSize={5}>
         {hits.map(hit => (
           <Product key={hit.productId} product={hit} />
         ))}
