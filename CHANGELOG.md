@@ -1,3 +1,13 @@
+## [3.1.1](https://github.com/Nosto/search-js/compare/v3.1.0...v3.1.1) (2025-06-27)
+
+
+### Bug Fixes
+
+* memo for observer infinite scroll ([e4f6481](https://github.com/Nosto/search-js/commit/e4f6481550da3dd5931a02a8fa8dcc9918d0978d))
+* revert to memo usage only ([4a0975e](https://github.com/Nosto/search-js/commit/4a0975e4adf060fd601dd67a04e3c2dfb0c462f1))
+* reviews ([479c658](https://github.com/Nosto/search-js/commit/479c65836d58d692154c9da9ff2ae5925a2e6a32))
+* search templates observer re-triggers ([d3265ff](https://github.com/Nosto/search-js/commit/d3265ff337d908986d75d57a44aed08b4f655760))
+
 # [3.1.0](https://github.com/Nosto/search-js/compare/v3.0.0...v3.1.0) (2025-06-26)
 
 
