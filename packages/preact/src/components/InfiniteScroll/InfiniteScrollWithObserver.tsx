@@ -45,7 +45,7 @@ export function InfiniteScrollWithObserver({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [response, observerOptions])
+  }, [response])
 
   return (
     <>
