@@ -105,7 +105,7 @@
     "husky": "^9.1.7",
     "isbot": "^5.1.28",
     "jsdom": "^26.1.0",
-    "prettier": "^3.5.3",
+    "prettier": "^3.6.0",
     "typedoc": "^0.28.5",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.33.1",
