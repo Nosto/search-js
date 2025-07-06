@@ -12,5 +12,6 @@ export type SearchHitWithSku = SearchHit & { skuId: string }
  */
 export async function addToCart(type: SearchTrackOptions, hit: SearchHitWithSku, quantity = 1) {
   await addSkuToCart(hit, undefined, quantity)
-  await nostojs(async api => await api.recordSearchAddToCart(type, hit))
+  const api = await new Promise(nostojs)
+  await api.recordSearchAddToCart(type, hit)
 }
