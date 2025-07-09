@@ -141,66 +141,7 @@ export function ProductCard({ product: baseProduct }: Props) {
       : undefined
   ].filter(v => !!v)
 
-  const testSKUs = [
-    {
-      id: "SKU-001",
-      imageUrl: "https://via.placeholder.com/150?text=Red+Cotton",
-      price: 19.99,
-      customFields: [
-        { key: "color", value: "Red" },
-        { key: "size", value: "S" },
-        { key: "material", value: "Cotton" }
-      ]
-    },
-    {
-      id: "SKU-002",
-      imageUrl: "https://via.placeholder.com/150?text=Red+Silk",
-      price: 24.99,
-      customFields: [
-        { key: "color", value: "Red" },
-        { key: "size", value: "M" },
-        { key: "material", value: "Silk" }
-      ]
-    },
-    {
-      id: "SKU-003",
-      imageUrl: "https://via.placeholder.com/150?text=Blue+Cotton",
-      price: 22.99,
-      customFields: [
-        { key: "color", value: "Blue" },
-        { key: "size", value: "M" },
-        { key: "material", value: "Cotton" }
-      ]
-    },
-    {
-      id: "SKU-004",
-      imageUrl: "https://via.placeholder.com/150?text=Blue+Wool",
-      customFields: [
-        { key: "color", value: "Blue" },
-        { key: "size", value: "L" },
-        { key: "material", value: "Wool" }
-      ]
-    },
-    {
-      id: "SKU-005",
-      imageUrl: "https://via.placeholder.com/150?text=Green+Silk",
-      customFields: [
-        { key: "color", value: "Green" },
-        { key: "size", value: "S" },
-        { key: "material", value: "Silk" }
-      ]
-    },
-    {
-      id: "SKU-006",
-      imageUrl: "https://via.placeholder.com/150?text=Green+Wool",
-      customFields: [
-        { key: "color", value: "Green" },
-        { key: "size", value: "XL" },
-        { key: "material", value: "Wool" }
-      ]
-    }
-  ]
-  const { matchedSkus, swatches, toggleOption } = useSwatches(testSKUs, ["color", "size", "material"])
+  const { matchedSkus, swatches, toggleOption } = useSwatches(product.skus, ["size"])
   const previewImage = matchedSkus[0]?.imageUrl || productImagePlaceholder
 
   const handleAddToCart = (sku: SearchProductSku) => {
