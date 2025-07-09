@@ -5,7 +5,6 @@ type Props = {
   toggleOption: ReturnType<typeof useSwatches>["toggleOption"]
 }
 
-// Shared styles for better readability and maintainability
 const styles = {
   container: {
     display: "flex",
