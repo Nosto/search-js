@@ -46,7 +46,7 @@ function normalize(value: number) {
 export function useSizeOptions(sizes: number[], serpSize: number) {
   const { from, size, total } = useNostoAppState(state => ({
     from: normalize(state.query.products?.from ?? 0),
-    size: normalize(state.response?.products?.size ?? 0),
+    size: normalize(state.response?.products?.size ?? serpSize),
     total: normalize(state.response?.products?.total ?? 0)
   }))
 
