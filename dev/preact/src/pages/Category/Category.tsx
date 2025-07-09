@@ -1,11 +1,14 @@
 import { CategoryConfig, CategoryPageProvider } from "@nosto/search-js/preact/category"
 
+import { useInfiniteScroll } from "../../contexts/InfiniteScrollContext"
 import { hitDecorators } from "../../utils/hitDecorators"
 import { CategoryContentInfinite } from "./CategoryContentInfinite"
 import { CategoryContentPaginated } from "./CategoryContentPaginated"
 import { CategoryQueryHandler } from "./CategoryQueryHandler"
 
-export function Category({ infinite = false }: { infinite?: boolean }) {
+export function Category() {
+  const { isInfiniteScrollEnabled } = useInfiniteScroll()
+
   const config = {
     defaultCurrency: "EUR",
     search: {
@@ -26,7 +29,7 @@ export function Category({ infinite = false }: { infinite?: boolean }) {
     >
       <CategoryPageProvider config={config}>
         <CategoryQueryHandler />
-        {infinite ? <CategoryContentInfinite /> : <CategoryContentPaginated />}
+        {isInfiniteScrollEnabled ? <CategoryContentInfinite /> : <CategoryContentPaginated />}
       </CategoryPageProvider>
     </div>
   )

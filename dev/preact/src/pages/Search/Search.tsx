@@ -1,12 +1,15 @@
 import { SearchPageProvider, SerpConfig } from "@nosto/search-js/preact/serp"
 
+import { useInfiniteScroll } from "../../contexts/InfiniteScrollContext"
 import { hitDecorators } from "../../utils/hitDecorators"
 import { Autocomplete } from "../Autocomplete/Autocomplete"
 import { SearchContentInfinite } from "./SearchContentInfinite"
 import { SearchContentPaginated } from "./SearchContentPaginated"
 import { SearchQueryHandler } from "./SearchQueryHandler"
 
-export function Search({ infinite = false }: { infinite?: boolean }) {
+export function Search() {
+  const { isInfiniteScrollEnabled } = useInfiniteScroll()
+
   const config = {
     defaultCurrency: "EUR",
     search: {
@@ -28,7 +31,7 @@ export function Search({ infinite = false }: { infinite?: boolean }) {
       <Autocomplete />
       <SearchPageProvider config={config}>
         <SearchQueryHandler />
-        {infinite ? <SearchContentInfinite /> : <SearchContentPaginated />}
+        {isInfiniteScrollEnabled ? <SearchContentInfinite /> : <SearchContentPaginated />}
       </SearchPageProvider>
     </div>
   )
