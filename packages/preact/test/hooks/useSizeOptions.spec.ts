@@ -36,6 +36,19 @@ describe("useSizeOptions", () => {
     expect(size).toBe(10)
   })
 
+  it("returns correct initial values if no request has been made yet", () => {
+    const sizes = [24, 48, 72]
+    const serpSize = 5
+
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: mockStore({}) })
+    const { from, to, total, size } = render.result.current
+
+    expect(from).toBe(0)
+    expect(to).toBe(5)
+    expect(total).toBe(0)
+    expect(size).toBe(5)
+  })
+
   it("handles size change correctly", () => {
     const sizes = [24, 48, 72]
     const serpSize = 5
