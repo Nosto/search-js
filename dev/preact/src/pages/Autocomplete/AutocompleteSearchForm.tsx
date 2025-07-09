@@ -12,7 +12,6 @@ export function AutocompleteSearchForm() {
   const [autocompleteShown, setAutocompleteShown] = useState(false)
   const { newSearch } = useActions()
 
-  // Memoized debounced search function
   const debouncedSearch = useMemo(
     () =>
       debounce((query: string) => {
@@ -23,7 +22,6 @@ export function AutocompleteSearchForm() {
     [newSearch]
   )
 
-  // Debounced search effect
   const onSearchInput = useCallback(
     (value: string) => {
       setInput(value)

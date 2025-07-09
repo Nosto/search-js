@@ -9,7 +9,6 @@ export function AutocompleteContent() {
     initialized: state.initialized
   }))
 
-  // Don't show the dropdown if not initialized or no results and not loading
   if (!initialized || hits.length === 0 || loading) {
     return null
   }
