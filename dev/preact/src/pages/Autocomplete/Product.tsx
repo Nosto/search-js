@@ -2,8 +2,8 @@ import type { SearchProduct } from "@nosto/nosto-js/client"
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import { useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
 
-import { productImagePlaceholder } from "../Search/productImagePlaceholder"
-import { hitDecorators } from "./Autocomplete"
+import { hitDecorators } from "../../utils/hitDecorators"
+import { productImagePlaceholder } from "../../utils/productImagePlaceholder"
 
 type Props = {
   product: SearchProduct

@@ -7,9 +7,7 @@ export function Header() {
   const locations = useMemo(
     () => [
       { url: "/", name: "Home" },
-      { url: "/search", name: "Search" },
-      { url: "/search-infinite", name: "Search with infinite" },
-      { url: "/autocomplete", name: "Autocomplete" }
+      { url: "/search", name: "Search" }
     ],
     []
   )
