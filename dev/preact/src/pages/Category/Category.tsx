@@ -3,6 +3,7 @@ import { CategoryConfig, CategoryPageProvider } from "@nosto/search-js/preact/ca
 import { hitDecorators } from "../../utils/hitDecorators"
 import { CategoryContentInfinite } from "./CategoryContentInfinite"
 import { CategoryContentPaginated } from "./CategoryContentPaginated"
+import { CategoryQueryHandler } from "./CategoryQueryHandler"
 
 export function Category({ infinite = false }: { infinite?: boolean }) {
   const config = {
@@ -13,8 +14,20 @@ export function Category({ infinite = false }: { infinite?: boolean }) {
   } satisfies CategoryConfig
 
   return (
-    <CategoryPageProvider config={config}>
-      {infinite ? <CategoryContentInfinite /> : <CategoryContentPaginated />}
-    </CategoryPageProvider>
+    <div
+      className="search"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100vw",
+        height: "calc(100vh - 48px - 14px)",
+        marginTop: "14px"
+      }}
+    >
+      <CategoryPageProvider config={config}>
+        <CategoryQueryHandler />
+        {infinite ? <CategoryContentInfinite /> : <CategoryContentPaginated />}
+      </CategoryPageProvider>
+    </div>
   )
 }

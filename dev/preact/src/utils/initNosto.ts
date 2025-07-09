@@ -2,7 +2,7 @@ import { getNostoWindow, init, isNostoLoaded, nostojs } from "@nosto/nosto-js"
 
 export function initNosto() {
   init({
-    merchantId: "shopify-9758212174"
+    merchantId: "shopify-10664366"
   })
   nostojs(api => api.setAutoLoad(false))
   const interval = setInterval(() => {

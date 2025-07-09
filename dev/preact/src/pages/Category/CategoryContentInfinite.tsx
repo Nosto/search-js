@@ -1,18 +1,21 @@
 import { InfiniteScroll } from "@nosto/search-js/preact/common"
-import { useNostoAppState } from "@nosto/search-js/preact/hooks"
+import { useNostoAppState, useSizeOptions } from "@nosto/search-js/preact/hooks"
 
-import { Product } from "../Search/Product"
+import { ProductCard } from "../../components/Product/ProductCard"
+import { ProductList } from "../../components/Product/ProductList"
+import { defaultConfig, pageSizes } from "../../defaultConfig"
 
 export function CategoryContentInfinite() {
   const { hits } = useNostoAppState(state => ({ hits: state.response.products?.hits || [] }))
+  const { size } = useSizeOptions(pageSizes, defaultConfig.searchPageSize)
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: 16, marginTop: 16 }}>
-      <InfiniteScroll pageSize={5}>
+    <ProductList>
+      <InfiniteScroll pageSize={size}>
         {hits.map(hit => (
-          <Product key={hit.productId} product={hit} />
+          <ProductCard key={hit.productId} product={hit} />
         ))}
       </InfiniteScroll>
-    </div>
+    </ProductList>
   )
 }

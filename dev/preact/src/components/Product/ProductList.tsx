@@ -1,0 +1,33 @@
+import { ComponentChildren } from "preact"
+
+type Props = {
+  children: ComponentChildren
+}
+
+export function ProductList({ children }: Props) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        gap: 16,
+        marginTop: 16,
+        alignItems: "center"
+      }}
+    >
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))",
+          gap: "32px",
+          width: "100%",
+          maxWidth: "1200px",
+          justifyContent: "center"
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  )
+}

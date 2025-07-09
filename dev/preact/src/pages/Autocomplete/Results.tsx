@@ -1,6 +1,6 @@
 import { SearchProduct } from "@nosto/nosto-js/client"
 
-import { Product } from "./Product"
+import { ProductRow } from "../../components/Product/ProductRow"
 
 export function Results({
   loading,
@@ -22,7 +22,7 @@ export function Results({
   return (
     <div>
       {hits.map(hit => (
-        <Product key={hit.productId} product={hit} />
+        <ProductRow key={hit.productId} product={hit} />
       ))}
     </div>
   )

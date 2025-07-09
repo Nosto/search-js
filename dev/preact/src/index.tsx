@@ -19,10 +19,8 @@ export function App() {
       <main>
         <Router>
           <Route path="/" component={Home} />
-          <Route path="/category" component={Category} />
-          <Route path="/category-infinite" component={() => <Category infinite />} />
+          <Route path="/category/:categoryPath" component={Category} />
           <Route path="/search" component={Search} />
-          <Route path="/search-infinite" component={() => <Search infinite />} />
           <Route default component={NotFound} />
         </Router>
       </main>

@@ -21,9 +21,8 @@ export function Search({ infinite = false }: { infinite?: boolean }) {
         display: "flex",
         flexDirection: "column",
         width: "100vw",
-        height: "calc(100vh - 48px - 48px)",
-        marginTop: "48px",
-        paddingTop: "48px 0 0 0"
+        height: "calc(100vh - 48px - 14px)",
+        marginTop: "14px"
       }}
     >
       <Autocomplete />
