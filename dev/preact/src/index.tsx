@@ -5,8 +5,8 @@ import { LocationProvider, Route, Router } from "preact-iso"
 
 import { Header } from "./components/Header"
 import { NotFound } from "./pages/404/_404"
-import { Autocomplete } from "./pages/Autocomplete/Autocomplete"
-import { Home } from "./pages/Home"
+import { Category } from "./pages/Category/Category"
+import { Home } from "./pages/Home/Home"
 import { Search } from "./pages/Search/Search"
 import { initNosto } from "./utils/initNosto"
 
@@ -19,7 +19,8 @@ export function App() {
       <main>
         <Router>
           <Route path="/" component={Home} />
-          <Route path="/autocomplete" component={Autocomplete} />
+          <Route path="/category" component={Category} />
+          <Route path="/category-infinite" component={() => <Category infinite />} />
           <Route path="/search" component={Search} />
           <Route path="/search-infinite" component={() => <Search infinite />} />
           <Route default component={NotFound} />

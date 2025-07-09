@@ -7,15 +7,13 @@ export function Header() {
   const locations = useMemo(
     () => [
       { url: "/", name: "Home" },
-      { url: "/search", name: "Search" },
-      { url: "/search-infinite", name: "Search with infinite" },
-      { url: "/autocomplete", name: "Autocomplete" }
+      { url: "/search", name: "Search" }
     ],
     []
   )
 
   return (
-    <header>
+    <header style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000 }}>
       <nav>
         {locations.map(({ url, name }) => (
           <a key={url} href={url} className={url == locationUrl ? "active" : ""}>

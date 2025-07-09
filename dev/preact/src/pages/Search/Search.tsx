@@ -1,11 +1,10 @@
-import { priceDecorator } from "@nosto/search-js/currencies"
 import { SearchPageProvider, SerpConfig } from "@nosto/search-js/preact/serp"
-import { thumbnailDecorator } from "@nosto/search-js/thumbnails"
 
-import { InfiniteScrolled as SearchContentInfinite } from "./Content/InfiniteScrolled"
-import { Paginated as SearchContentPaginated } from "./Content/Paginated"
-
-export const hitDecorators = [thumbnailDecorator({ size: "2" }), priceDecorator({ defaultCurrency: "EUR" })] as const
+import { hitDecorators } from "../../utils/hitDecorators"
+import { Autocomplete } from "../Autocomplete/Autocomplete"
+import { SearchContentInfinite } from "./SearchContentInfinite"
+import { SearchContentPaginated } from "./SearchContentPaginated"
+import { SearchQueryHandler } from "./SearchQueryHandler"
 
 export function Search({ infinite = false }: { infinite?: boolean }) {
   const config = {
@@ -16,8 +15,22 @@ export function Search({ infinite = false }: { infinite?: boolean }) {
   } satisfies SerpConfig
 
   return (
-    <SearchPageProvider config={config}>
-      {infinite ? <SearchContentInfinite /> : <SearchContentPaginated />}
-    </SearchPageProvider>
+    <div
+      className="search"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        width: "100vw",
+        height: "calc(100vh - 48px - 48px)",
+        marginTop: "48px",
+        paddingTop: "48px 0 0 0"
+      }}
+    >
+      <Autocomplete />
+      <SearchPageProvider config={config}>
+        <SearchQueryHandler />
+        {infinite ? <SearchContentInfinite /> : <SearchContentPaginated />}
+      </SearchPageProvider>
+    </div>
   )
 }
