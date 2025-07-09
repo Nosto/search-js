@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/Nosto/search-js/compare/v3.1.1...v3.1.2) (2025-07-09)
+
+
+### Bug Fixes
+
+* default page size ([d4d004e](https://github.com/Nosto/search-js/commit/d4d004e100582423d3973863e1a23c3866412097))
+
 ## [3.1.1](https://github.com/Nosto/search-js/compare/v3.1.0...v3.1.1) (2025-06-27)
 
 
