@@ -9,129 +9,119 @@ type Props = {
   product: SearchProduct
 }
 
+const styles = {
+  container: {
+    display: "flex",
+    alignItems: "center",
+    gap: "10px",
+    padding: "8px 16px",
+    textDecoration: "none",
+    color: "inherit",
+    borderRadius: "6px",
+    cursor: "pointer",
+    minHeight: "56px"
+  },
+  image: {
+    width: "44px",
+    height: "44px",
+    objectFit: "cover" as const,
+    borderRadius: "5px",
+    flexShrink: 0,
+    background: "#f3f4f6",
+    display: "block",
+    margin: 0
+  },
+  content: {
+    flex: 1,
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column" as const,
+    justifyContent: "center"
+  },
+  brand: {
+    fontSize: "11px",
+    fontWeight: 600,
+    color: "#9ca3af",
+    marginBottom: "2px",
+    textTransform: "uppercase" as const,
+    letterSpacing: "0.5px",
+    lineHeight: 1
+  },
+  name: {
+    fontSize: "15px",
+    fontWeight: 500,
+    color: "#1f2937",
+    lineHeight: 1.2,
+    whiteSpace: "nowrap" as const,
+    overflow: "hidden",
+    textOverflow: "ellipsis"
+  },
+  priceContainer: {
+    marginLeft: "auto",
+    display: "flex",
+    flexDirection: "column" as const,
+    alignItems: "flex-end",
+    minWidth: "70px"
+  },
+  price: {
+    fontSize: "16px",
+    fontWeight: 700,
+    color: "#059669",
+    lineHeight: 1
+  },
+  listPrice: {
+    fontSize: "13px",
+    color: "#9ca3af",
+    textDecoration: "line-through",
+    marginTop: "2px"
+  }
+}
+
 export function ProductRow({ product: baseProduct }: Props) {
   const product = useDecoratedSearchResults<typeof hitDecorators>(baseProduct)
 
   return (
-    <AutocompleteElement
-      hit={{
-        ...product,
-        productId: product.productId!,
-        url: product.url!
-      }}
-      as="a"
-      componentProps={{
-        href: product.url,
-        style: {
-          display: "flex",
-          alignItems: "center",
-          gap: "10px",
-          padding: "8px 16px",
-          textDecoration: "none",
-          color: "inherit",
-          borderRadius: "6px",
-          transition: "background-color 0.15s ease",
-          cursor: "pointer",
-          minHeight: "56px"
-        },
-        "aria-label": `Product ${product.name}`,
-        onMouseEnter: e => {
-          e.currentTarget.style.backgroundColor = "#f3f4f6"
-        },
-        onMouseLeave: e => {
-          e.currentTarget.style.backgroundColor = "transparent"
+    <>
+      <style>{`
+        .product-row {
+          transition: background-color 0.15s ease;
         }
-      }}
-    >
-      <img
-        src={product.thumbUrl ?? productImagePlaceholder}
-        alt={product.name}
-        width="44"
-        height="44"
-        style={{
-          width: "44px",
-          height: "44px",
-          objectFit: "cover",
-          borderRadius: "5px",
-          flexShrink: 0,
-          background: "#f3f4f6",
-          display: "block",
-          margin: 0
+        .product-row:hover {
+          background-color: #f3f4f6 !important;
+        }
+      `}</style>
+      <AutocompleteElement
+        hit={{
+          ...product,
+          productId: product.productId!,
+          url: product.url!
         }}
-      />
-      <div
-        data-nosto-element="product"
-        style={{
-          flex: 1,
-          minWidth: 0,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center"
+        as="a"
+        componentProps={{
+          href: product.url,
+          className: "product-row",
+          style: styles.container,
+          "aria-label": `Product ${product.name}`
         }}
       >
-        {product.brand && (
-          <div
-            style={{
-              fontSize: "11px",
-              fontWeight: 600,
-              color: "#9ca3af",
-              marginBottom: "2px",
-              textTransform: "uppercase",
-              letterSpacing: "0.5px",
-              lineHeight: 1
-            }}
-          >
-            {product.brand}
-          </div>
-        )}
-        <div
-          style={{
-            fontSize: "15px",
-            fontWeight: 500,
-            color: "#1f2937",
-            lineHeight: 1.2,
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis"
-          }}
-        >
-          {product.name}
+        <img
+          src={product.thumbUrl ?? productImagePlaceholder}
+          alt={product.name}
+          width="44"
+          height="44"
+          style={styles.image}
+        />
+        <div data-nosto-element="product" style={styles.content}>
+          {product.brand && <div style={styles.brand}>{product.brand}</div>}
+          <div style={styles.name}>{product.name}</div>
         </div>
-      </div>
-      <div
-        style={{
-          marginLeft: "auto",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-end",
-          minWidth: "70px"
-        }}
-      >
-        {product.price && (
-          <span
-            style={{
-              fontSize: "16px",
-              fontWeight: 700,
-              color: "#059669",
-              lineHeight: 1
-            }}
-          >
-            {product.priceText}
-          </span>
-        )}
-        {product.price && product.listPrice && product.listPrice > product.price && (
-          <span
-            style={{
-              fontSize: "13px",
-              color: "#9ca3af",
-              textDecoration: "line-through",
-              marginTop: "2px"
-            }}
-          >
-            {product.listPriceText}
-          </span>
-        )}
-      </div>
-    </AutocompleteElement>
+        <div style={styles.priceContainer}>
+          {product.price && <span style={styles.price}>{product.priceText}</span>}
+          {product.price && product.listPrice && product.listPrice > product.price && (
+            <span style={styles.listPrice}>{product.listPriceText}</span>
+          )}
+        </div>
+      </AutocompleteElement>
+    </>
   )
 }
