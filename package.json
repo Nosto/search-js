@@ -27,6 +27,11 @@
       "import": "./dist/currencies/currencies.es.js",
       "require": "./dist/currencies/currencies.cjs.js"
     },
+    "./inject": {
+      "types": "./dist/inject/inject.d.ts",
+      "import": "./dist/inject/inject.es.js",
+      "require": "./dist/inject/inject.cjs.js"
+    },
     "./thumbnails": {
       "types": "./dist/thumbnails/thumbnails.d.ts",
       "import": "./dist/thumbnails/thumbnails.es.js",

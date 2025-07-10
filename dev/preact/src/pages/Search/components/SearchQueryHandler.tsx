@@ -2,7 +2,7 @@ import { useActions, useSizeOptions } from "@nosto/search-js/preact/hooks"
 import { useEffect } from "preact/hooks"
 import { useLocation } from "preact-iso"
 
-import { defaultConfig, pageSizes } from "../../defaultConfig"
+import { defaultConfig, pageSizes } from "../../../defaultConfig"
 
 export function SearchQueryHandler() {
   const { url, query } = useLocation()
