@@ -2,9 +2,10 @@ import { SearchInput } from "@nosto/search-js/preact/autocomplete"
 import { useActions } from "@nosto/search-js/preact/hooks"
 import { useCallback, useMemo, useState } from "preact/hooks"
 
-import { Input } from "../../components/Input"
-import { debounce } from "../../utils/debounce"
-import { SpeechToTextButton } from "../Search/SpeechToTextButton"
+import { Button } from "../../../components/Button"
+import { Input } from "../../../components/Input"
+import { debounce } from "../../../utils/debounce"
+import { SpeechToTextButton } from "../../Search/components/SpeechToTextButton"
 import { AutocompleteContent } from "./AutocompleteContent"
 
 export function AutocompleteSearchForm() {
@@ -76,21 +77,7 @@ export function AutocompleteSearchForm() {
         }}
         onSearchInput={target => onSearchInput(target.value)}
       />
-      <button
-        type="submit"
-        style={{
-          padding: "12px 24px",
-          fontSize: "16px",
-          backgroundColor: "#673ab8",
-          color: "white",
-          border: "none",
-          borderRadius: "8px",
-          cursor: "pointer",
-          fontWeight: "500"
-        }}
-      >
-        Search
-      </button>
+      <Button type="submit">Search</Button>
       <SpeechToTextButton />
       {autocompleteShown && <AutocompleteContent />}
     </form>
