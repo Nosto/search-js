@@ -1,22 +1,26 @@
-import { useActions } from "@nosto/search-js/preact/hooks"
+import { useActions, useSizeOptions } from "@nosto/search-js/preact/hooks"
 import { useEffect } from "preact/hooks"
 import { useLocation } from "preact-iso"
 
+import { defaultConfig, pageSizes } from "../../defaultConfig"
+
 export function SearchQueryHandler() {
-  const { url } = useLocation()
+  const { url, query } = useLocation()
   const { newSearch } = useActions()
+  const { size } = useSizeOptions(pageSizes, defaultConfig.searchPageSize)
 
-  // Extract query parameter from URL and perform search
   useEffect(() => {
-    const urlParams = new URLSearchParams(url.split("?")[1])
-    const query = urlParams.get("q")
+    const userQuery = query.q
 
-    if (query) {
+    if (userQuery) {
       newSearch({
-        query: query
+        query: userQuery,
+        products: {
+          size
+        }
       })
     }
-  }, [url, newSearch])
+  }, [url, newSearch, size, query])
 
   return null
 }

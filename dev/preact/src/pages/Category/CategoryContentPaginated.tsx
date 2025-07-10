@@ -1,19 +1,20 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
 
 import { Pagination } from "../../components/Pagination"
-import { Product } from "../Search/Product"
+import { ProductCard } from "../../components/Product/ProductCard"
+import { ProductList } from "../../components/Product/ProductList"
 
 export function CategoryContentPaginated() {
   const { hits } = useNostoAppState(state => ({ hits: state.response.products?.hits || [] }))
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", width: "100%", gap: 16, marginTop: 16 }}>
-      <div>
+    <>
+      <ProductList>
         {hits.map(hit => (
-          <Product key={hit.productId} product={hit} />
+          <ProductCard key={hit.productId} product={hit} />
         ))}
-      </div>
+      </ProductList>
       <Pagination />
-    </div>
+    </>
   )
 }
