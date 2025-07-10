@@ -2,7 +2,7 @@ import type { SearchProduct, SearchProductSku } from "@nosto/nosto-js/client"
 import { useDecoratedSearchResults, useSwatches } from "@nosto/search-js/preact/hooks"
 import { SerpElement } from "@nosto/search-js/preact/serp"
 
-import ProductSwatches from "../../pages/Search/ProductSwatches"
+import ProductSwatches from "../../pages/Search/components/ProductSwatches"
 import { hitDecorators } from "../../utils/hitDecorators"
 import { productImagePlaceholder } from "../../utils/productImagePlaceholder"
 

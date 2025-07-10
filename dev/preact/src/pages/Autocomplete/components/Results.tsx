@@ -1,6 +1,6 @@
 import { SearchProduct } from "@nosto/nosto-js/client"
 
-import { ProductRow } from "../../components/Product/ProductRow"
+import { ProductRow } from "../../../components/Product/ProductRow"
 
 export function Results({
   loading,

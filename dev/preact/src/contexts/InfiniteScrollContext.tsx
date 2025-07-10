@@ -1,40 +1,67 @@
 import { type ComponentChildren, createContext } from "preact"
 import { useContext, useState } from "preact/hooks"
 
-interface InfiniteScrollContextType {
+interface UserPreferences {
   isInfiniteScrollEnabled: boolean
-  toggleInfiniteScroll: () => void
+  isInjectionEnabled: boolean
 }
 
-const InfiniteScrollContext = createContext<InfiniteScrollContextType | null>(null)
+interface UserPreferencesContextType {
+  preferences: UserPreferences
+  updatePreference: <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => void
+}
 
-interface InfiniteScrollProviderProps {
+const UserPreferencesContext = createContext<UserPreferencesContextType | null>(null)
+
+interface UserPreferencesProviderProps {
   children: ComponentChildren
 }
 
-export function InfiniteScrollProvider({ children }: InfiniteScrollProviderProps) {
-  const [isInfiniteScrollEnabled, setIsInfiniteScrollEnabled] = useState(false)
+export function UserPreferencesProvider({ children }: UserPreferencesProviderProps) {
+  const [preferences, setPreferences] = useState<UserPreferences>({
+    isInfiniteScrollEnabled: false,
+    isInjectionEnabled: false
+  })
 
-  const toggleInfiniteScroll = () => {
-    setIsInfiniteScrollEnabled(prev => !prev)
+  const updatePreference = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
+    setPreferences(prev => ({
+      ...prev,
+      [key]: value
+    }))
   }
 
   return (
-    <InfiniteScrollContext.Provider
+    <UserPreferencesContext.Provider
       value={{
-        isInfiniteScrollEnabled,
-        toggleInfiniteScroll
+        preferences,
+        updatePreference
       }}
     >
       {children}
-    </InfiniteScrollContext.Provider>
+    </UserPreferencesContext.Provider>
   )
 }
 
-export function useInfiniteScroll() {
-  const context = useContext(InfiniteScrollContext)
+export function useUserPreferences() {
+  const context = useContext(UserPreferencesContext)
   if (!context) {
-    throw new Error("useInfiniteScroll must be used within an InfiniteScrollProvider")
+    throw new Error("useUserPreferences must be used within a UserPreferencesProvider")
   }
   return context
+}
+
+export function useInfiniteScroll() {
+  const { preferences, updatePreference } = useUserPreferences()
+  return {
+    isInfiniteScrollEnabled: preferences.isInfiniteScrollEnabled,
+    toggleInfiniteScroll: () => updatePreference("isInfiniteScrollEnabled", !preferences.isInfiniteScrollEnabled)
+  }
+}
+
+export function useInjectionLogic() {
+  const { preferences, updatePreference } = useUserPreferences()
+  return {
+    isInjectionEnabled: preferences.isInjectionEnabled,
+    toggleInjection: () => updatePreference("isInjectionEnabled", !preferences.isInjectionEnabled)
+  }
 }
