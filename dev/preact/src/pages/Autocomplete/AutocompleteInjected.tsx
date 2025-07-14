@@ -1,4 +1,4 @@
-import { init } from "@nosto/search-js/inject"
+import { init } from "@nosto/search-js/preact/inject"
 
 export function AutocompleteInjected() {
   // TODO: Actually inject from here

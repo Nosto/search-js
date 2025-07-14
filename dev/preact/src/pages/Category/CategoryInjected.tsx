@@ -1,4 +1,4 @@
-import { init } from "@nosto/search-js/inject"
+import { init } from "@nosto/search-js/preact/inject"
 import { CategoryConfig, CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { useRoute } from "preact-iso"
 

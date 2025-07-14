@@ -1,4 +1,4 @@
-import { init } from "@nosto/search-js/inject"
+import { init } from "@nosto/search-js/preact/inject"
 
 import { Autocomplete } from "../Autocomplete/Autocomplete"
 

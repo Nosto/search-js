@@ -1,4 +1,4 @@
-import { PublicCategoryConfig } from "@preact/config/pages/category/config"
+import { PublicCategoryConfig } from "@preact/category/CategoryConfig"
 import { VNode } from "preact"
 
 import { CssSelector } from "./resolveCssSelector"

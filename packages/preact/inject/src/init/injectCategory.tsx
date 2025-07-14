@@ -1,12 +1,12 @@
-import { SearchPageProvider } from "@preact/config/pages/serp/provider.tsx"
-import { createStore, Store } from "@preact/store.tsx"
+import { Store } from "@preact/common/store/store"
+import { SearchPageProvider } from "@preact/serp/SerpPageProvider"
 import { logger } from "@utils/logger.ts"
 import { render } from "preact"
 
-import ErrorBoundary from "./components/ErrorBoundary.tsx"
-import { CategoryInjectConfig, InitConfig } from "./config.ts"
-import { resolveCssSelector } from "./resolveCssSelector.ts"
-import { waitForElements } from "./wait.ts"
+import ErrorBoundary from "../components/ErrorBoundary"
+import { CategoryInjectConfig } from "../config"
+import { resolveCssSelector } from "../resolveCssSelector"
+import { waitForElements } from "../wait"
 
 export async function injectCategory(config: CategoryInjectConfig, store: Store) {
   const { categorySelector, render: userRender } = config
@@ -35,10 +35,4 @@ export async function injectCategory(config: CategoryInjectConfig, store: Store)
     </ErrorBoundary>,
     target
   )
-}
-
-export async function init(config: InitConfig) {
-  if (config.category && (!config.category.isCategoryPage || config.category.isCategoryPage?.())) {
-    await injectCategory(config.category, createStore())
-  }
 }

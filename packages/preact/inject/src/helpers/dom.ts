@@ -16,3 +16,8 @@ export async function DOMReady(): Promise<void> {
     }
   })
 }
+
+// TODO: Replace with something that works better with custom elements
+export function cloneNode<T extends Node>(node: T, deep: boolean): T {
+  return node.cloneNode(deep) as T
+}
