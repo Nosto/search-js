@@ -9,7 +9,7 @@ import globals from "globals"
 import tseslint from "typescript-eslint"
 
 export default tseslint.config(
-  { ignores: ["dist", "docs"] },
+  { ignores: ["dist", "docs", "dev/preact/dist"] },
   {
     extends: [...tseslint.configs.recommended],
     files: ["**/*.{js,ts,tsx}"],
