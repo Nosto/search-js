@@ -15,18 +15,14 @@
 			"react-dom": ["./node_modules/preact/compat/"],
 			"@nosto/search-js": ["../../dist/core"],
 			"@nosto/search-js/currencies": ["../../dist/currencies"],
-			"@nosto/search-js/currencies/*": ["../../dist/currencies/*"],
 			"@nosto/search-js/thumbnails": ["../../dist/thumbnails"],
-			"@nosto/search-js/thumbnails/*": ["../../dist/thumbnails/*"],
-			"@nosto/search-js/utils": ["../../dist/utils"],
-			"@nosto/search-js/utils/*": ["../../dist/utils/*"],
-			"@nosto/search-js/preact/legacy": ["../../dist/preact/legacy"],
-			"@nosto/search-js/*": ["../../dist/*"],
-			"@nosto/search-js/preact/common": ["../../dist/preact/common"],
-			"@nosto/search-js/preact/serp": ["../../dist/preact/serp"],
 			"@nosto/search-js/preact/autocomplete": ["../../dist/preact/autocomplete"],
+			"@nosto/search-js/preact/common": ["../../dist/preact/common"],
 			"@nosto/search-js/preact/category": ["../../dist/preact/category"],
-			"@nosto/search-js/preact/hooks": ["../../dist/preact/hooks/hooks.ts"],
+			"@nosto/search-js/preact/hooks": ["../../dist/preact/hooks"],
+			"@nosto/search-js/preact/legacy": ["../../dist/preact/legacy"],
+			"@nosto/search-js/preact/serp": ["../../dist/preact/serp"],
+			"@nosto/search-js/utils": ["../../dist/utils"]
 		}
 	},
 	"include": ["node_modules/vite/client.d.ts", "**/*"]
