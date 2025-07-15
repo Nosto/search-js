@@ -9,7 +9,7 @@ export async function init(config: InitConfig) {
   if (config.autocomplete) {
     await injectAutocomplete()
   }
-  if (config.category && (!config.category.isCategoryPage || config.category.isCategoryPage?.())) {
+  if (config.category) {
     await injectCategory(config.category, createStore())
   }
   if (config.serp) {

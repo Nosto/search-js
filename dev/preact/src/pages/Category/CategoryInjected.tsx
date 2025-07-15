@@ -22,7 +22,6 @@ export function CategoryInject() {
 
   init({
     category: {
-      isCategoryPage: () => true,
       categorySelector: "#inject-category",
       render: () => (
         <CategoryPageProvider config={config}>

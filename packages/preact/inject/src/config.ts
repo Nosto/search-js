@@ -17,12 +17,6 @@ export type AutocompleteInjectConfig = {
 
 export type CategoryInjectConfig = PublicCategoryConfig & {
   /**
-   * Check if the current page is a category page.
-   * If not provided, we assume it's always true.
-   */
-  isCategoryPage?: () => boolean
-
-  /**
    * CSS selector for category content rendering.
    */
   categorySelector: CssSelector
