@@ -28,7 +28,35 @@ jobs:
         run: npm run build
 
       - name: Run tests
-        run: npm test
+        run: npm run test:core
+
+  build-preact-dev:
+    name: Build and Test Preact Dev
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install dev app dependencies
+        working-directory: ./dev/preact
+        run: npm ci
+
+      - name: Run build
+        working-directory: ./dev/preact
+        run: npm run build
+
+      - name: Run tests
+        working-directory: ./dev/preact
+        run: npm run test
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
