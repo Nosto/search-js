@@ -49,7 +49,10 @@ jobs:
         working-directory: ./dev/preact
         run: npm ci
 
-      - name: Run build
+      - name: Run parent build
+        run: npm run build
+
+      - name: Run dev app build
         working-directory: ./dev/preact
         run: npm run build
 
