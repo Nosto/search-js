@@ -6,6 +6,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
     "declaration": true,
+    "rootDir": ".",
     "outDir": "dist",
 
     /* Bundler mode */
@@ -33,6 +34,7 @@
       "@preact/category/*": ["packages/preact/category/src/*"],
       "@preact/common/*": ["packages/preact/common/src/*"],
       "@preact/hooks/*": ["packages/preact/hooks/src/*"],
+      "@preact/inject/*": ["packages/preact/inject/src/*"],
       "@preact/legacy/*": ["packages/preact/legacy/src/*"],
       "@preact/serp/*": ["packages/preact/serp/src/*"],
       "@thumbnails/*": ["packages/thumbnails/src/*"],

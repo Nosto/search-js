@@ -37,20 +37,25 @@
       "import": "./dist/preact/autocomplete/autocomplete.es.js",
       "require": "./dist/preact/autocomplete/autocomplete.cjs.js"
     },
-    "./preact/common": {
-      "types": "./dist/preact/common/common.d.ts",
-      "import": "./dist/preact/common/common.es.js",
-      "require": "./dist/preact/common/common.cjs.js"
-    },
     "./preact/category": {
       "types": "./dist/preact/category/category.d.ts",
       "import": "./dist/preact/category/category.es.js",
       "require": "./dist/preact/category/category.cjs.js"
     },
+    "./preact/common": {
+      "types": "./dist/preact/common/common.d.ts",
+      "import": "./dist/preact/common/common.es.js",
+      "require": "./dist/preact/common/common.cjs.js"
+    },
     "./preact/hooks": {
       "types": "./dist/preact/hooks/hooks.d.ts",
       "import": "./dist/preact/hooks/hooks.es.js",
       "require": "./dist/preact/hooks/hooks.cjs.js"
+    },
+    "./preact/inject": {
+      "types": "./dist/preact/inject/inject.d.ts",
+      "import": "./dist/preact/inject/inject.es.js",
+      "require": "./dist/preact/inject/inject.cjs.js"
     },
     "./preact/legacy": {
       "types": "./dist/preact/legacy/legacy.d.ts",

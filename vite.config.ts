@@ -3,7 +3,7 @@ import dts from "vite-plugin-dts"
 import { defineConfig } from "vitest/config"
 
 const basePackages = ["core", "currencies", "thumbnails", "utils"]
-const preactPackages = ["autocomplete", "category", "common", "hooks", "legacy", "serp"]
+const preactPackages = ["autocomplete", "category", "common", "hooks", "inject", "legacy", "serp"]
 const packages = [...basePackages, ...preactPackages]
 
 export default defineConfig({
@@ -46,6 +46,7 @@ export default defineConfig({
       "@preact/category": resolve(import.meta.dirname, "packages/preact/category/src"),
       "@preact/common": resolve(import.meta.dirname, "packages/preact/common/src"),
       "@preact/hooks": resolve(import.meta.dirname, "packages/preact/hooks/src"),
+      "@preact/inject": resolve(import.meta.dirname, "packages/preact/inject/src"),
       "@preact/legacy": resolve(import.meta.dirname, "packages/preact/legacy/src"),
       "@preact/serp": resolve(import.meta.dirname, "packages/preact/serp/src"),
       "@thumbnails": resolve(import.meta.dirname, "packages/thumbnails/src"),
