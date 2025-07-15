@@ -26,13 +26,12 @@ export default defineConfig({
       name: "@nosto/search-js",
       formats: ["es", "cjs"],
       entry: packages.map(name => {
-        const prefix = preactPackages.includes(name) ? "/preact" : ""
-        return resolve(import.meta.dirname, `packages${prefix}/${name}/${name}.ts`)
+        const prefix = preactPackages.includes(name) ? "preact/" : ""
+        return resolve(import.meta.dirname, `packages/${prefix}${name}/${name}.ts`)
       }),
       fileName: (format, filename) => {
-        return preactPackages.includes(filename)
-          ? `preact/${filename}.${format}.js`
-          : `${filename}/${filename}.${format}.js`
+        const prefix = preactPackages.includes(filename) ? "preact/" : ""
+        return `${prefix}${filename}/${filename}.${format}.js`
       }
     },
     rollupOptions: {

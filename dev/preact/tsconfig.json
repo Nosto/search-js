@@ -26,7 +26,7 @@
 			"@nosto/search-js/preact/serp": ["../../dist/preact/serp"],
 			"@nosto/search-js/preact/autocomplete": ["../../dist/preact/autocomplete"],
 			"@nosto/search-js/preact/category": ["../../dist/preact/category"],
-			"@nosto/search-js/preact/hooks": ["../../dist/preact/hooks"]
+			"@nosto/search-js/preact/hooks": ["../../dist/preact/hooks/hooks.ts"],
 		}
 	},
 	"include": ["node_modules/vite/client.d.ts", "**/*"]

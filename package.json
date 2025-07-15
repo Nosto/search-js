@@ -33,34 +33,34 @@
       "require": "./dist/thumbnails/thumbnails.cjs.js"
     },
     "./preact/autocomplete": {
-      "types": "./dist/preact/autocomplete.d.ts",
-      "import": "./dist/preact/autocomplete.es.js",
-      "require": "./dist/preact/autocomplete.cjs.js"
+      "types": "./dist/preact/autocomplete/autocomplete.d.ts",
+      "import": "./dist/preact/autocomplete/autocomplete.es.js",
+      "require": "./dist/preact/autocomplete/autocomplete.cjs.js"
     },
     "./preact/common": {
-      "types": "./dist/preact/common.d.ts",
-      "import": "./dist/preact/common.es.js",
-      "require": "./dist/preact/common.cjs.js"
+      "types": "./dist/preact/common/common.d.ts",
+      "import": "./dist/preact/common/common.es.js",
+      "require": "./dist/preact/common/common.cjs.js"
     },
     "./preact/category": {
-      "types": "./dist/preact/category.d.ts",
-      "import": "./dist/preact/category.es.js",
-      "require": "./dist/preact/category.cjs.js"
+      "types": "./dist/preact/category/category.d.ts",
+      "import": "./dist/preact/category/category.es.js",
+      "require": "./dist/preact/category/category.cjs.js"
     },
     "./preact/hooks": {
-      "types": "./dist/preact/hooks.d.ts",
-      "import": "./dist/preact/hooks.es.js",
-      "require": "./dist/preact/hooks.cjs.js"
+      "types": "./dist/preact/hooks/hooks.d.ts",
+      "import": "./dist/preact/hooks/hooks.es.js",
+      "require": "./dist/preact/hooks/hooks.cjs.js"
     },
     "./preact/legacy": {
-      "types": "./dist/preact/legacy.d.ts",
-      "import": "./dist/preact/legacy.es.js",
-      "require": "./dist/preact/legacy.cjs.js"
+      "types": "./dist/preact/legacy/legacy.d.ts",
+      "import": "./dist/preact/legacy/legacy.es.js",
+      "require": "./dist/preact/legacy/legacy.cjs.js"
     },
     "./preact/serp": {
-      "types": "./dist/preact/serp.d.ts",
-      "import": "./dist/preact/serp.es.js",
-      "require": "./dist/preact/serp.cjs.js"
+      "types": "./dist/preact/serp/serp.d.ts",
+      "import": "./dist/preact/serp/serp.es.js",
+      "require": "./dist/preact/serp/serp.cjs.js"
     },
     "./utils": {
       "types": "./dist/utils/utils.d.ts",
