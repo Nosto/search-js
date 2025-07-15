@@ -7,12 +7,12 @@ import { injectSerp } from "./init/injectSerp"
 
 export async function init(config: InitConfig) {
   if (config.autocomplete) {
-    await injectAutocomplete(config.autocomplete, createStore())
+    await injectAutocomplete()
   }
   if (config.category && (!config.category.isCategoryPage || config.category.isCategoryPage?.())) {
     await injectCategory(config.category, createStore())
   }
   if (config.serp) {
-    await injectSerp(config.serp, createStore())
+    await injectSerp()
   }
 }
