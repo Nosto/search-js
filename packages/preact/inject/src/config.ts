@@ -1,9 +1,16 @@
+import { PublicAutocompleteConfig } from "@preact/autocomplete/AutocompleteConfig"
 import { PublicCategoryConfig } from "@preact/category/CategoryConfig"
+import { PublicSerpConfig } from "@preact/serp/SerpConfig"
 import { VNode } from "preact"
 
 import { CssSelector } from "./resolveCssSelector"
 
 export type AutocompleteInjectConfig = {
+  /**
+   * Configuration passthrough.
+   */
+  config: PublicAutocompleteConfig
+
   /**
    * CSS selector for each input element to bind search events like input change and form submit.
    */
@@ -15,11 +22,16 @@ export type AutocompleteInjectConfig = {
   dropdownSelector: CssSelector
 }
 
-export type CategoryInjectConfig = PublicCategoryConfig & {
+export type CategoryInjectConfig = {
+  /**
+   * Configuration passthrough.
+   */
+  config: PublicCategoryConfig
+
   /**
    * CSS selector for category content rendering.
    */
-  categorySelector: CssSelector
+  cssSelector: CssSelector
 
   /**
    * Render function for category content.
@@ -29,9 +41,19 @@ export type CategoryInjectConfig = PublicCategoryConfig & {
 
 export type SerpInjectConfig = {
   /**
+   * Configuration passthrough.
+   */
+  config: PublicSerpConfig
+
+  /**
    * CSS selector for search page rendering.
    */
-  contentSelector: CssSelector
+  cssSelector: CssSelector
+
+  /**
+   * Render function for search page content.
+   */
+  render: () => VNode | Promise<VNode>
 }
 
 export type InitConfig = {

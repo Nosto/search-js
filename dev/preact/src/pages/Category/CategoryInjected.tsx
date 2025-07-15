@@ -1,9 +1,9 @@
-import { CategoryConfig, CategoryPageProvider } from "@nosto/search-js/preact/category"
 import { init } from "@nosto/search-js/preact/inject"
 import { useRoute } from "preact-iso"
 
 import { useInfiniteScroll } from "../../contexts/InfiniteScrollContext"
 import { hitDecorators } from "../../utils/hitDecorators"
+import { useEffectOnce } from "../../utils/useEffectOnce"
 import { CategoryContentInfinite } from "./components/CategoryContentInfinite"
 import { CategoryContentPaginated } from "./components/CategoryContentPaginated"
 import { CategoryQueryHandler } from "./components/CategoryQueryHandler"
@@ -13,23 +13,24 @@ export function CategoryInject() {
   const { params } = useRoute()
   const { categoryPath } = params
 
-  const config = {
-    defaultCurrency: "EUR",
-    search: {
-      hitDecorators
-    }
-  } satisfies CategoryConfig
-
-  init({
-    category: {
-      categorySelector: "#inject-category",
-      render: () => (
-        <CategoryPageProvider config={config}>
-          <CategoryQueryHandler categoryPath={categoryPath} />
-          {isInfiniteScrollEnabled ? <CategoryContentInfinite /> : <CategoryContentPaginated />}
-        </CategoryPageProvider>
-      )
-    }
+  useEffectOnce(() => {
+    init({
+      category: {
+        config: {
+          defaultCurrency: "EUR",
+          search: {
+            hitDecorators
+          }
+        },
+        cssSelector: "#inject-category",
+        render: () => (
+          <>
+            <CategoryQueryHandler categoryPath={categoryPath} />
+            {isInfiniteScrollEnabled ? <CategoryContentInfinite /> : <CategoryContentPaginated />}
+          </>
+        )
+      }
+    })
   })
 
   return (
