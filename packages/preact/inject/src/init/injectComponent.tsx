@@ -13,7 +13,7 @@ export async function injectComponent(cssSelector: CssSelector, renderComponent:
   })
 
   if (targets.length === 0) {
-    throw new Error(`No category elements found for selector: ${selector}`)
+    throw new Error(`No elements found for selector: ${selector}`)
   }
   if (targets.length > 1) {
     logger.warn(`Multiple (${targets.length}) elements found for selector: ${selector}`)
