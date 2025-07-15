@@ -4,6 +4,9 @@ export function AutocompleteInjected() {
   // TODO: Actually inject from here
   init({
     autocomplete: {
+      config: {
+        defaultCurrency: "EUR"
+      },
       inputSelector: "#inject-autocomplete",
       dropdownSelector: "#inject-autocomplete-dropdown"
     }

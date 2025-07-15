@@ -1,4 +1,5 @@
 import { SearchPageProvider, SerpConfig } from "@nosto/search-js/preact/serp"
+import { useLocation } from "preact-iso"
 
 import { useInfiniteScroll } from "../../contexts/InfiniteScrollContext"
 import { hitDecorators } from "../../utils/hitDecorators"
@@ -9,6 +10,7 @@ import { SearchQueryHandler } from "./components/SearchQueryHandler"
 
 export function SearchNative() {
   const { isInfiniteScrollEnabled } = useInfiniteScroll()
+  const { query } = useLocation()
 
   const config = {
     defaultCurrency: "EUR",
@@ -31,7 +33,7 @@ export function SearchNative() {
     >
       <Autocomplete />
       <SearchPageProvider config={config}>
-        <SearchQueryHandler />
+        <SearchQueryHandler urlQuery={query} />
         {isInfiniteScrollEnabled ? <SearchContentInfinite /> : <SearchContentPaginated />}
       </SearchPageProvider>
     </div>

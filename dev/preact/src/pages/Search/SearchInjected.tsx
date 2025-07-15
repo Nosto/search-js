@@ -1,13 +1,32 @@
 import { init } from "@nosto/search-js/preact/inject"
+import { useLocation } from "preact-iso"
 
+import { useInfiniteScroll } from "../../contexts/InfiniteScrollContext"
+import { useEffectOnce } from "../../utils/useEffectOnce"
 import { Autocomplete } from "../Autocomplete/Autocomplete"
+import { SearchContentInfinite } from "./components/SearchContentInfinite"
+import { SearchContentPaginated } from "./components/SearchContentPaginated"
+import { SearchQueryHandler } from "./components/SearchQueryHandler"
 
 export function SearchInjected() {
-  // TODO: Actually inject from here
-  init({
-    serp: {
-      contentSelector: "#inject-search"
-    }
+  const { isInfiniteScrollEnabled } = useInfiniteScroll()
+  const { query } = useLocation()
+
+  useEffectOnce(() => {
+    init({
+      serp: {
+        config: {
+          defaultCurrency: "EUR"
+        },
+        cssSelector: "#inject-search",
+        render: () => (
+          <>
+            <SearchQueryHandler urlQuery={query} />
+            {isInfiniteScrollEnabled ? <SearchContentInfinite /> : <SearchContentPaginated />}
+          </>
+        )
+      }
+    })
   })
 
   return (
@@ -23,7 +42,6 @@ export function SearchInjected() {
       }}
     >
       <Autocomplete />
-      <span>Injected search will be here</span>
       <div id="inject-search" />
     </div>
   )

@@ -13,6 +13,6 @@ export async function init(config: InitConfig) {
     await injectCategory(config.category, createStore())
   }
   if (config.serp) {
-    await injectSerp()
+    await injectSerp(config.serp, createStore())
   }
 }
