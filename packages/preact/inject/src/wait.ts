@@ -29,24 +29,24 @@ export interface DelayOptions {
  * ```
  */
 
-export async function waitForElement({ selector, timeout = 500 }: DelayOptions): Promise<Element | void> {
+export async function waitForElement<T extends Element>({ selector, timeout = 500 }: DelayOptions): Promise<T | void> {
   const elements = await waitForElements({ selector, timeout })
-  return elements[0]
+  return elements[0] as T | void
 }
 
 /**
  * Wait for element to appear in DOM using MutationObserver
  * @returns Array of elements it finds
  */
-export function waitForElements({ selector, timeout = 500 }: DelayOptions): Promise<Element[]> {
+export function waitForElements<T extends Element>({ selector, timeout = 500 }: DelayOptions): Promise<T[]> {
   return new Promise(resolve => {
-    const elements = findAll(selector)
+    const elements = findAll<T>(selector)
     if (elements.length > 0) {
       return resolve(elements)
     }
 
     const observer = new MutationObserver(() => {
-      const elements = findAll(selector)
+      const elements = findAll<T>(selector)
       if (elements.length > 0) {
         observer.disconnect()
         clearTimeout(timer)
