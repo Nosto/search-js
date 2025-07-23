@@ -20,6 +20,7 @@
 			"@nosto/search-js/preact/common": ["../../dist/preact/common"],
 			"@nosto/search-js/preact/category": ["../../dist/preact/category"],
 			"@nosto/search-js/preact/hooks": ["../../dist/preact/hooks"],
+			"@nosto/search-js/preact/events": ["../../dist/preact/events"],
 			"@nosto/search-js/preact/legacy": ["../../dist/preact/legacy"],
 			"@nosto/search-js/preact/serp": ["../../dist/preact/serp"],
 			"@nosto/search-js/utils": ["../../dist/utils"]
