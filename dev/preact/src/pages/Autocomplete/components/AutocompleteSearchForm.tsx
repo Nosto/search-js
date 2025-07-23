@@ -65,9 +65,11 @@ export function AutocompleteSearchForm() {
       <SearchInput
         as={Input}
         componentProps={{
+          id: "autocomplete-search-input",
           placeholder: "Search for products...",
           style: {
             flex: "1",
+            width: "100%",
             padding: "12px 16px",
             fontSize: "16px",
             border: "2px solid #ddd",
@@ -77,8 +79,8 @@ export function AutocompleteSearchForm() {
         }}
         onSearchInput={target => onSearchInput(target.value)}
       />
-      <Button type="submit">Search</Button>
       <SpeechToTextButton />
+      <Button type="submit">Search</Button>
       {autocompleteShown && <AutocompleteContent />}
     </form>
   )

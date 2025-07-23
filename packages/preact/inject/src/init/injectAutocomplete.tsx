@@ -39,14 +39,22 @@ async function injectAutocompleteForInput(
 ) {
   const dropdown = createDropdown(input, injectConfig.dropdownCssSelector)
   const history = createHistory(input, injectConfig.dropdownCssSelector, injectConfig.config.historySize)
+  const hasSpeechToTextAlready = !!input.parentElement?.querySelector(".ns-autocomplete-voice-position")
 
-  if (injectConfig.renderSpeechToText) {
+  if (injectConfig.renderSpeechToText && !hasSpeechToTextAlready) {
     const locationHelperElement = document.createElement("div")
     locationHelperElement.className = "ns-autocomplete-voice-position"
     input.insertAdjacentElement("afterend", locationHelperElement)
 
     const speechToText = await injectConfig.renderSpeechToText()
-    render(<ErrorBoundary>{speechToText}</ErrorBoundary>, locationHelperElement)
+    render(
+      <ErrorBoundary>
+        <AutocompletePageProvider config={injectConfig.config} store={store}>
+          {speechToText}
+        </AutocompletePageProvider>
+      </ErrorBoundary>,
+      locationHelperElement
+    )
   }
 
   const storeHistoryState = () => {
@@ -69,17 +77,16 @@ async function injectAutocompleteForInput(
     storeHistoryState()
     if (isKeyword) {
       nostojs(api => api.recordSearchSubmit(query))
+      input.value = query
     }
   }
 
   const onReportProductClick = (product: SearchProduct) => {
     onReportClick(product.name!, false)
-    console.log("Reporting product click", product)
   }
 
   const onReportKeywordClick = (keyword: SearchKeyword) => {
     onReportClick(keyword.keyword, true)
-    console.log("Reporting keyword click", keyword)
   }
 
   const bind = bindAutocompleteInput(input, history, dropdown, injectConfig, store)
@@ -139,6 +146,7 @@ export type AutocompleteDropdown = ReturnType<typeof createDropdown>
 
 function createDropdown(input: HTMLInputElement, dropdownSelector: CssSelector) {
   const dropdown = document.createElement("div")
+  dropdown.className = "nosto-autocomplete-dropdown"
   const base = createElements(input, dropdown, dropdownSelector)
 
   return {
@@ -151,6 +159,7 @@ const historyKey = "nosto:search-js:history"
 
 function createHistory(input: HTMLInputElement, dropdownSelector: CssSelector, historySize: number) {
   const dropdown = document.createElement("div")
+  dropdown.className = "nosto-autocomplete-history"
   const base = createElements(input, dropdown, dropdownSelector)
 
   return {

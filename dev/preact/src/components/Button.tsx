@@ -6,6 +6,7 @@ export const Button = ({ children, style, ...props }: ButtonHTMLAttributes<HTMLB
       <button
         {...props}
         style={{
+          flexShrink: 0,
           padding: "12px 24px",
           fontSize: "16px",
           backgroundColor: "#673ab8",

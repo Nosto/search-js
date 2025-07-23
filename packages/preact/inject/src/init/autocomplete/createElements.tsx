@@ -1,13 +1,19 @@
 import { CssSelector, resolveCssSelector } from "@preact/inject/resolveCssSelector"
 
 export function createElements(input: HTMLInputElement, dropdown: HTMLDivElement, dropdownSelector: CssSelector) {
-  const wrapper = document.createElement("div")
-  wrapper.className = "nosto-autocomplete-wrapper"
-
   dropdown.style.display = "none"
 
-  input.parentNode?.insertBefore(wrapper, input.nextSibling)
-  wrapper.appendChild(input)
+  const wrapper = (() => {
+    if (input.parentElement && input.parentElement.classList.contains("nosto-autocomplete-wrapper")) {
+      return input.parentElement
+    }
+
+    const wrapper = document.createElement("div")
+    wrapper.className = "nosto-autocomplete-wrapper"
+    input.parentNode?.insertBefore(wrapper, input.nextSibling)
+    wrapper.appendChild(input)
+    return wrapper
+  })()
 
   const dropdownLocator = resolveCssSelector(dropdownSelector)
   const dropdownParent = dropdownLocator && document.querySelector(dropdownLocator.selector)

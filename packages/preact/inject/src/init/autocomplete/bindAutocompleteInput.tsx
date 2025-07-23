@@ -76,7 +76,6 @@ async function onFocus(
   store: Store,
   history: AutocompleteHistory
 ) {
-  console.log("onFocus", value)
   const config = injectConfig.config
   if (value.length >= config.minQueryLength) {
     if (!value) {
