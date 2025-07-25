@@ -89,8 +89,6 @@ async function injectAutocompleteForInput(
     onReportClick(keyword.keyword, true)
   }
 
-  const bind = bindAutocompleteInput(input, history, dropdown, injectConfig, store)
-
   disableNativeAutocomplete(input)
 
   store.onChange(
@@ -121,14 +119,15 @@ async function injectAutocompleteForInput(
   const outsideDropdown = bindClickOutside([dropdown.element, input], () => {
     dropdown.hide()
   })
-
   const outsideHistory = bindClickOutside([history.element, input], () => {
     history.hide()
   })
 
   bindBlur(history.element, history.hide)
-
   bindBlur(dropdown.element, dropdown.hide)
+
+  // Keep last
+  const bind = bindAutocompleteInput(input, history, dropdown, injectConfig, store)
 
   return {
     destroy() {

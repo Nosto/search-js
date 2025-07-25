@@ -1,3 +1,4 @@
+import { useEventBusDispatch } from "@nosto/search-js/preact/events"
 import { init } from "@nosto/search-js/preact/inject"
 
 import { Button } from "../../components/Button"
@@ -6,6 +7,8 @@ import { SpeechToTextButton } from "../Search/components/SpeechToTextButton"
 import { AutocompleteContent } from "./components/AutocompleteContent"
 
 export function AutocompleteInjected() {
+  const triggerNewSearch = useEventBusDispatch({ event: "actions/newSearch" })
+
   useEffectOnce(() => {
     init({
       autocomplete: {
@@ -15,8 +18,15 @@ export function AutocompleteInjected() {
         formCssSelector: "#inject-autocomplete-form",
         inputCssSelector: "#inject-autocomplete-input",
         dropdownCssSelector: "#inject-autocomplete-dropdown",
-        onNavigateToSearch: () => {
-          console.log("onNavigateToSearch")
+        onNavigateToSearch: query => {
+          if (window.location.pathname.startsWith("/search")) {
+            triggerNewSearch({
+              query,
+              targetStore: "search"
+            })
+          } else {
+            window.location.href = `/search/?q=${query.query}`
+          }
         },
         renderAutocomplete: () => <AutocompleteContent />,
         renderSpeechToText: () => <SpeechToTextButton />,

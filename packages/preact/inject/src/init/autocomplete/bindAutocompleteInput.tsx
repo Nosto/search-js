@@ -25,7 +25,7 @@ export function bindAutocompleteInput(
     onInput: value => onInput(value, dropdown, history, injectConfig, store, debouncer),
     onFocus: value => onFocus(value, injectConfig, store, history),
     onClick: value => onClick(value, dropdown, history, injectConfig, store),
-    onSubmit: value => onSubmit(value, dropdown, history, config, store),
+    onSubmit: value => onSubmit(value, dropdown, history, injectConfig, store),
     onKeyDown: (value, key) => onKeyDown(dropdown, value, key, config, history)
   })
 
@@ -138,7 +138,7 @@ function onSubmit(
   value: string,
   dropdown: AutocompleteDropdown,
   history: AutocompleteHistory,
-  config: AutocompleteConfig,
+  injectConfig: AutocompleteInjectConfig,
   store: Store
 ) {
   const storeHistoryState = () => {
@@ -147,7 +147,7 @@ function onSubmit(
     })
   }
 
-  if (value.length >= config.minQueryLength) {
+  if (value.length >= injectConfig.config.minQueryLength) {
     dropdown.hide()
     history.hide()
     history.add(value)
@@ -157,9 +157,9 @@ function onSubmit(
       dropdown.submitHighlightedItem(highlighted)
       return
     }
-    // handlers.onSubmit({
-    // query: value
-    // })
+    injectConfig.onNavigateToSearch?.({
+      query: value
+    })
     dropdown.hide()
   }
 }
