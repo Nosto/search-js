@@ -1,3 +1,10 @@
+# [3.2.0](https://github.com/Nosto/search-js/compare/v3.1.2...v3.2.0) (2025-07-23)
+
+
+### Features
+
+* add store actions event listeners ([a9a381b](https://github.com/Nosto/search-js/commit/a9a381b716a49c3e50aa5db8b767c27ba47fe8cf))
+
 ## [3.1.2](https://github.com/Nosto/search-js/compare/v3.1.1...v3.1.2) (2025-07-09)
 
 
