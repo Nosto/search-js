@@ -21,6 +21,7 @@ export function bindAutocompleteInput(
   const config = injectConfig.config
   const debouncer = debounce(config.debounceDelay)
 
+  // TODO: Split into subcomponents or clean-up in general.
   const bind = bindInput(input, {
     onInput: value => onInput(value, dropdown, history, injectConfig, store, debouncer),
     onFocus: value => onFocus(value, injectConfig, store, history),
@@ -77,14 +78,15 @@ async function onFocus(
   history: AutocompleteHistory
 ) {
   const config = injectConfig.config
-  if (value.length >= config.minQueryLength) {
-    if (!value) {
-      store.updateState({
-        initialized: true,
-        loading: false
-      })
-    }
-  } else if (value.length === 0 && config.historyEnabled && !history.isOpen()) {
+  // TODO: Figure out what was the intent here (doesn't seem to do anything)
+  // if (value.length >= config.minQueryLength) {
+  //   if (!value) {
+  //     store.updateState({
+  //       initialized: true,
+  //       loading: false
+  //     })
+  //   }
+  if (value.length === 0 && config.historyEnabled && !history.isOpen()) {
     if (!injectConfig.renderHistory) {
       return
     }

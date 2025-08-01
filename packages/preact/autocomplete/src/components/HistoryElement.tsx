@@ -24,6 +24,7 @@ export interface HistoryElementProps {
  * @group Components
  */
 export function HistoryElement({ children, query, class: className }: HistoryElementProps) {
+  // TODO: Use historyElement (currently not used)
   //   const onSubmit = useContext(Context)
 
   return (

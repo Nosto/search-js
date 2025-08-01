@@ -59,7 +59,7 @@ export function createElements(input: HTMLInputElement, dropdown: HTMLDivElement
       dropdown.style.display = "none"
     },
     show: () => {
-      dropdown.style.display = ""
+      dropdown.style.display = "inherit"
     },
     destroy: () => {
       wrapper.parentElement?.removeChild(wrapper)
