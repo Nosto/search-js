@@ -1,3 +1,10 @@
+# [3.3.0](https://github.com/Nosto/search-js/compare/v3.2.0...v3.3.0) (2025-08-04)
+
+
+### Features
+
+* add copilot instructions ([4fd814c](https://github.com/Nosto/search-js/commit/4fd814ce3072921ae254a08e36704debf0200c54))
+
 # [3.2.0](https://github.com/Nosto/search-js/compare/v3.1.2...v3.2.0) (2025-07-23)
 
 
