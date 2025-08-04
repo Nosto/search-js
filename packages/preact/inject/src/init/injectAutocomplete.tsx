@@ -20,7 +20,7 @@ export async function injectAutocomplete(config: AutocompleteInjectConfig, store
   const selector = resolveCssSelector(config.inputCssSelector).selector
   const inputs = await waitForElements<HTMLInputElement>({
     selector,
-    timeout: 100
+    timeout: config.timeout
   })
 
   if (inputs.length === 0) {
@@ -37,19 +37,20 @@ async function injectAutocompleteForInput(
   injectConfig: AutocompleteInjectConfig,
   store: Store
 ) {
-  const dropdown = createDropdown(input, injectConfig.dropdownCssSelector)
-  const history = createHistory(input, injectConfig.dropdownCssSelector, injectConfig.config.historySize)
+  const { config, dropdownCssSelector, renderSpeechToText, renderAutocomplete } = injectConfig
+  const dropdown = createDropdown(input, dropdownCssSelector)
+  const history = createHistory(input, dropdownCssSelector, config.historySize)
   const hasSpeechToTextAlready = !!input.parentElement?.querySelector(".ns-autocomplete-voice-position")
 
-  if (injectConfig.renderSpeechToText && !hasSpeechToTextAlready) {
+  if (renderSpeechToText && !hasSpeechToTextAlready) {
     const locationHelperElement = document.createElement("div")
     locationHelperElement.className = "ns-autocomplete-voice-position"
     input.insertAdjacentElement("afterend", locationHelperElement)
 
-    const speechToText = await injectConfig.renderSpeechToText()
+    const speechToText = await renderSpeechToText()
     render(
       <ErrorBoundary>
-        <AutocompletePageProvider config={injectConfig.config} store={store}>
+        <AutocompletePageProvider config={config} store={store}>
           {speechToText}
         </AutocompletePageProvider>
       </ErrorBoundary>,
@@ -94,7 +95,7 @@ async function injectAutocompleteForInput(
   store.onChange(
     state => state.initialized,
     initialized => {
-      if (!initialized || !injectConfig.renderAutocomplete) {
+      if (!initialized || !renderAutocomplete) {
         return
       }
 
@@ -102,11 +103,11 @@ async function injectAutocompleteForInput(
 
       render(
         <ErrorBoundary>
-          <AutocompletePageProvider config={injectConfig.config} store={store}>
+          <AutocompletePageProvider config={config} store={store}>
             <AutocompleteContext
               value={{ reportProductClick: onReportProductClick, reportKeywordClick: onReportKeywordClick }}
             >
-              {injectConfig.renderAutocomplete()}
+              {renderAutocomplete()}
             </AutocompleteContext>
           </AutocompletePageProvider>
         </ErrorBoundary>,

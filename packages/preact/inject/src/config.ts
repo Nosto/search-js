@@ -18,6 +18,13 @@ export type PublicAutocompleteInjectConfig = {
   query?: SearchQuery
 
   /**
+   * Maximum time (in milliseconds) to wait for the DOM to be available.
+   * If a selector is unable to find any elements after the timeout, an error will be thrown.
+   * @default 100
+   */
+  timeout?: number
+
+  /**
    * CSS selector for the form element to bind search events like form submit.
    */
   formCssSelector: CssSelector
