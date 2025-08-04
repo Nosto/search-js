@@ -1,6 +1,6 @@
 {
   "name": "@nosto/search-js",
-  "version": "3.1.2",
+  "version": "3.2.0",
   "license": "ISC",
   "type": "module",
   "files": [
@@ -46,6 +46,11 @@
       "types": "./dist/preact/common/common.d.ts",
       "import": "./dist/preact/common/common.es.js",
       "require": "./dist/preact/common/common.cjs.js"
+    },
+    "./preact/events": {
+      "types": "./dist/preact/events/events.d.ts",
+      "import": "./dist/preact/events/events.es.js",
+      "require": "./dist/preact/events/events.cjs.js"
     },
     "./preact/hooks": {
       "types": "./dist/preact/hooks/hooks.d.ts",

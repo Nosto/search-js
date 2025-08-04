@@ -1,28 +1,62 @@
-import { PublicAutocompleteConfig } from "@preact/autocomplete/AutocompleteConfig"
-import { PublicCategoryConfig } from "@preact/category/CategoryConfig"
-import { PublicSerpConfig } from "@preact/serp/SerpConfig"
+import { SearchQuery } from "@nosto/nosto-js/client"
+import { AutocompleteConfig, PublicAutocompleteConfig } from "@preact/autocomplete/AutocompleteConfig"
+import { CategoryConfig, PublicCategoryConfig } from "@preact/category/CategoryConfig"
+import { PublicSerpConfig, SerpConfig } from "@preact/serp/SerpConfig"
 import { VNode } from "preact"
 
 import { CssSelector } from "./resolveCssSelector"
 
-export type AutocompleteInjectConfig = {
+export type PublicAutocompleteInjectConfig = {
   /**
    * Configuration passthrough.
    */
   config: PublicAutocompleteConfig
 
   /**
+   * Query to be used for autocomplete.
+   */
+  query?: SearchQuery
+
+  /**
+   * CSS selector for the form element to bind search events like form submit.
+   */
+  formCssSelector: CssSelector
+  /**
    * CSS selector for each input element to bind search events like input change and form submit.
    */
-  inputSelector: CssSelector
+  inputCssSelector: CssSelector
   /**
    * CSS selector for autocomplete dropdown render.
    * Leave undefined for default use (After input element)
    */
-  dropdownSelector: CssSelector
+  dropdownCssSelector: CssSelector
+
+  /**
+   * Render function for autocomplete component.
+   */
+  renderAutocomplete?: () => VNode | Promise<VNode>
+
+  /**
+   * Render function for autocomplete history component.
+   */
+  renderHistory?: () => VNode | Promise<VNode>
+
+  /**
+   * Render function for speech to text component.
+   */
+  renderSpeechToText?: () => VNode | Promise<VNode>
+
+  /**
+   * If provided, will be called on search submit or "show all products" click.
+   */
+  onNavigateToSearch?: (query: SearchQuery) => void
 }
 
-export type CategoryInjectConfig = {
+export type AutocompleteInjectConfig = PublicAutocompleteInjectConfig & {
+  config: AutocompleteConfig
+}
+
+export type PublicCategoryInjectConfig = {
   /**
    * Configuration passthrough.
    */
@@ -39,7 +73,11 @@ export type CategoryInjectConfig = {
   render: () => VNode | Promise<VNode>
 }
 
-export type SerpInjectConfig = {
+export type CategoryInjectConfig = PublicCategoryInjectConfig & {
+  config: CategoryConfig
+}
+
+export type PublicSerpInjectConfig = {
   /**
    * Configuration passthrough.
    */
@@ -56,22 +94,26 @@ export type SerpInjectConfig = {
   render: () => VNode | Promise<VNode>
 }
 
+export type SerpInjectConfig = PublicSerpInjectConfig & {
+  config: SerpConfig
+}
+
 export type InitConfig = {
   /**
    * Autocomplete injection config.
    * If present, the autocomplete dropdown will be injected into the page.
    */
-  autocomplete?: AutocompleteInjectConfig
+  autocomplete?: PublicAutocompleteInjectConfig
 
   /**
    * Category injection config.
    * If present, the category page will be injected.
    */
-  category?: CategoryInjectConfig
+  category?: PublicCategoryInjectConfig
 
   /**
    * Serp injection config.
    * If present, the search result page will be injected.
    */
-  serp?: SerpInjectConfig
+  serp?: PublicSerpInjectConfig
 }
