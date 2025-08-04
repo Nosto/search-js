@@ -17,10 +17,11 @@ import { bindAutocompleteInput } from "./autocomplete/bindAutocompleteInput"
 import { createElements } from "./autocomplete/createElements"
 
 export async function injectAutocomplete(config: AutocompleteInjectConfig, store: Store) {
-  const selector = resolveCssSelector(config.inputCssSelector).selector
+  const { inputCssSelector, timeout } = config
+  const selector = resolveCssSelector(inputCssSelector).selector
   const inputs = await waitForElements<HTMLInputElement>({
     selector,
-    timeout: config.timeout
+    timeout
   })
 
   if (inputs.length === 0) {
