@@ -1,10 +1,6 @@
 import { InputEventContext } from "../bindAutocompleteInput"
 
 export function onSubmit(value: string, { config, dropdown, history, onNavigateToSearch, store }: InputEventContext) {
-  if (!dropdown.isOpen()) {
-    return
-  }
-
   dropdown.hide()
   history.hide()
   if (value.length < config.minQueryLength) {

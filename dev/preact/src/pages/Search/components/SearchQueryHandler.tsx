@@ -1,7 +1,7 @@
 import { useActions, useSizeOptions } from "@nosto/search-js/preact/hooks"
-import { useEffect } from "preact/hooks"
 
 import { defaultConfig, pageSizes } from "../../../defaultConfig"
+import { useEffectOnce } from "../../../utils/useEffectOnce"
 
 type Props = {
   urlQuery: Record<string, string>
@@ -11,7 +11,7 @@ export function SearchQueryHandler({ urlQuery }: Props) {
   const { newSearch } = useActions()
   const { size } = useSizeOptions(pageSizes, defaultConfig.searchPageSize)
 
-  useEffect(() => {
+  useEffectOnce(() => {
     const searchQuery = urlQuery.q
     if (searchQuery) {
       newSearch({
@@ -21,7 +21,7 @@ export function SearchQueryHandler({ urlQuery }: Props) {
         }
       })
     }
-  }, [newSearch, size, urlQuery])
+  })
 
   return null
 }

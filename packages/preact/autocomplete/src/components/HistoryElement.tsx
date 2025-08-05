@@ -26,9 +26,7 @@ export function HistoryElement({ children, class: className, onSubmit }: History
   return (
     <div
       className={`ns-autocomplete-element ${className || ""}`}
-      onClick={() => {
-        onSubmit()
-      }}
+      onClick={onSubmit}
       onKeyDown={event => {
         if (event.key === "Enter") {
           onSubmit()
