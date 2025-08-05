@@ -5,6 +5,7 @@ import { Button } from "../../components/Button"
 import { useEffectOnce } from "../../utils/useEffectOnce"
 import { SpeechToTextButton } from "../Search/components/SpeechToTextButton"
 import { AutocompleteContent } from "./components/AutocompleteContent"
+import { AutocompleteHistory } from "./components/AutocompleteHistory"
 
 export function AutocompleteInjected() {
   const triggerNewSearch = useEventBusDispatch({ event: "actions/newSearch" })
@@ -29,6 +30,7 @@ export function AutocompleteInjected() {
           }
         },
         renderAutocomplete: () => <AutocompleteContent />,
+        renderHistory: () => <AutocompleteHistory />,
         renderSpeechToText: () => <SpeechToTextButton />,
         query: {
           keywords: {
