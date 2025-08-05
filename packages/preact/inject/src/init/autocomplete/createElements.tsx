@@ -38,6 +38,12 @@ export function createElements(input: HTMLInputElement, dropdown: HTMLDivElement
     elementList[highlightIndex]?.classList.add("ns-autocomplete-element-hovered")
   }
 
+  const clearHighlight = () => {
+    dropdown
+      .querySelector(".ns-autocomplete-element.ns-autocomplete-element-hovered")
+      ?.classList.remove("ns-autocomplete-element-hovered")
+  }
+
   const getHighlightIndex = (removeHighlight?: boolean): number => {
     const elements = Array.from(dropdown.getElementsByClassName("ns-autocomplete-element"))
 
@@ -57,6 +63,7 @@ export function createElements(input: HTMLInputElement, dropdown: HTMLDivElement
     element: dropdown,
     hide: () => {
       dropdown.style.display = "none"
+      clearHighlight()
     },
     show: () => {
       dropdown.style.display = "inherit"
@@ -80,10 +87,6 @@ export function createElements(input: HTMLInputElement, dropdown: HTMLDivElement
     submitHighlightedItem: (highlightedIndex: number) => {
       const elements = Array.from(dropdown.querySelectorAll<HTMLElement>(".ns-autocomplete-element"))
       elements[highlightedIndex]?.click()
-      const value = elements[highlightedIndex]?.getAttribute("data-nosto-query")
-      if (value) {
-        input.value = value
-      }
     }
   }
 }

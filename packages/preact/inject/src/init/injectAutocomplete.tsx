@@ -1,11 +1,12 @@
 import { nostojs } from "@nosto/nosto-js"
-import { SearchKeyword, SearchProduct } from "@nosto/nosto-js/client"
+import { SearchKeyword, SearchProduct, SearchQuery } from "@nosto/nosto-js/client"
 import { AutocompletePageProvider } from "@preact/autocomplete/AutocompletePageProvider"
 import { Store } from "@preact/common/store/store"
 import { disableNativeAutocomplete } from "@utils/bindInput"
+import { debounce } from "@utils/debounce"
 import { measure } from "@utils/performance"
 import { getLocalStorageItem, setLocalStorageItem } from "@utils/storage"
-import { render } from "preact"
+import { render, VNode } from "preact"
 
 import ErrorBoundary from "../components/ErrorBoundary"
 import { AutocompleteInjectConfig } from "../config"
@@ -13,7 +14,7 @@ import { bindBlur, bindClickOutside } from "../helpers/dom"
 import { CssSelector, resolveCssSelector } from "../resolveCssSelector"
 import { waitForElements } from "../wait"
 import { AutocompleteContext } from "./autocomplete/AutocompleteContext"
-import { bindAutocompleteInput } from "./autocomplete/bindAutocompleteInput"
+import { bindAutocompleteInput, InputEventContext } from "./autocomplete/bindAutocompleteInput"
 import { createElements } from "./autocomplete/createElements"
 
 export async function injectAutocomplete(config: AutocompleteInjectConfig, store: Store) {
@@ -79,8 +80,8 @@ async function injectAutocompleteForInput(
     storeHistoryState()
     if (isKeyword) {
       nostojs(api => api.recordSearchSubmit(query))
-      input.value = query
     }
+    input.value = query
   }
 
   const onReportProductClick = (product: SearchProduct) => {
@@ -91,7 +92,30 @@ async function injectAutocompleteForInput(
     onReportClick(keyword.keyword, true)
   }
 
+  const onHandleSubmit = (query: SearchQuery) => {
+    onReportClick(query.query!, false)
+    injectConfig.onNavigateToSearch?.(query)
+  }
+
   disableNativeAutocomplete(input)
+
+  const renderComponent = (renderer: () => VNode | Promise<VNode>, target: HTMLDivElement) =>
+    render(
+      <ErrorBoundary>
+        <AutocompletePageProvider config={config} store={store}>
+          <AutocompleteContext
+            value={{
+              reportProductClick: onReportProductClick,
+              reportKeywordClick: onReportKeywordClick,
+              handleSubmit: onHandleSubmit
+            }}
+          >
+            {renderer()}
+          </AutocompleteContext>
+        </AutocompletePageProvider>
+      </ErrorBoundary>,
+      target
+    )
 
   store.onChange(
     state => state.initialized,
@@ -101,19 +125,7 @@ async function injectAutocompleteForInput(
       }
 
       const end = measure("renderAutocomplete")
-
-      render(
-        <ErrorBoundary>
-          <AutocompletePageProvider config={config} store={store}>
-            <AutocompleteContext
-              value={{ reportProductClick: onReportProductClick, reportKeywordClick: onReportKeywordClick }}
-            >
-              {renderAutocomplete()}
-            </AutocompleteContext>
-          </AutocompletePageProvider>
-        </ErrorBoundary>,
-        dropdown.element
-      )
+      renderComponent(renderAutocomplete, dropdown.element)
       end()
     }
   )
@@ -128,8 +140,19 @@ async function injectAutocompleteForInput(
   bindBlur(history.element, history.hide)
   bindBlur(dropdown.element, dropdown.hide)
 
+  const debouncer = debounce(config.debounceDelay)
+  const eventContext: InputEventContext = {
+    ...injectConfig,
+    dropdown,
+    history,
+    config,
+    store,
+    debouncer,
+    renderComponent
+  }
+
   // Keep last
-  const bind = bindAutocompleteInput(input, history, dropdown, injectConfig, store)
+  const bind = bindAutocompleteInput(input, eventContext)
 
   return {
     destroy() {

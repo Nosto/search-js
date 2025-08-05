@@ -21,7 +21,7 @@ export async function onInput(value: string, { config, dropdown, history, store,
 
   history.hide()
   debouncer(async () => {
-    await newSearch({ config, store }, { query: value })
+    newSearch({ config, store }, { query: value })
     dropdown.show()
   })
 }

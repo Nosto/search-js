@@ -21,7 +21,7 @@ export function AutocompleteElement<C extends AsComponent>({
   }, [hit])
 
   return (
-    <BaseElement onClick={onClick} as={as} componentProps={componentProps}>
+    <BaseElement onClick={onClick} as={as} componentProps={componentProps} className="ns-autocomplete-element">
       {children}
     </BaseElement>
   )

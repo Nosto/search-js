@@ -3,6 +3,7 @@ import { Store } from "@preact/common/store/store"
 import { AutocompleteInjectConfig } from "@preact/inject/config"
 import { bindInput } from "@utils/bindInput"
 import { debounce } from "@utils/debounce"
+import { VNode } from "preact"
 
 import { AutocompleteDropdown, AutocompleteHistory } from "../injectAutocomplete"
 import { onClick } from "./events/onClick"
@@ -17,27 +18,10 @@ export type InputEventContext = AutocompleteInjectConfig & {
   config: AutocompleteConfig
   store: Store
   debouncer: ReturnType<typeof debounce>
+  renderComponent: (renderer: () => VNode | Promise<VNode>, target: HTMLDivElement) => void
 }
 
-export function bindAutocompleteInput(
-  input: HTMLInputElement,
-  history: AutocompleteHistory,
-  dropdown: AutocompleteDropdown,
-  injectConfig: AutocompleteInjectConfig,
-  store: Store
-) {
-  const config = injectConfig.config
-  const debouncer = debounce(config.debounceDelay)
-
-  const eventContext: InputEventContext = {
-    ...injectConfig,
-    dropdown,
-    history,
-    config,
-    store,
-    debouncer
-  }
-
+export function bindAutocompleteInput(input: HTMLInputElement, eventContext: InputEventContext) {
   const bind = bindInput(input, {
     onInput: value => onInput(value, eventContext),
     onFocus: value => onFocus(value, eventContext),

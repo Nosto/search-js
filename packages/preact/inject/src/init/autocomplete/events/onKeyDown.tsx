@@ -2,12 +2,14 @@ import { AutocompleteDropdown, AutocompleteHistory } from "../../injectAutocompl
 import { InputEventContext } from "../bindAutocompleteInput"
 
 export function onKeyDown(value: string, key: string, context: InputEventContext) {
-  const { config } = context
+  const { config, debouncer } = context
   if (value.length >= config.minQueryLength) {
     elementControls(key, context.dropdown, context.history)
   } else if (config.historyEnabled) {
     elementControls(key, context.history, context.dropdown)
   }
+  // Cancel debounce
+  debouncer(() => {})
 }
 
 export function elementControls(
