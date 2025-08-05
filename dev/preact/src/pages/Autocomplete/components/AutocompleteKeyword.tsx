@@ -1,7 +1,5 @@
 import type { SearchKeyword } from "@nosto/nosto-js/client"
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
-import { StoreContext } from "@nosto/search-js/preact/common"
-import { useEventBusDispatch } from "@nosto/search-js/preact/events"
 import { AutocompleteContext } from "@nosto/search-js/preact/inject"
 import { useContext } from "preact/hooks"
 
@@ -10,21 +8,10 @@ type Props = {
 }
 
 export function AutocompleteKeyword({ keyword }: Props) {
-  const { updateState } = useContext(StoreContext)
-  const { reportKeywordClick } = useContext(AutocompleteContext)
-  const triggerNewSearch = useEventBusDispatch({ event: "actions/newSearch" })
+  const { handleSubmit } = useContext(AutocompleteContext)
 
   const onClick = () => {
-    reportKeywordClick(keyword)
-    updateState({ query: { query: keyword.keyword } })
-    if (window.location.pathname.startsWith("/search")) {
-      triggerNewSearch({
-        query: {
-          query: keyword.keyword
-        },
-        targetStore: "search"
-      })
-    }
+    handleSubmit({ query: keyword.keyword })
   }
 
   return (
