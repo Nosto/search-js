@@ -14,7 +14,7 @@ export interface HistoryElementProps {
    */
   activeClass?: string
   /**
-   * Execute new search on the selection.
+   * Action to perform on search submission (click or keyboard).
    */
   onSubmit: () => void
 }
@@ -23,9 +23,6 @@ export interface HistoryElementProps {
  * @group Components
  */
 export function HistoryElement({ children, class: className, onSubmit }: HistoryElementProps) {
-  // TODO: Use historyElement (currently not used)
-  //   const onSubmit = useContext(Context)
-
   return (
     <div
       className={`ns-autocomplete-element ${className || ""}`}
