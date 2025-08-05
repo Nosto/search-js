@@ -17,17 +17,20 @@ interface UserPreferencesProviderProps {
   children: ComponentChildren
 }
 
+const localStorageKey = "nosto:search-js-dev:user-preferences"
+
 export function UserPreferencesProvider({ children }: UserPreferencesProviderProps) {
-  const [preferences, setPreferences] = useState<UserPreferences>({
-    isInfiniteScrollEnabled: false,
-    isInjectionEnabled: false
-  })
+  const [preferences, setPreferences] = useState<UserPreferences>(loadPreferences)
 
   const updatePreference = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
-    setPreferences(prev => ({
-      ...prev,
-      [key]: value
-    }))
+    setPreferences(prev => {
+      const newPreferences = {
+        ...prev,
+        [key]: value
+      }
+      savePreferences(newPreferences)
+      return newPreferences
+    })
   }
 
   return (
@@ -40,6 +43,19 @@ export function UserPreferencesProvider({ children }: UserPreferencesProviderPro
       {children}
     </UserPreferencesContext.Provider>
   )
+}
+
+function loadPreferences(): UserPreferences {
+  const preferences = localStorage.getItem(localStorageKey)
+  return {
+    isInfiniteScrollEnabled: false,
+    isInjectionEnabled: false,
+    ...(preferences ? (JSON.parse(preferences) as UserPreferences) : {})
+  }
+}
+
+function savePreferences(preferences: UserPreferences) {
+  localStorage.setItem(localStorageKey, JSON.stringify(preferences))
 }
 
 export function useUserPreferences() {
