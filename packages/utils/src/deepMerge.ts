@@ -30,8 +30,8 @@ function mergeRecursive(target: unknown, overrides: unknown): unknown {
   return overrides
 }
 
-type Merge<T, U = unknown> = Simplify<PlainMerge<T, U>>
-type PlainMerge<T, U = unknown> = T extends [infer First, ...infer Rest] ? PlainMerge<Rest, U & First> : U
+export type Merge<T, U = unknown> = Simplify<PlainMerge<T, U>>
+export type PlainMerge<T, U = unknown> = T extends [infer First, ...infer Rest] ? PlainMerge<Rest, U & First> : U
 
 export type MergeTests = [
   // simple object merging
