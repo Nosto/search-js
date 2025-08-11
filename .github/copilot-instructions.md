@@ -19,6 +19,10 @@
 * Use 'afterEach' for cleanup
 * Use 'expect' for assertions
 
+## Commits
+
+* Use conventional commits format: `<type>(<scope>): <subject>`
+
 ## Build
 
 * `npm ci` - Install dependencies (preferred over `npm install` for CI/CD and clean installs)
