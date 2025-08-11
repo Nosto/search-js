@@ -22,3 +22,11 @@
 ## Commits
 
 * Use conventional commits format: `<type>(<scope>): <subject>`
+
+## Build
+
+* `npm ci` - Install dependencies (preferred over `npm install` for CI/CD and clean installs)
+* `npm run build` - Main build script: compiles TypeScript, bundles with vite, and generates documentation
+* `npm run lint` - Run ESLint to check code quality and style
+* `npm run lint-fix` - Run ESLint to automatically fix linting issues (run before commit)
+* `npm test` - Run test suite with vitest including coverage reporting
