@@ -4,4 +4,4 @@ This is a simple Preact application for internal development and testing purpose
 
 ## Getting Started
 
--   `npm run dev` - Starts a dev server at http://localhost:5173/
+-   `npm run dev` - Starts a dev server at http://localhost:8000/
