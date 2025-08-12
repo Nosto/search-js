@@ -114,7 +114,7 @@
     "prettier": "^3.6.2",
     "typedoc": "^0.28.9",
     "typescript": "^5.9.2",
-    "typescript-eslint": "^8.39.0",
+    "typescript-eslint": "^8.39.1",
     "vite": "^7.1.1",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^3.1.3"
