@@ -68,3 +68,50 @@ The `thumbnails` package helps you resize thumbnails. It supports different form
 
 ### `utils`
 The `utils` package includes handy tools for common tasks like array or object merging, checking equality, and generating unique values.
+
+## Development
+
+### Setup
+To set up the development environment:
+
+```bash
+# Install dependencies
+npm ci
+
+# Install dev app dependencies
+cd dev/preact && npm ci && cd ../..
+```
+
+### Building
+```bash
+# Build all packages
+npm run build
+```
+
+This compiles TypeScript, bundles with Vite, and generates documentation in the `docs/` directory.
+
+### Testing
+```bash
+# Run all tests with coverage
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+```
+
+### Linting
+```bash
+# Check code style
+npm run lint
+
+# Auto-fix linting issues
+npm run lint-fix
+```
+
+### Development Server
+```bash
+# Start development environment (library watch + dev app)
+npm run dev
+```
+
+The development app runs at http://localhost:8000/ and provides a testing environment for the library components.
