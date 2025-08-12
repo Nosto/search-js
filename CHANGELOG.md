@@ -1,3 +1,15 @@
+# [3.4.0](https://github.com/Nosto/search-js/compare/v3.3.0...v3.4.0) (2025-08-12)
+
+
+### Bug Fixes
+
+* correct dev app port and improve README with development instructions ([62c0861](https://github.com/Nosto/search-js/commit/62c0861667df38ba5a85356fccb6bd9ecb712853))
+
+
+### Features
+
+* create comprehensive GitHub Copilot instructions with validated commands and timing ([2b6c401](https://github.com/Nosto/search-js/commit/2b6c401c25e6020d9a6b63cd56bced94559b06b9))
+
 # [3.3.0](https://github.com/Nosto/search-js/compare/v3.2.0...v3.3.0) (2025-08-04)
 
 
