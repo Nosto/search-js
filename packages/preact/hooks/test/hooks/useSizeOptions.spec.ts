@@ -5,22 +5,25 @@ import { mockActions, mockStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 describe("useSizeOptions", () => {
-  const store = mockStore({
-    loading: false,
-    initialized: true,
-    query: {
-      products: {
-        from: 0
+  const createStoreWithTotal = (total: number) =>
+    mockStore({
+      loading: false,
+      initialized: true,
+      query: {
+        products: {
+          from: 0
+        }
+      },
+      response: {
+        products: {
+          size: 10,
+          total,
+          hits: []
+        }
       }
-    },
-    response: {
-      products: {
-        size: 10,
-        total: 100,
-        hits: []
-      }
-    }
-  })
+    })
+
+  const store = createStoreWithTotal(100)
   const actions = mockActions()
 
   it("returns correct initial values", () => {
@@ -78,24 +81,8 @@ describe("useSizeOptions", () => {
   it("returns correct size options when there are no more results", () => {
     const sizes = [24, 48, 72]
     const serpSize = 5
-    const storeWithSmallTotal = mockStore({
-      loading: false,
-      initialized: true,
-      query: {
-        products: {
-          from: 0
-        }
-      },
-      response: {
-        products: {
-          size: 10,
-          total: 10, // Small total - less than any of the size options
-          hits: []
-        }
-      }
-    })
 
-    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: storeWithSmallTotal })
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(10) })
     const { sizeOptions } = render.result.current
 
     expect(sizeOptions).toEqual([])
@@ -104,27 +91,11 @@ describe("useSizeOptions", () => {
   it("returns only size options smaller than total", () => {
     const sizes = [24, 48, 72]
     const serpSize = 5
-    const storeWithPartialResults = mockStore({
-      loading: false,
-      initialized: true,
-      query: {
-        products: {
-          from: 0
-        }
-      },
-      response: {
-        products: {
-          size: 10,
-          total: 50, // Medium total - some size options should be filtered out
-          hits: []
-        }
-      }
-    })
 
-    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: storeWithPartialResults })
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(50) })
     const { sizeOptions } = render.result.current
 
-    expect(sizeOptions).toEqual([48, 24]) // 72 filtered out since 72 >= 50
+    expect(sizeOptions).toEqual([48, 24])
   })
   it("handles size change correctly with string passed instead", () => {
     const sizes = [24, 48, 72]
