@@ -1,3 +1,15 @@
+## [3.4.1](https://github.com/Nosto/search-js/compare/v3.4.0...v3.4.1) (2025-08-13)
+
+
+### Bug Fixes
+
+* **hooks:** adjust useSizeOptions filtering logic to remove serpSize ([6bfa180](https://github.com/Nosto/search-js/commit/6bfa180d479269ee9f3e561f4f9768f85f1d614d))
+
+
+### Performance Improvements
+
+* **hooks:** optimize useSizeOptions with useCallback and useMemo ([3ed331c](https://github.com/Nosto/search-js/commit/3ed331c4b03bbaff8a7d04719496d4eb3809caa7))
+
 # [3.4.0](https://github.com/Nosto/search-js/compare/v3.3.0...v3.4.0) (2025-08-12)
 
 
