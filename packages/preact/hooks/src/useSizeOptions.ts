@@ -68,21 +68,18 @@ export function useSizeOptions(sizes: number[], serpSize: number) {
     [updateSearch]
   )
 
-  return useMemo(
-    () => ({
-      /** from value */
-      from,
-      /** to value */
-      to,
-      /** total value */
-      total,
-      /** size value */
-      size,
-      /** Array of size options */
-      sizeOptions,
-      /** Should be called when size is changed */
-      handleSizeChange
-    }),
-    [from, to, total, size, sizeOptions, handleSizeChange]
-  )
+  return {
+    /** from value */
+    from,
+    /** to value */
+    to,
+    /** total value */
+    total,
+    /** size value */
+    size,
+    /** Array of size options */
+    sizeOptions,
+    /** Should be called when size is changed */
+    handleSizeChange
+  }
 }
