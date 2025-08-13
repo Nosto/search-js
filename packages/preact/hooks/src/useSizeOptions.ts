@@ -1,4 +1,5 @@
 import { parseNumber } from "@utils/parseNumber"
+import { useCallback, useMemo } from "preact/hooks"
 
 import { useActions } from "./useActions"
 import { useNostoAppState } from "./useNostoAppState"
@@ -52,30 +53,36 @@ export function useSizeOptions(sizes: number[], serpSize: number) {
 
   const { updateSearch } = useActions()
 
-  const to = from + size
+  const to = useMemo(() => from + size, [from, size])
 
-  const sizeOptions = [...sizes].reverse().filter(value => value < total)
+  const sizeOptions = useMemo(() => [...sizes].reverse().filter(value => value < total), [sizes, total])
 
-  const handleSizeChange = (size: number) => {
-    updateSearch({
-      products: {
-        size: parseNumber(size)
-      }
-    })
-  }
+  const handleSizeChange = useCallback(
+    (size: number) => {
+      updateSearch({
+        products: {
+          size: parseNumber(size)
+        }
+      })
+    },
+    [updateSearch]
+  )
 
-  return {
-    /** from value */
-    from,
-    /** to value */
-    to,
-    /** total value */
-    total,
-    /** size value */
-    size,
-    /** Array of size options */
-    sizeOptions,
-    /** Should be called when size is changed */
-    handleSizeChange
-  }
+  return useMemo(
+    () => ({
+      /** from value */
+      from,
+      /** to value */
+      to,
+      /** total value */
+      total,
+      /** size value */
+      size,
+      /** Array of size options */
+      sizeOptions,
+      /** Should be called when size is changed */
+      handleSizeChange
+    }),
+    [from, to, total, size, sizeOptions, handleSizeChange]
+  )
 }
