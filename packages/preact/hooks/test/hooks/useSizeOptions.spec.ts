@@ -5,22 +5,25 @@ import { mockActions, mockStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 describe("useSizeOptions", () => {
-  const store = mockStore({
-    loading: false,
-    initialized: true,
-    query: {
-      products: {
-        from: 0
+  const createStoreWithTotal = (total: number) =>
+    mockStore({
+      loading: false,
+      initialized: true,
+      query: {
+        products: {
+          from: 0
+        }
+      },
+      response: {
+        products: {
+          size: 10,
+          total,
+          hits: []
+        }
       }
-    },
-    response: {
-      products: {
-        size: 10,
-        total: 100,
-        hits: []
-      }
-    }
-  })
+    })
+
+  const store = createStoreWithTotal(100)
   const actions = mockActions()
 
   it("returns correct initial values", () => {
@@ -77,12 +80,22 @@ describe("useSizeOptions", () => {
   })
   it("returns correct size options when there are no more results", () => {
     const sizes = [24, 48, 72]
-    const serpSize = 100
+    const serpSize = 5
 
-    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store })
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(10) })
     const { sizeOptions } = render.result.current
 
     expect(sizeOptions).toEqual([])
+  })
+
+  it("returns only size options smaller than total", () => {
+    const sizes = [24, 48, 72]
+    const serpSize = 5
+
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(50) })
+    const { sizeOptions } = render.result.current
+
+    expect(sizeOptions).toEqual([48, 24])
   })
   it("handles size change correctly with string passed instead", () => {
     const sizes = [24, 48, 72]
