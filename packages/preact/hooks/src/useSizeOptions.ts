@@ -54,7 +54,7 @@ export function useSizeOptions(sizes: number[], serpSize: number) {
 
   const to = from + size
 
-  const sizeOptions = [...sizes].reverse().filter(value => value + serpSize < total)
+  const sizeOptions = [...sizes].reverse().filter(value => value < total)
 
   const handleSizeChange = (size: number) => {
     updateSearch({

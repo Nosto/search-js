@@ -77,12 +77,54 @@ describe("useSizeOptions", () => {
   })
   it("returns correct size options when there are no more results", () => {
     const sizes = [24, 48, 72]
-    const serpSize = 100
+    const serpSize = 5
+    const storeWithSmallTotal = mockStore({
+      loading: false,
+      initialized: true,
+      query: {
+        products: {
+          from: 0
+        }
+      },
+      response: {
+        products: {
+          size: 10,
+          total: 10, // Small total - less than any of the size options
+          hits: []
+        }
+      }
+    })
 
-    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store })
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: storeWithSmallTotal })
     const { sizeOptions } = render.result.current
 
     expect(sizeOptions).toEqual([])
+  })
+
+  it("returns only size options smaller than total", () => {
+    const sizes = [24, 48, 72]
+    const serpSize = 5
+    const storeWithPartialResults = mockStore({
+      loading: false,
+      initialized: true,
+      query: {
+        products: {
+          from: 0
+        }
+      },
+      response: {
+        products: {
+          size: 10,
+          total: 50, // Medium total - some size options should be filtered out
+          hits: []
+        }
+      }
+    })
+
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: storeWithPartialResults })
+    const { sizeOptions } = render.result.current
+
+    expect(sizeOptions).toEqual([48, 24]) // 72 filtered out since 72 >= 50
   })
   it("handles size change correctly with string passed instead", () => {
     const sizes = [24, 48, 72]
