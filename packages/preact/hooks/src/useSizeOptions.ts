@@ -53,7 +53,7 @@ export function useSizeOptions(sizes: number[], serpSize: number) {
 
   const { updateSearch } = useActions()
 
-  const to = useMemo(() => from + size, [from, size])
+  const to = from + size
 
   const sizeOptions = useMemo(() => [...sizes].reverse().filter(value => value < total), [sizes, total])
 
