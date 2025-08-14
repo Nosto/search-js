@@ -1,7 +1,8 @@
-import { AutocompleteDropdown, AutocompleteHistory } from "../../injectAutocomplete"
-import { InputEventContext } from "../bindAutocompleteInput"
+import { AutocompleteInjectContext } from "../../injectAutocomplete"
+import { AutocompleteDropdown } from "../components/AutocompleteDropdown"
+import { AutocompleteHistory } from "../components/AutocompleteHistory"
 
-export function onKeyDown(value: string, key: string, context: InputEventContext) {
+export function onKeyDown(value: string, key: string, context: AutocompleteInjectContext) {
   const { config, debouncer } = context
   if (value.length >= config.minQueryLength) {
     elementControls(key, context.dropdown, context.history)

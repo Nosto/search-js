@@ -1,6 +1,6 @@
 import { CssSelector, resolveCssSelector } from "@preact/inject/resolveCssSelector"
 
-export function createElements(input: HTMLInputElement, dropdown: HTMLDivElement, dropdownSelector: CssSelector) {
+export function createComponent(input: HTMLInputElement, dropdown: HTMLDivElement, dropdownSelector: CssSelector) {
   dropdown.style.display = "none"
 
   const wrapper = (() => {
@@ -67,9 +67,6 @@ export function createElements(input: HTMLInputElement, dropdown: HTMLDivElement
     },
     show: () => {
       dropdown.style.display = "inherit"
-    },
-    destroy: () => {
-      wrapper.parentElement?.removeChild(wrapper)
     },
     isOpen: () => dropdown.style.display !== "none",
     goDown: () => {

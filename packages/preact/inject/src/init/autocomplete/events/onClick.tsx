@@ -1,8 +1,11 @@
 import { newSearch } from "@preact/common/actions/newSearch"
 
-import { InputEventContext } from "../bindAutocompleteInput"
+import { AutocompleteInjectContext } from "../../injectAutocomplete"
 
-export async function onClick(value: string, { config, dropdown, history, renderHistory, store }: InputEventContext) {
+export async function onClick(
+  value: string,
+  { config, dropdown, history, renderHistory, store }: AutocompleteInjectContext
+) {
   const { historyEnabled, minQueryLength } = config
 
   if (value.length < minQueryLength && historyEnabled && renderHistory && !history.isOpen()) {

@@ -1,15 +1,17 @@
 import { measure } from "@utils/performance"
 
-import { InputEventContext } from "../bindAutocompleteInput"
+import { AutocompleteInjectContext, createUserComponentRenderer } from "../../injectAutocomplete"
 
-export async function onFocus(value: string, { config, renderHistory, history, renderComponent }: InputEventContext) {
+export async function onFocus(value: string, context: AutocompleteInjectContext) {
+  const { config, renderHistory, history } = context
   const { historyEnabled, minQueryLength } = config
   if (!renderHistory || value.length >= minQueryLength || !historyEnabled || history.isOpen()) {
     return
   }
 
+  const userComponentRenderer = createUserComponentRenderer(context)
   history.show()
   const end = measure("renderHistory")
-  renderComponent(renderHistory, history.element)
+  userComponentRenderer(renderHistory, history.element)
   end()
 }

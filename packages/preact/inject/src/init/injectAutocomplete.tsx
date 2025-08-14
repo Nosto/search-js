@@ -2,20 +2,24 @@ import { nostojs } from "@nosto/nosto-js"
 import { SearchKeyword, SearchProduct, SearchQuery } from "@nosto/nosto-js/client"
 import { AutocompletePageProvider } from "@preact/autocomplete/AutocompletePageProvider"
 import { Store } from "@preact/common/store/store"
-import { disableNativeAutocomplete } from "@utils/bindInput"
+import { bindInput, disableNativeAutocomplete } from "@utils/bindInput"
 import { debounce } from "@utils/debounce"
 import { measure } from "@utils/performance"
-import { getLocalStorageItem, setLocalStorageItem } from "@utils/storage"
 import { render, VNode } from "preact"
 
 import ErrorBoundary from "../components/ErrorBoundary"
 import { AutocompleteInjectConfig } from "../config"
 import { bindBlur, bindClickOutside } from "../helpers/dom"
-import { CssSelector, resolveCssSelector } from "../resolveCssSelector"
+import { resolveCssSelector } from "../resolveCssSelector"
 import { waitForElements } from "../wait"
 import { AutocompleteContext } from "./autocomplete/AutocompleteContext"
-import { bindAutocompleteInput, InputEventContext } from "./autocomplete/bindAutocompleteInput"
-import { createElements } from "./autocomplete/createElements"
+import { AutocompleteDropdown, createDropdownComponent } from "./autocomplete/components/AutocompleteDropdown"
+import { AutocompleteHistory, createHistoryComponent } from "./autocomplete/components/AutocompleteHistory"
+import { onClick } from "./autocomplete/events/onClick"
+import { onFocus } from "./autocomplete/events/onFocus"
+import { onInput } from "./autocomplete/events/onInput"
+import { onKeyDown } from "./autocomplete/events/onKeyDown"
+import { onSubmit } from "./autocomplete/events/onSubmit"
 
 export async function injectAutocomplete(config: AutocompleteInjectConfig, store: Store) {
   const { inputCssSelector, timeout } = config
@@ -39,36 +43,90 @@ async function injectAutocompleteForInput(
   injectConfig: AutocompleteInjectConfig,
   store: Store
 ) {
-  const { config, dropdownCssSelector, renderSpeechToText, renderAutocomplete } = injectConfig
-  const dropdown = createDropdown(input, dropdownCssSelector)
-  const history = createHistory(input, dropdownCssSelector, config.historySize)
-  const hasSpeechToTextAlready = !!input.parentElement?.querySelector(".ns-autocomplete-voice-position")
+  const { config, dropdownCssSelector } = injectConfig
+  const dropdown = createDropdownComponent(input, dropdownCssSelector)
+  const history = createHistoryComponent(input, dropdownCssSelector, config.historySize)
 
-  if (renderSpeechToText && !hasSpeechToTextAlready) {
-    const locationHelperElement = document.createElement("div")
-    locationHelperElement.className = "ns-autocomplete-voice-position"
-    input.insertAdjacentElement("afterend", locationHelperElement)
-
-    const speechToText = await renderSpeechToText()
-    render(
-      <ErrorBoundary>
-        <AutocompletePageProvider config={config} store={store}>
-          {speechToText}
-        </AutocompletePageProvider>
-      </ErrorBoundary>,
-      locationHelperElement
-    )
+  const context: AutocompleteInjectContext = {
+    ...injectConfig,
+    input,
+    dropdown,
+    history,
+    store,
+    debouncer: debounce(config.debounceDelay)
   }
 
-  const storeHistoryState = () => {
-    store.updateState({
-      historyItems: history.get()
-    })
-  }
+  injectSpeechToText(context)
 
   input.setAttribute("data-nosto-element", "search-input")
-  storeHistoryState()
+  store.updateState({
+    historyItems: history.get()
+  })
 
+  disableNativeAutocomplete(input)
+
+  renderAutocompleteOnStoreInit(context)
+  store.onInit(() => {
+    renderAutocompleteOnStoreInit(context)
+  })
+
+  bindInput(input, {
+    onInput: value => onInput(value, context),
+    onFocus: value => onFocus(value, context),
+    onClick: value => onClick(value, context),
+    onSubmit: value => onSubmit(value, context),
+    onKeyDown: (value, key) => onKeyDown(value, key, context)
+  })
+  bindBlur(history.element, history.hide)
+  bindBlur(dropdown.element, dropdown.hide)
+  bindClickOutside([history.element, input], history.hide)
+  bindClickOutside([dropdown.element, input], dropdown.hide)
+}
+
+export type AutocompleteInjectContext = AutocompleteInjectConfig & {
+  input: HTMLInputElement
+  dropdown: AutocompleteDropdown
+  history: AutocompleteHistory
+  store: Store
+  debouncer: ReturnType<typeof debounce>
+}
+
+function renderAutocompleteOnStoreInit(context: AutocompleteInjectContext) {
+  const { dropdown, renderAutocomplete } = context
+  if (!renderAutocomplete) {
+    return
+  }
+  const userComponentRenderer = createUserComponentRenderer(context)
+  const end = measure("renderAutocomplete")
+  userComponentRenderer(renderAutocomplete, dropdown.element)
+  end()
+}
+
+async function injectSpeechToText(context: AutocompleteInjectContext) {
+  const { input, renderSpeechToText, config, store } = context
+  if (!renderSpeechToText) return
+
+  const speechToTextClass = "ns-autocomplete-voice-position"
+
+  const hasSpeechToTextAlready = !!input.parentElement?.querySelector(`.${speechToTextClass}`)
+  if (hasSpeechToTextAlready) return
+
+  const locationHelperElement = document.createElement("div")
+  locationHelperElement.className = speechToTextClass
+  input.insertAdjacentElement("afterend", locationHelperElement)
+
+  const speechToText = await renderSpeechToText()
+  render(
+    <ErrorBoundary>
+      <AutocompletePageProvider config={config} store={store}>
+        {speechToText}
+      </AutocompletePageProvider>
+    </ErrorBoundary>,
+    locationHelperElement
+  )
+}
+
+function createEventHandlers({ dropdown, history, store, input, onNavigateToSearch }: AutocompleteInjectContext) {
   const onReportClick = (query: string, isKeyword: boolean) => {
     dropdown.hide()
     history.hide()
@@ -77,37 +135,41 @@ async function injectAutocompleteForInput(
     }
 
     history.add(query)
-    storeHistoryState()
+    store.updateState({
+      historyItems: history.get()
+    })
     if (isKeyword) {
       nostojs(api => api.recordSearchSubmit(query))
     }
     input.value = query
   }
 
-  const onReportProductClick = (product: SearchProduct) => {
-    onReportClick(product.name!, false)
+  return {
+    onReportProductClick: (product: SearchProduct) => {
+      onReportClick(product.name!, false)
+    },
+    onReportKeywordClick: (keyword: SearchKeyword) => {
+      onReportClick(keyword.keyword, true)
+    },
+    onHandleSubmit: (query: SearchQuery) => {
+      onReportClick(query.query!, false)
+      onNavigateToSearch?.(query)
+    }
   }
+}
 
-  const onReportKeywordClick = (keyword: SearchKeyword) => {
-    onReportClick(keyword.keyword, true)
-  }
-
-  const onHandleSubmit = (query: SearchQuery) => {
-    onReportClick(query.query!, false)
-    injectConfig.onNavigateToSearch?.(query)
-  }
-
-  disableNativeAutocomplete(input)
-
-  const renderComponent = (renderer: () => VNode | Promise<VNode>, target: HTMLDivElement) =>
+export function createUserComponentRenderer(context: AutocompleteInjectContext) {
+  const { config, store } = context
+  const eventHandlers = createEventHandlers(context)
+  return (renderer: () => VNode | Promise<VNode>, target: HTMLDivElement) =>
     render(
       <ErrorBoundary>
         <AutocompletePageProvider config={config} store={store}>
           <AutocompleteContext
             value={{
-              reportProductClick: onReportProductClick,
-              reportKeywordClick: onReportKeywordClick,
-              handleSubmit: onHandleSubmit
+              reportProductClick: eventHandlers.onReportProductClick,
+              reportKeywordClick: eventHandlers.onReportKeywordClick,
+              handleSubmit: eventHandlers.onHandleSubmit
             }}
           >
             {renderer()}
@@ -116,92 +178,4 @@ async function injectAutocompleteForInput(
       </ErrorBoundary>,
       target
     )
-
-  store.onChange(
-    state => state.initialized,
-    initialized => {
-      if (!initialized || !renderAutocomplete) {
-        return
-      }
-
-      const end = measure("renderAutocomplete")
-      renderComponent(renderAutocomplete, dropdown.element)
-      end()
-    }
-  )
-
-  const outsideDropdown = bindClickOutside([dropdown.element, input], () => {
-    dropdown.hide()
-  })
-  const outsideHistory = bindClickOutside([history.element, input], () => {
-    history.hide()
-  })
-
-  bindBlur(history.element, history.hide)
-  bindBlur(dropdown.element, dropdown.hide)
-
-  const debouncer = debounce(config.debounceDelay)
-  const eventContext: InputEventContext = {
-    ...injectConfig,
-    dropdown,
-    history,
-    config,
-    store,
-    debouncer,
-    renderComponent
-  }
-
-  // Keep last
-  const bind = bindAutocompleteInput(input, eventContext)
-
-  return {
-    destroy() {
-      bind.destroy()
-      dropdown.destroy()
-      history.destroy()
-      outsideDropdown.destroy()
-      outsideHistory.destroy()
-    }
-  }
-}
-
-export type AutocompleteHistory = ReturnType<typeof createHistory>
-export type AutocompleteDropdown = ReturnType<typeof createDropdown>
-
-function createDropdown(input: HTMLInputElement, dropdownSelector: CssSelector) {
-  const dropdown = document.createElement("div")
-  dropdown.className = "nosto-autocomplete-dropdown"
-  const base = createElements(input, dropdown, dropdownSelector)
-
-  return {
-    ...base,
-    element: dropdown
-  }
-}
-
-const historyKey = "nosto:search-js:history"
-
-function createHistory(input: HTMLInputElement, dropdownSelector: CssSelector, historySize: number) {
-  const dropdown = document.createElement("div")
-  dropdown.className = "nosto-autocomplete-history"
-  const base = createElements(input, dropdown, dropdownSelector)
-
-  return {
-    ...base,
-    element: dropdown,
-    add: (value: string) => {
-      const allItems = getLocalStorageItem<string[]>(historyKey) || []
-      const filteredItems = allItems.filter(v => v !== value).slice(historySize ? -historySize : 0)
-      filteredItems.push(value)
-      setLocalStorageItem(historyKey, filteredItems)
-    },
-    get: () => {
-      const historyFromLocalStorage = getLocalStorageItem<string[]>(historyKey) || []
-      const historyItems = historyFromLocalStorage
-        ? historyFromLocalStorage.reverse().filter((c: string) => !!c)
-        : undefined
-
-      return historyItems
-    }
-  }
 }
