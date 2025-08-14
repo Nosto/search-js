@@ -49,6 +49,18 @@ export function createExtendableStore<State extends BaseState>(defaultState: Sta
     })
   }
 
+  // Convenience method to run a callback when the store is initialized
+  function onInit(callback: () => void) {
+    onChange(
+      state => state.initialized,
+      initialized => {
+        if (initialized) {
+          callback()
+        }
+      }
+    )
+  }
+
   function clearOnChange<T>(callback: (piece: T) => void) {
     changeCallbacks.delete(callback)
   }
@@ -58,6 +70,7 @@ export function createExtendableStore<State extends BaseState>(defaultState: Sta
     getState,
     getInitialState,
     onChange,
+    onInit,
     clearOnChange
   }
 }
