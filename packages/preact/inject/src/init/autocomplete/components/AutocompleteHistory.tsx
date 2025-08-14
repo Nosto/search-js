@@ -22,12 +22,8 @@ export function createHistoryComponent(input: HTMLInputElement, dropdownSelector
       setLocalStorageItem(historyKey, filteredItems)
     },
     get: () => {
-      const historyFromLocalStorage = getLocalStorageItem<string[]>(historyKey) || []
-      const historyItems = historyFromLocalStorage
-        ? historyFromLocalStorage.reverse().filter((c: string) => !!c)
-        : undefined
-
-      return historyItems
+      const historyFromLocalStorage = getLocalStorageItem<string[]>(historyKey) ?? []
+      return historyFromLocalStorage.reverse().filter((c: string) => !!c)
     }
   }
 }
