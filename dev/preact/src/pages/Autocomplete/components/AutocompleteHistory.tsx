@@ -1,4 +1,6 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
+import { AutocompleteContext } from "@nosto/search-js/preact/inject"
+import { useContext } from "preact/hooks"
 
 import { AutocompleteHistoryElement } from "./AutocompleteHistoryElement"
 
@@ -30,6 +32,7 @@ const styles = {
 
 export function AutocompleteHistory() {
   const historyItems = useNostoAppState(state => state.historyItems)
+  const { highlightedElementIndex } = useContext(AutocompleteContext)
 
   if (!historyItems) {
     return null
@@ -38,8 +41,8 @@ export function AutocompleteHistory() {
   return (
     <div style={styles.container}>
       <div style={styles.header}>Recent searches</div>
-      {historyItems.map(item => (
-        <AutocompleteHistoryElement key={item} item={item} />
+      {historyItems.map((item, index) => (
+        <AutocompleteHistoryElement key={item} item={item} highlighted={index === highlightedElementIndex} />
       ))}
     </div>
   )

@@ -47,10 +47,6 @@ header a:hover {
 	background-color: #0008;
 }
 
-.ns-autocomplete-element:hover, .ns-autocomplete-element-hovered {
-	background-color: #00000011;
-}
-
 main {
 	flex: auto;
 	display: flex;

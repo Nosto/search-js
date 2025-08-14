@@ -31,11 +31,11 @@ export function bindInput(
 
   if (onKeyDown || onSubmit) {
     addEventListener(target, "keydown", (event: KeyboardEvent) => {
-      onKeyDown?.(target.value, event.key)
+      const isKeyPressHandled = onKeyDown?.(target.value, event.key)
       if (onKeyDown && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
         event.preventDefault()
       } else if (onSubmit && event.key === "Enter") {
-        if (target.value !== "" && !event.repeat) {
+        if (target.value !== "" && !event.repeat && !isKeyPressHandled) {
           onSubmit(target.value)
         }
         if (!nativeSubmit) {

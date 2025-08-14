@@ -10,6 +10,7 @@ export type AutocompleteHistory = ReturnType<typeof createHistoryComponent>
 export function createHistoryComponent(input: HTMLInputElement, dropdownSelector: CssSelector, historySize: number) {
   const dropdown = document.createElement("div")
   dropdown.className = "nosto-autocomplete-history"
+
   const base = createComponent(input, dropdown, dropdownSelector)
 
   return {

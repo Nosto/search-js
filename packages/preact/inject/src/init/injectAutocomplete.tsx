@@ -1,5 +1,3 @@
-import { nostojs } from "@nosto/nosto-js"
-import { SearchKeyword, SearchProduct, SearchQuery } from "@nosto/nosto-js/client"
 import { AutocompletePageProvider } from "@preact/autocomplete/AutocompletePageProvider"
 import { Store } from "@preact/common/store/store"
 import { bindInput, disableNativeAutocomplete } from "@utils/bindInput"
@@ -12,7 +10,7 @@ import { AutocompleteInjectConfig } from "../config"
 import { bindBlur, bindClickOutside } from "../helpers/dom"
 import { resolveCssSelector } from "../resolveCssSelector"
 import { waitForElements } from "../wait"
-import { AutocompleteContext } from "./autocomplete/AutocompleteContext"
+import { AutocompleteContext, createContextHandle } from "./autocomplete/AutocompleteContext"
 import { AutocompleteDropdown, createDropdownComponent } from "./autocomplete/components/AutocompleteDropdown"
 import { AutocompleteHistory, createHistoryComponent } from "./autocomplete/components/AutocompleteHistory"
 import { onClick } from "./autocomplete/events/onClick"
@@ -65,9 +63,8 @@ async function injectAutocompleteForInput(
 
   disableNativeAutocomplete(input)
 
-  renderAutocompleteOnStoreInit(context)
   store.onInit(() => {
-    renderAutocompleteOnStoreInit(context)
+    renderAutocompleteComponent(context)
   })
 
   bindInput(input, {
@@ -91,12 +88,15 @@ export type AutocompleteInjectContext = AutocompleteInjectConfig & {
   debouncer: ReturnType<typeof debounce>
 }
 
-function renderAutocompleteOnStoreInit(context: AutocompleteInjectContext) {
+function renderAutocompleteComponent(context: AutocompleteInjectContext) {
   const { dropdown, renderAutocomplete } = context
   if (!renderAutocomplete) {
     return
   }
-  const userComponentRenderer = createUserComponentRenderer(context)
+  const userComponentRenderer = createUserComponentRenderer(context, dropdown)
+  dropdown.onHighlightChange(() => {
+    userComponentRenderer(renderAutocomplete, dropdown.element)
+  })
   const end = measure("renderAutocomplete")
   userComponentRenderer(renderAutocomplete, dropdown.element)
   end()
@@ -126,54 +126,20 @@ async function injectSpeechToText(context: AutocompleteInjectContext) {
   )
 }
 
-function createEventHandlers({ dropdown, history, store, input, onNavigateToSearch }: AutocompleteInjectContext) {
-  const onReportClick = (query: string, isKeyword: boolean) => {
-    dropdown.hide()
-    history.hide()
-    if (!query) {
-      return
-    }
-
-    history.add(query)
-    store.updateState({
-      historyItems: history.get()
-    })
-    if (isKeyword) {
-      nostojs(api => api.recordSearchSubmit(query))
-    }
-    input.value = query
-  }
-
-  return {
-    onReportProductClick: (product: SearchProduct) => {
-      onReportClick(product.name!, false)
-    },
-    onReportKeywordClick: (keyword: SearchKeyword) => {
-      onReportClick(keyword.keyword, true)
-    },
-    onHandleSubmit: (query: SearchQuery) => {
-      onReportClick(query.query!, false)
-      onNavigateToSearch?.(query)
-    }
-  }
-}
-
-export function createUserComponentRenderer(context: AutocompleteInjectContext) {
-  const { config, store } = context
-  const eventHandlers = createEventHandlers(context)
+export function createUserComponentRenderer(
+  injectContext: AutocompleteInjectContext,
+  element: AutocompleteDropdown | AutocompleteHistory
+) {
+  const { config, store } = injectContext
+  const userContext = createContextHandle(injectContext, element)
+  element.onHighlightChange(() => {
+    userContext.highlightedElementIndex = element.highlightedIndex()
+  })
   return (renderer: () => VNode | Promise<VNode>, target: HTMLDivElement) =>
     render(
       <ErrorBoundary>
         <AutocompletePageProvider config={config} store={store}>
-          <AutocompleteContext
-            value={{
-              reportProductClick: eventHandlers.onReportProductClick,
-              reportKeywordClick: eventHandlers.onReportKeywordClick,
-              handleSubmit: eventHandlers.onHandleSubmit
-            }}
-          >
-            {renderer()}
-          </AutocompleteContext>
+          <AutocompleteContext value={userContext}>{renderer()}</AutocompleteContext>
         </AutocompletePageProvider>
       </ErrorBoundary>,
       target

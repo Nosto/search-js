@@ -1,4 +1,6 @@
 import { SearchKeyword, SearchProduct } from "@nosto/nosto-js/client"
+import { AutocompleteContext } from "@nosto/search-js/preact/inject"
+import { useContext } from "preact/hooks"
 
 import { ProductRow } from "../../../components/Product/ProductRow"
 import { AutocompleteKeyword } from "./AutocompleteKeyword"
@@ -14,6 +16,7 @@ export function AutocompleteResults({
   keywords: SearchKeyword[]
   initialized: boolean
 }) {
+  const { highlightedElementIndex } = useContext(AutocompleteContext)
   if (!initialized) {
     return <div>Start typing to search</div>
   }
@@ -27,8 +30,12 @@ export function AutocompleteResults({
       {keywords.map(keyword => (
         <AutocompleteKeyword key={keyword.keyword} keyword={keyword} />
       ))}
-      {hits.map(hit => (
-        <ProductRow key={hit.productId} product={hit} />
+      {hits.map((hit, index) => (
+        <ProductRow
+          key={hit.productId}
+          product={hit}
+          highlighted={index + keywords.length === highlightedElementIndex}
+        />
       ))}
     </div>
   )

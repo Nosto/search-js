@@ -31,34 +31,27 @@ export function createComponent(input: HTMLInputElement, dropdown: HTMLDivElemen
     wrapper.appendChild(dropdown)
   }
 
-  const highlightElement = (elementList: Element[], highlightIndex: number) => {
-    dropdown
-      .querySelector(".ns-autocomplete-element.ns-autocomplete-element-hovered")
-      ?.classList.remove("ns-autocomplete-element-hovered")
-    elementList[highlightIndex]?.classList.add("ns-autocomplete-element-hovered")
+  const highlightState = {
+    index: -1,
+    onChangeListeners: [] as (() => void)[]
   }
 
+  const highlightElement = (elements: Element[], highlightIndex: number) => {
+    const totalCount = elements.length
+    if (totalCount === 0) {
+      highlightIndex = -1
+    }
+    highlightState.index = highlightIndex >= 0 ? highlightIndex % totalCount : totalCount - 1
+    highlightState.onChangeListeners.forEach(callback => callback())
+  }
   const clearHighlight = () => {
-    dropdown
-      .querySelector(".ns-autocomplete-element.ns-autocomplete-element-hovered")
-      ?.classList.remove("ns-autocomplete-element-hovered")
+    highlightState.index = -1
+    highlightState.onChangeListeners.forEach(callback => callback())
+  }
+  const getHighlightIndex = () => {
+    return highlightState.index
   }
 
-  const getHighlightIndex = (removeHighlight?: boolean): number => {
-    const elements = Array.from(dropdown.getElementsByClassName("ns-autocomplete-element"))
-
-    const highlighted = elements.find(item => {
-      if (item.classList.contains("ns-autocomplete-element-hovered")) {
-        if (removeHighlight) {
-          item.classList.remove("ns-autocomplete-element-hovered")
-        }
-        return true
-      }
-      return false
-    })
-
-    return highlighted ? elements.indexOf(highlighted) : -1
-  }
   return {
     element: dropdown,
     hide: () => {
@@ -71,19 +64,22 @@ export function createComponent(input: HTMLInputElement, dropdown: HTMLDivElemen
     isOpen: () => dropdown.style.display !== "none",
     goDown: () => {
       const elements = Array.from(dropdown.getElementsByClassName("ns-autocomplete-element"))
-      const index = getHighlightIndex(true)
-      highlightElement(elements, index >= 0 ? index + 1 : 0)
+      const index = getHighlightIndex()
+      highlightElement(elements, index + 1)
     },
     goUp: () => {
       const elements = Array.from(dropdown.getElementsByClassName("ns-autocomplete-element"))
-      const index = getHighlightIndex(true)
-      highlightElement(elements, (index >= 0 ? index : elements.length) - 1)
+      const index = getHighlightIndex()
+      highlightElement(elements, index - 1)
     },
     highlight: highlightElement,
     highlightedIndex: getHighlightIndex,
     submitHighlightedItem: (highlightedIndex: number) => {
       const elements = Array.from(dropdown.querySelectorAll<HTMLElement>(".ns-autocomplete-element"))
       elements[highlightedIndex]?.click()
+    },
+    onHighlightChange: (callback: () => void) => {
+      highlightState.onChangeListeners.push(callback)
     }
   }
 }
