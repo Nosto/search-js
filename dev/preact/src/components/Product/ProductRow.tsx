@@ -1,12 +1,15 @@
 import type { SearchProduct } from "@nosto/nosto-js/client"
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
 import { useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
+import { AutocompleteContext } from "@nosto/search-js/preact/inject"
+import { useContext } from "preact/hooks"
 
 import { hitDecorators } from "../../utils/hitDecorators"
 import { productImagePlaceholder } from "../../utils/productImagePlaceholder"
 
 type Props = {
   product: SearchProduct
+  highlighted: boolean
 }
 
 const styles = {
@@ -77,8 +80,9 @@ const styles = {
   }
 }
 
-export function ProductRow({ product: baseProduct }: Props) {
+export function ProductRow({ product: baseProduct, highlighted }: Props) {
   const product = useDecoratedSearchResults<typeof hitDecorators>(baseProduct)
+  const { reportProductClick } = useContext(AutocompleteContext)
 
   return (
     <>
@@ -86,7 +90,7 @@ export function ProductRow({ product: baseProduct }: Props) {
         .product-row {
           transition: background-color 0.15s ease;
         }
-        .product-row:hover {
+        .product-row:hover, .product-row.highlighted {
           background-color: #f3f4f6 !important;
         }
       `}</style>
@@ -99,7 +103,8 @@ export function ProductRow({ product: baseProduct }: Props) {
         as="a"
         componentProps={{
           href: product.url,
-          className: "product-row",
+          onClick: () => reportProductClick(product),
+          className: "product-row" + (highlighted ? " highlighted" : ""),
           style: styles.container,
           "aria-label": `Product ${product.name}`
         }}

@@ -1,40 +1,83 @@
 import { type ComponentChildren, createContext } from "preact"
 import { useContext, useState } from "preact/hooks"
 
-interface InfiniteScrollContextType {
+interface UserPreferences {
   isInfiniteScrollEnabled: boolean
-  toggleInfiniteScroll: () => void
+  isInjectionEnabled: boolean
 }
 
-const InfiniteScrollContext = createContext<InfiniteScrollContextType | null>(null)
+interface UserPreferencesContextType {
+  preferences: UserPreferences
+  updatePreference: <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => void
+}
 
-interface InfiniteScrollProviderProps {
+const UserPreferencesContext = createContext<UserPreferencesContextType | null>(null)
+
+interface UserPreferencesProviderProps {
   children: ComponentChildren
 }
 
-export function InfiniteScrollProvider({ children }: InfiniteScrollProviderProps) {
-  const [isInfiniteScrollEnabled, setIsInfiniteScrollEnabled] = useState(false)
+const localStorageKey = "nosto:search-js-dev:user-preferences"
 
-  const toggleInfiniteScroll = () => {
-    setIsInfiniteScrollEnabled(prev => !prev)
+export function UserPreferencesProvider({ children }: UserPreferencesProviderProps) {
+  const [preferences, setPreferences] = useState<UserPreferences>(loadPreferences)
+
+  const updatePreference = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
+    setPreferences(prev => {
+      const newPreferences = {
+        ...prev,
+        [key]: value
+      }
+      savePreferences(newPreferences)
+      return newPreferences
+    })
   }
 
   return (
-    <InfiniteScrollContext.Provider
+    <UserPreferencesContext.Provider
       value={{
-        isInfiniteScrollEnabled,
-        toggleInfiniteScroll
+        preferences,
+        updatePreference
       }}
     >
       {children}
-    </InfiniteScrollContext.Provider>
+    </UserPreferencesContext.Provider>
   )
 }
 
-export function useInfiniteScroll() {
-  const context = useContext(InfiniteScrollContext)
+function loadPreferences(): UserPreferences {
+  const preferences = localStorage.getItem(localStorageKey)
+  return {
+    isInfiniteScrollEnabled: false,
+    isInjectionEnabled: false,
+    ...(preferences ? (JSON.parse(preferences) as UserPreferences) : {})
+  }
+}
+
+function savePreferences(preferences: UserPreferences) {
+  localStorage.setItem(localStorageKey, JSON.stringify(preferences))
+}
+
+export function useUserPreferences() {
+  const context = useContext(UserPreferencesContext)
   if (!context) {
-    throw new Error("useInfiniteScroll must be used within an InfiniteScrollProvider")
+    throw new Error("useUserPreferences must be used within a UserPreferencesProvider")
   }
   return context
+}
+
+export function useInfiniteScroll() {
+  const { preferences, updatePreference } = useUserPreferences()
+  return {
+    isInfiniteScrollEnabled: preferences.isInfiniteScrollEnabled,
+    toggleInfiniteScroll: () => updatePreference("isInfiniteScrollEnabled", !preferences.isInfiniteScrollEnabled)
+  }
+}
+
+export function useInjectionLogic() {
+  const { preferences, updatePreference } = useUserPreferences()
+  return {
+    isInjectionEnabled: preferences.isInjectionEnabled,
+    toggleInjection: () => updatePreference("isInjectionEnabled", !preferences.isInjectionEnabled)
+  }
 }

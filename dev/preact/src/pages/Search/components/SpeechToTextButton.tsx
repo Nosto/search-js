@@ -1,5 +1,7 @@
 import { speechToTextSupported, useActions, useSpeechToText } from "@nosto/search-js/preact/hooks"
 
+import { Button } from "../../../components/Button"
+
 export function SpeechToTextButton() {
   const { newSearch } = useActions()
 
@@ -17,17 +19,7 @@ export function SpeechToTextButton() {
   }
 
   return (
-    <button
-      style={{
-        padding: "12px 24px",
-        fontSize: "16px",
-        backgroundColor: "#673ab8",
-        color: "white",
-        border: "none",
-        borderRadius: "8px",
-        cursor: "pointer",
-        fontWeight: "500"
-      }}
+    <Button
       onClick={() => {
         if (listening) {
           stopListening()
@@ -37,6 +29,6 @@ export function SpeechToTextButton() {
       }}
     >
       🎤︎︎
-    </button>
+    </Button>
   )
 }

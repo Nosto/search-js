@@ -12,6 +12,7 @@ export type BaseElementProps<C extends AsComponent> = {
   as?: C
   componentProps?: JSX.LibraryManagedAttributes<C, ComponentProps<C>>
   children?: ComponentChildren
+  className?: string
 }
 
 /**
@@ -19,7 +20,13 @@ export type BaseElementProps<C extends AsComponent> = {
  *
  * @group Components
  */
-export function BaseElement<C extends AsComponent>({ onClick, as, children, componentProps }: BaseElementProps<C>) {
+export function BaseElement<C extends AsComponent>({
+  onClick,
+  as,
+  children,
+  componentProps,
+  className
+}: BaseElementProps<C>) {
   const props = {
     ...componentProps,
     onClick: useCallback(
@@ -31,7 +38,12 @@ export function BaseElement<C extends AsComponent>({ onClick, as, children, comp
     )
   }
 
+  const componentClass = "className" in props ? props.className + " " + className : className
   const Comp = as ?? (componentProps && "href" in componentProps ? "a" : "span")
 
-  return <Comp {...props}>{children}</Comp>
+  return (
+    <Comp {...props} className={componentClass}>
+      {children}
+    </Comp>
+  )
 }

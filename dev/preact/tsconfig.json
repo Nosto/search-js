@@ -13,17 +13,18 @@
 		"paths": {
 			"react": ["./node_modules/preact/compat/"],
 			"react-dom": ["./node_modules/preact/compat/"],
-			"@nosto/search-js": ["../../dist/core"],
-			"@nosto/search-js/currencies": ["../../dist/currencies"],
-			"@nosto/search-js/thumbnails": ["../../dist/thumbnails"],
-			"@nosto/search-js/preact/autocomplete": ["../../dist/preact/autocomplete"],
-			"@nosto/search-js/preact/common": ["../../dist/preact/common"],
-			"@nosto/search-js/preact/category": ["../../dist/preact/category"],
-			"@nosto/search-js/preact/hooks": ["../../dist/preact/hooks"],
-			"@nosto/search-js/preact/events": ["../../dist/preact/events"],
-			"@nosto/search-js/preact/legacy": ["../../dist/preact/legacy"],
-			"@nosto/search-js/preact/serp": ["../../dist/preact/serp"],
-			"@nosto/search-js/utils": ["../../dist/utils"]
+			"@nosto/search-js": ["../../dist/core/core"],
+			"@nosto/search-js/currencies": ["../../dist/currencies/currencies"],
+			"@nosto/search-js/thumbnails": ["../../dist/thumbnails/thumbnails"],
+			"@nosto/search-js/preact/autocomplete": ["../../dist/preact/autocomplete/autocomplete"],
+			"@nosto/search-js/preact/common": ["../../dist/preact/common/common"],
+			"@nosto/search-js/preact/category": ["../../dist/preact/category/category"],
+			"@nosto/search-js/preact/events": ["../../dist/preact/events/events"],
+			"@nosto/search-js/preact/hooks": ["../../dist/preact/hooks/hooks"],
+			"@nosto/search-js/preact/inject": ["../../dist/preact/inject/inject"],
+			"@nosto/search-js/preact/legacy": ["../../dist/preact/legacy/legacy"],
+			"@nosto/search-js/preact/serp": ["../../dist/preact/serp/serp"],
+			"@nosto/search-js/utils": ["../../dist/utils/utils"]
 		}
 	},
 	"include": ["node_modules/vite/client.d.ts", "**/*"]
