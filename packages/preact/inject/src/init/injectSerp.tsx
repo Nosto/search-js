@@ -6,7 +6,7 @@ import { SerpInjectConfig } from "../config"
 import { injectComponent } from "./injectComponent"
 
 export async function injectSerp(config: SerpInjectConfig, store: Store) {
-  const { cssSelector, render: userRender } = config
+  const { render: userRender } = config
 
   const ComponentToRender = await userRender()
 
@@ -18,5 +18,8 @@ export async function injectSerp(config: SerpInjectConfig, store: Store) {
     </ErrorBoundary>
   )
 
-  injectComponent(cssSelector, renderComponent)
+  injectComponent({
+    ...config,
+    renderComponent
+  })
 }

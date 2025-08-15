@@ -70,6 +70,13 @@ export type PublicCategoryInjectConfig = {
   config: PublicCategoryConfig
 
   /**
+   * Maximum time (in milliseconds) to wait for the DOM to be available.
+   * If a selector is unable to find any elements after the timeout, an error will be thrown.
+   * @default 100
+   */
+  timeout?: number
+
+  /**
    * CSS selector for category content rendering.
    */
   cssSelector: CssSelector
@@ -89,6 +96,13 @@ export type PublicSerpInjectConfig = {
    * Configuration passthrough.
    */
   config: PublicSerpConfig
+
+  /**
+   * Maximum time (in milliseconds) to wait for the DOM to be available.
+   * If a selector is unable to find any elements after the timeout, an error will be thrown.
+   * @default 100
+   */
+  timeout?: number
 
   /**
    * CSS selector for search page rendering.
