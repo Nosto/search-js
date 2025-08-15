@@ -25,7 +25,7 @@ const styles = {
   }
 }
 
-export function AutocompleteHistoryElement({ item }: { item: string }) {
+export function AutocompleteHistoryElement({ item, highlighted }: { item: string; highlighted: boolean }) {
   const { handleSubmit } = useContext(AutocompleteContext)
 
   const onSubmit = () => {
@@ -34,7 +34,14 @@ export function AutocompleteHistoryElement({ item }: { item: string }) {
 
   return (
     <HistoryElement key={item} onSubmit={onSubmit}>
-      <div style={styles.container}>
+      <style>
+        {`
+          .history-element.highlighted, .history-element:hover {
+            background-color: #0c080811;
+          }
+        `}
+      </style>
+      <div style={styles.container} className={"history-element" + (highlighted ? " highlighted" : "")}>
         <div style={styles.name}>{item}</div>
       </div>
     </HistoryElement>

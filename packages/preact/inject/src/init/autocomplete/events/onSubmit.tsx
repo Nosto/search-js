@@ -14,11 +14,7 @@ export function onSubmit(
   store.updateState({
     historyItems: history.get()
   })
-  const highlighted = dropdown.highlightedIndex()
-  if (highlighted >= 0) {
-    dropdown.submitHighlightedItem(highlighted)
-    return
-  }
+
   onNavigateToSearch?.({
     query: value
   })

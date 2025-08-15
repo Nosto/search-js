@@ -4,13 +4,13 @@ import { AutocompleteHistory } from "../components/AutocompleteHistory"
 
 export function onKeyDown(value: string, key: string, context: AutocompleteInjectContext) {
   const { config, debouncer } = context
-  if (value.length >= config.minQueryLength) {
-    elementControls(key, context.dropdown, context.history)
-  } else if (config.historyEnabled) {
-    elementControls(key, context.history, context.dropdown)
-  }
   // Cancel debounce
   debouncer(() => {})
+  if (value.length >= config.minQueryLength) {
+    return elementControls(key, context.dropdown, context.history)
+  } else if (config.historyEnabled) {
+    return elementControls(key, context.history, context.dropdown)
+  }
 }
 
 export function elementControls(
@@ -43,5 +43,6 @@ export function elementControls(
       activeElement.submitHighlightedItem(highlighted)
     }
     activeElement.hide()
+    return highlighted >= 0 // Key handled
   }
 }

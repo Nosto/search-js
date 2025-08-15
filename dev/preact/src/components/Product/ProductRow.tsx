@@ -9,6 +9,7 @@ import { productImagePlaceholder } from "../../utils/productImagePlaceholder"
 
 type Props = {
   product: SearchProduct
+  highlighted: boolean
 }
 
 const styles = {
@@ -79,7 +80,7 @@ const styles = {
   }
 }
 
-export function ProductRow({ product: baseProduct }: Props) {
+export function ProductRow({ product: baseProduct, highlighted }: Props) {
   const product = useDecoratedSearchResults<typeof hitDecorators>(baseProduct)
   const { reportProductClick } = useContext(AutocompleteContext)
 
@@ -89,7 +90,7 @@ export function ProductRow({ product: baseProduct }: Props) {
         .product-row {
           transition: background-color 0.15s ease;
         }
-        .product-row:hover {
+        .product-row:hover, .product-row.highlighted {
           background-color: #f3f4f6 !important;
         }
       `}</style>
@@ -103,7 +104,7 @@ export function ProductRow({ product: baseProduct }: Props) {
         componentProps={{
           href: product.url,
           onClick: () => reportProductClick(product),
-          className: "product-row",
+          className: "product-row" + (highlighted ? " highlighted" : ""),
           style: styles.container,
           "aria-label": `Product ${product.name}`
         }}
