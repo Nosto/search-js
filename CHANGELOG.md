@@ -1,3 +1,27 @@
+# [3.5.0](https://github.com/Nosto/search-js/compare/v3.4.1...v3.5.0) (2025-08-15)
+
+
+### Bug Fixes
+
+* address pr comments ([a334e48](https://github.com/Nosto/search-js/commit/a334e48f18a091999345f78cf8dc61536008b07b))
+* autocomplete bugs ([9a333d3](https://github.com/Nosto/search-js/commit/9a333d39f315a84ea13a072a75d6dcf77e8961ba))
+* configurable timeout ([301cb3c](https://github.com/Nosto/search-js/commit/301cb3cebaf8e5359856c7723f54d81e61653ccf))
+* error message ([10f84cb](https://github.com/Nosto/search-js/commit/10f84cbd6c315738b8b7a34933c53d3723a96a18))
+* further refactoring on autocomplete injection ([3e9f232](https://github.com/Nosto/search-js/commit/3e9f2325a484ec0d97dfe483794bb034e6a35c3e))
+* history and keyboard navigation ([222b1c3](https://github.com/Nosto/search-js/commit/222b1c37dd0f4379d9156b9bee0bb60c62962771))
+* remove isCategoryPage ([bff9aed](https://github.com/Nosto/search-js/commit/bff9aed833d11bcee2fe0a8a778ed9aa536282d8))
+* search submission ([202b03d](https://github.com/Nosto/search-js/commit/202b03d6533b03890e5bdf9847719f096c2b20e9))
+* wrap injection in useEffectOnce ([233fef1](https://github.com/Nosto/search-js/commit/233fef153ead4deea6ec4c1aca39282920fef4d2))
+
+
+### Features
+
+* add autocomplete injection ([6b98ec9](https://github.com/Nosto/search-js/commit/6b98ec9d939370c92309376d605dd45628d017ad))
+* add category injection logic ([3b69ad3](https://github.com/Nosto/search-js/commit/3b69ad36360363d054d68f7a114b9850792a95dc))
+* finalize autocomplete injection" ([1a64a67](https://github.com/Nosto/search-js/commit/1a64a67f9f933fd800e13436ae10e0c9675b28ce))
+* provide highlighted element index through context ([b9448da](https://github.com/Nosto/search-js/commit/b9448da3b331fa1ca3b2b1ee33a21fce5760ed59))
+* search page injection ([5472efc](https://github.com/Nosto/search-js/commit/5472efc779617dd9379abc7e0b14c91e75de8e70))
+
 ## [3.4.1](https://github.com/Nosto/search-js/compare/v3.4.0...v3.4.1) (2025-08-13)
 
 
