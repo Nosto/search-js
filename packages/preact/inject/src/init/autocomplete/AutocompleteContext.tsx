@@ -20,20 +20,11 @@ export const AutocompleteContext = createContext<AutocompleteUserContext>({
   highlightedElementIndex: -1
 })
 
-export const createContextHandle = (
+export function createContextHandle(
   context: AutocompleteInjectContext,
   element: AutocompleteDropdown | AutocompleteHistory
-): AutocompleteUserContext => {
-  const eventHandlers = createEventHandlers(context)
-  return {
-    reportProductClick: eventHandlers.onReportProductClick,
-    reportKeywordClick: eventHandlers.onReportKeywordClick,
-    handleSubmit: eventHandlers.onHandleSubmit,
-    highlightedElementIndex: element.highlightedIndex()
-  }
-}
-
-function createEventHandlers({ dropdown, history, store, input, onNavigateToSearch }: AutocompleteInjectContext) {
+): AutocompleteUserContext {
+  const { dropdown, history, store, input, onNavigateToSearch } = context
   const onReportClick = (query: string, isKeyword: boolean) => {
     dropdown.hide()
     history.hide()
@@ -52,15 +43,16 @@ function createEventHandlers({ dropdown, history, store, input, onNavigateToSear
   }
 
   return {
-    onReportProductClick: (product: SearchProduct) => {
+    reportProductClick: (product: SearchProduct) => {
       onReportClick(product.name!, false)
     },
-    onReportKeywordClick: (keyword: SearchKeyword) => {
+    reportKeywordClick: (keyword: SearchKeyword) => {
       onReportClick(keyword.keyword, true)
     },
-    onHandleSubmit: (query: SearchQuery) => {
+    handleSubmit: (query: SearchQuery) => {
       onReportClick(query.query!, false)
       onNavigateToSearch?.(query)
-    }
+    },
+    highlightedElementIndex: element.highlightedIndex()
   }
 }
