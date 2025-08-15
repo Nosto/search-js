@@ -6,7 +6,7 @@ import { CategoryInjectConfig } from "../config"
 import { injectComponent } from "./injectComponent"
 
 export async function injectCategory(config: CategoryInjectConfig, store: Store) {
-  const { cssSelector, render: userRender } = config
+  const { render: userRender } = config
 
   const ComponentToRender = await userRender()
 
@@ -18,5 +18,8 @@ export async function injectCategory(config: CategoryInjectConfig, store: Store)
     </ErrorBoundary>
   )
 
-  injectComponent(cssSelector, renderComponent)
+  injectComponent({
+    ...config,
+    renderComponent
+  })
 }
