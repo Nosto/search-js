@@ -7,17 +7,17 @@ export interface NostoWebComponentConfig {
    * Nosto account ID
    */
   accountId: string
-  
+
   /**
    * Default currency for formatting prices
    */
   defaultCurrency?: string
-  
+
   /**
    * Search endpoint URL
    */
   searchUrl?: string
-  
+
   /**
    * Additional search configuration
    */
@@ -37,14 +37,14 @@ export type PageConfig = SerpConfig | CategoryConfig | AutocompleteConfig
  */
 export const NOSTO_EVENTS = {
   SEARCH: "nosto:search-js/search",
-  FILTER_CHANGE: "nosto:search-js/filter-change", 
+  FILTER_CHANGE: "nosto:search-js/filter-change",
   SORT_CHANGE: "nosto:search-js/sort-change",
   PAGE_CHANGE: "nosto:search-js/page-change",
   RESULTS_UPDATED: "nosto:search-js/results-updated",
   AUTOCOMPLETE_SELECT: "nosto:search-js/autocomplete-select"
 } as const
 
-export type NostoEventType = typeof NOSTO_EVENTS[keyof typeof NOSTO_EVENTS]
+export type NostoEventType = (typeof NOSTO_EVENTS)[keyof typeof NOSTO_EVENTS]
 
 /**
  * Event detail interfaces

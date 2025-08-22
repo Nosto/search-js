@@ -1,6 +1,7 @@
-import { render } from "preact"
-import { NostoWebComponentConfig } from "../types"
 import { parseNumber } from "@utils/parseNumber"
+import { render } from "preact"
+
+import { NostoWebComponentConfig } from "../types"
 
 /**
  * Base class for all Nosto web components
@@ -8,7 +9,7 @@ import { parseNumber } from "@utils/parseNumber"
 export abstract class NostoBaseElement extends HTMLElement {
   protected _config: Partial<NostoWebComponentConfig> = {}
   protected _mounted = false
-  
+
   constructor() {
     super()
     this.attachShadow({ mode: "open" })
@@ -93,13 +94,6 @@ export abstract class NostoBaseElement extends HTMLElement {
    * Get the list of observed attributes
    */
   static get observedAttributes(): string[] {
-    return [
-      "account-id",
-      "default-currency", 
-      "search-url",
-      "limit",
-      "fields",
-      "redirect"
-    ]
+    return ["account-id", "default-currency", "search-url", "limit", "fields", "redirect"]
   }
 }

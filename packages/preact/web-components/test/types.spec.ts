@@ -1,4 +1,5 @@
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { describe, expect, it } from "vitest"
+
 import { NOSTO_EVENTS } from "../src/types"
 
 describe("NostoWebComponents Types", () => {

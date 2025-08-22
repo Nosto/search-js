@@ -1,21 +1,21 @@
 import { NostoAutocomplete } from "./components/NostoAutocomplete.tsx"
 import { NostoFilters } from "./components/NostoFilters.tsx"
+import { NostoPagination } from "./components/NostoPagination.tsx"
 import { NostoResults } from "./components/NostoResults.tsx"
 import { NostoSorting } from "./components/NostoSorting.tsx"
-import { NostoPagination } from "./components/NostoPagination.tsx"
 
 /**
  * Register all Nosto web components with the browser's custom element registry.
- * 
+ *
  * This function should be called once to make the components available for use in HTML.
- * 
+ *
  * @example
  * ```typescript
  * import { registerNostoElements } from '@nosto/search-js/preact/web-components'
- * 
+ *
  * // Register all components
  * registerNostoElements()
- * 
+ *
  * // Now you can use them in HTML:
  * // <nosto-autocomplete account-id="shopify-12345"></nosto-autocomplete>
  * // <nosto-results account-id="shopify-12345"></nosto-results>
@@ -61,7 +61,7 @@ export const registerComponents = {
   },
 
   /**
-   * Register the NostoFilters component  
+   * Register the NostoFilters component
    */
   filters() {
     if (typeof customElements !== "undefined" && !customElements.get("nosto-filters")) {

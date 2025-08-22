@@ -1,73 +1,84 @@
-import { render } from "preact"
-import { useCallback, useState } from "preact/hooks"
-import { SearchInput } from "@preact/autocomplete/components/SearchInput"
+import { AutocompleteConfig, makeAutocompleteConfig } from "@preact/autocomplete/AutocompleteConfig"
 import { AutocompletePageProvider } from "@preact/autocomplete/AutocompletePageProvider"
-import { makeAutocompleteConfig } from "@preact/autocomplete/AutocompleteConfig"
+import { AutocompleteElement } from "@preact/autocomplete/components/AutocompleteElement"
+import { SearchInput } from "@preact/autocomplete/components/SearchInput"
 import { useActions } from "@preact/hooks/useActions"
 import { useResponse } from "@preact/hooks/useResponse"
-import { AutocompleteElement } from "@preact/autocomplete/components/AutocompleteElement"
+import { render } from "preact"
+import { useCallback, useState } from "preact/hooks"
+
+import { AutocompleteSelectEventDetail, NOSTO_EVENTS, SearchEventDetail } from "../types"
 import { NostoBaseElement } from "./NostoBaseElement.tsx"
-import { NOSTO_EVENTS, AutocompleteSelectEventDetail, SearchEventDetail } from "../types"
 
 /**
  * AutocompleteWrapper component that handles the autocomplete logic
  */
-function AutocompleteWrapper({ 
-  config, 
-  onSelect, 
-  onSearch 
-}: { 
-  config: any
+function AutocompleteWrapper({
+  config,
+  onSelect,
+  onSearch
+}: {
+  config: AutocompleteConfig
   onSelect: (detail: AutocompleteSelectEventDetail) => void
   onSearch: (detail: SearchEventDetail) => void
 }) {
   const [query, setQuery] = useState("")
   const [isOpen, setIsOpen] = useState(false)
-  
+
   const { newSearch } = useActions()
   const { products, keywords } = useResponse()
 
-  const handleInput = useCallback((target: HTMLInputElement) => {
-    const value = target.value
-    setQuery(value)
-    
-    if (value.length >= (config.minQueryLength || 2)) {
-      newSearch({
-        query: value,
-        products: {
-          size: config.search?.products?.limit || 5
-        }
-      })
-      setIsOpen(true)
-    } else {
-      setIsOpen(false)
-    }
-  }, [newSearch, config])
+  const handleInput = useCallback(
+    (target: HTMLInputElement) => {
+      const value = target.value
+      setQuery(value)
 
-  const handleSelect = useCallback((hit: any) => {
-    if (hit && "productId" in hit) {
-      onSelect({ hit })
-    } else if (hit && "keyword" in hit) {
-      onSelect({ query: hit.keyword })
-      onSearch({ query: hit.keyword })
-    }
-    setIsOpen(false)
-  }, [onSelect, onSearch])
+      if (value.length >= (config.minQueryLength || 2)) {
+        newSearch({
+          query: value,
+          products: {
+            size: 5
+          }
+        })
+        setIsOpen(true)
+      } else {
+        setIsOpen(false)
+      }
+    },
+    [newSearch, config]
+  )
 
-  const handleSearch = useCallback((event: Event) => {
-    event.preventDefault()
-    if (query.trim()) {
-      onSearch({ query: query.trim() })
+  const handleSelect = useCallback(
+    (hit: unknown) => {
+      if (hit && typeof hit === "object" && "productId" in hit) {
+        onSelect({ hit })
+      } else if (hit && typeof hit === "object" && "keyword" in hit) {
+        const keywordHit = hit as { keyword: string }
+        onSelect({ query: keywordHit.keyword })
+        onSearch({ query: keywordHit.keyword })
+      }
       setIsOpen(false)
-    }
-  }, [query, onSearch])
+    },
+    [onSelect, onSearch]
+  )
+
+  const handleSearch = useCallback(
+    (event: Event) => {
+      event.preventDefault()
+      if (query.trim()) {
+        onSearch({ query: query.trim() })
+        setIsOpen(false)
+      }
+    },
+    [query, onSearch]
+  )
 
   const hasResults = (products.hits && products.hits.length > 0) || (keywords.hits && keywords.hits.length > 0)
 
   return (
     <div className="nosto-autocomplete">
       <form onSubmit={handleSearch}>
-        <SearchInput 
+        <SearchInput
           onSearchInput={handleInput}
           componentProps={{
             placeholder: "Search products...",
@@ -78,9 +89,9 @@ function AutocompleteWrapper({
           }}
         />
       </form>
-      
+
       {isOpen && hasResults && (
-        <div 
+        <div
           className="nosto-autocomplete-dropdown"
           role="listbox"
           style={{
@@ -112,7 +123,7 @@ function AutocompleteWrapper({
               <div>{hit.keyword}</div>
             </AutocompleteElement>
           ))}
-          
+
           {products.hits?.map((hit, index) => (
             <AutocompleteElement
               key={hit.productId || index}
@@ -142,12 +153,12 @@ function AutocompleteWrapper({
 
 /**
  * NostoAutocomplete Web Component
- * 
+ *
  * Wraps an input field and renders an autocomplete dropdown with search suggestions.
- * 
+ *
  * @example
  * ```html
- * <nosto-autocomplete 
+ * <nosto-autocomplete
  *   account-id="shopify-12345"
  *   default-currency="USD"
  *   limit="10">
@@ -155,7 +166,6 @@ function AutocompleteWrapper({
  * ```
  */
 export class NostoAutocomplete extends NostoBaseElement {
-  
   protected _render() {
     if (!this.shadowRoot) return
 
@@ -176,22 +186,14 @@ export class NostoAutocomplete extends NostoBaseElement {
 
     render(
       <AutocompletePageProvider config={config}>
-        <AutocompleteWrapper 
-          config={config}
-          onSelect={handleSelect}
-          onSearch={handleSearch}
-        />
+        <AutocompleteWrapper config={config} onSelect={handleSelect} onSearch={handleSearch} />
       </AutocompletePageProvider>,
       this.shadowRoot
     )
   }
 
   static get observedAttributes(): string[] {
-    return [
-      ...super.observedAttributes,
-      "min-query-length",
-      "debounce-delay"
-    ]
+    return [...super.observedAttributes, "min-query-length", "debounce-delay"]
   }
 }
 

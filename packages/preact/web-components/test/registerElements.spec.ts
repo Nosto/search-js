@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest"
+
 import { registerNostoElements } from "../src/registerElements"
 
 // Mock custom elements API
@@ -34,7 +35,7 @@ describe("registerNostoElements", () => {
     customElementsGet.mockReturnValue(class {}) // Element already registered
 
     const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
-    
+
     registerNostoElements()
 
     expect(customElementsDefine).not.toHaveBeenCalled()
@@ -46,18 +47,18 @@ describe("registerNostoElements", () => {
 
   it("handles missing custom elements API gracefully", () => {
     const originalCustomElements = global.customElements
-    
+
     // @ts-expect-error - Testing runtime condition
     global.customElements = undefined
 
     const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
-    
+
     registerNostoElements()
 
     expect(consoleSpy).toHaveBeenCalledWith("Custom Elements are not supported in this browser")
-    
+
     consoleSpy.mockRestore()
-    
+
     // Restore for other tests
     global.customElements = originalCustomElements
   })

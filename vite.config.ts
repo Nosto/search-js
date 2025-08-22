@@ -3,7 +3,17 @@ import dts from "vite-plugin-dts"
 import { defineConfig } from "vitest/config"
 
 const basePackages = ["core", "currencies", "thumbnails", "utils"]
-const preactPackages = ["autocomplete", "category", "common", "events", "hooks", "inject", "legacy", "serp", "web-components"]
+const preactPackages = [
+  "autocomplete",
+  "category",
+  "common",
+  "events",
+  "hooks",
+  "inject",
+  "legacy",
+  "serp",
+  "web-components"
+]
 const packages = [...basePackages, ...preactPackages]
 
 export default defineConfig({

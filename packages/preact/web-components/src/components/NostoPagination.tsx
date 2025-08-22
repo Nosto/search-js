@@ -1,31 +1,31 @@
-import { render } from "preact"
-import { useCallback, useEffect } from "preact/hooks"
-import { SearchPageProvider } from "@preact/serp/SerpPageProvider"
-import { makeSerpConfig } from "@preact/serp/SerpConfig"
-import { usePagination } from "@preact/hooks/usePagination"
 import { useActions } from "@preact/hooks/useActions"
+import { usePagination } from "@preact/hooks/usePagination"
+import { makeSerpConfig } from "@preact/serp/SerpConfig"
+import { SearchPageProvider } from "@preact/serp/SerpPageProvider"
+import { render } from "preact"
+import { useCallback } from "preact/hooks"
+
+import { NOSTO_EVENTS, PageChangeEventDetail } from "../types"
 import { NostoBaseElement } from "./NostoBaseElement.tsx"
-import { NOSTO_EVENTS, PageChangeEventDetail, ResultsUpdatedEventDetail } from "../types"
 
 /**
  * PaginationWrapper component that manages pagination state
  */
-function PaginationWrapper({ 
-  onPageChange 
-}: { 
-  onPageChange: (detail: PageChangeEventDetail) => void 
-}) {
-  const { totalPages, current, prev, next, first, last, pages, resultsFrom, resultsTo } = usePagination()
+function PaginationWrapper({ onPageChange }: { onPageChange: (detail: PageChangeEventDetail) => void }) {
+  const { totalPages, prev, next, first, last, pages, resultsFrom, resultsTo } = usePagination()
   const { updateSearch } = useActions()
 
-  const handlePageClick = useCallback((from: number, page: number) => {
-    updateSearch({
-      products: {
-        from
-      }
-    })
-    onPageChange({ page })
-  }, [updateSearch, onPageChange])
+  const handlePageClick = useCallback(
+    (from: number, page: number) => {
+      updateSearch({
+        products: {
+          from
+        }
+      })
+      onPageChange({ page })
+    },
+    [updateSearch, onPageChange]
+  )
 
   if (totalPages <= 1) {
     return null
@@ -48,36 +48,26 @@ function PaginationWrapper({
     borderColor: "#2563eb"
   }
 
-  const disabledButtonStyle = {
-    ...buttonStyle,
-    opacity: 0.5,
-    cursor: "not-allowed"
-  }
-
   return (
     <div className="nosto-pagination">
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "4px",
-        padding: "16px"
-      }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "4px",
+          padding: "16px"
+        }}
+      >
         {prev && (
-          <button
-            onClick={() => handlePageClick(prev.from, prev.page)}
-            style={buttonStyle}
-          >
+          <button onClick={() => handlePageClick(prev.from, prev.page)} style={buttonStyle}>
             Previous
           </button>
         )}
 
         {first && (
           <>
-            <button
-              onClick={() => handlePageClick(first.from, first.page)}
-              style={buttonStyle}
-            >
+            <button onClick={() => handlePageClick(first.from, first.page)} style={buttonStyle}>
               {first.page}
             </button>
             <span style={{ padding: "8px 4px" }}>...</span>
@@ -97,31 +87,27 @@ function PaginationWrapper({
         {last && (
           <>
             <span style={{ padding: "8px 4px" }}>...</span>
-            <button
-              onClick={() => handlePageClick(last.from, last.page)}
-              style={buttonStyle}
-            >
+            <button onClick={() => handlePageClick(last.from, last.page)} style={buttonStyle}>
               {last.page}
             </button>
           </>
         )}
 
         {next && (
-          <button
-            onClick={() => handlePageClick(next.from, next.page)}
-            style={buttonStyle}
-          >
+          <button onClick={() => handlePageClick(next.from, next.page)} style={buttonStyle}>
             Next
           </button>
         )}
       </div>
 
-      <div style={{
-        textAlign: "center",
-        fontSize: "14px",
-        color: "#666",
-        marginTop: "8px"
-      }}>
+      <div
+        style={{
+          textAlign: "center",
+          fontSize: "14px",
+          color: "#666",
+          marginTop: "8px"
+        }}
+      >
         Showing {resultsFrom} - {resultsTo} results
       </div>
     </div>
@@ -130,19 +116,18 @@ function PaginationWrapper({
 
 /**
  * NostoPagination Web Component
- * 
+ *
  * Renders pagination controls for search results.
- * 
+ *
  * @example
  * ```html
- * <nosto-pagination 
+ * <nosto-pagination
  *   account-id="shopify-12345"
  *   limit="24">
  * </nosto-pagination>
  * ```
  */
 export class NostoPagination extends NostoBaseElement {
-  
   protected _render() {
     if (!this.shadowRoot) return
 
@@ -157,9 +142,7 @@ export class NostoPagination extends NostoBaseElement {
 
     render(
       <SearchPageProvider config={config}>
-        <PaginationWrapper 
-          onPageChange={handlePageChange} 
-        />
+        <PaginationWrapper onPageChange={handlePageChange} />
       </SearchPageProvider>,
       this.shadowRoot
     )

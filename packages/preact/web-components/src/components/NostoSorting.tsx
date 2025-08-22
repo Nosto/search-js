@@ -1,10 +1,11 @@
+import { SortOption, useSort } from "@preact/hooks/useSort/useSort"
+import { makeSerpConfig } from "@preact/serp/SerpConfig"
+import { SearchPageProvider } from "@preact/serp/SerpPageProvider"
 import { render } from "preact"
 import { useCallback } from "preact/hooks"
-import { SearchPageProvider } from "@preact/serp/SerpPageProvider"
-import { makeSerpConfig } from "@preact/serp/SerpConfig"
-import { useSort, SortOption } from "@preact/hooks/useSort/useSort"
-import { NostoBaseElement } from "./NostoBaseElement.tsx"
+
 import { NOSTO_EVENTS, SortChangeEventDetail } from "../types"
+import { NostoBaseElement } from "./NostoBaseElement.tsx"
 
 /**
  * Default sort options
@@ -27,7 +28,7 @@ const defaultSortOptions: SortOption[] = [
   {
     id: "price-desc",
     value: {
-      name: "Price: High to Low", 
+      name: "Price: High to Low",
       sort: [{ field: "price", order: "desc" }]
     }
   },
@@ -50,25 +51,28 @@ const defaultSortOptions: SortOption[] = [
 /**
  * SortingWrapper component that manages sorting state
  */
-function SortingWrapper({ 
+function SortingWrapper({
   sortOptions = defaultSortOptions,
-  onSortChange 
-}: { 
+  onSortChange
+}: {
   sortOptions?: SortOption[]
-  onSortChange: (detail: SortChangeEventDetail) => void 
+  onSortChange: (detail: SortChangeEventDetail) => void
 }) {
   const { activeSort, setSort } = useSort(sortOptions)
 
-  const handleSortChange = useCallback((event: Event) => {
-    const target = event.target as HTMLSelectElement
-    const sortId = target.value
-    setSort(sortId)
-    onSortChange({ sort: sortId })
-  }, [setSort, onSortChange])
+  const handleSortChange = useCallback(
+    (event: Event) => {
+      const target = event.target as HTMLSelectElement
+      const sortId = target.value
+      setSort(sortId)
+      onSortChange({ sort: sortId })
+    },
+    [setSort, onSortChange]
+  )
 
   return (
     <div className="nosto-sorting">
-      <label 
+      <label
         htmlFor="nosto-sort-select"
         style={{
           display: "block",
@@ -105,19 +109,18 @@ function SortingWrapper({
 
 /**
  * NostoSorting Web Component
- * 
+ *
  * Renders a sorting dropdown for search results.
- * 
+ *
  * @example
  * ```html
- * <nosto-sorting 
+ * <nosto-sorting
  *   account-id="shopify-12345"
  *   sort-options='[{"id":"relevance","name":"Relevance"},{"id":"price-asc","name":"Price: Low to High"}]'>
  * </nosto-sorting>
  * ```
  */
 export class NostoSorting extends NostoBaseElement {
-  
   protected _render() {
     if (!this.shadowRoot) return
 
@@ -133,13 +136,19 @@ export class NostoSorting extends NostoBaseElement {
       try {
         const parsed = JSON.parse(customSortOptions)
         if (Array.isArray(parsed)) {
-          sortOptions = parsed.map((option: any) => ({
-            id: option.id,
-            value: {
-              name: option.name,
-              sort: option.sort || (option.id === "relevance" ? [] : [{ field: option.field || "price", order: option.order || "asc" }])
-            }
-          }))
+          sortOptions = parsed.map(
+            (option: { id: string; name: string; sort?: unknown; field?: string; order?: string }) => ({
+              id: option.id,
+              value: {
+                name: option.name,
+                sort: Array.isArray(option.sort)
+                  ? option.sort
+                  : option.id === "relevance"
+                    ? []
+                    : [{ field: option.field || "price", order: (option.order || "asc") as "asc" | "desc" }]
+              }
+            })
+          )
         }
       } catch (e) {
         console.warn("Invalid sort-options JSON:", e)
@@ -152,19 +161,13 @@ export class NostoSorting extends NostoBaseElement {
 
     render(
       <SearchPageProvider config={config}>
-        <SortingWrapper 
-          sortOptions={sortOptions}
-          onSortChange={handleSortChange} 
-        />
+        <SortingWrapper sortOptions={sortOptions} onSortChange={handleSortChange} />
       </SearchPageProvider>,
       this.shadowRoot
     )
   }
 
   static get observedAttributes(): string[] {
-    return [
-      ...super.observedAttributes,
-      "sort-options"
-    ]
+    return [...super.observedAttributes, "sort-options"]
   }
 }

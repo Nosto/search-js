@@ -1,21 +1,22 @@
+import { useActions } from "@preact/hooks/useActions"
+import { useResponse } from "@preact/hooks/useResponse"
+import { SerpElement } from "@preact/serp/components/SerpElement"
+import { makeSerpConfig, SerpConfig } from "@preact/serp/SerpConfig"
+import { SearchPageProvider } from "@preact/serp/SerpPageProvider"
 import { render } from "preact"
 import { useEffect } from "preact/hooks"
-import { SearchPageProvider } from "@preact/serp/SerpPageProvider"
-import { makeSerpConfig } from "@preact/serp/SerpConfig"
-import { useResponse } from "@preact/hooks/useResponse"
-import { useActions } from "@preact/hooks/useActions"
-import { SerpElement } from "@preact/serp/components/SerpElement"
+
+import { NOSTO_EVENTS, ResultsUpdatedEventDetail, SearchEventDetail } from "../types"
 import { NostoBaseElement } from "./NostoBaseElement.tsx"
-import { NOSTO_EVENTS, SearchEventDetail, ResultsUpdatedEventDetail } from "../types"
 
 /**
  * ResultsWrapper component that renders search results
  */
-function ResultsWrapper({ 
+function ResultsWrapper({
   config,
-  onResultsUpdate 
-}: { 
-  config: any
+  onResultsUpdate
+}: {
+  config: SerpConfig
   onResultsUpdate: (detail: ResultsUpdatedEventDetail) => void
 }) {
   const { products } = useResponse()
@@ -25,22 +26,24 @@ function ResultsWrapper({
   useEffect(() => {
     const handleSearch = (event: CustomEvent<SearchEventDetail>) => {
       const { query, filters, sort, page } = event.detail
-      
+
       newSearch({
         query,
         products: {
-          size: config.search?.products?.limit || 24,
-          from: page ? (page - 1) * (config.search?.products?.limit || 24) : 0,
-          filter: filters ? Object.entries(filters).map(([field, value]) => ({ 
-            field, 
-            value: Array.isArray(value) ? value : [String(value)] 
-          })) : undefined,
+          size: 24,
+          from: page ? (page - 1) * 24 : 0,
+          filter: filters
+            ? Object.entries(filters).map(([field, value]) => ({
+                field,
+                value: Array.isArray(value) ? value : [String(value)]
+              }))
+            : undefined,
           sort: sort ? [{ field: sort, order: "asc" }] : undefined
         }
       })
     }
 
-    const unsubscribe = document.addEventListener(NOSTO_EVENTS.SEARCH, handleSearch as EventListener)
+    document.addEventListener(NOSTO_EVENTS.SEARCH, handleSearch as EventListener)
     return () => document.removeEventListener(NOSTO_EVENTS.SEARCH, handleSearch as EventListener)
   }, [newSearch, config])
 
@@ -50,7 +53,7 @@ function ResultsWrapper({
       onResultsUpdate({
         results: products.hits,
         total: products.total || 0,
-        page: products.from ? Math.floor(products.from / (config.search?.products?.limit || 24)) + 1 : 1,
+        page: products.from ? Math.floor(products.from / 24) + 1 : 1,
         facets: products.facets
       })
     }
@@ -65,12 +68,15 @@ function ResultsWrapper({
   }
 
   return (
-    <div className="nosto-results-grid" style={{
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-      gap: "16px",
-      padding: "16px"
-    }}>
+    <div
+      className="nosto-results-grid"
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+        gap: "16px",
+        padding: "16px"
+      }}
+    >
       {products.hits.map((hit, index) => (
         <SerpElement
           key={hit.productId || index}
@@ -88,8 +94,8 @@ function ResultsWrapper({
         >
           <div>
             {hit.imageUrl && (
-              <img 
-                src={hit.imageUrl} 
+              <img
+                src={hit.imageUrl}
                 alt={hit.name}
                 style={{
                   width: "100%",
@@ -99,29 +105,35 @@ function ResultsWrapper({
                 }}
               />
             )}
-            <h3 style={{ 
-              fontSize: "14px", 
-              fontWeight: "600", 
-              margin: "0 0 4px 0",
-              lineHeight: "1.3"
-            }}>
+            <h3
+              style={{
+                fontSize: "14px",
+                fontWeight: "600",
+                margin: "0 0 4px 0",
+                lineHeight: "1.3"
+              }}
+            >
               {hit.name}
             </h3>
             {hit.price && (
-              <div style={{ 
-                fontSize: "16px", 
-                fontWeight: "700", 
-                color: "#2563eb" 
-              }}>
+              <div
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "700",
+                  color: "#2563eb"
+                }}
+              >
                 {hit.price}
               </div>
             )}
             {hit.listPrice && hit.listPrice !== hit.price && (
-              <div style={{ 
-                fontSize: "14px", 
-                color: "#6b7280", 
-                textDecoration: "line-through" 
-              }}>
+              <div
+                style={{
+                  fontSize: "14px",
+                  color: "#6b7280",
+                  textDecoration: "line-through"
+                }}
+              >
                 {hit.listPrice}
               </div>
             )}
@@ -134,12 +146,12 @@ function ResultsWrapper({
 
 /**
  * NostoResults Web Component
- * 
+ *
  * Renders a grid of search result products.
- * 
+ *
  * @example
  * ```html
- * <nosto-results 
+ * <nosto-results
  *   account-id="shopify-12345"
  *   limit="24"
  *   columns="4">
@@ -147,7 +159,6 @@ function ResultsWrapper({
  * ```
  */
 export class NostoResults extends NostoBaseElement {
-  
   protected _render() {
     if (!this.shadowRoot) return
 
@@ -162,19 +173,13 @@ export class NostoResults extends NostoBaseElement {
 
     render(
       <SearchPageProvider config={config}>
-        <ResultsWrapper 
-          config={config}
-          onResultsUpdate={handleResultsUpdate}
-        />
+        <ResultsWrapper config={config} onResultsUpdate={handleResultsUpdate} />
       </SearchPageProvider>,
       this.shadowRoot
     )
   }
 
   static get observedAttributes(): string[] {
-    return [
-      ...super.observedAttributes,
-      "columns"
-    ]
+    return [...super.observedAttributes, "columns"]
   }
 }
