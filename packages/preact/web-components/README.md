@@ -1,6 +1,6 @@
-# Nosto Web Components
+# Nosto Search Elements
 
-A collection of custom HTML elements that expose core Nosto Search functionality as easy-to-use web components.
+A collection of custom HTML elements that expose core Nosto Search functionality as easy-to-use search elements.
 
 ## Installation
 

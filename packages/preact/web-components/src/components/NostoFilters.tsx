@@ -1,11 +1,11 @@
-import type { SearchFacet, SearchTermsFacet } from "@nosto/nosto-js/client"
+import type { SearchTermsFacet } from "@nosto/nosto-js/client"
 import { useFacet } from "@preact/hooks/useFacet"
 import { useFacets } from "@preact/hooks/useFacets"
 import { useSelectedFiltersCount } from "@preact/hooks/useSelectedFiltersCount"
 import { makeSerpConfig } from "@preact/serp/SerpConfig"
 import { SearchPageProvider } from "@preact/serp/SerpPageProvider"
-import { useCallback } from "preact/hooks"
 import { render } from "preact"
+import { useCallback } from "preact/hooks"
 
 import { FilterChangeEventDetail, NOSTO_EVENTS } from "../types"
 import { NostoBaseElement } from "./NostoBaseElement.tsx"
@@ -198,11 +198,11 @@ function FiltersWrapper({ onFilterChange }: { onFilterChange: (detail: FilterCha
       <SelectedFilters onClearFilter={handleClearFilter} />
 
       <div className="nosto-filter-facets">
-        {facets.map(facet => (
+        {facets.map(facet =>
           facet.type === "terms" ? (
             <FilterFacet key={facet.field} facet={facet} onFilterChange={onFilterChange} />
           ) : null
-        ))}
+        )}
       </div>
     </div>
   )
