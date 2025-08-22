@@ -90,8 +90,8 @@ Custom HTML elements that expose core Nosto Search functionality as easy-to-use 
 </script>
 
 <!-- Use components -->
-<nosto-autocomplete account-id="your-account-id"></nosto-autocomplete>
-<nosto-results account-id="your-account-id"></nosto-results>
+<nosto-autocomplete></nosto-autocomplete>
+<nosto-results></nosto-results>
 <nosto-filters></nosto-filters>
 <nosto-sorting></nosto-sorting>
 <nosto-pagination></nosto-pagination>
