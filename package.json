@@ -72,6 +72,11 @@
       "import": "./dist/preact/serp/serp.es.js",
       "require": "./dist/preact/serp/serp.cjs.js"
     },
+    "./preact/web-components": {
+      "types": "./dist/preact/web-components/web-components.d.ts",
+      "import": "./dist/preact/web-components/web-components.es.js",
+      "require": "./dist/preact/web-components/web-components.cjs.js"
+    },
     "./utils": {
       "types": "./dist/utils/utils.d.ts",
       "import": "./dist/utils/utils.es.js",

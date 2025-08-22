@@ -56,6 +56,11 @@ The `preact/hooks` package offers hooks to manage state and actions in your sear
 #### `preact/serp`
 The `preact/serp` package provides tools to create Search Engine Results Pages (SERPs) with features like pagination, sorting, and displaying results.
 
+#### `preact/web-components`
+The `preact/web-components` package provides custom HTML elements that expose core Nosto Search functionality as easy-to-use web components.
+
+---
+
 #### `preact/legacy`
 The `preact/legacy` package is designed to provide backward compatibility for existing Search Template implementations.
 
