@@ -160,8 +160,6 @@ function ResultsWrapper({
  */
 export class NostoResults extends NostoBaseElement {
   protected _render() {
-    if (!this.shadowRoot) return
-
     const config = makeSerpConfig({
       defaultCurrency: this._config.defaultCurrency || "EUR",
       search: this._config.search
@@ -175,7 +173,7 @@ export class NostoResults extends NostoBaseElement {
       <SearchPageProvider config={config}>
         <ResultsWrapper config={config} onResultsUpdate={handleResultsUpdate} />
       </SearchPageProvider>,
-      this.shadowRoot
+      this
     )
   }
 

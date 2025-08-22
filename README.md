@@ -56,15 +56,48 @@ The `preact/hooks` package offers hooks to manage state and actions in your sear
 #### `preact/serp`
 The `preact/serp` package provides tools to create Search Engine Results Pages (SERPs) with features like pagination, sorting, and displaying results.
 
-#### `preact/web-components`
-The `preact/web-components` package provides custom HTML elements that expose core Nosto Search functionality as easy-to-use web components.
-
 ---
 
 #### `preact/legacy`
 The `preact/legacy` package is designed to provide backward compatibility for existing Search Template implementations.
 
 > The components included in this package are intended solely for compatibility purposes. They are not recommended for use in new development or as active components in modern applications.
+
+---
+
+### `web-components`
+Custom HTML elements that expose core Nosto Search functionality as easy-to-use web components. These components work with any web framework or vanilla JavaScript and provide a complete search experience through simple HTML tags.
+
+**Key Features:**
+- Framework-agnostic custom HTML elements
+- Event-driven component communication
+- Attribute-based configuration
+- Complete search functionality out of the box
+
+**Components:**
+- `<nosto-autocomplete>` - Search input with autocomplete dropdown
+- `<nosto-results>` - Product results grid
+- `<nosto-filters>` - Filter facets and summary
+- `<nosto-sorting>` - Sort dropdown
+- `<nosto-pagination>` - Pagination controls
+
+**Usage:**
+```html
+<!-- Register components -->
+<script type="module">
+  import { registerNostoElements } from '@nosto/search-js/web-components';
+  registerNostoElements();
+</script>
+
+<!-- Use components -->
+<nosto-autocomplete account-id="your-account-id"></nosto-autocomplete>
+<nosto-results account-id="your-account-id"></nosto-results>
+<nosto-filters></nosto-filters>
+<nosto-sorting></nosto-sorting>
+<nosto-pagination></nosto-pagination>
+```
+
+---
 
 ### `thumbnails`
 The `thumbnails` package helps you resize thumbnails. It supports different formats, including Shopify and Nosto-specific ones.

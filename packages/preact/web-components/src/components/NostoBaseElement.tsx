@@ -12,7 +12,6 @@ export abstract class NostoBaseElement extends HTMLElement {
 
   constructor() {
     super()
-    this.attachShadow({ mode: "open" })
   }
 
   connectedCallback() {
@@ -24,9 +23,7 @@ export abstract class NostoBaseElement extends HTMLElement {
   }
 
   disconnectedCallback() {
-    if (this.shadowRoot) {
-      render(null, this.shadowRoot)
-    }
+    render(null, this)
     this._mounted = false
   }
 

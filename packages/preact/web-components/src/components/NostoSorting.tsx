@@ -122,8 +122,6 @@ function SortingWrapper({
  */
 export class NostoSorting extends NostoBaseElement {
   protected _render() {
-    if (!this.shadowRoot) return
-
     const config = makeSerpConfig({
       defaultCurrency: this._config.defaultCurrency || "EUR",
       search: this._config.search
@@ -163,7 +161,7 @@ export class NostoSorting extends NostoBaseElement {
       <SearchPageProvider config={config}>
         <SortingWrapper sortOptions={sortOptions} onSortChange={handleSortChange} />
       </SearchPageProvider>,
-      this.shadowRoot
+      this
     )
   }
 

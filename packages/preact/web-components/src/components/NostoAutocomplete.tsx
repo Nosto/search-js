@@ -167,8 +167,6 @@ function AutocompleteWrapper({
  */
 export class NostoAutocomplete extends NostoBaseElement {
   protected _render() {
-    if (!this.shadowRoot) return
-
     const config = makeAutocompleteConfig({
       defaultCurrency: this._config.defaultCurrency || "EUR",
       search: this._config.search,
@@ -188,7 +186,7 @@ export class NostoAutocomplete extends NostoBaseElement {
       <AutocompletePageProvider config={config}>
         <AutocompleteWrapper config={config} onSelect={handleSelect} onSearch={handleSearch} />
       </AutocompletePageProvider>,
-      this.shadowRoot
+      this
     )
   }
 

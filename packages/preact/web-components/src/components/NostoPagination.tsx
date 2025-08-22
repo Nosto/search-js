@@ -129,8 +129,6 @@ function PaginationWrapper({ onPageChange }: { onPageChange: (detail: PageChange
  */
 export class NostoPagination extends NostoBaseElement {
   protected _render() {
-    if (!this.shadowRoot) return
-
     const config = makeSerpConfig({
       defaultCurrency: this._config.defaultCurrency || "EUR",
       search: this._config.search
@@ -144,7 +142,7 @@ export class NostoPagination extends NostoBaseElement {
       <SearchPageProvider config={config}>
         <PaginationWrapper onPageChange={handlePageChange} />
       </SearchPageProvider>,
-      this.shadowRoot
+      this
     )
   }
 }

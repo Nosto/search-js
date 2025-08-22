@@ -24,25 +24,22 @@ registerNostoElements()
 ```html
 <!-- Autocomplete search input -->
 <nosto-autocomplete 
-  account-id="your-account-id"
-  default-currency="USD"
-  limit="8">
+  account-id="your-account-id">
 </nosto-autocomplete>
 
 <!-- Filter sidebar -->
-<nosto-filters account-id="your-account-id"></nosto-filters>
+<nosto-filters></nosto-filters>
 
 <!-- Product results grid -->
 <nosto-results 
-  account-id="your-account-id"
-  limit="24">
+  account-id="your-account-id">
 </nosto-results>
 
 <!-- Sorting dropdown -->
-<nosto-sorting account-id="your-account-id"></nosto-sorting>
+<nosto-sorting></nosto-sorting>
 
 <!-- Pagination controls -->
-<nosto-pagination account-id="your-account-id"></nosto-pagination>
+<nosto-pagination></nosto-pagination>
 ```
 
 ## Components
@@ -53,8 +50,6 @@ Wraps an input field and renders an autocomplete dropdown with search suggestion
 
 **Attributes:**
 - `account-id` (required) - Your Nosto account ID
-- `default-currency` - Default currency for price formatting (default: "EUR")
-- `limit` - Maximum number of suggestions to show (default: 5)
 - `min-query-length` - Minimum query length to trigger autocomplete (default: 2)
 - `debounce-delay` - Debounce delay in milliseconds (default: 500)
 
@@ -68,8 +63,6 @@ Renders a grid of search result products.
 
 **Attributes:**
 - `account-id` (required) - Your Nosto account ID
-- `default-currency` - Default currency for price formatting (default: "EUR")
-- `limit` - Number of products per page (default: 24)
 
 **Events Dispatched:**
 - `nosto:search-js/results-updated` - When search results are updated
@@ -82,7 +75,6 @@ Renders a grid of search result products.
 Renders filter facets and selected filter summary.
 
 **Attributes:**
-- `account-id` (required) - Your Nosto account ID
 
 **Events Dispatched:**
 - `nosto:search-js/filter-change` - When a filter is toggled
@@ -92,7 +84,6 @@ Renders filter facets and selected filter summary.
 Renders a sorting dropdown for search results.
 
 **Attributes:**
-- `account-id` (required) - Your Nosto account ID
 - `sort-options` - JSON string of custom sort options
 
 **Events Dispatched:**
@@ -114,8 +105,6 @@ Renders a sorting dropdown for search results.
 Renders pagination controls for search results.
 
 **Attributes:**
-- `account-id` (required) - Your Nosto account ID
-- `limit` - Number of products per page (should match NostoResults limit)
 
 **Events Dispatched:**
 - `nosto:search-js/page-change` - When page changes
@@ -165,7 +154,6 @@ registerComponents.pagination()
 
 ```html
 <nosto-sorting 
-  account-id="your-account-id"
   sort-options='[
     {"id": "relevance", "name": "Best Match"},
     {"id": "price-asc", "name": "Price: Low to High", "field": "price", "order": "asc"},
