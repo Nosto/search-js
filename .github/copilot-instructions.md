@@ -54,12 +54,12 @@ This bypasses the Husky pre-commit and commit-msg hooks that may cause issues in
 
 ## Pre-commit Validation
 
-**All commits are automatically validated with the following checks via Husky pre-commit hooks:**
-* **Linting**: `npm run lint` - Ensures code quality and style standards
-* **Testing**: `npm test` - Runs the full test suite with coverage reporting
-* **TypeChecking**: `npx tsc --noEmit` - Validates TypeScript types
+**Copilot should run the following validation checks before making commits:**
+* **Linting**: `npm run lint` - Check code quality and style standards
+* **Testing**: `npm test` - Run the full test suite with coverage reporting  
+* **TypeChecking**: `npx tsc --noEmit` - Validate TypeScript types
 
-These checks run automatically before every commit and must pass for the commit to succeed. This ensures code quality and prevents broken code from being committed.
+Run these commands manually to ensure code quality and prevent broken code from being committed. All checks must pass before committing changes.
 
 ## GitHub Action Plugins – Review Checklist
 
