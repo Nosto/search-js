@@ -50,6 +50,16 @@ This bypasses the Husky pre-commit and commit-msg hooks that may cause issues in
 * `npm run lint` - Run ESLint to check code quality and style
 * `npm run lint-fix` - Run ESLint to automatically fix linting issues (run before commit)
 * `npm test` - Run test suite with vitest including coverage reporting
+* `npx tsc --noEmit` - Run TypeScript type checking without emitting files
+
+## Pre-commit Validation
+
+**All commits are automatically validated with the following checks via Husky pre-commit hooks:**
+* **Linting**: `npm run lint` - Ensures code quality and style standards
+* **Testing**: `npm test` - Runs the full test suite with coverage reporting
+* **TypeChecking**: `npx tsc --noEmit` - Validates TypeScript types
+
+These checks run automatically before every commit and must pass for the commit to succeed. This ensures code quality and prevents broken code from being committed.
 
 ## GitHub Action Plugins – Review Checklist
 
