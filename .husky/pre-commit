@@ -1,0 +1,12 @@
+echo "Running pre-commit checks..."
+
+echo "🔍 Running lint..."
+npm run lint
+
+echo "✅ Running tests..."
+npm test
+
+echo "🔧 Running typecheck..."
+npx tsc --noEmit
+
+echo "✨ All pre-commit checks passed!"
