@@ -91,6 +91,7 @@
     "test:watch": "vitest",
     "lint": "eslint",
     "lint-fix": "eslint --fix",
+    "typecheck": "tsc --noEmit",
     "install:dev": "(cd dev/preact && npm i --ignore-scripts)",
     "prepare": "husky"
   },
