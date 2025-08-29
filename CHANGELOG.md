@@ -1,3 +1,11 @@
+# [3.6.0](https://github.com/Nosto/search-js/compare/v3.5.0...v3.6.0) (2025-08-29)
+
+
+### Features
+
+* add pre-commit hook for lint, test, and typecheck validation ([e190bf4](https://github.com/Nosto/search-js/commit/e190bf41b5016169ce063d85068c6cb07d287c07))
+* add typecheck npm script for easier validation ([8ce41ec](https://github.com/Nosto/search-js/commit/8ce41eceae842cf3d3d2357e0d6e976c39790aac))
+
 # [3.5.0](https://github.com/Nosto/search-js/compare/v3.4.1...v3.5.0) (2025-08-15)
 
 
