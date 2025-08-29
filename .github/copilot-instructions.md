@@ -50,14 +50,14 @@ This bypasses the Husky pre-commit and commit-msg hooks that may cause issues in
 * `npm run lint` - Run ESLint to check code quality and style
 * `npm run lint-fix` - Run ESLint to automatically fix linting issues (run before commit)
 * `npm test` - Run test suite with vitest including coverage reporting
-* `npx tsc --noEmit` - Run TypeScript type checking without emitting files
+* `npm run typecheck` - Run TypeScript type checking without emitting files
 
 ## Pre-commit Validation
 
 **Copilot should run the following validation checks before making commits:**
 * **Linting**: `npm run lint` - Check code quality and style standards
 * **Testing**: `npm test` - Run the full test suite with coverage reporting  
-* **TypeChecking**: `npx tsc --noEmit` - Validate TypeScript types
+* **TypeChecking**: `npm run typecheck` - Validate TypeScript types
 
 Run these commands manually to ensure code quality and prevent broken code from being committed. All checks must pass before committing changes.
 
