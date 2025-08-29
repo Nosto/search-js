@@ -1,7 +1,9 @@
 # Dynamically loaded Nosto client script type definitions
 src/nosto/nosto.d.ts
-# Typedoc docs
+# Typedoc docs (excluding analysis docs)
 /docs
+!docs/preact-exports-analysis.md
+!docs/README.md
 
 # Logs
 logs
