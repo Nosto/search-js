@@ -8,30 +8,30 @@ import { injectAutocomplete } from "./init/injectAutocomplete"
 import { injectCategory } from "./init/injectCategory"
 import { injectSerp } from "./init/injectSerp"
 
-export async function init(initConfig: InitConfig) {
-  if (initConfig.autocomplete) {
+export async function init({ autocomplete, category, serp }: InitConfig) {
+  if (autocomplete) {
     await injectAutocomplete(
       {
-        ...initConfig.autocomplete,
-        config: makeAutocompleteConfig(initConfig.autocomplete.config)
+        ...autocomplete,
+        config: makeAutocompleteConfig(autocomplete.config)
       },
-      createStore({ query: initConfig.autocomplete.query })
+      createStore({ query: autocomplete.query })
     )
   }
-  if (initConfig.category) {
+  if (category) {
     await injectCategory(
       {
-        ...initConfig.category,
-        config: makeCategoryConfig(initConfig.category.config)
+        ...category,
+        config: makeCategoryConfig(category.config)
       },
       createStore()
     )
   }
-  if (initConfig.serp) {
+  if (serp) {
     await injectSerp(
       {
-        ...initConfig.serp,
-        config: makeSerpConfig(initConfig.serp.config)
+        ...serp,
+        config: makeSerpConfig(serp.config)
       },
       createStore()
     )
