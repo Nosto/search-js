@@ -12,6 +12,6 @@
  * cl("base", condition ? "active" : undefined) // "base" or "base active"
  * ```
  */
-export default function cl(...classes: unknown[]): string {
+export function cl(...classes: unknown[]): string {
   return classes.filter(Boolean).join(" ")
 }

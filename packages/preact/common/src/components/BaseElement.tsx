@@ -1,4 +1,4 @@
-import cl from "@utils/cl"
+import { cl } from "@utils/cl"
 import { ComponentChildren, ComponentProps, ComponentType, JSX } from "preact"
 import { useCallback } from "preact/hooks"
 

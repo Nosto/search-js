@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest"
 
-import cl from "../src/cl"
+import { cl } from "../src/cl"
 
 describe("cl", () => {
   it("should join multiple string classes", () => {
