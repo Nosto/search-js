@@ -5,6 +5,7 @@ export {
   disableNativeAutocomplete,
   type InputBindingCallbacks
 } from "./src/bindInput"
+export { default as cl } from "./src/cl"
 export { deepMerge, type Merge, type PlainMerge } from "./src/deepMerge"
 export { isBot } from "./src/isBot"
 export { isEqual } from "./src/isEqual"
