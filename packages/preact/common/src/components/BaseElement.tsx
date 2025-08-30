@@ -39,7 +39,7 @@ export function BaseElement<C extends AsComponent>({
     )
   }
 
-  const componentClass = cl("className" in props ? props.className : undefined, className)
+  const componentClass = cl("className" in props && props.className, className)
   const Comp = as ?? (componentProps && "href" in componentProps ? "a" : "span")
 
   return (
