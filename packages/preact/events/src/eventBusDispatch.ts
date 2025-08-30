@@ -6,13 +6,7 @@ type Props<T extends AllowedEvents> = {
   event: T
 }
 
-export const dispatchNostoEvent = <T extends AllowedEvents>({
-  event,
-  params
-}: {
-  event: T
-  params: EventParams[T]
-}) => {
+export function dispatchNostoEvent<T extends AllowedEvents>({ event, params }: { event: T; params: EventParams[T] }) {
   window.dispatchEvent(
     new CustomEvent(`@nosto/search-js/${event}`, {
       detail: params
@@ -20,7 +14,7 @@ export const dispatchNostoEvent = <T extends AllowedEvents>({
   )
 }
 
-export const useEventBusDispatch = <T extends AllowedEvents>({ event }: Props<T>) => {
+export function useEventBusDispatch<T extends AllowedEvents>({ event }: Props<T>) {
   return useCallback(
     (params: EventParams[T]) => {
       dispatchNostoEvent({ event, params })
