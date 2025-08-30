@@ -1,3 +1,4 @@
+import { cl } from "@utils/cl"
 import { ComponentChildren, ComponentProps, ComponentType, JSX } from "preact"
 import { useCallback } from "preact/hooks"
 
@@ -38,7 +39,7 @@ export function BaseElement<C extends AsComponent>({
     )
   }
 
-  const componentClass = "className" in props ? props.className + " " + className : className
+  const componentClass = cl("className" in props && props.className, className)
   const Comp = as ?? (componentProps && "href" in componentProps ? "a" : "span")
 
   return (
