@@ -9,7 +9,7 @@
  * cl("base", "active") // "base active"
  * cl("base", undefined, "active") // "base active"
  * cl("base", false && "conditional") // "base"
- * cl("base", condition ? "active" : undefined) // "base" or "base active"
+ * cl("base", condition && "active") // "base" or "base active"
  * ```
  */
 export function cl(...classes: unknown[]): string {
