@@ -70,6 +70,11 @@ export type PublicCategoryInjectConfig = {
   config: PublicCategoryConfig
 
   /**
+   * Query to be used for category.
+   */
+  query?: SearchQuery
+
+  /**
    * Maximum time (in milliseconds) to wait for the DOM to be available.
    * If a selector is unable to find any elements after the timeout, an error will be thrown.
    * @default 100
@@ -96,6 +101,11 @@ export type PublicSerpInjectConfig = {
    * Configuration passthrough.
    */
   config: PublicSerpConfig
+
+  /**
+   * Query to be used for search.
+   */
+  query?: SearchQuery
 
   /**
    * Maximum time (in milliseconds) to wait for the DOM to be available.

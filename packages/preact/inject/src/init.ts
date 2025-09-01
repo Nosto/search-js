@@ -24,7 +24,7 @@ export async function init({ autocomplete, category, serp }: InitConfig) {
         ...category,
         config: makeCategoryConfig(category.config)
       },
-      createStore()
+      createStore({ query: category.query })
     )
   }
   if (serp) {
@@ -33,7 +33,7 @@ export async function init({ autocomplete, category, serp }: InitConfig) {
         ...serp,
         config: makeSerpConfig(serp.config)
       },
-      createStore()
+      createStore({ query: serp.query })
     )
   }
 }
