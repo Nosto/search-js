@@ -1,3 +1,10 @@
+# [3.7.0](https://github.com/Nosto/search-js/compare/v3.6.0...v3.7.0) (2025-09-01)
+
+
+### Features
+
+* convert const function declarations to function syntax ([387688d](https://github.com/Nosto/search-js/commit/387688d811d00f132988e3d0e5f44906a962eae1))
+
 # [3.6.0](https://github.com/Nosto/search-js/compare/v3.5.0...v3.6.0) (2025-08-29)
 
 
