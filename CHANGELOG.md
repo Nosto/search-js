@@ -1,3 +1,10 @@
+# [3.8.0](https://github.com/Nosto/search-js/compare/v3.7.0...v3.8.0) (2025-09-01)
+
+
+### Features
+
+* **utils:** add cl utility for class name joining and replace string concatenation in preact components ([cf1e7b1](https://github.com/Nosto/search-js/commit/cf1e7b138f6cc801127f23080cdf2b7c61b545bb))
+
 # [3.7.0](https://github.com/Nosto/search-js/compare/v3.6.0...v3.7.0) (2025-09-01)
 
 
