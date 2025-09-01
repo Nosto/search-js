@@ -33,7 +33,6 @@
       "@preact/autocomplete/*": ["packages/preact/autocomplete/src/*"],
       "@preact/category/*": ["packages/preact/category/src/*"],
       "@preact/common/*": ["packages/preact/common/src/*"],
-      "@preact/events/*": ["packages/preact/events/src/*"],
       "@preact/hooks/*": ["packages/preact/hooks/src/*"],
       "@preact/inject/*": ["packages/preact/inject/src/*"],
       "@preact/legacy/*": ["packages/preact/legacy/src/*"],

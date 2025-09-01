@@ -1,5 +1,4 @@
 import { ConfigContext } from "@preact/common/config/configContext"
-import { StoreActionsListener } from "@preact/common/store/components/StoreActionsListener"
 import { createStore, type Store } from "@preact/common/store/store"
 import { StoreContext } from "@preact/common/store/storeContext"
 import { useCheckClientScript } from "@preact/hooks/useCheckClientScript"
@@ -19,10 +18,7 @@ export function SearchPageProvider({ config, store, children }: SearchProps) {
 
   return (
     <ConfigContext value={makeSerpConfig(config)}>
-      <StoreContext value={actualStore}>
-        <StoreActionsListener />
-        {children}
-      </StoreContext>
+      <StoreContext value={actualStore}>{children}</StoreContext>
     </ConfigContext>
   )
 }

@@ -1,4 +1,3 @@
-import { useEventBusDispatch } from "@nosto/search-js/preact/events"
 import { init } from "@nosto/search-js/preact/inject"
 
 import { Button } from "../../components/Button"
@@ -8,8 +7,6 @@ import { AutocompleteContent } from "./components/AutocompleteContent"
 import { AutocompleteHistory } from "./components/AutocompleteHistory"
 
 export function AutocompleteInjected() {
-  const triggerNewSearch = useEventBusDispatch({ event: "actions/newSearch" })
-
   useEffectOnce(() => {
     init({
       autocomplete: {
@@ -20,14 +17,7 @@ export function AutocompleteInjected() {
         inputCssSelector: "#inject-autocomplete-input",
         dropdownCssSelector: "#inject-autocomplete-dropdown",
         onNavigateToSearch: query => {
-          if (window.location.pathname.startsWith("/search")) {
-            triggerNewSearch({
-              query,
-              targetStore: "search"
-            })
-          } else {
-            window.location.href = `/search/?q=${query.query}`
-          }
+          window.location.href = `/search/?q=${query.query}`
         },
         renderAutocomplete: () => <AutocompleteContent />,
         renderHistory: () => <AutocompleteHistory />,

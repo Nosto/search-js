@@ -47,11 +47,6 @@
       "import": "./dist/preact/common/common.es.js",
       "require": "./dist/preact/common/common.cjs.js"
     },
-    "./preact/events": {
-      "types": "./dist/preact/events/events.d.ts",
-      "import": "./dist/preact/events/events.es.js",
-      "require": "./dist/preact/events/events.cjs.js"
-    },
     "./preact/hooks": {
       "types": "./dist/preact/hooks/hooks.d.ts",
       "import": "./dist/preact/hooks/hooks.es.js",
