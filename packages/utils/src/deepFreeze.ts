@@ -1,7 +1,7 @@
 import { isPlainObject } from "./isPlainObject"
 import { Equals, Expect } from "./types"
 
-export const deepFreeze = <T extends object>(obj: T): Readonly<Freeze<T>> => {
+export function deepFreeze<T extends object>(obj: T): Readonly<Freeze<T>> {
   const frozenObj = Object.entries(obj).reduce((acc, [key, value]) => {
     const frozenValue = isPlainObject(value) ? deepFreeze(value) : Object.freeze(value)
     return {

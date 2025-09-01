@@ -7,7 +7,7 @@ type Props<T extends AllowedEvents> = {
   callback: (params: EventParams[T]) => void
 }
 
-export const subscribeToNostoEvent = <T extends AllowedEvents>({ event, callback }: Props<T>) => {
+export function subscribeToNostoEvent<T extends AllowedEvents>({ event, callback }: Props<T>) {
   const onEvent = ((event: CustomEvent) => {
     const params = event.detail as EventParams[T]
     callback(params)
@@ -19,7 +19,7 @@ export const subscribeToNostoEvent = <T extends AllowedEvents>({ event, callback
   }
 }
 
-export const useEventBusSubscribe = <T extends AllowedEvents>({ event, callback }: Props<T>) => {
+export function useEventBusSubscribe<T extends AllowedEvents>({ event, callback }: Props<T>) {
   const onEvent = useCallback(
     (event: CustomEvent) => {
       const params = event.detail as EventParams[T]
