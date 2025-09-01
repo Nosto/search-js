@@ -1,4 +1,3 @@
-import { SearchQuery } from "@nosto/nosto-js/client"
 import { mockNostojs } from "@nosto/nosto-js/testing"
 import { createStore } from "@preact/common/store/store"
 import { beforeEach, describe, expect, it, vi } from "vitest"
@@ -31,7 +30,7 @@ describe("init", () => {
   })
 
   it("should pass query to autocomplete store", async () => {
-    const query: SearchQuery = { query: "test autocomplete" }
+    const query = { query: "test autocomplete" }
 
     await init({
       autocomplete: {
@@ -50,7 +49,7 @@ describe("init", () => {
   })
 
   it("should pass query to category store", async () => {
-    const query: SearchQuery = { query: "test category" }
+    const query = { query: "test category" }
 
     await init({
       category: {
@@ -68,7 +67,7 @@ describe("init", () => {
   })
 
   it("should pass query to serp store", async () => {
-    const query: SearchQuery = { query: "test serp" }
+    const query = { query: "test serp" }
 
     await init({
       serp: {
