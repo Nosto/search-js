@@ -27,12 +27,12 @@ describe("init", () => {
   beforeEach(() => {
     vi.resetAllMocks()
     mockNostojs({})
-    ;(createStore as any).mockReturnValue({ getState: () => ({}) })
+    vi.mocked(createStore).mockReturnValue({ getState: () => ({}) } as ReturnType<typeof createStore>)
   })
 
   it("should pass query to autocomplete store", async () => {
     const query: SearchQuery = { query: "test autocomplete" }
-    
+
     await init({
       autocomplete: {
         config: {
@@ -51,7 +51,7 @@ describe("init", () => {
 
   it("should pass query to category store", async () => {
     const query: SearchQuery = { query: "test category" }
-    
+
     await init({
       category: {
         config: {
@@ -60,7 +60,7 @@ describe("init", () => {
         },
         query,
         cssSelector: ".category",
-        render: () => Promise.resolve(null as any)
+        render: () => Promise.resolve(null as never)
       }
     })
 
@@ -69,7 +69,7 @@ describe("init", () => {
 
   it("should pass query to serp store", async () => {
     const query: SearchQuery = { query: "test serp" }
-    
+
     await init({
       serp: {
         config: {
@@ -78,7 +78,7 @@ describe("init", () => {
         },
         query,
         cssSelector: ".serp",
-        render: () => Promise.resolve(null as any)
+        render: () => Promise.resolve(null as never)
       }
     })
 
@@ -93,7 +93,7 @@ describe("init", () => {
           search: {}
         },
         cssSelector: ".category",
-        render: () => Promise.resolve(null as any)
+        render: () => Promise.resolve(null as never)
       }
     })
 
@@ -107,8 +107,8 @@ describe("init", () => {
           defaultCurrency: "USD",
           search: {}
         },
-        cssSelector: ".serp", 
-        render: () => Promise.resolve(null as any)
+        cssSelector: ".serp",
+        render: () => Promise.resolve(null as never)
       }
     })
 
