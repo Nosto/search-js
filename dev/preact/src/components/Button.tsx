@@ -1,6 +1,6 @@
 import { ButtonHTMLAttributes } from "preact/compat"
 
-export const Button = ({ children, style, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) => {
+export function Button({ children, style, ...props }: ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
     <>
       <button
