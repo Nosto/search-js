@@ -5,7 +5,7 @@ import { Config } from "./config"
 
 export const ConfigContext = createContext<Config | null>(null)
 
-export const useConfig = () => {
+export function useConfig() {
   const context = useContext(ConfigContext)
   if (!context) {
     throw new Error("useConfig must be used within a ConfigProvider")
@@ -13,7 +13,7 @@ export const useConfig = () => {
   return context
 }
 
-export const useSerpConfig = () => {
+export function useSerpConfig() {
   const context = useConfig()
   if (context.pageType !== "search") {
     throw new Error("useSerpConfig must be used within a NostoSearchPageProvider")
@@ -21,7 +21,7 @@ export const useSerpConfig = () => {
   return context
 }
 
-export const useCategoryConfig = () => {
+export function useCategoryConfig() {
   const context = useConfig()
   if (context.pageType !== "category") {
     throw new Error("useCategoryConfig must be used within a NostoCategoryPageProvider")
@@ -29,7 +29,7 @@ export const useCategoryConfig = () => {
   return context
 }
 
-export const useAutocompleteConfig = () => {
+export function useAutocompleteConfig() {
   const context = useConfig()
   if (context.pageType !== "autocomplete") {
     throw new Error("useAutocompleteConfig must be used within a NostoAutocompletePageProvider")
