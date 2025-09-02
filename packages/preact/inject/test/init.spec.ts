@@ -25,7 +25,7 @@ vi.mock("@preact/common/store/store", () => ({
 describe("init", () => {
   beforeEach(() => {
     vi.resetAllMocks()
-    mockNostojs({})
+    mockNostojs()
     vi.mocked(createStore).mockReturnValue({ getState: () => ({}) } as ReturnType<typeof createStore>)
   })
 
