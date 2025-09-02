@@ -1,43 +1,30 @@
 import { mockNostojs } from "@nosto/nosto-js/testing"
-import { createStore } from "@preact/common/store/store"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { init } from "../src/init"
+import * as injectAutocomplete from "../src/init/injectAutocomplete"
+import * as injectCategory from "../src/init/injectCategory"
+import * as injectSerp from "../src/init/injectSerp"
 
-// Mock the injection functions
-vi.mock("../src/init/injectAutocomplete", () => ({
-  injectAutocomplete: vi.fn()
-}))
-
-vi.mock("../src/init/injectCategory", () => ({
-  injectCategory: vi.fn()
-}))
-
-vi.mock("../src/init/injectSerp", () => ({
-  injectSerp: vi.fn()
-}))
-
-// Mock the store creation
-vi.mock("@preact/common/store/store", () => ({
-  createStore: vi.fn()
-}))
+const mockConfig = {
+  defaultCurrency: "USD",
+  search: {}
+}
 
 describe("init", () => {
   beforeEach(() => {
-    vi.resetAllMocks()
     mockNostojs()
-    vi.mocked(createStore).mockReturnValue({ getState: () => ({}) } as ReturnType<typeof createStore>)
+    vi.spyOn(injectAutocomplete, "injectAutocomplete").mockImplementation(vi.fn())
+    vi.spyOn(injectCategory, "injectCategory").mockImplementation(vi.fn())
+    vi.spyOn(injectSerp, "injectSerp").mockImplementation(vi.fn())
   })
 
   it("should pass query to autocomplete store", async () => {
     const query = { query: "test autocomplete" }
 
-    await init({
+    const result = await init({
       autocomplete: {
-        config: {
-          defaultCurrency: "USD",
-          search: {}
-        },
+        config: mockConfig,
         query,
         formCssSelector: "form",
         inputCssSelector: "input",
@@ -45,72 +32,60 @@ describe("init", () => {
       }
     })
 
-    expect(createStore).toHaveBeenCalledWith({ query })
+    expect(result.autocomplete?.store.getState().query).toEqual(query)
   })
 
   it("should pass query to category store", async () => {
     const query = { query: "test category" }
 
-    await init({
+    const result = await init({
       category: {
-        config: {
-          defaultCurrency: "USD",
-          search: {}
-        },
+        config: mockConfig,
         query,
         cssSelector: ".category",
         render: () => Promise.resolve(null as never)
       }
     })
 
-    expect(createStore).toHaveBeenCalledWith({ query })
+    expect(result.category?.store.getState().query).toEqual(query)
   })
 
   it("should pass query to serp store", async () => {
     const query = { query: "test serp" }
 
-    await init({
+    const result = await init({
       serp: {
-        config: {
-          defaultCurrency: "USD",
-          search: {}
-        },
+        config: mockConfig,
         query,
         cssSelector: ".serp",
         render: () => Promise.resolve(null as never)
       }
     })
 
-    expect(createStore).toHaveBeenCalledWith({ query })
+    expect(result.serp?.store.getState().query).toEqual(query)
   })
 
   it("should handle undefined query for category", async () => {
-    await init({
+    const result = await init({
       category: {
-        config: {
-          defaultCurrency: "USD",
-          search: {}
-        },
+        config: mockConfig,
         cssSelector: ".category",
         render: () => Promise.resolve(null as never)
       }
     })
 
-    expect(createStore).toHaveBeenCalledWith({ query: undefined })
+    expect(result.category?.store.getState().query).toEqual({})
   })
 
   it("should handle undefined query for serp", async () => {
-    await init({
+    const result = await init({
       serp: {
-        config: {
-          defaultCurrency: "USD",
-          search: {}
-        },
+        config: mockConfig,
         cssSelector: ".serp",
         render: () => Promise.resolve(null as never)
       }
     })
 
-    expect(createStore).toHaveBeenCalledWith({ query: undefined })
+    expect(result.serp?.store.getState().query).toEqual({})
   })
 })
