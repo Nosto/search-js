@@ -8,14 +8,12 @@ import { injectAutocomplete } from "./init/injectAutocomplete"
 import { injectCategory } from "./init/injectCategory"
 import { injectSerp } from "./init/injectSerp"
 
-export interface InitResult {
-  autocomplete?: { store: Store }
-  category?: { store: Store }
-  serp?: { store: Store }
+export type InitResult<T extends InitConfig> = {
+  [K in keyof T as T[K] extends undefined ? never : K]: { store: Store }
 }
 
-export async function init({ autocomplete, category, serp }: InitConfig): Promise<InitResult> {
-  const result: InitResult = {}
+export async function init<T extends InitConfig>({ autocomplete, category, serp }: T): Promise<InitResult<T>> {
+  const result: Partial<{ autocomplete: { store: Store }; category: { store: Store }; serp: { store: Store } }> = {}
 
   if (autocomplete) {
     const store = createStore({ query: autocomplete.query })
@@ -51,5 +49,5 @@ export async function init({ autocomplete, category, serp }: InitConfig): Promis
     result.serp = { store }
   }
 
-  return result
+  return result as InitResult<T>
 }
