@@ -67,7 +67,6 @@ export default defineConfig({
     },
     globals: true,
     environment: "jsdom",
-    include: ["packages/**/*.spec.ts", "packages/**/*.test.ts", "packages/**/*.spec.tsx", "packages/**/*.test.tsx"],
-    restoreMocks: true
+    include: ["packages/**/*.spec.ts", "packages/**/*.test.ts", "packages/**/*.spec.tsx", "packages/**/*.test.tsx"]
   }
 })
