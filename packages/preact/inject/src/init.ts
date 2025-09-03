@@ -13,7 +13,7 @@ export type InitResult<T extends InitConfig> = {
 }
 
 export async function init<T extends InitConfig>({ autocomplete, category, serp }: T): Promise<InitResult<T>> {
-  const result: Partial<{ autocomplete: { store: Store }; category: { store: Store }; serp: { store: Store } }> = {}
+  const result: Partial<Record<"autocomplete" | "category" | "serp", { store: Store }>> = {}
 
   if (autocomplete) {
     const store = createStore({ query: autocomplete.query })
