@@ -32,11 +32,11 @@ export function useDecoratedSearchResults<T extends readonly HitDecorator[]>(
 ): DecoratedProduct<T>
 export function useDecoratedSearchResults<T extends readonly HitDecorator[]>(products: SearchResult): DecoratedResult<T>
 export function useDecoratedSearchResults<T extends readonly HitDecorator[]>(products?: SearchProduct | SearchResult) {
-  const state = useNostoAppState(state => state.response) as DecoratedResult<T>
+  const state = useNostoAppState(state => state.response)
   if (products && Array.isArray(products)) {
     return products as DecoratedProduct<T>
   } else if (products && isPlainObject(products)) {
     return products as DecoratedResult<T>
   }
-  return state
+  return state as unknown as DecoratedResult<T>
 }

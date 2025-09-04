@@ -35,7 +35,7 @@ export type ToIntersection<U> = (U extends any ? (x: U) => void : never) extends
 export type DecoratedProduct<HD extends readonly HitDecorator[]> = ToIntersection<ReturnType<HD[number]>>
 
 export type DecoratedResult<HD extends readonly HitDecorator[]> = Omit<SearchResult, "products"> & {
-  products: SearchResult["products"] & {
+  products: Omit<SearchResult["products"], "hits"> & {
     hits: DecoratedProduct<HD>[]
   }
 }
