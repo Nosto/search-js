@@ -86,6 +86,7 @@
     "dev:library": "vite build --watch",
     "dev:preact": "cd dev/preact && npm run dev",
     "typedoc": "typedoc --treatWarningsAsErrors",
+    "typedoc-json": "typedoc --treatWarningsAsErrors --json dist/typedoc.json",
     "test": "npm run test:core && (cd dev/preact && npm run test)",
     "test:core": "vitest --run --coverage",
     "test:watch": "vitest",
