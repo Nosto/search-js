@@ -4,6 +4,7 @@ import { useDecoratedSearchResults } from "@nosto/search-js/preact/hooks"
 import { AutocompleteContext } from "@nosto/search-js/preact/inject"
 import { useContext } from "preact/hooks"
 
+import { productRowCSS, productRowStyles } from "../../Component.styles"
 import { hitDecorators } from "../../utils/hitDecorators"
 import { productImagePlaceholder } from "../../utils/productImagePlaceholder"
 
@@ -12,88 +13,13 @@ type Props = {
   highlighted: boolean
 }
 
-const styles = {
-  container: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-    padding: "8px 16px",
-    textDecoration: "none",
-    color: "inherit",
-    borderRadius: "6px",
-    cursor: "pointer",
-    minHeight: "56px"
-  },
-  image: {
-    width: "44px",
-    height: "44px",
-    objectFit: "cover" as const,
-    borderRadius: "5px",
-    flexShrink: 0,
-    background: "#f3f4f6",
-    display: "block",
-    margin: 0
-  },
-  content: {
-    flex: 1,
-    minWidth: 0,
-    display: "flex",
-    flexDirection: "column" as const,
-    justifyContent: "center"
-  },
-  brand: {
-    fontSize: "11px",
-    fontWeight: 600,
-    color: "#9ca3af",
-    marginBottom: "2px",
-    textTransform: "uppercase" as const,
-    letterSpacing: "0.5px",
-    lineHeight: 1
-  },
-  name: {
-    fontSize: "15px",
-    fontWeight: 500,
-    color: "#1f2937",
-    lineHeight: 1.2,
-    whiteSpace: "nowrap" as const,
-    overflow: "hidden",
-    textOverflow: "ellipsis"
-  },
-  priceContainer: {
-    marginLeft: "auto",
-    display: "flex",
-    flexDirection: "column" as const,
-    alignItems: "flex-end",
-    minWidth: "70px"
-  },
-  price: {
-    fontSize: "16px",
-    fontWeight: 700,
-    color: "#059669",
-    lineHeight: 1
-  },
-  listPrice: {
-    fontSize: "13px",
-    color: "#9ca3af",
-    textDecoration: "line-through",
-    marginTop: "2px"
-  }
-}
-
 export function ProductRow({ product: baseProduct, highlighted }: Props) {
   const product = useDecoratedSearchResults<typeof hitDecorators>(baseProduct)
   const { reportProductClick } = useContext(AutocompleteContext)
 
   return (
     <>
-      <style>{`
-        .product-row {
-          transition: background-color 0.15s ease;
-        }
-        .product-row:hover, .product-row.highlighted {
-          background-color: #f3f4f6 !important;
-        }
-      `}</style>
+      <style>{productRowCSS}</style>
       <AutocompleteElement
         hit={{
           ...product,
@@ -105,7 +31,7 @@ export function ProductRow({ product: baseProduct, highlighted }: Props) {
           href: product.url,
           onClick: () => reportProductClick(product),
           className: "product-row" + (highlighted ? " highlighted" : ""),
-          style: styles.container,
+          style: productRowStyles.container,
           "aria-label": `Product ${product.name}`
         }}
       >
@@ -114,16 +40,16 @@ export function ProductRow({ product: baseProduct, highlighted }: Props) {
           alt={product.name}
           width="44"
           height="44"
-          style={styles.image}
+          style={productRowStyles.image}
         />
-        <div data-nosto-element="product" style={styles.content}>
-          {product.brand && <div style={styles.brand}>{product.brand}</div>}
-          <div style={styles.name}>{product.name}</div>
+        <div data-nosto-element="product" style={productRowStyles.content}>
+          {product.brand && <div style={productRowStyles.brand}>{product.brand}</div>}
+          <div style={productRowStyles.name}>{product.name}</div>
         </div>
-        <div style={styles.priceContainer}>
-          {product.price && <span style={styles.price}>{product.priceText}</span>}
+        <div style={productRowStyles.priceContainer}>
+          {product.price && <span style={productRowStyles.price}>{product.priceText}</span>}
           {product.price && product.listPrice && product.listPrice > product.price && (
-            <span style={styles.listPrice}>{product.listPriceText}</span>
+            <span style={productRowStyles.listPrice}>{product.listPriceText}</span>
           )}
         </div>
       </AutocompleteElement>

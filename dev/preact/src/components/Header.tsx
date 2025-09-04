@@ -1,6 +1,7 @@
 import { useMemo } from "preact/hooks"
 import { useLocation } from "preact-iso"
 
+import { headerStyles } from "../Component.styles"
 import { useInfiniteScroll, useInjectionLogic } from "../contexts/InfiniteScrollContext"
 import { Button } from "./Button"
 
@@ -22,7 +23,7 @@ export function Header() {
   )
 
   return (
-    <header style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingRight: "2em" }}>
+    <header style={headerStyles.header}>
       <nav>
         {locations.map(({ url, name }) => (
           <a key={url} href={url} className={url == locationUrl ? "active" : ""}>
@@ -30,11 +31,11 @@ export function Header() {
           </a>
         ))}
       </nav>
-      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+      <div style={headerStyles.buttonContainer}>
         <Button
           onClick={toggleInfiniteScroll}
           style={{
-            padding: "8px 16px",
+            ...headerStyles.toggleButton,
             border: isInfiniteScrollEnabled ? "1px solid #22c55e" : "1px solid #6b7280",
             outline: isInfiniteScrollEnabled ? "1px solid #22c55e" : "1px solid #00000000",
             boxShadow: isInfiniteScrollEnabled
@@ -48,7 +49,7 @@ export function Header() {
         <Button
           onClick={toggleInjection}
           style={{
-            padding: "8px 16px",
+            ...headerStyles.toggleButton,
             border: isInjectionEnabled ? "1px solid #22c55e" : "1px solid #6b7280",
             outline: isInjectionEnabled ? "1px solid #22c55e" : "1px solid #00000000",
             boxShadow: isInjectionEnabled ? "0 2px 8px rgba(99, 102, 241, 0.15)" : "0 2px 8px rgba(107, 114, 128, 0.15)"
