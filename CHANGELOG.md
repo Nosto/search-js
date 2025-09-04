@@ -1,3 +1,16 @@
+# [3.11.0](https://github.com/Nosto/search-js/compare/v3.10.0...v3.11.0) (2025-09-04)
+
+
+### Bug Fixes
+
+* resolve linting issues in test file ([c79d91e](https://github.com/Nosto/search-js/commit/c79d91efdb3812b2c12d1e7c7e4ef3bc323a3209))
+
+
+### Features
+
+* add query support for category and serp configs ([c7be558](https://github.com/Nosto/search-js/commit/c7be55870dbaa3252b2ab7bd0eaf428c27e6d168))
+* adjust return type to reflect input shape in init function ([3173124](https://github.com/Nosto/search-js/commit/3173124bcf6859ae627e6a78a2da28d6aa2aa047))
+
 # [3.10.0](https://github.com/Nosto/search-js/compare/v3.9.0...v3.10.0) (2025-09-04)
 
 
