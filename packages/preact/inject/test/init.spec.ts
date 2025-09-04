@@ -32,7 +32,7 @@ describe("init", () => {
       }
     })
 
-    expect(result.autocomplete?.store.getState().query).toEqual(query)
+    expect(result.autocomplete.store.getState().query).toEqual(query)
   })
 
   it("should pass query to category store", async () => {
@@ -47,7 +47,7 @@ describe("init", () => {
       }
     })
 
-    expect(result.category?.store.getState().query).toEqual(query)
+    expect(result.category.store.getState().query).toEqual(query)
   })
 
   it("should pass query to serp store", async () => {
@@ -62,7 +62,7 @@ describe("init", () => {
       }
     })
 
-    expect(result.serp?.store.getState().query).toEqual(query)
+    expect(result.serp.store.getState().query).toEqual(query)
   })
 
   it("should handle undefined query for category", async () => {
@@ -74,7 +74,7 @@ describe("init", () => {
       }
     })
 
-    expect(result.category?.store.getState().query).toEqual({})
+    expect(result.category.store.getState().query).toEqual({})
   })
 
   it("should handle undefined query for serp", async () => {
@@ -86,6 +86,6 @@ describe("init", () => {
       }
     })
 
-    expect(result.serp?.store.getState().query).toEqual({})
+    expect(result.serp.store.getState().query).toEqual({})
   })
 })
