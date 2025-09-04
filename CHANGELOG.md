@@ -1,3 +1,15 @@
+# [3.10.0](https://github.com/Nosto/search-js/compare/v3.9.0...v3.10.0) (2025-09-04)
+
+
+### Bug Fixes
+
+* change typedoc-json output path from build to dist directory ([876563d](https://github.com/Nosto/search-js/commit/876563d3bd9a2b31bcd9b3d965f80a01c7073c20))
+
+
+### Features
+
+* add typedoc-json script to output JSON documentation ([6db2c0c](https://github.com/Nosto/search-js/commit/6db2c0ce75ac114fc6e3c150aa52d5fada56cff2))
+
 # [3.9.0](https://github.com/Nosto/search-js/compare/v3.8.0...v3.9.0) (2025-09-02)
 
 
