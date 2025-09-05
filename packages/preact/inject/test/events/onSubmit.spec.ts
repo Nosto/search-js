@@ -84,7 +84,6 @@ describe("onSubmit", () => {
     expect(recordSearchSubmit).toHaveBeenCalledWith(value)
     expect(context.onNavigateToSearch).toHaveBeenCalledWith({ query: value })
 
-    // Verify the order: recordSearchSubmit should be called before onNavigateToSearch
     const recordOrder = recordSearchSubmit.mock.invocationCallOrder[0]
     const navigateOrder = (context.onNavigateToSearch as ReturnType<typeof vi.fn>).mock.invocationCallOrder[0]
     expect(recordOrder).toBeLessThan(navigateOrder)
@@ -117,7 +116,6 @@ describe("onSubmit", () => {
 
     onSubmit(value, context)
 
-    // Verify all methods are called
     expect(context.dropdown.hide).toHaveBeenCalled()
     expect(context.history.hide).toHaveBeenCalled()
     expect(context.history.add).toHaveBeenCalledWith(value)
