@@ -1,26 +1,71 @@
+import { SearchQuery } from "@nosto/nosto-js/client"
 import { mockNostojs } from "@nosto/nosto-js/testing"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { onSubmit } from "../../src/init/autocomplete/events/onSubmit"
 import type { AutocompleteInjectContext } from "../../src/init/injectAutocomplete"
 
-// Create a minimal mock that satisfies the type requirements
-const createMockContext = (overrides = {}) =>
-  ({
-    config: { minQueryLength: 1 },
-    dropdown: { hide: vi.fn() },
-    history: {
-      hide: vi.fn(),
-      add: vi.fn(),
-      get: vi.fn(() => ["test query"])
-    },
-    store: { updateState: vi.fn() },
-    onNavigateToSearch: vi.fn(),
+// Create a proper mock that satisfies all type requirements
+const createMockContext = (overrides: Partial<AutocompleteInjectContext> = {}): AutocompleteInjectContext => {
+  const baseConfig = {
+    pageType: "autocomplete" as const,
+    defaultCurrency: "USD",
+    queryModifications: (query: SearchQuery) => query,
+    memoryCache: false,
+    historyEnabled: true,
+    historySize: 5,
+    debounceDelay: 300,
+    minQueryLength: 1
+  }
+
+  return {
+    // AutocompleteInjectConfig properties
+    config: { ...baseConfig, ...overrides.config },
     formCssSelector: "form",
     inputCssSelector: "input",
     dropdownCssSelector: ".dropdown",
+    onNavigateToSearch: vi.fn(),
+    timeout: 100,
+    // AutocompleteInjectContext specific properties
+    input: document.createElement("input"),
+    dropdown: {
+      element: document.createElement("div"),
+      hide: vi.fn(),
+      show: vi.fn(),
+      isOpen: vi.fn(() => false),
+      goDown: vi.fn(),
+      goUp: vi.fn(),
+      highlight: vi.fn(),
+      highlightedIndex: vi.fn(() => -1),
+      submitHighlightedItem: vi.fn(),
+      onHighlightChange: vi.fn()
+    },
+    history: {
+      element: document.createElement("div"),
+      hide: vi.fn(),
+      show: vi.fn(),
+      isOpen: vi.fn(() => false),
+      goDown: vi.fn(),
+      goUp: vi.fn(),
+      highlight: vi.fn(),
+      highlightedIndex: vi.fn(() => -1),
+      submitHighlightedItem: vi.fn(),
+      onHighlightChange: vi.fn(),
+      add: vi.fn(),
+      get: vi.fn(() => ["test query"])
+    },
+    store: {
+      updateState: vi.fn(),
+      getState: vi.fn(() => ({ loading: false, query: {}, response: {}, initialized: true })),
+      getInitialState: vi.fn(() => ({ loading: true, query: {}, response: {}, initialized: false })),
+      onChange: vi.fn(),
+      onInit: vi.fn(),
+      clearOnChange: vi.fn()
+    },
+    debouncer: vi.fn(),
     ...overrides
-  }) as unknown as AutocompleteInjectContext
+  }
+}
 
 describe("onSubmit", () => {
   const recordSearchSubmit = vi.fn()
@@ -46,7 +91,18 @@ describe("onSubmit", () => {
   })
 
   it("should not call recordSearchSubmit if value length is below minQueryLength", () => {
-    const context = createMockContext({ config: { minQueryLength: 3 } })
+    const context = createMockContext({
+      config: {
+        pageType: "autocomplete" as const,
+        defaultCurrency: "USD",
+        queryModifications: (query: SearchQuery) => query,
+        memoryCache: false,
+        historyEnabled: true,
+        historySize: 5,
+        debounceDelay: 300,
+        minQueryLength: 3
+      }
+    })
     const value = ""
 
     onSubmit(value, context)
