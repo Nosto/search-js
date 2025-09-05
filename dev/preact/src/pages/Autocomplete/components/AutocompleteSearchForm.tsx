@@ -7,6 +7,7 @@ import { Input } from "../../../components/Input"
 import { debounce } from "../../../utils/debounce"
 import { SpeechToTextButton } from "../../Search/components/SpeechToTextButton"
 import { AutocompleteContent } from "./AutocompleteContent"
+import { styles } from "./AutocompleteSearchForm.styles"
 
 export function AutocompleteSearchForm() {
   const [input, setInput] = useState("")
@@ -51,31 +52,13 @@ export function AutocompleteSearchForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSearch}
-      style={{
-        position: "relative",
-        display: "flex",
-        gap: "8px",
-        justifyContent: "center",
-        maxWidth: "500px",
-        margin: "0 auto"
-      }}
-    >
+    <form onSubmit={handleSearch} style={styles.form}>
       <SearchInput
         as={Input}
         componentProps={{
           id: "autocomplete-search-input",
           placeholder: "Search for products...",
-          style: {
-            flex: "1",
-            width: "100%",
-            padding: "12px 16px",
-            fontSize: "16px",
-            border: "2px solid #ddd",
-            borderRadius: "8px",
-            outline: "none"
-          }
+          style: styles.searchInput
         }}
         onSearchInput={target => onSearchInput(target.value)}
       />

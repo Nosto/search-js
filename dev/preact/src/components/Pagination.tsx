@@ -2,6 +2,8 @@ import { useActions, usePagination } from "@nosto/search-js/preact/hooks"
 import { type ComponentChildren } from "preact"
 import { useCallback } from "preact/hooks"
 
+import { styles } from "./Pagination.styles"
+
 function PaginationLink({ goToPage, children }: { goToPage: () => void; children: ComponentChildren }) {
   return (
     <a
@@ -34,7 +36,7 @@ export function Pagination() {
   const handlePaginate = useCallback((page: { from: number | undefined }) => () => paginate(page), [paginate])
 
   return (
-    <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+    <div style={styles.container}>
       {prev && <PaginationLink goToPage={handlePaginate(prev)}>{"<"}</PaginationLink>}
       {first && (
         <>
