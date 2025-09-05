@@ -1,3 +1,5 @@
+import { nostojs } from "@nosto/nosto-js"
+
 import { AutocompleteInjectContext } from "../../injectAutocomplete"
 
 export function onSubmit(
@@ -13,6 +15,10 @@ export function onSubmit(
   history.add(value)
   store.updateState({
     historyItems: history.get()
+  })
+
+  nostojs(api => {
+    api.recordSearchSubmit(value)
   })
 
   onNavigateToSearch?.({
