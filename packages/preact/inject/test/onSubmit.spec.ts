@@ -1,37 +1,27 @@
 import { mockNostojs } from "@nosto/nosto-js/testing"
-import { describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { onSubmit } from "../src/init/autocomplete/events/onSubmit"
 
 describe("onSubmit", () => {
   let mockContext: {
     config: { minQueryLength: number }
-    dropdown: { hide: ReturnType<typeof vi.fn> }
-    history: {
-      hide: ReturnType<typeof vi.fn>
-      add: ReturnType<typeof vi.fn>
-      get: ReturnType<typeof vi.fn>
-    }
-    store: { updateState: ReturnType<typeof vi.fn> }
-    onNavigateToSearch: ReturnType<typeof vi.fn>
+    dropdown: { hide: () => void }
+    history: { hide: () => void; add: (value: string) => void; get: () => string[] }
+    store: { updateState: (state: unknown) => void }
+    onNavigateToSearch: (options: { query: string }) => void
   }
 
   beforeEach(() => {
     mockContext = {
-      config: {
-        minQueryLength: 2
-      },
-      dropdown: {
-        hide: vi.fn()
-      },
+      config: { minQueryLength: 2 },
+      dropdown: { hide: vi.fn() },
       history: {
         hide: vi.fn(),
         add: vi.fn(),
         get: vi.fn(() => ["previous query"])
       },
-      store: {
-        updateState: vi.fn()
-      },
+      store: { updateState: vi.fn() },
       onNavigateToSearch: vi.fn()
     }
   })
