@@ -2,22 +2,13 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { onSubmit } from "../src/init/autocomplete/events/onSubmit"
+import { AutocompleteInjectContext } from "../src/init/injectAutocomplete"
 
 describe("onSubmit", () => {
   let mockApi: {
     recordSearchSubmit: ReturnType<typeof vi.fn>
   }
-  let mockContext: {
-    config: { minQueryLength: number }
-    dropdown: { hide: ReturnType<typeof vi.fn> }
-    history: {
-      hide: ReturnType<typeof vi.fn>
-      add: ReturnType<typeof vi.fn>
-      get: ReturnType<typeof vi.fn>
-    }
-    store: { updateState: ReturnType<typeof vi.fn> }
-    onNavigateToSearch: ReturnType<typeof vi.fn>
-  }
+  let mockContext: Pick<AutocompleteInjectContext, "config" | "dropdown" | "history" | "store" | "onNavigateToSearch">
 
   beforeEach(() => {
     mockApi = {
@@ -48,7 +39,6 @@ describe("onSubmit", () => {
   it("should call recordSearchSubmit with the query value", () => {
     const queryValue = "test query"
 
-    // @ts-expect-error - Mock context for testing purposes
     onSubmit(queryValue, mockContext)
 
     expect(mockApi.recordSearchSubmit).toHaveBeenCalledWith(queryValue)
@@ -57,7 +47,6 @@ describe("onSubmit", () => {
   it("should call both recordSearchSubmit and onNavigateToSearch", () => {
     const queryValue = "test query"
 
-    // @ts-expect-error - Mock context for testing purposes
     onSubmit(queryValue, mockContext)
 
     expect(mockApi.recordSearchSubmit).toHaveBeenCalledWith(queryValue)
@@ -69,7 +58,6 @@ describe("onSubmit", () => {
   it("should hide dropdown and history", () => {
     const queryValue = "test query"
 
-    // @ts-expect-error - Mock context for testing purposes
     onSubmit(queryValue, mockContext)
 
     expect(mockContext.dropdown.hide).toHaveBeenCalled()
@@ -79,7 +67,6 @@ describe("onSubmit", () => {
   it("should not proceed if query length is less than minimum", () => {
     const shortQuery = "a" // Less than minQueryLength of 2
 
-    // @ts-expect-error - Mock context for testing purposes
     onSubmit(shortQuery, mockContext)
 
     expect(mockContext.history.add).not.toHaveBeenCalled()
@@ -91,7 +78,6 @@ describe("onSubmit", () => {
   it("should add to history and update store state", () => {
     const queryValue = "test query"
 
-    // @ts-expect-error - Mock context for testing purposes
     onSubmit(queryValue, mockContext)
 
     expect(mockContext.history.add).toHaveBeenCalledWith(queryValue)
@@ -103,7 +89,6 @@ describe("onSubmit", () => {
   it("should call onNavigateToSearch with correct query", () => {
     const queryValue = "test query"
 
-    // @ts-expect-error - Mock context for testing purposes
     onSubmit(queryValue, mockContext)
 
     expect(mockContext.onNavigateToSearch).toHaveBeenCalledWith({
