@@ -17,7 +17,6 @@ export function AutocompleteElement<C extends AsComponent>({
   hit,
   as,
   className,
-  onClick,
   ...rest
 }: AutocompleteElementProps<C>) {
   const handleClick = useCallback(() => {
@@ -30,7 +29,7 @@ export function AutocompleteElement<C extends AsComponent>({
     <BaseElement
       onClick={handleClick}
       as={as}
-      componentProps={{ ...rest, onClick }}
+      componentProps={rest as JSX.LibraryManagedAttributes<C, ComponentProps<C>>}
       className={cl("ns-autocomplete-element", className)}
     >
       {children}
