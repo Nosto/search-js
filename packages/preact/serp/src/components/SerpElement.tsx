@@ -20,7 +20,7 @@ export type SerpElementProps<C extends AsComponent> = JSX.LibraryManagedAttribut
  *
  * @group Components
  */
-export function SerpElement<C extends AsComponent>({ children, hit, as, className, ...rest }: SerpElementProps<C>) {
+export function SerpElement<C extends AsComponent>({ children, hit, as, ...rest }: SerpElementProps<C>) {
   const { pageType } = useConfig()
   const track = pageType === "autocomplete" ? undefined : pageType === "search" ? "serp" : pageType
 
@@ -31,13 +31,10 @@ export function SerpElement<C extends AsComponent>({ children, hit, as, classNam
     savePageScroll()
   }, [hit, track])
 
+  const componentProps = rest as JSX.LibraryManagedAttributes<C, ComponentProps<C>>
+
   return (
-    <BaseElement
-      as={as}
-      onClick={onClick}
-      componentProps={rest as JSX.LibraryManagedAttributes<C, ComponentProps<C>>}
-      className={className}
-    >
+    <BaseElement as={as} onClick={onClick} componentProps={componentProps}>
       {children}
     </BaseElement>
   )
