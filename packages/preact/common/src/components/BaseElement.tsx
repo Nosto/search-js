@@ -8,9 +8,10 @@ export type AsComponent = keyof JSX.IntrinsicElements | ComponentType<any>
 /**
  * @group Components
  */
-export type BaseElementProps<C extends AsComponent> = JSX.LibraryManagedAttributes<C, ComponentProps<C>> & {
-  trackingOnClick: () => void
+export type BaseElementProps<C extends AsComponent> = {
+  onClick: () => void
   as?: C
+  componentProps?: JSX.LibraryManagedAttributes<C, ComponentProps<C>>
   children?: ComponentChildren
   className?: string
 }
@@ -21,28 +22,28 @@ export type BaseElementProps<C extends AsComponent> = JSX.LibraryManagedAttribut
  * @group Components
  */
 export function BaseElement<C extends AsComponent>({
-  trackingOnClick,
+  onClick,
   as,
   children,
-  className,
-  ...rest
+  componentProps,
+  className
 }: BaseElementProps<C>) {
-  const mergedOnClick = useCallback(
-    (event: JSX.TargetedMouseEvent<HTMLElement>) => {
-      trackingOnClick()
-      // If there's an onClick in the rest props, call it as well
-      if ("onClick" in rest && typeof rest.onClick === "function") {
-        rest.onClick(event)
-      }
-    },
-    [trackingOnClick, rest]
-  )
+  const props = {
+    ...componentProps,
+    onClick: useCallback(
+      (event: JSX.TargetedMouseEvent<HTMLElement>) => {
+        onClick()
+        componentProps?.onClick?.(event)
+      },
+      [onClick, componentProps]
+    )
+  }
 
-  const componentClass = cl("className" in rest && rest.className, className)
-  const Comp = as ?? (rest && "href" in rest ? "a" : "span")
+  const componentClass = cl("className" in props && props.className, className)
+  const Comp = as ?? (componentProps && "href" in componentProps ? "a" : "span")
 
   return (
-    <Comp {...rest} onClick={mergedOnClick} className={componentClass}>
+    <Comp {...props} className={componentClass}>
       {children}
     </Comp>
   )

@@ -1,16 +1,14 @@
 import { nostojs } from "@nosto/nosto-js"
 import { ProductHit } from "@preact/autocomplete/types"
-import { AsComponent, BaseElement } from "@preact/common/components/BaseElement"
+import { AsComponent, BaseElement, BaseElementProps } from "@preact/common/components/BaseElement"
 import { useConfig } from "@preact/common/config/configContext"
 import { savePageScroll } from "@utils/savePageScroll"
-import { ComponentProps, JSX } from "preact"
 import { useCallback } from "preact/hooks"
 
 /**
  * @group Components
  */
-export type SerpElementProps<C extends AsComponent> = JSX.LibraryManagedAttributes<C, ComponentProps<C>> & {
-  as?: C
+export type SerpElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, "onClick"> & {
   hit: ProductHit
 }
 
@@ -19,11 +17,11 @@ export type SerpElementProps<C extends AsComponent> = JSX.LibraryManagedAttribut
  *
  * @group Components
  */
-export function SerpElement<C extends AsComponent>({ children, hit, as, ...rest }: SerpElementProps<C>) {
+export function SerpElement<C extends AsComponent>({ children, hit, componentProps, as }: SerpElementProps<C>) {
   const { pageType } = useConfig()
   const track = pageType === "autocomplete" ? undefined : pageType === "search" ? "serp" : pageType
 
-  const trackingOnClick = useCallback(() => {
+  const onClick = useCallback(() => {
     if (hit && track) {
       nostojs(api => api.recordSearchClick(track, hit))
     }
@@ -31,7 +29,7 @@ export function SerpElement<C extends AsComponent>({ children, hit, as, ...rest 
   }, [hit, track])
 
   return (
-    <BaseElement trackingOnClick={trackingOnClick} as={as} {...rest}>
+    <BaseElement as={as} onClick={onClick} componentProps={componentProps}>
       {children}
     </BaseElement>
   )
