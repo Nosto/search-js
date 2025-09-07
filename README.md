@@ -27,6 +27,10 @@ Read [Nosto Techdocs](https://docs.nosto.com/techdocs/apis/frontend/oss/search-j
 
 [Library TypeDoc page](https://nosto.github.io/search-js/) includes detailed library helpers documentation and examples.
 
+## Architecture
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for a visual component diagram of the search-js library structure and exports.
+
 ## Packages
 
 ### `core`
