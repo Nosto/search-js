@@ -1,6 +1,6 @@
 import { logger } from "./logger"
 
-const scrollPosStorageKey = "nosto:search:scrollPos"
+const scrollPosStorageKey = "nosto:search-js:scrollPos"
 
 export function savePageScroll() {
   window.sessionStorage.setItem(scrollPosStorageKey, window.scrollY.toString())
