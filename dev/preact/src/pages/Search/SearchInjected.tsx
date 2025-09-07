@@ -7,6 +7,7 @@ import { Autocomplete } from "../Autocomplete/Autocomplete"
 import { SearchContentInfinite } from "./components/SearchContentInfinite"
 import { SearchContentPaginated } from "./components/SearchContentPaginated"
 import { SearchQueryHandler } from "./components/SearchQueryHandler"
+import { styles } from "./SearchInjected.styles"
 
 export function SearchInjected() {
   const { isInfiniteScrollEnabled } = useInfiniteScroll()
@@ -30,17 +31,7 @@ export function SearchInjected() {
   })
 
   return (
-    <div
-      className="search"
-      title="Search (Injected)"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100vw",
-        height: "calc(100vh - 48px - 14px)",
-        marginTop: "14px"
-      }}
-    >
+    <div className="search" title="Search (Injected)" style={styles.container}>
       <Autocomplete />
       <div id="inject-search" />
     </div>

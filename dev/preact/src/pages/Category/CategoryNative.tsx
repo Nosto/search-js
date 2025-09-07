@@ -3,6 +3,7 @@ import { useRoute } from "preact-iso"
 
 import { useInfiniteScroll } from "../../contexts/InfiniteScrollContext"
 import { hitDecorators } from "../../utils/hitDecorators"
+import { styles } from "./CategoryNative.styles"
 import { CategoryContentInfinite } from "./components/CategoryContentInfinite"
 import { CategoryContentPaginated } from "./components/CategoryContentPaginated"
 import { CategoryQueryHandler } from "./components/CategoryQueryHandler"
@@ -20,17 +21,7 @@ export function CategoryNative() {
   } satisfies CategoryConfig
 
   return (
-    <div
-      className="category"
-      title="Category (Native)"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100vw",
-        height: "calc(100vh - 48px - 14px)",
-        marginTop: "14px"
-      }}
-    >
+    <div className="category" title="Category (Native)" style={styles.container}>
       <CategoryPageProvider config={config}>
         <CategoryQueryHandler categoryPath={categoryPath} />
         {isInfiniteScrollEnabled ? <CategoryContentInfinite /> : <CategoryContentPaginated />}
