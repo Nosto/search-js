@@ -15,7 +15,6 @@ export function AutocompleteElement<C extends AsComponent>({
   children,
   hit,
   as,
-  className,
   ...rest
 }: AutocompleteElementProps<C>) {
   const onClick = useCallback(() => {
@@ -27,12 +26,7 @@ export function AutocompleteElement<C extends AsComponent>({
   const componentProps = rest as JSX.LibraryManagedAttributes<C, ComponentProps<C>>
 
   return (
-    <BaseElement
-      onClick={onClick}
-      as={as}
-      componentProps={componentProps}
-      className="ns-autocomplete-element"
-    >
+    <BaseElement onClick={onClick} as={as} componentProps={componentProps} className="ns-autocomplete-element">
       {children}
     </BaseElement>
   )

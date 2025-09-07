@@ -32,7 +32,12 @@ export function SerpElement<C extends AsComponent>({ children, hit, as, classNam
   }, [hit, track])
 
   return (
-    <BaseElement as={as} onClick={onClick} componentProps={rest as JSX.LibraryManagedAttributes<C, ComponentProps<C>>} className={className}>
+    <BaseElement
+      as={as}
+      onClick={onClick}
+      componentProps={rest as JSX.LibraryManagedAttributes<C, ComponentProps<C>>}
+      className={className}
+    >
       {children}
     </BaseElement>
   )
