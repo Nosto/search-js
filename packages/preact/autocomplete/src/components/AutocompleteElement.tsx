@@ -1,6 +1,5 @@
 import { nostojs } from "@nosto/nosto-js"
 import { AsComponent, BaseElement } from "@preact/common/components/BaseElement"
-import { cl } from "@utils/cl"
 import { ComponentChildren, ComponentProps, JSX } from "preact"
 import { useCallback } from "preact/hooks"
 
@@ -19,18 +18,20 @@ export function AutocompleteElement<C extends AsComponent>({
   className,
   ...rest
 }: AutocompleteElementProps<C>) {
-  const handleClick = useCallback(() => {
+  const onClick = useCallback(() => {
     if (hit && "productId" in hit) {
       nostojs(api => api.recordSearchClick("autocomplete", hit))
     }
   }, [hit])
 
+  const componentProps = rest as JSX.LibraryManagedAttributes<C, ComponentProps<C>>
+
   return (
     <BaseElement
-      onClick={handleClick}
+      onClick={onClick}
       as={as}
-      componentProps={rest as JSX.LibraryManagedAttributes<C, ComponentProps<C>>}
-      className={cl("ns-autocomplete-element", className)}
+      componentProps={componentProps}
+      className="ns-autocomplete-element"
     >
       {children}
     </BaseElement>
