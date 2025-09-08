@@ -12,7 +12,6 @@ import { useCallback } from "preact/hooks"
 export type SerpElementProps<C extends AsComponent> = JSX.LibraryManagedAttributes<C, ComponentProps<C>> & {
   as?: C
   hit: ProductHit
-  componentProps?: JSX.LibraryManagedAttributes<C, ComponentProps<C>>
 }
 
 /**
@@ -20,13 +19,7 @@ export type SerpElementProps<C extends AsComponent> = JSX.LibraryManagedAttribut
  *
  * @group Components
  */
-export function SerpElement<C extends AsComponent>({
-  children,
-  hit,
-  as,
-  componentProps,
-  ...directProps
-}: SerpElementProps<C>) {
+export function SerpElement<C extends AsComponent>({ children, hit, as, ...directProps }: SerpElementProps<C>) {
   const { pageType } = useConfig()
   const track = pageType === "autocomplete" ? undefined : pageType === "search" ? "serp" : pageType
 
@@ -37,14 +30,11 @@ export function SerpElement<C extends AsComponent>({
     savePageScroll()
   }, [hit, track])
 
-  // Merge componentProps with direct props, filtering out undefined values
-  const mergedComponentProps = {
-    ...componentProps,
-    ...Object.fromEntries(Object.entries(directProps).filter(([, value]) => value !== undefined))
-  }
+  // Filter out undefined values from direct props
+  const componentProps = Object.fromEntries(Object.entries(directProps).filter(([, value]) => value !== undefined))
 
   return (
-    <BaseElement as={as} onClick={onClick} componentProps={mergedComponentProps}>
+    <BaseElement as={as} onClick={onClick} componentProps={componentProps}>
       {children}
     </BaseElement>
   )

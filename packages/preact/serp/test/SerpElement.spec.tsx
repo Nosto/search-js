@@ -28,7 +28,7 @@ describe("SerpElement", () => {
       })
       const result = render(
         <ConfigContext value={makeAutocompleteConfig({})}>
-          <SerpElement hit={hit} componentProps={{ onClick }}>
+          <SerpElement hit={hit} onClick={onClick}>
             {children}
           </SerpElement>
         </ConfigContext>
@@ -48,7 +48,7 @@ describe("SerpElement", () => {
       const onClick = vi.fn()
       const result = render(
         <ConfigContext value={makeAutocompleteConfig({})}>
-          <SerpElement as={"a"} hit={hit} componentProps={{ onClick }}>
+          <SerpElement as={"a"} hit={hit} onClick={onClick}>
             {children}
           </SerpElement>
         </ConfigContext>
@@ -68,7 +68,7 @@ describe("SerpElement", () => {
       const onClick = vi.fn()
       const result = render(
         <ConfigContext value={makeAutocompleteConfig({})}>
-          <SerpElement as={"a"} hit={hit} componentProps={{ onClick }}>
+          <SerpElement as={"a"} hit={hit} onClick={onClick}>
             {children}
           </SerpElement>
         </ConfigContext>
@@ -86,7 +86,7 @@ describe("SerpElement", () => {
       })
       const result = render(
         <ConfigContext value={makeAutocompleteConfig({})}>
-          <SerpElement as={"a"} hit={hit} componentProps={{ onClick }}>
+          <SerpElement as={"a"} hit={hit} onClick={onClick}>
             {children}
           </SerpElement>
         </ConfigContext>
@@ -102,7 +102,7 @@ describe("SerpElement", () => {
       const onClick = vi.fn()
       const result = render(
         <ConfigContext value={makeAutocompleteConfig({})}>
-          <SerpElement as={"button"} componentProps={{ onClick }} hit={hit}>
+          <SerpElement as={"button"} onClick={onClick} hit={hit}>
             {children}
           </SerpElement>
         </ConfigContext>
@@ -124,7 +124,7 @@ describe("SerpElement", () => {
 
     const result = render(
       <ConfigContext value={makeAutocompleteConfig({})}>
-        <SerpElement as={"a"} hit={hit} componentProps={{ onClick: vi.fn() }}>
+        <SerpElement as={"a"} hit={hit} onClick={vi.fn()}>
           {children}
         </SerpElement>
       </ConfigContext>
@@ -136,5 +136,32 @@ describe("SerpElement", () => {
     expect(result.getByText("Test").onclick).toBeNull()
     expect(result.getByText("Click me").onclick).toBeNull()
     expect(result.getByText("Clickable div").onclick).toBeNull()
+  })
+
+  it("supports direct props pattern", () => {
+    const onClickMock = vi.fn()
+    const result = render(
+      <ConfigContext value={makeAutocompleteConfig({})}>
+        <SerpElement
+          hit={hit}
+          as="a"
+          href="https://example.com"
+          onClick={onClickMock}
+          className="direct-props-class"
+          data-testid="direct-props"
+        >
+          Direct Props Test
+        </SerpElement>
+      </ConfigContext>
+    )
+
+    const element = result.getByText("Direct Props Test")
+    expect(element).toBeDefined()
+    expect(element.getAttribute("href")).toBe("https://example.com")
+    expect(element.getAttribute("class")).toContain("direct-props-class")
+    expect(element.getAttribute("data-testid")).toBe("direct-props")
+
+    element.click()
+    expect(onClickMock).toHaveBeenCalled()
   })
 })
