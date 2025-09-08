@@ -114,4 +114,60 @@ describe("AutocompleteElement", () => {
     expect(nostoJsSpy).toHaveBeenCalled()
     expect(onClickMock).toHaveBeenCalled()
   })
+
+  it("supports new direct props pattern", () => {
+    const onClickMock = vi.fn()
+    const { getByText } = render(
+      <AutocompleteElement
+        hit={mockHit}
+        as="a"
+        href="https://example.com"
+        onClick={onClickMock}
+        className="new-pattern-class"
+        data-testid="new-pattern"
+      >
+        New Pattern Test
+      </AutocompleteElement>
+    )
+
+    const element = getByText("New Pattern Test")
+    expect(element).toBeDefined()
+    expect(element.getAttribute("href")).toBe("https://example.com")
+    expect(element.getAttribute("class")).toContain("new-pattern-class")
+    expect(element.getAttribute("class")).toContain("ns-autocomplete-element")
+    expect(element.getAttribute("data-testid")).toBe("new-pattern")
+
+    element.click()
+    expect(nostoJsSpy).toHaveBeenCalled()
+    expect(onClickMock).toHaveBeenCalled()
+  })
+
+  it("maintains backward compatibility with componentProps", () => {
+    const onClickMock = vi.fn()
+    const { getByText } = render(
+      <AutocompleteElement
+        hit={mockHit}
+        as="a"
+        componentProps={{
+          href: "https://example.com",
+          onClick: onClickMock,
+          className: "old-pattern-class",
+          "data-testid": "old-pattern"
+        }}
+      >
+        Old Pattern Test
+      </AutocompleteElement>
+    )
+
+    const element = getByText("Old Pattern Test")
+    expect(element).toBeDefined()
+    expect(element.getAttribute("href")).toBe("https://example.com")
+    expect(element.getAttribute("class")).toContain("old-pattern-class")
+    expect(element.getAttribute("class")).toContain("ns-autocomplete-element")
+    expect(element.getAttribute("data-testid")).toBe("old-pattern")
+
+    element.click()
+    expect(nostoJsSpy).toHaveBeenCalled()
+    expect(onClickMock).toHaveBeenCalled()
+  })
 })

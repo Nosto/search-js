@@ -27,13 +27,11 @@ export function ProductRow({ product: baseProduct, highlighted }: Props) {
           url: product.url!
         }}
         as="a"
-        componentProps={{
-          href: product.url,
-          onClick: () => reportProductClick(product),
-          className: "product-row" + (highlighted ? " highlighted" : ""),
-          style: styles.container,
-          "aria-label": `Product ${product.name}`
-        }}
+        href={product.url}
+        onClick={() => reportProductClick(product)}
+        className={"product-row" + (highlighted ? " highlighted" : "")}
+        style={styles.container}
+        aria-label={`Product ${product.name}`}
       >
         <img
           src={product.thumbUrl ?? productImagePlaceholder}

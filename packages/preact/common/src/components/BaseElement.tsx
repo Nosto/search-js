@@ -14,7 +14,7 @@ export type BaseElementProps<C extends AsComponent> = {
   componentProps?: JSX.LibraryManagedAttributes<C, ComponentProps<C>>
   children?: ComponentChildren
   className?: string
-}
+} & Partial<JSX.LibraryManagedAttributes<C, ComponentProps<C>>>
 
 /**
  * Wrapper component that can be used to wrap any element in the search result list.
@@ -26,24 +26,32 @@ export function BaseElement<C extends AsComponent>({
   as,
   children,
   componentProps,
-  className
+  className,
+  ...props
 }: BaseElementProps<C>) {
-  const props = {
+  // Merge componentProps (for backward compatibility) with direct props (new pattern)
+  const allProps = {
     ...componentProps,
+    ...props,
     onClick: useCallback(
       (event: JSX.TargetedMouseEvent<HTMLElement>) => {
         onClick()
+        // Call original onClick from componentProps (backward compatibility)
         componentProps?.onClick?.(event)
+        // Call original onClick from direct props (new pattern)
+        if ("onClick" in props && typeof props.onClick === "function") {
+          props.onClick(event)
+        }
       },
-      [onClick, componentProps]
+      [onClick, componentProps, props]
     )
   }
 
-  const componentClass = cl("className" in props && props.className, className)
-  const Comp = as ?? (componentProps && "href" in componentProps ? "a" : "span")
+  const componentClass = cl("className" in allProps && allProps.className, className)
+  const Comp = as ?? (componentProps && "href" in componentProps ? "a" : allProps && "href" in allProps ? "a" : "span")
 
   return (
-    <Comp {...props} className={componentClass}>
+    <Comp {...allProps} className={componentClass}>
       {children}
     </Comp>
   )
