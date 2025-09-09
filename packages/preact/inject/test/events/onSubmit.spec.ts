@@ -5,7 +5,6 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 import { onSubmit } from "../../src/init/autocomplete/events/onSubmit"
 import type { AutocompleteInjectContext } from "../../src/init/injectAutocomplete"
 
-// Create a proper mock that satisfies all type requirements
 const createMockContext = (overrides: Partial<AutocompleteInjectContext> = {}): AutocompleteInjectContext => {
   const baseConfig = {
     pageType: "autocomplete" as const,
@@ -26,7 +25,6 @@ const createMockContext = (overrides: Partial<AutocompleteInjectContext> = {}): 
     dropdownCssSelector: ".dropdown",
     onNavigateToSearch: vi.fn(),
     timeout: 100,
-    // AutocompleteInjectContext specific properties
     input: document.createElement("input"),
     dropdown: {
       element: document.createElement("div"),
