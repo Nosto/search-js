@@ -4,6 +4,7 @@ import { init } from "@nosto/search-js/preact/inject"
 import { Button } from "../../components/Button"
 import { useEffectOnce } from "../../utils/useEffectOnce"
 import { SpeechToTextButton } from "../Search/components/SpeechToTextButton"
+import { styles } from "./AutocompleteInjected.styles"
 import { AutocompleteContent } from "./components/AutocompleteContent"
 import { AutocompleteHistory } from "./components/AutocompleteHistory"
 
@@ -48,36 +49,12 @@ export function AutocompleteInjected() {
   }
 
   return (
-    <div title="Autocomplete (Injected)" style={{ position: "relative" }}>
-      <form
-        id="inject-autocomplete-form"
-        onSubmit={handleSearch}
-        style={{
-          position: "relative",
-          display: "flex",
-          gap: "8px",
-          justifyContent: "center",
-          maxWidth: "500px",
-          margin: "0 auto"
-        }}
-      >
-        <input
-          id="inject-autocomplete-input"
-          type="search"
-          placeholder="Search for products..."
-          style={{
-            flex: "1",
-            width: "100%",
-            padding: "12px 16px",
-            fontSize: "16px",
-            border: "2px solid #ddd",
-            borderRadius: "8px",
-            outline: "none"
-          }}
-        />
+    <div title="Autocomplete (Injected)" style={styles.container}>
+      <form id="inject-autocomplete-form" onSubmit={handleSearch} style={styles.form}>
+        <input id="inject-autocomplete-input" type="search" placeholder="Search for products..." style={styles.input} />
         <Button type="submit">Search</Button>
       </form>
-      <div style={{ position: "relative", maxWidth: "500px", margin: "0 auto" }}>
+      <div style={styles.dropdownContainer}>
         <div id="inject-autocomplete-dropdown"></div>
       </div>
     </div>
