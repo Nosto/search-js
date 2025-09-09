@@ -1,3 +1,10 @@
+# [3.13.0](https://github.com/Nosto/search-js/compare/v3.12.0...v3.13.0) (2025-09-09)
+
+
+### Features
+
+* extract styles from remaining TSX components to sibling .styles.ts files ([03cc9eb](https://github.com/Nosto/search-js/commit/03cc9eb5f617840702bf9f6d9228a5d11969c37d))
+
 # [3.12.0](https://github.com/Nosto/search-js/compare/v3.11.0...v3.12.0) (2025-09-05)
 
 
