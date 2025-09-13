@@ -1,5 +1,4 @@
-import { HistoryElement } from "@nosto/search-js/preact/autocomplete"
-import { AutocompleteContext } from "@nosto/search-js/preact/inject"
+import { AutocompleteContext, HistoryElement } from "@nosto/search-js/preact/autocomplete"
 import { useContext } from "preact/hooks"
 
 import { historyElementStyles, styles } from "./AutocompleteHistoryElement.styles"

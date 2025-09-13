@@ -1,6 +1,5 @@
-import { logger } from "@utils/logger.ts"
-
-import { findAll } from "./helpers/dom.ts"
+import { findAll } from "./findAll"
+import { logger } from "./logger"
 
 export interface DelayOptions {
   /** HTML Selector to observe and wait for */
@@ -11,12 +10,13 @@ export interface DelayOptions {
    */
   timeout?: number
 }
+
 /**
  * Wait for element to appear in DOM using MutationObserver
  * @returns First element it finds
  * @example
  * ```
- * import { waitForElement } from '@nosto/preact'
+ * import { waitForElement } from '@nosto/search-js/utils'
  *
  * init({
  *     serpRenderDelay: () => {
@@ -28,7 +28,6 @@ export interface DelayOptions {
  * })
  * ```
  */
-
 export async function waitForElement<T extends Element>({ selector, timeout = 500 }: DelayOptions): Promise<T | void> {
   const elements = await waitForElements({ selector, timeout })
   return elements[0] as T | void

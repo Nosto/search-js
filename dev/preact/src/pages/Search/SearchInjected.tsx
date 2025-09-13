@@ -1,37 +1,26 @@
-import { init } from "@nosto/search-js/preact/inject"
-import { useLocation } from "preact-iso"
-
-import { useInfiniteScroll } from "../../contexts/InfiniteScrollContext"
 import { useEffectOnce } from "../../utils/useEffectOnce"
 import { Autocomplete } from "../Autocomplete/Autocomplete"
-import { SearchContentInfinite } from "./components/SearchContentInfinite"
-import { SearchContentPaginated } from "./components/SearchContentPaginated"
-import { SearchQueryHandler } from "./components/SearchQueryHandler"
 import { styles } from "./SearchInjected.styles"
 
 export function SearchInjected() {
-  const { isInfiniteScrollEnabled } = useInfiniteScroll()
-  const { query } = useLocation()
-
+  // Inject functionality has been removed
   useEffectOnce(() => {
-    init({
-      serp: {
-        config: {
-          defaultCurrency: "EUR"
-        },
-        cssSelector: "#inject-search",
-        render: () => (
-          <>
-            <SearchQueryHandler urlQuery={query} />
-            {isInfiniteScrollEnabled ? <SearchContentInfinite /> : <SearchContentPaginated />}
-          </>
-        )
-      }
-    })
+    console.warn("Inject functionality has been removed from @nosto/search-js/preact/inject")
   })
 
   return (
-    <div className="search" title="Search (Injected)" style={styles.container}>
+    <div className="search" title="Search (Injected - DEPRECATED)" style={styles.container}>
+      <div
+        style={{
+          padding: "20px",
+          backgroundColor: "#ffe6e6",
+          border: "1px solid #ff9999",
+          borderRadius: "4px",
+          marginBottom: "20px"
+        }}
+      >
+        <strong>Notice:</strong> The inject functionality has been removed. This component no longer works as intended.
+      </div>
       <Autocomplete />
       <div id="inject-search" />
     </div>

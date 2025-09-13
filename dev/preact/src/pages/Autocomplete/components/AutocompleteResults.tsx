@@ -1,5 +1,5 @@
 import { SearchKeyword, SearchProduct } from "@nosto/nosto-js/client"
-import { AutocompleteContext } from "@nosto/search-js/preact/inject"
+import { AutocompleteContext } from "@nosto/search-js/preact/autocomplete"
 import { useContext } from "preact/hooks"
 
 import { ProductRow } from "../../../components/Product/ProductRow"
