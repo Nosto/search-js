@@ -1,47 +1,11 @@
-import { useEventBusDispatch } from "@nosto/search-js/preact/events"
-import { init } from "@nosto/search-js/preact/inject"
-
 import { Button } from "../../components/Button"
 import { useEffectOnce } from "../../utils/useEffectOnce"
-import { SpeechToTextButton } from "../Search/components/SpeechToTextButton"
 import { styles } from "./AutocompleteInjected.styles"
-import { AutocompleteContent } from "./components/AutocompleteContent"
-import { AutocompleteHistory } from "./components/AutocompleteHistory"
 
 export function AutocompleteInjected() {
-  const triggerNewSearch = useEventBusDispatch({ event: "actions/newSearch" })
-
+  // Inject functionality has been removed
   useEffectOnce(() => {
-    init({
-      autocomplete: {
-        config: {
-          defaultCurrency: "EUR"
-        },
-        formCssSelector: "#inject-autocomplete-form",
-        inputCssSelector: "#inject-autocomplete-input",
-        dropdownCssSelector: "#inject-autocomplete-dropdown",
-        onNavigateToSearch: query => {
-          if (window.location.pathname.startsWith("/search")) {
-            triggerNewSearch({
-              query,
-              targetStore: "search"
-            })
-          } else {
-            window.location.href = `/search/?q=${query.query}`
-          }
-        },
-        renderAutocomplete: () => <AutocompleteContent />,
-        renderHistory: () => <AutocompleteHistory />,
-        renderSpeechToText: () => <SpeechToTextButton />,
-        query: {
-          keywords: {
-            fields: ["keyword", "_highlight.keyword"],
-            size: 5,
-            facets: ["*"]
-          }
-        }
-      }
-    })
+    console.warn("Inject functionality has been removed from @nosto/search-js/preact/inject")
   })
 
   const handleSearch = () => {
@@ -49,7 +13,18 @@ export function AutocompleteInjected() {
   }
 
   return (
-    <div title="Autocomplete (Injected)" style={styles.container}>
+    <div title="Autocomplete (Injected - DEPRECATED)" style={styles.container}>
+      <div
+        style={{
+          padding: "20px",
+          backgroundColor: "#ffe6e6",
+          border: "1px solid #ff9999",
+          borderRadius: "4px",
+          marginBottom: "20px"
+        }}
+      >
+        <strong>Notice:</strong> The inject functionality has been removed. This component no longer works as intended.
+      </div>
       <form id="inject-autocomplete-form" onSubmit={handleSearch} style={styles.form}>
         <input id="inject-autocomplete-input" type="search" placeholder="Search for products..." style={styles.input} />
         <Button type="submit">Search</Button>

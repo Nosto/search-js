@@ -57,11 +57,6 @@
       "import": "./dist/preact/hooks/hooks.es.js",
       "require": "./dist/preact/hooks/hooks.cjs.js"
     },
-    "./preact/inject": {
-      "types": "./dist/preact/inject/inject.d.ts",
-      "import": "./dist/preact/inject/inject.es.js",
-      "require": "./dist/preact/inject/inject.cjs.js"
-    },
     "./preact/legacy": {
       "types": "./dist/preact/legacy/legacy.d.ts",
       "import": "./dist/preact/legacy/legacy.es.js",
