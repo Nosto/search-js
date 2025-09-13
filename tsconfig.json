@@ -30,8 +30,10 @@
     "paths": {
       "@core/*": ["packages/core/src/*"],
       "@currencies/*": ["packages/currencies/src/*"],
+      "@preact/autocomplete": ["packages/preact/autocomplete/autocomplete.ts"],
       "@preact/autocomplete/*": ["packages/preact/autocomplete/src/*"],
       "@preact/category/*": ["packages/preact/category/src/*"],
+      "@preact/common": ["packages/preact/common/common.ts"],
       "@preact/common/*": ["packages/preact/common/src/*"],
       "@preact/events/*": ["packages/preact/events/src/*"],
       "@preact/hooks/*": ["packages/preact/hooks/src/*"],
@@ -39,7 +41,8 @@
       "@preact/legacy/*": ["packages/preact/legacy/src/*"],
       "@preact/serp/*": ["packages/preact/serp/src/*"],
       "@thumbnails/*": ["packages/thumbnails/src/*"],
-      "@utils/*": ["packages/utils/src/*"],
+      "@utils": ["packages/utils/utils.ts"],
+      "@utils/*": ["packages/utils/src/*"]
     }
   },
   "exclude": ["dev"]

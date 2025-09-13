@@ -1,24 +1,13 @@
 import { nostojs } from "@nosto/nosto-js"
 import { SearchKeyword, SearchProduct, SearchQuery } from "@nosto/nosto-js/client"
-import { createContext } from "preact"
+import { AutocompleteContext, type AutocompleteUserContext } from "@preact/autocomplete/AutocompleteContext"
 
 import { AutocompleteInjectContext } from "../injectAutocomplete"
 import { AutocompleteDropdown } from "./components/AutocompleteDropdown"
 import { AutocompleteHistory } from "./components/AutocompleteHistory"
 
-export type AutocompleteUserContext = {
-  reportProductClick: (product: SearchProduct) => void
-  reportKeywordClick: (keyword: SearchKeyword) => void
-  handleSubmit: (query: SearchQuery) => void
-  highlightedElementIndex: number
-}
-
-export const AutocompleteContext = createContext<AutocompleteUserContext>({
-  reportProductClick: () => {},
-  reportKeywordClick: () => {},
-  handleSubmit: () => {},
-  highlightedElementIndex: -1
-})
+// Re-export the context from autocomplete package for backwards compatibility
+export { AutocompleteContext, type AutocompleteUserContext }
 
 export function createContextHandle(
   context: AutocompleteInjectContext,

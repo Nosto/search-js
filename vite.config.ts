@@ -39,20 +39,23 @@ export default defineConfig({
     }
   },
   resolve: {
-    alias: {
-      "@core": resolve(import.meta.dirname, "packages/core/src"),
-      "@currencies": resolve(import.meta.dirname, "packages/currencies/src"),
-      "@preact/autocomplete": resolve(import.meta.dirname, "packages/preact/autocomplete/src"),
-      "@preact/category": resolve(import.meta.dirname, "packages/preact/category/src"),
-      "@preact/common": resolve(import.meta.dirname, "packages/preact/common/src"),
-      "@preact/events": resolve(import.meta.dirname, "packages/preact/events/src"),
-      "@preact/hooks": resolve(import.meta.dirname, "packages/preact/hooks/src"),
-      "@preact/inject": resolve(import.meta.dirname, "packages/preact/inject/src"),
-      "@preact/legacy": resolve(import.meta.dirname, "packages/preact/legacy/src"),
-      "@preact/serp": resolve(import.meta.dirname, "packages/preact/serp/src"),
-      "@thumbnails": resolve(import.meta.dirname, "packages/thumbnails/src"),
-      "@utils": resolve(import.meta.dirname, "packages/utils/src")
-    }
+    alias: [
+      { find: /^@core\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/core/src/$1") },
+      { find: /^@currencies\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/currencies/src/$1") },
+      { find: /^@preact\/autocomplete\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/preact/autocomplete/src/$1") },
+      { find: /^@preact\/autocomplete$/, replacement: resolve(import.meta.dirname, "packages/preact/autocomplete/autocomplete.ts") },
+      { find: /^@preact\/category\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/preact/category/src/$1") },
+      { find: /^@preact\/common\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/preact/common/src/$1") },
+      { find: /^@preact\/common$/, replacement: resolve(import.meta.dirname, "packages/preact/common/common.ts") },
+      { find: /^@preact\/events\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/preact/events/src/$1") },
+      { find: /^@preact\/hooks\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/preact/hooks/src/$1") },
+      { find: /^@preact\/inject\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/preact/inject/src/$1") },
+      { find: /^@preact\/legacy\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/preact/legacy/src/$1") },
+      { find: /^@preact\/serp\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/preact/serp/src/$1") },
+      { find: /^@thumbnails\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/thumbnails/src/$1") },
+      { find: /^@utils\/(.*)$/, replacement: resolve(import.meta.dirname, "packages/utils/src/$1") },
+      { find: /^@utils$/, replacement: resolve(import.meta.dirname, "packages/utils/utils.ts") }
+    ]
   },
   test: {
     coverage: {

@@ -1,7 +1,3 @@
-export function findAll<T extends Element>(selector: string) {
-  return Array.from(document.querySelectorAll<T>(selector))
-}
-
 function getParents(target: Element) {
   const parentsList: Element[] = []
   let parent = target.parentNode
@@ -30,9 +26,4 @@ export function bindClickOutside([element, input]: HTMLElement[], callback: () =
       document.removeEventListener("click", onClick)
     }
   }
-}
-
-export function bindBlur(element: HTMLElement, callback: () => void): void {
-  element.tabIndex = 0
-  element.addEventListener("blur", callback)
 }

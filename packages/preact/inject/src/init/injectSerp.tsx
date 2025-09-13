@@ -1,7 +1,7 @@
+import { ErrorBoundary } from "@preact/common"
 import { Store } from "@preact/common/store/store"
 import { SearchPageProvider } from "@preact/serp/SerpPageProvider"
 
-import ErrorBoundary from "../components/ErrorBoundary"
 import { SerpInjectConfig } from "../config"
 import { injectComponent } from "./injectComponent"
 
