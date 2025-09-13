@@ -1,6 +1,6 @@
-import { CategoryPageProvider } from "@preact/category/CategoryPageProvider"
-import { ErrorBoundary } from "@preact/common"
-import { Store } from "@preact/common/store/store"
+import { CategoryPageProvider } from "../../../category/src/CategoryPageProvider"
+import { ErrorBoundary } from "../../../common/src/components/ErrorBoundary"
+import { Store } from "../../../common/src/store/store"
 
 import { CategoryInjectConfig } from "../config"
 import { injectComponent } from "./injectComponent"

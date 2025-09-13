@@ -1,5 +1,5 @@
-import { waitForElements } from "@utils"
-import { logger } from "@utils/logger"
+import { waitForElements } from "../../../../utils/src/wait"
+import { logger } from "../../../../utils/src/logger"
 import { render } from "preact"
 import { JSX } from "preact/jsx-runtime"
 
