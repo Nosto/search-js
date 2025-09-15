@@ -1,3 +1,10 @@
+## [3.13.1](https://github.com/Nosto/search-js/compare/v3.13.0...v3.13.1) (2025-09-15)
+
+
+### Bug Fixes
+
+* expose config hooks ([e24b00c](https://github.com/Nosto/search-js/commit/e24b00cd81e6af8a133acd781106d433a7a3dc63))
+
 # [3.13.0](https://github.com/Nosto/search-js/compare/v3.12.0...v3.13.0) (2025-09-09)
 
 
