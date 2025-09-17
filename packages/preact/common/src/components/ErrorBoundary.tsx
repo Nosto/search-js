@@ -6,7 +6,7 @@ import { useErrorBoundary } from "preact/hooks"
  * Error boundary component to log UI level errors
  * @group Components
  */
-export default function ErrorBoundary({ children }: { children: ComponentChildren }) {
+export const ErrorBoundary = ({ children }: { children: ComponentChildren }) => {
   const [error] = useErrorBoundary()
 
   if (error) {

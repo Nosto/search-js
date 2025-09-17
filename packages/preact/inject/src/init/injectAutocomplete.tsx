@@ -1,5 +1,5 @@
 import { AutocompletePageProvider } from "@preact/autocomplete/AutocompletePageProvider"
-import ErrorBoundary from "@preact/common/components/ErrorBoundary"
+import { ErrorBoundary } from "@preact/common/components/ErrorBoundary"
 import { Store } from "@preact/common/store/store"
 import { bindInput, disableNativeAutocomplete } from "@utils/bindInput"
 import { debounce } from "@utils/debounce"

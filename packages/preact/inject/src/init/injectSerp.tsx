@@ -1,4 +1,4 @@
-import ErrorBoundary from "@preact/common/components/ErrorBoundary"
+import { ErrorBoundary } from "@preact/common/components/ErrorBoundary"
 import { Store } from "@preact/common/store/store"
 import { SearchPageProvider } from "@preact/serp/SerpPageProvider"
 
