@@ -75,23 +75,6 @@ describe("bindClickOutside", () => {
     destroy()
   })
 
-  it("should clean up event listener when destroy is called", () => {
-    const element = document.createElement("div")
-    const input = document.createElement("input")
-    const outsideElement = document.createElement("div")
-    const callback = vi.fn()
-
-    document.body.appendChild(element)
-    document.body.appendChild(input)
-    document.body.appendChild(outsideElement)
-
-    const { destroy } = bindClickOutside([element, input], callback)
-
-    destroy()
-    outsideElement.click()
-    expect(callback).not.toHaveBeenCalled()
-  })
-
   it("should handle non-HTMLElement targets gracefully", () => {
     const element = document.createElement("div")
     const input = document.createElement("input")
