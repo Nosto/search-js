@@ -1,7 +1,7 @@
 import { CategoryPageProvider } from "@preact/category/CategoryPageProvider"
+import ErrorBoundary from "@preact/common/components/ErrorBoundary"
 import { Store } from "@preact/common/store/store"
 
-import ErrorBoundary from "../components/ErrorBoundary"
 import { CategoryInjectConfig } from "../config"
 import { injectComponent } from "./injectComponent"
 
