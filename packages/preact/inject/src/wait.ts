@@ -1,6 +1,5 @@
+import { findAll } from "@utils/findAll"
 import { logger } from "@utils/logger.ts"
-
-import { findAll } from "./helpers/dom.ts"
 
 export interface DelayOptions {
   /** HTML Selector to observe and wait for */

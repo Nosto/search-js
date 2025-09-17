@@ -1,4 +1,6 @@
 /** @module utils */
+export { bindBlur } from "./src/bindBlur"
+export { bindClickOutside } from "./src/bindClickOutside"
 export {
   type BindElementOptions,
   bindInput,
@@ -7,6 +9,7 @@ export {
 } from "./src/bindInput"
 export { cl } from "./src/cl"
 export { deepMerge, type Merge, type PlainMerge } from "./src/deepMerge"
+export { findAll } from "./src/findAll"
 export { isBot } from "./src/isBot"
 export { isEqual } from "./src/isEqual"
 export { isPlainObject } from "./src/isPlainObject"

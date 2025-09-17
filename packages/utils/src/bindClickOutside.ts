@@ -1,8 +1,9 @@
-export function findAll<T extends Element>(selector: string) {
-  return Array.from(document.querySelectorAll<T>(selector))
-}
-
-function getParents(target: Element) {
+/**
+ * Get parent elements of a target element
+ * @param target - Element to get parents for
+ * @returns Array of parent elements
+ */
+function getParents(target: Element): Element[] {
   const parentsList: Element[] = []
   let parent = target.parentNode
   while (parent && parent !== document && parent instanceof Element) {
@@ -12,6 +13,12 @@ function getParents(target: Element) {
   return parentsList
 }
 
+/**
+ * Bind click outside event handler
+ * @param elements - Array containing [element, input] HTMLElements
+ * @param callback - Function to call when clicking outside
+ * @returns Object with destroy method to cleanup event listener
+ */
 export function bindClickOutside([element, input]: HTMLElement[], callback: () => void) {
   const onClick = (event: MouseEvent) => {
     const target = event.target
@@ -30,9 +37,4 @@ export function bindClickOutside([element, input]: HTMLElement[], callback: () =
       document.removeEventListener("click", onClick)
     }
   }
-}
-
-export function bindBlur(element: HTMLElement, callback: () => void): void {
-  element.tabIndex = 0
-  element.addEventListener("blur", callback)
 }
