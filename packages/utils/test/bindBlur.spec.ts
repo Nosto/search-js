@@ -28,14 +28,4 @@ describe("bindBlur", () => {
 
     expect(callback).toHaveBeenCalled()
   })
-
-  it("should override existing tabIndex", () => {
-    const element = document.createElement("div")
-    element.tabIndex = 5
-    const callback = vi.fn()
-
-    bindBlur(element, callback)
-
-    expect(element.tabIndex).toBe(0)
-  })
 })

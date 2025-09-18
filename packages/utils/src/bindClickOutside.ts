@@ -15,12 +15,11 @@ function getParents(target: Element): Element[] {
 
 /**
  * Bind click outside event handler
- * @param options - Configuration object with element and input
- * @param callback - Function to call when clicking outside
+ * @param options - Configuration object with element, input, and callback
  * @returns Object with destroy method to cleanup event listener
  */
-export function bindClickOutside(options: { element: HTMLElement; input: HTMLElement }, callback: () => void) {
-  const { element, input } = options
+export function bindClickOutside(options: { element: HTMLElement; input: HTMLElement; callback: () => void }) {
+  const { element, input, callback } = options
   const onClick = (event: MouseEvent) => {
     const target = event.target
 

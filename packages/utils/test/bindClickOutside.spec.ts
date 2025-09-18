@@ -13,7 +13,7 @@ describe("bindClickOutside", () => {
     document.body.appendChild(input)
     document.body.appendChild(outsideElement)
 
-    bindClickOutside({ element, input }, callback)
+    bindClickOutside({ element, input, callback })
 
     outsideElement.click()
     expect(callback).toHaveBeenCalledTimes(1)
@@ -27,7 +27,7 @@ describe("bindClickOutside", () => {
     document.body.appendChild(element)
     document.body.appendChild(input)
 
-    bindClickOutside({ element, input }, callback)
+    bindClickOutside({ element, input, callback })
 
     element.click()
     expect(callback).not.toHaveBeenCalled()
@@ -41,7 +41,7 @@ describe("bindClickOutside", () => {
     document.body.appendChild(element)
     document.body.appendChild(input)
 
-    bindClickOutside({ element, input }, callback)
+    bindClickOutside({ element, input, callback })
 
     input.click()
     expect(callback).not.toHaveBeenCalled()
@@ -57,7 +57,7 @@ describe("bindClickOutside", () => {
     document.body.appendChild(element)
     document.body.appendChild(input)
 
-    bindClickOutside({ element, input }, callback)
+    bindClickOutside({ element, input, callback })
 
     childElement.click()
     expect(callback).not.toHaveBeenCalled()
@@ -71,7 +71,7 @@ describe("bindClickOutside", () => {
     document.body.appendChild(element)
     document.body.appendChild(input)
 
-    bindClickOutside({ element, input }, callback)
+    bindClickOutside({ element, input, callback })
 
     document.body.click()
     expect(callback).toHaveBeenCalledTimes(1)
