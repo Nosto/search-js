@@ -1,4 +1,5 @@
 /** @module preact/common */
+export { ErrorBoundary } from "./src/components/ErrorBoundary"
 export { InfiniteScroll, type InfiniteScrollProps } from "./src/components/InfiniteScroll/InfiniteScroll"
 export { InfiniteScrollWithLink } from "./src/components/InfiniteScroll/InfiniteScrollWithLink"
 export { useAutocompleteConfig, useCategoryConfig, useConfig, useSerpConfig } from "./src/config/configContext"

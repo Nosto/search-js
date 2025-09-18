@@ -1,11 +1,11 @@
 import { AutocompletePageProvider } from "@preact/autocomplete/AutocompletePageProvider"
+import { ErrorBoundary } from "@preact/common/components/ErrorBoundary"
 import { Store } from "@preact/common/store/store"
 import { bindInput, disableNativeAutocomplete } from "@utils/bindInput"
 import { debounce } from "@utils/debounce"
 import { measure } from "@utils/performance"
 import { render, VNode } from "preact"
 
-import ErrorBoundary from "../components/ErrorBoundary"
 import { AutocompleteInjectConfig } from "../config"
 import { bindBlur, bindClickOutside } from "../helpers/dom"
 import { resolveCssSelector } from "../resolveCssSelector"
