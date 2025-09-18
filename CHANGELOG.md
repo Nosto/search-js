@@ -1,3 +1,13 @@
+# [3.14.0](https://github.com/Nosto/search-js/compare/v3.13.1...v3.14.0) (2025-09-18)
+
+
+### Features
+
+* drop ErrorBoundary test file ([0454d20](https://github.com/Nosto/search-js/commit/0454d20aa4f9d6113d340b3395d6856543a45cdc))
+* move ErrorBoundary to common/src/components and export it ([3105925](https://github.com/Nosto/search-js/commit/31059256e50255ec0b666762a3a298ea6a5e86f4))
+* use function declaration for ErrorBoundary component ([a9ba1dc](https://github.com/Nosto/search-js/commit/a9ba1dc20e3d8eae3b3e459debeffc5421a11df0))
+* use named export for ErrorBoundary component ([9175454](https://github.com/Nosto/search-js/commit/91754540bcf1eaaafe945890bc08bbdefb023d91))
+
 ## [3.13.1](https://github.com/Nosto/search-js/compare/v3.13.0...v3.13.1) (2025-09-15)
 
 
