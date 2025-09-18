@@ -77,8 +77,8 @@ async function injectAutocompleteForInput(
   })
   bindBlur(history.element, history.hide)
   bindBlur(dropdown.element, dropdown.hide)
-  bindClickOutside([history.element, input], history.hide)
-  bindClickOutside([dropdown.element, input], dropdown.hide)
+  bindClickOutside({ element: history.element, input }, history.hide)
+  bindClickOutside({ element: dropdown.element, input }, dropdown.hide)
 }
 
 export type AutocompleteInjectContext = AutocompleteInjectConfig & {

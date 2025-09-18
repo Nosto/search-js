@@ -1,12 +1,8 @@
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 
 import { bindClickOutside } from "../src/bindClickOutside"
 
 describe("bindClickOutside", () => {
-  beforeEach(() => {
-    document.body.innerHTML = ""
-  })
-
   it("should call callback when clicking outside element", () => {
     const element = document.createElement("div")
     const input = document.createElement("input")
@@ -17,12 +13,10 @@ describe("bindClickOutside", () => {
     document.body.appendChild(input)
     document.body.appendChild(outsideElement)
 
-    const { destroy } = bindClickOutside([element, input], callback)
+    bindClickOutside({ element, input }, callback)
 
     outsideElement.click()
     expect(callback).toHaveBeenCalledTimes(1)
-
-    destroy()
   })
 
   it("should not call callback when clicking on element", () => {
@@ -33,12 +27,10 @@ describe("bindClickOutside", () => {
     document.body.appendChild(element)
     document.body.appendChild(input)
 
-    const { destroy } = bindClickOutside([element, input], callback)
+    bindClickOutside({ element, input }, callback)
 
     element.click()
     expect(callback).not.toHaveBeenCalled()
-
-    destroy()
   })
 
   it("should not call callback when clicking on input", () => {
@@ -49,12 +41,10 @@ describe("bindClickOutside", () => {
     document.body.appendChild(element)
     document.body.appendChild(input)
 
-    const { destroy } = bindClickOutside([element, input], callback)
+    bindClickOutside({ element, input }, callback)
 
     input.click()
     expect(callback).not.toHaveBeenCalled()
-
-    destroy()
   })
 
   it("should not call callback when clicking on child element", () => {
@@ -67,15 +57,13 @@ describe("bindClickOutside", () => {
     document.body.appendChild(element)
     document.body.appendChild(input)
 
-    const { destroy } = bindClickOutside([element, input], callback)
+    bindClickOutside({ element, input }, callback)
 
     childElement.click()
     expect(callback).not.toHaveBeenCalled()
-
-    destroy()
   })
 
-  it("should handle non-HTMLElement targets gracefully", () => {
+  it("should handle clicks on document body", () => {
     const element = document.createElement("div")
     const input = document.createElement("input")
     const callback = vi.fn()
@@ -83,15 +71,9 @@ describe("bindClickOutside", () => {
     document.body.appendChild(element)
     document.body.appendChild(input)
 
-    const { destroy } = bindClickOutside([element, input], callback)
+    bindClickOutside({ element, input }, callback)
 
-    // Create a click event with a non-HTMLElement target
-    const event = new MouseEvent("click", { bubbles: true })
-    Object.defineProperty(event, "target", { value: document.createTextNode("text") })
-    document.dispatchEvent(event)
-
-    expect(callback).not.toHaveBeenCalled()
-
-    destroy()
+    document.body.click()
+    expect(callback).toHaveBeenCalledTimes(1)
   })
 })

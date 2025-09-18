@@ -1,12 +1,8 @@
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 
 import { bindBlur } from "../src/bindBlur"
 
 describe("bindBlur", () => {
-  beforeEach(() => {
-    document.body.innerHTML = ""
-  })
-
   it("should set tabIndex and bind blur event", () => {
     const element = document.createElement("div")
     const callback = vi.fn()
@@ -33,14 +29,13 @@ describe("bindBlur", () => {
     expect(callback).toHaveBeenCalled()
   })
 
-  it("should work with elements that already have tabIndex", () => {
+  it("should override existing tabIndex", () => {
     const element = document.createElement("div")
     element.tabIndex = 5
     const callback = vi.fn()
-    document.body.appendChild(element)
 
     bindBlur(element, callback)
 
-    expect(element.tabIndex).toBe(0) // Should override existing tabIndex
+    expect(element.tabIndex).toBe(0)
   })
 })
