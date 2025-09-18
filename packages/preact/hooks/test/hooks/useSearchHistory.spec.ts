@@ -1,44 +1,34 @@
 import { useSearchHistory } from "@preact/hooks/useSearchHistory"
-import * as storage from "@utils/storage"
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { afterEach, beforeEach, describe, expect, it } from "vitest"
 
 import { mockStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
-// Mock the storage module
-vi.mock("@utils/storage", () => ({
-  getLocalStorageItem: vi.fn(),
-  setLocalStorageItem: vi.fn(),
-  removeLocalStorageItem: vi.fn()
-}))
-
 describe("useSearchHistory", () => {
-  const mockGetLocalStorageItem = vi.mocked(storage.getLocalStorageItem)
-  const mockSetLocalStorageItem = vi.mocked(storage.setLocalStorageItem)
-  const mockRemoveLocalStorageItem = vi.mocked(storage.removeLocalStorageItem)
-
   beforeEach(() => {
-    vi.clearAllMocks()
+    // Clear localStorage before each test
+    localStorage.clear()
   })
 
   afterEach(() => {
-    vi.restoreAllMocks()
+    // Clean up after each test
+    localStorage.clear()
   })
 
   it("returns empty array when no history exists", () => {
-    mockGetLocalStorageItem.mockReturnValue(null)
     const store = mockStore({})
 
     const render = renderHookWithProviders(() => useSearchHistory(), { store })
     const { historyItems } = render.result.current
 
     expect(historyItems).toEqual([])
-    expect(mockGetLocalStorageItem).toHaveBeenCalledWith("nosto:search-js:history")
   })
 
   it("returns history items from localStorage when not in state", () => {
+    // Set up localStorage directly
     const historyData = ["search1", "search2", "search3"]
-    mockGetLocalStorageItem.mockReturnValue(historyData)
+    localStorage.setItem("nosto:search-js:history", JSON.stringify(historyData))
+
     const store = mockStore({})
 
     const render = renderHookWithProviders(() => useSearchHistory(), { store })
@@ -57,12 +47,12 @@ describe("useSearchHistory", () => {
     const { historyItems } = render.result.current
 
     expect(historyItems).toEqual(stateHistoryItems)
-    expect(mockGetLocalStorageItem).not.toHaveBeenCalled()
   })
 
   it("filters out empty strings from localStorage history", () => {
     const historyData = ["search1", "", "search2", null, "search3"]
-    mockGetLocalStorageItem.mockReturnValue(historyData)
+    localStorage.setItem("nosto:search-js:history", JSON.stringify(historyData))
+
     const store = mockStore({})
 
     const render = renderHookWithProviders(() => useSearchHistory(), { store })
@@ -73,7 +63,8 @@ describe("useSearchHistory", () => {
 
   it("adds new search term to history", () => {
     const existingHistory = ["search1", "search2"]
-    mockGetLocalStorageItem.mockReturnValue(existingHistory)
+    localStorage.setItem("nosto:search-js:history", JSON.stringify(existingHistory))
+
     const store = mockStore({})
 
     const render = renderHookWithProviders(() => useSearchHistory(), { store })
@@ -81,16 +72,14 @@ describe("useSearchHistory", () => {
 
     addToHistory("new search")
 
-    expect(mockSetLocalStorageItem).toHaveBeenCalledWith("nosto:search-js:history", [
-      "search1",
-      "search2",
-      "new search"
-    ])
+    const storedHistory = JSON.parse(localStorage.getItem("nosto:search-js:history") || "[]")
+    expect(storedHistory).toEqual(["search1", "search2", "new search"])
   })
 
   it("removes duplicate when adding existing search term", () => {
     const existingHistory = ["search1", "search2", "search3"]
-    mockGetLocalStorageItem.mockReturnValue(existingHistory)
+    localStorage.setItem("nosto:search-js:history", JSON.stringify(existingHistory))
+
     const store = mockStore({})
 
     const render = renderHookWithProviders(() => useSearchHistory(), { store })
@@ -98,12 +87,14 @@ describe("useSearchHistory", () => {
 
     addToHistory("search2")
 
-    expect(mockSetLocalStorageItem).toHaveBeenCalledWith("nosto:search-js:history", ["search1", "search3", "search2"])
+    const storedHistory = JSON.parse(localStorage.getItem("nosto:search-js:history") || "[]")
+    expect(storedHistory).toEqual(["search1", "search3", "search2"])
   })
 
   it("respects history size limit", () => {
     const existingHistory = ["search1", "search2", "search3", "search4", "search5"]
-    mockGetLocalStorageItem.mockReturnValue(existingHistory)
+    localStorage.setItem("nosto:search-js:history", JSON.stringify(existingHistory))
+
     const store = mockStore({})
 
     const render = renderHookWithProviders(() => useSearchHistory(3), { store })
@@ -111,12 +102,8 @@ describe("useSearchHistory", () => {
 
     addToHistory("new search")
 
-    expect(mockSetLocalStorageItem).toHaveBeenCalledWith("nosto:search-js:history", [
-      "search3",
-      "search4",
-      "search5",
-      "new search"
-    ])
+    const storedHistory = JSON.parse(localStorage.getItem("nosto:search-js:history") || "[]")
+    expect(storedHistory).toEqual(["search3", "search4", "search5", "new search"])
   })
 
   it("does not add empty or whitespace-only strings", () => {
@@ -128,12 +115,14 @@ describe("useSearchHistory", () => {
     addToHistory("   ")
     addToHistory("\t\n")
 
-    expect(mockSetLocalStorageItem).not.toHaveBeenCalled()
+    const storedHistory = JSON.parse(localStorage.getItem("nosto:search-js:history") || "[]")
+    expect(storedHistory).toEqual([])
   })
 
   it("trims whitespace from search terms", () => {
     const existingHistory = ["search1"]
-    mockGetLocalStorageItem.mockReturnValue(existingHistory)
+    localStorage.setItem("nosto:search-js:history", JSON.stringify(existingHistory))
+
     const store = mockStore({})
 
     const render = renderHookWithProviders(() => useSearchHistory(), { store })
@@ -141,36 +130,27 @@ describe("useSearchHistory", () => {
 
     addToHistory("  new search  ")
 
-    expect(mockSetLocalStorageItem).toHaveBeenCalledWith("nosto:search-js:history", ["search1", "new search"])
-  })
-
-  it("gets history from localStorage via getHistory method", () => {
-    const historyData = ["search1", "search2", "search3"]
-    mockGetLocalStorageItem.mockReturnValue(historyData)
-    const store = mockStore({})
-
-    const render = renderHookWithProviders(() => useSearchHistory(), { store })
-    const { getHistory } = render.result.current
-
-    const result = getHistory()
-
-    expect(result).toEqual(["search3", "search2", "search1"]) // reversed
-    expect(mockGetLocalStorageItem).toHaveBeenCalledWith("nosto:search-js:history")
+    const storedHistory = JSON.parse(localStorage.getItem("nosto:search-js:history") || "[]")
+    expect(storedHistory).toEqual(["search1", "new search"])
   })
 
   it("clears history from localStorage", () => {
+    const existingHistory = ["search1", "search2"]
+    localStorage.setItem("nosto:search-js:history", JSON.stringify(existingHistory))
+
     const store = mockStore({})
     const render = renderHookWithProviders(() => useSearchHistory(), { store })
     const { clearHistory } = render.result.current
 
     clearHistory()
 
-    expect(mockRemoveLocalStorageItem).toHaveBeenCalledWith("nosto:search-js:history")
+    expect(localStorage.getItem("nosto:search-js:history")).toBeNull()
   })
 
   it("uses default history size of 10", () => {
     const longHistory = Array.from({ length: 15 }, (_, i) => `search${i}`)
-    mockGetLocalStorageItem.mockReturnValue(longHistory)
+    localStorage.setItem("nosto:search-js:history", JSON.stringify(longHistory))
+
     const store = mockStore({})
 
     const render = renderHookWithProviders(() => useSearchHistory(), { store })
@@ -178,7 +158,8 @@ describe("useSearchHistory", () => {
 
     addToHistory("new search")
 
-    expect(mockSetLocalStorageItem).toHaveBeenCalledWith("nosto:search-js:history", [
+    const storedHistory = JSON.parse(localStorage.getItem("nosto:search-js:history") || "[]")
+    expect(storedHistory).toEqual([
       "search5",
       "search6",
       "search7",

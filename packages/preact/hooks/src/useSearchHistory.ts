@@ -65,11 +65,6 @@ export function useSearchHistory(historySize = 10) {
     [historySize]
   )
 
-  const getHistory = useCallback(() => {
-    const historyFromLocalStorage = getLocalStorageItem<string[]>(historyKey) ?? []
-    return [...historyFromLocalStorage].reverse().filter((item: string) => !!item)
-  }, [])
-
   const clearHistory = useCallback(() => {
     removeLocalStorageItem(historyKey)
   }, [])
@@ -79,8 +74,6 @@ export function useSearchHistory(historySize = 10) {
     historyItems,
     /** Add a search term to the history */
     addToHistory,
-    /** Get search history items from localStorage */
-    getHistory,
     /** Clear all search history */
     clearHistory
   }
