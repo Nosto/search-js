@@ -1,14 +1,13 @@
 import { HistoryElement } from "@nosto/search-js/preact/autocomplete"
-import { AutocompleteContext } from "@nosto/search-js/preact/inject"
-import { useContext } from "preact/hooks"
+import { useActions } from "@nosto/search-js/preact/hooks"
 
 import { historyElementStyles, styles } from "./AutocompleteHistoryElement.styles"
 
 export function AutocompleteHistoryElement({ item, highlighted }: { item: string; highlighted: boolean }) {
-  const { handleSubmit } = useContext(AutocompleteContext)
+  const { newSearch } = useActions()
 
   const onSubmit = () => {
-    handleSubmit({ query: item })
+    newSearch({ query: item })
   }
 
   return (

@@ -1,17 +1,16 @@
 import type { SearchKeyword } from "@nosto/nosto-js/client"
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
-import { AutocompleteContext } from "@nosto/search-js/preact/inject"
-import { useContext } from "preact/hooks"
+import { useActions } from "@nosto/search-js/preact/hooks"
 
 type Props = {
   keyword: SearchKeyword
 }
 
 export function AutocompleteKeyword({ keyword }: Props) {
-  const { handleSubmit } = useContext(AutocompleteContext)
+  const { newSearch } = useActions()
 
   const onClick = () => {
-    handleSubmit({ query: keyword.keyword })
+    newSearch({ query: keyword.keyword })
   }
 
   return (

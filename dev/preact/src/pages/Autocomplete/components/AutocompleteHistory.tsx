@@ -1,13 +1,10 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { AutocompleteContext } from "@nosto/search-js/preact/inject"
-import { useContext } from "preact/hooks"
 
 import { styles } from "./AutocompleteHistory.styles"
 import { AutocompleteHistoryElement } from "./AutocompleteHistoryElement"
 
-export function AutocompleteHistory() {
+export function AutocompleteHistory({ highlightedElementIndex = -1 }: { highlightedElementIndex?: number }) {
   const historyItems = useNostoAppState(state => state.historyItems)
-  const { highlightedElementIndex } = useContext(AutocompleteContext)
 
   if (!historyItems) {
     return null

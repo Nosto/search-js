@@ -1,9 +1,21 @@
-import { useInjectionLogic } from "../../contexts/InfiniteScrollContext"
-import { AutocompleteInjected } from "./AutocompleteInjected"
-import { AutocompleteNative } from "./AutocompleteNative"
+import { AutocompleteConfig, AutocompletePageProvider } from "@nosto/search-js/preact/autocomplete"
+
+import { hitDecorators } from "../../utils/hitDecorators"
+import { AutocompleteSearchForm } from "./components/AutocompleteSearchForm"
 
 export function Autocomplete() {
-  const { isInjectionEnabled } = useInjectionLogic()
+  const config = {
+    defaultCurrency: "EUR",
+    search: {
+      hitDecorators
+    }
+  } satisfies AutocompleteConfig
 
-  return isInjectionEnabled ? <AutocompleteInjected /> : <AutocompleteNative />
+  return (
+    <div title="Autocomplete">
+      <AutocompletePageProvider config={config}>
+        <AutocompleteSearchForm />
+      </AutocompletePageProvider>
+    </div>
+  )
 }
