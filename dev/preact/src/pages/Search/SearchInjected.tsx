@@ -1,8 +1,8 @@
-import { init } from "@nosto/search-js/preact/inject"
+import { createPortal } from "preact/compat"
+import { useRef } from "preact/hooks"
 import { useLocation } from "preact-iso"
 
 import { useInfiniteScroll } from "../../contexts/InfiniteScrollContext"
-import { useEffectOnce } from "../../utils/useEffectOnce"
 import { Autocomplete } from "../Autocomplete/Autocomplete"
 import { SearchContentInfinite } from "./components/SearchContentInfinite"
 import { SearchContentPaginated } from "./components/SearchContentPaginated"
@@ -12,28 +12,21 @@ import { styles } from "./SearchInjected.styles"
 export function SearchInjected() {
   const { isInfiniteScrollEnabled } = useInfiniteScroll()
   const { query } = useLocation()
-
-  useEffectOnce(() => {
-    init({
-      serp: {
-        config: {
-          defaultCurrency: "EUR"
-        },
-        cssSelector: "#inject-search",
-        render: () => (
-          <>
-            <SearchQueryHandler urlQuery={query} />
-            {isInfiniteScrollEnabled ? <SearchContentInfinite /> : <SearchContentPaginated />}
-          </>
-        )
-      }
-    })
-  })
+  const searchRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className="search" title="Search (Injected)" style={styles.container}>
       <Autocomplete />
-      <div id="inject-search" />
+      <div id="inject-search" ref={searchRef}>
+        {searchRef.current &&
+          createPortal(
+            <>
+              <SearchQueryHandler urlQuery={query} />
+              {isInfiniteScrollEnabled ? <SearchContentInfinite /> : <SearchContentPaginated />}
+            </>,
+            searchRef.current
+          )}
+      </div>
     </div>
   )
 }

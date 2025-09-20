@@ -1,7 +1,7 @@
 import { HistoryElement } from "@nosto/search-js/preact/autocomplete"
-import { AutocompleteContext } from "@nosto/search-js/preact/inject"
 import { useContext } from "preact/hooks"
 
+import { AutocompleteContext } from "../AutocompleteInjected"
 import { historyElementStyles, styles } from "./AutocompleteHistoryElement.styles"
 
 export function AutocompleteHistoryElement({ item, highlighted }: { item: string; highlighted: boolean }) {

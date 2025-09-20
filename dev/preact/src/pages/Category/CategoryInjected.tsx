@@ -1,9 +1,8 @@
-import { init } from "@nosto/search-js/preact/inject"
+import { createPortal } from "preact/compat"
+import { useRef } from "preact/hooks"
 import { useRoute } from "preact-iso"
 
 import { useInfiniteScroll } from "../../contexts/InfiniteScrollContext"
-import { hitDecorators } from "../../utils/hitDecorators"
-import { useEffectOnce } from "../../utils/useEffectOnce"
 import { styles } from "./CategoryInjected.styles"
 import { CategoryContentInfinite } from "./components/CategoryContentInfinite"
 import { CategoryContentPaginated } from "./components/CategoryContentPaginated"
@@ -13,30 +12,20 @@ export function CategoryInject() {
   const { isInfiniteScrollEnabled } = useInfiniteScroll()
   const { params } = useRoute()
   const { categoryPath } = params
-
-  useEffectOnce(() => {
-    init({
-      category: {
-        config: {
-          defaultCurrency: "EUR",
-          search: {
-            hitDecorators
-          }
-        },
-        cssSelector: "#inject-category",
-        render: () => (
-          <>
-            <CategoryQueryHandler categoryPath={categoryPath} />
-            {isInfiniteScrollEnabled ? <CategoryContentInfinite /> : <CategoryContentPaginated />}
-          </>
-        )
-      }
-    })
-  })
+  const categoryRef = useRef<HTMLDivElement>(null)
 
   return (
     <div className="category" title="Category (Injected)" style={styles.container}>
-      <div id="inject-category" />
+      <div id="inject-category" ref={categoryRef}>
+        {categoryRef.current &&
+          createPortal(
+            <>
+              <CategoryQueryHandler categoryPath={categoryPath} />
+              {isInfiniteScrollEnabled ? <CategoryContentInfinite /> : <CategoryContentPaginated />}
+            </>,
+            categoryRef.current
+          )}
+      </div>
     </div>
   )
 }

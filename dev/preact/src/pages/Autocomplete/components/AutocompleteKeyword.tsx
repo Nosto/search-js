@@ -1,7 +1,8 @@
 import type { SearchKeyword } from "@nosto/nosto-js/client"
 import { AutocompleteElement } from "@nosto/search-js/preact/autocomplete"
-import { AutocompleteContext } from "@nosto/search-js/preact/inject"
 import { useContext } from "preact/hooks"
+
+import { AutocompleteContext } from "../AutocompleteInjected"
 
 type Props = {
   keyword: SearchKeyword

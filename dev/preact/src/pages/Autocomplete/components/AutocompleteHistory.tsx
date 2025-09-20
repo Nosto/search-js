@@ -1,7 +1,7 @@
 import { useNostoAppState } from "@nosto/search-js/preact/hooks"
-import { AutocompleteContext } from "@nosto/search-js/preact/inject"
 import { useContext } from "preact/hooks"
 
+import { AutocompleteContext } from "../AutocompleteInjected"
 import { styles } from "./AutocompleteHistory.styles"
 import { AutocompleteHistoryElement } from "./AutocompleteHistoryElement"
 
