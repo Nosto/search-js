@@ -1,14 +1,21 @@
 import { HistoryElement } from "@nosto/search-js/preact/autocomplete"
-import { AutocompleteContext } from "@nosto/search-js/preact/inject"
-import { useContext } from "preact/hooks"
 
 import { historyElementStyles, styles } from "./AutocompleteHistoryElement.styles"
 
 export function AutocompleteHistoryElement({ item, highlighted }: { item: string; highlighted: boolean }) {
-  const { handleSubmit } = useContext(AutocompleteContext)
-
   const onSubmit = () => {
-    handleSubmit({ query: item })
+    // In native mode, the HistoryElement handles navigation automatically
+    // We just need to handle the submit action which navigates to search
+    if (window.location.pathname.startsWith("/search")) {
+      // Update the current search if we're already on search page
+      const searchParams = new URLSearchParams(window.location.search)
+      searchParams.set("q", item)
+      window.history.pushState({}, "", `${window.location.pathname}?${searchParams}`)
+      window.dispatchEvent(new PopStateEvent("popstate"))
+    } else {
+      // Navigate to search page
+      window.location.href = `/search/?q=${item}`
+    }
   }
 
   return (
