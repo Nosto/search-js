@@ -38,6 +38,7 @@
       "@preact/inject/*": ["packages/preact/inject/src/*"],
       "@preact/legacy/*": ["packages/preact/legacy/src/*"],
       "@preact/serp/*": ["packages/preact/serp/src/*"],
+      "@preact/utils/*": ["packages/preact/utils/src/*"],
       "@thumbnails/*": ["packages/thumbnails/src/*"],
       "@utils/*": ["packages/utils/src/*"],
     }

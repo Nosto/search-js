@@ -1,9 +1,9 @@
+import { waitForElements } from "@preact/utils/wait"
 import { logger } from "@utils/logger"
 import { render } from "preact"
 import { JSX } from "preact/jsx-runtime"
 
 import { CssSelector, resolveCssSelector } from "../resolveCssSelector"
-import { waitForElements } from "../wait"
 
 type Props = {
   cssSelector: CssSelector
