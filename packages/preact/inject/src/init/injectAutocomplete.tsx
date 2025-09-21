@@ -1,8 +1,9 @@
 import { AutocompletePageProvider } from "@preact/autocomplete/AutocompletePageProvider"
 import { ErrorBoundary } from "@preact/common/components/ErrorBoundary"
 import { Store } from "@preact/common/store/store"
-import { bindInput, disableNativeAutocomplete } from "@utils/bindInput"
+import { bindInput } from "@utils/bindInput"
 import { debounce } from "@utils/debounce"
+import { disableNativeAutocomplete } from "@utils/disableNativeAutocomplete"
 import { measure } from "@utils/performance"
 import { render, VNode } from "preact"
 
