@@ -1,5 +1,3 @@
-import { disableNativeAutocomplete } from "./disableNativeAutocomplete"
-
 export type InputBindingCallbacks = {
   onSubmit?: (value: string) => void
   onInput?: (value: string) => void
@@ -12,8 +10,6 @@ export interface BindElementOptions {
   form?: HTMLFormElement
   nativeSubmit?: boolean
 }
-
-export { disableNativeAutocomplete }
 
 export function bindInput(
   target: HTMLInputElement,
