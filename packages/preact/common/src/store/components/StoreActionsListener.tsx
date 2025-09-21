@@ -4,45 +4,45 @@ import { useActions } from "@preact/hooks/useActions"
 
 export function StoreActionsListener() {
   const { pageType } = useConfig()
-  const actions = useActions()
+  const { newSearch, updateSearch, replaceFilter, toggleProductFilter } = useActions()
 
   useEventBusSubscribe({
     event: "actions/newSearch",
-    callback: params => {
-      if (pageType !== params.targetStore) {
+    callback: ({ query, options, targetStore }) => {
+      if (pageType !== targetStore) {
         return
       }
-      actions.newSearch(params.query, params.options)
+      newSearch(query, options)
     }
   })
 
   useEventBusSubscribe({
     event: "actions/updateSearch",
-    callback: params => {
-      if (pageType !== params.targetStore) {
+    callback: ({ query, options, targetStore }) => {
+      if (pageType !== targetStore) {
         return
       }
-      actions.updateSearch(params.query, params.options)
+      updateSearch(query, options)
     }
   })
 
   useEventBusSubscribe({
     event: "actions/replaceFilter",
-    callback: params => {
-      if (pageType !== params.targetStore) {
+    callback: ({ field, value, targetStore }) => {
+      if (pageType !== targetStore) {
         return
       }
-      actions.replaceFilter(params.field, params.value)
+      replaceFilter(field, value)
     }
   })
 
   useEventBusSubscribe({
     event: "actions/toggleProductFilter",
-    callback: params => {
-      if (pageType !== params.targetStore) {
+    callback: ({ field, value, active, targetStore }) => {
+      if (pageType !== targetStore) {
         return
       }
-      actions.toggleProductFilter(params.field, params.value, params.active)
+      toggleProductFilter(field, value, active)
     }
   })
 
