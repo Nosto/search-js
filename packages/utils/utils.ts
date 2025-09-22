@@ -1,12 +1,8 @@
 /** @module utils */
-export {
-  type BindElementOptions,
-  bindInput,
-  disableNativeAutocomplete,
-  type InputBindingCallbacks
-} from "./src/bindInput"
+export { type BindElementOptions, bindInput, type InputBindingCallbacks } from "./src/bindInput"
 export { cl } from "./src/cl"
 export { deepMerge, type Merge, type PlainMerge } from "./src/deepMerge"
+export { disableNativeAutocomplete } from "./src/disableNativeAutocomplete"
 export { isBot } from "./src/isBot"
 export { isEqual } from "./src/isEqual"
 export { isPlainObject } from "./src/isPlainObject"

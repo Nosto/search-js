@@ -11,10 +11,6 @@ export interface BindElementOptions {
   nativeSubmit?: boolean
 }
 
-export function disableNativeAutocomplete(target: HTMLInputElement) {
-  target.setAttribute("autocomplete", "off")
-}
-
 export function bindInput(
   target: HTMLInputElement,
   { onClick, onFocus, onInput, onKeyDown, onSubmit }: InputBindingCallbacks,
