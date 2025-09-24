@@ -126,7 +126,9 @@ function setCache(handle: string, product: ShopifyProduct) {
   })
 }
 
-// Test helper - not part of public API
-export const __test__ = {
-  clearCache: () => cache.clear()
+/**
+ * Clears the product cache (useful for testing)
+ */
+export function clearShopifyProductCache() {
+  cache.clear()
 }

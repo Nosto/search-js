@@ -1,14 +1,5 @@
 /** @module preact/hooks */
-export {
-  type ShopifyImage,
-  type ShopifyMedia,
-  type ShopifyOption,
-  type ShopifyProduct,
-  type ShopifyVariant,
-  type SwatchField,
-  type SwatchOption,
-  type UseShopifyProductState
-} from "./src/types"
+export { type SwatchField, type SwatchOption } from "./src/types"
 export { useActions } from "./src/useActions"
 export { useDecoratedSearchResults } from "./src/useDecoratedSearchResults"
 export { useFacet, type UseFacetOptions } from "./src/useFacet"

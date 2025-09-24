@@ -1,8 +1,7 @@
 import { act, waitFor } from "@testing-library/preact"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { ShopifyProduct } from "../../src/types"
-import { __test__, useShopifyProduct } from "../../src/useShopifyProduct"
+import { clearShopifyProductCache, ShopifyProduct, useShopifyProduct } from "../../src/useShopifyProduct"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 // Mock fetch
@@ -76,7 +75,7 @@ const mockProduct: ShopifyProduct = {
 describe("useShopifyProduct", () => {
   beforeEach(() => {
     vi.resetAllMocks()
-    __test__.clearCache()
+    clearShopifyProductCache()
   })
 
   it("should initialize with loading state", () => {
