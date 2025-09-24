@@ -1,75 +1,20 @@
 import { act, waitFor } from "@testing-library/preact"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { clearShopifyProductCache, ShopifyProduct, useShopifyProduct } from "../../src/useShopifyProduct"
+import { ShopifyProduct } from "../../src/useShopifyProduct/types"
+import { clearShopifyProductCache, useShopifyProduct } from "../../src/useShopifyProduct/useShopifyProduct"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 // Mock fetch
 const mockFetch = vi.fn()
 global.fetch = mockFetch
 
-const mockProduct: ShopifyProduct = {
+const mockProduct: Partial<ShopifyProduct> = {
   id: 123456789,
   title: "Test Product",
   handle: "test-product",
-  description: "A test product description",
-  published_at: "2023-01-01T00:00:00Z",
-  created_at: "2023-01-01T00:00:00Z",
-  vendor: "Test Vendor",
-  type: "Test Type",
-  tags: ["test", "product"],
   price: 2999,
-  price_min: 2999,
-  price_max: 2999,
-  available: true,
-  price_varies: false,
-  compare_at_price: 3999,
-  compare_at_price_min: 3999,
-  compare_at_price_max: 3999,
-  compare_at_price_varies: false,
-  variants: [
-    {
-      id: 987654321,
-      title: "Default Title",
-      option1: null,
-      option2: null,
-      option3: null,
-      sku: "TEST-SKU-001",
-      requires_shipping: true,
-      taxable: true,
-      featured_image: null,
-      available: true,
-      name: "Test Product",
-      public_title: "Default Title",
-      options: [],
-      price: 2999,
-      weight: 100,
-      compare_at_price: 3999,
-      inventory_management: "shopify",
-      barcode: "123456789012",
-      featured_media: {
-        alt: "Test image",
-        id: 111,
-        position: 1,
-        preview_image: {
-          id: 111,
-          product_id: 123456789,
-          position: 1,
-          created_at: "2023-01-01T00:00:00Z",
-          updated_at: "2023-01-01T00:00:00Z",
-          alt: "Test image",
-          width: 800,
-          height: 600,
-          src: "https://cdn.shopify.com/test-image.jpg",
-          variant_ids: [987654321]
-        }
-      }
-    }
-  ],
-  images: ["https://cdn.shopify.com/test-image.jpg"],
-  featured_image: "https://cdn.shopify.com/test-image.jpg",
-  options: [],
-  url: "/products/test-product"
+  available: true
 }
 
 describe("useShopifyProduct", () => {
@@ -173,11 +118,12 @@ describe("useShopifyProduct", () => {
   })
 
   it("should handle different product handles independently", async () => {
-    const mockProduct2: ShopifyProduct = {
-      ...mockProduct,
+    const mockProduct2: Partial<ShopifyProduct> = {
       id: 999888777,
       title: "Another Product",
-      handle: "another-product"
+      handle: "another-product",
+      price: 1999,
+      available: false
     }
 
     mockFetch
@@ -210,11 +156,12 @@ describe("useShopifyProduct", () => {
   })
 
   it("should refetch when handle changes", async () => {
-    const mockProduct2: ShopifyProduct = {
-      ...mockProduct,
+    const mockProduct2: Partial<ShopifyProduct> = {
       id: 999888777,
       title: "Updated Product",
-      handle: "updated-product"
+      handle: "updated-product",
+      price: 3999,
+      available: true
     }
 
     mockFetch

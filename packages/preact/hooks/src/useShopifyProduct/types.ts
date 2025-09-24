@@ -74,9 +74,3 @@ export interface ShopifyOption {
   position: number
   values: string[]
 }
-
-export interface UseShopifyProductState {
-  product: ShopifyProduct | null
-  loading: boolean
-  error: string | null
-}

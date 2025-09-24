@@ -1,6 +1,12 @@
 import { useEffect, useState } from "preact/hooks"
 
-import { ShopifyProduct, UseShopifyProductState } from "./types"
+import { ShopifyProduct } from "./types"
+
+export interface UseShopifyProductState {
+  product: ShopifyProduct | null
+  loading: boolean
+  error: string | null
+}
 
 interface CacheEntry {
   product: ShopifyProduct
