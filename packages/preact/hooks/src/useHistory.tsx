@@ -9,13 +9,16 @@ export function useHistory() {
   const { updateState } = useContext(StoreContext)
   const { historySize } = useAutocompleteConfig()
 
-  const addQuery = useCallback((value: string) => {
-    const allItems = getLocalStorageItem<string[]>(historyKey) ?? []
-    const filteredItems = allItems.filter(v => v !== value).slice(historySize ? -historySize : 0)
-    filteredItems.push(value)
-    setLocalStorageItem(historyKey, filteredItems)
-    updateState({ historyItems: filteredItems.reverse() })
-  }, [])
+  const addQuery = useCallback(
+    (value: string) => {
+      const allItems = getLocalStorageItem<string[]>(historyKey) ?? []
+      const filteredItems = allItems.filter(v => v !== value).slice(historySize ? -historySize : 0)
+      filteredItems.push(value)
+      setLocalStorageItem(historyKey, filteredItems)
+      updateState({ historyItems: filteredItems.reverse() })
+    },
+    [historySize, updateState]
+  )
 
   const readSaved = useCallback(() => {
     const historyFromLocalStorage = getLocalStorageItem<string[]>(historyKey) ?? []

@@ -126,9 +126,7 @@ async function injectSpeechToText(context: AutocompleteInjectContext) {
   )
 }
 
-export function createUserComponentRenderer(
-  injectContext: AutocompleteInjectContext
-) {
+export function createUserComponentRenderer(injectContext: AutocompleteInjectContext) {
   const { config, store } = injectContext
   return (renderer: () => VNode | Promise<VNode>, target: HTMLDivElement) =>
     render(

@@ -3,10 +3,11 @@ import { StoreActionsListener } from "@preact/common/store/components/StoreActio
 import { createStore, type Store } from "@preact/common/store/store"
 import { StoreContext } from "@preact/common/store/storeContext"
 import { useCheckClientScript } from "@preact/hooks/useCheckClientScript"
+import { useHistory } from "@preact/hooks/useHistory"
 import { ComponentChildren } from "preact"
+import { useEffect } from "preact/hooks"
 
 import { makeAutocompleteConfig, PublicAutocompleteConfig } from "./AutocompleteConfig"
-import { useHistory } from "@preact/hooks/useHistory"
 
 type AutocompleteProps = {
   config: PublicAutocompleteConfig
@@ -20,9 +21,11 @@ export function AutocompletePageProvider({ config, store, children }: Autocomple
 
   const { readSaved } = useHistory()
 
-  actualStore.updateState({
-    historyItems: readSaved()
-  })
+  useEffect(() => {
+    actualStore.updateState({
+      historyItems: readSaved()
+    })
+  }, [actualStore, readSaved])
 
   return (
     <ConfigContext value={makeAutocompleteConfig(config)}>
