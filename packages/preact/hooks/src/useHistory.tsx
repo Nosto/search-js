@@ -1,12 +1,13 @@
+import { useAutocompleteConfig } from "@preact/common/config/configContext"
 import { StoreContext } from "@preact/common/store/storeContext"
 import { getLocalStorageItem, setLocalStorageItem } from "@utils/storage"
 import { useCallback, useContext } from "preact/hooks"
 
 const historyKey = "nosto:search-js:history"
-const historySize = 10
 
 export function useHistory() {
   const { updateState } = useContext(StoreContext)
+  const { historySize } = useAutocompleteConfig()
 
   const addQuery = useCallback((value: string) => {
     const allItems = getLocalStorageItem<string[]>(historyKey) ?? []
@@ -23,6 +24,6 @@ export function useHistory() {
 
   return {
     addQuery,
-    readSaved,
+    readSaved
   }
 }
