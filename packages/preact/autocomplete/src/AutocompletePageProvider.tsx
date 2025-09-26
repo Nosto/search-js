@@ -6,6 +6,7 @@ import { useCheckClientScript } from "@preact/hooks/useCheckClientScript"
 import { ComponentChildren } from "preact"
 
 import { makeAutocompleteConfig, PublicAutocompleteConfig } from "./AutocompleteConfig"
+import { useHistory } from "@preact/hooks/useHistory"
 
 type AutocompleteProps = {
   config: PublicAutocompleteConfig
@@ -16,6 +17,12 @@ type AutocompleteProps = {
 export function AutocompletePageProvider({ config, store, children }: AutocompleteProps) {
   const actualStore = store ?? createStore()
   useCheckClientScript()
+
+  const { readSaved } = useHistory()
+
+  actualStore.updateState({
+    historyItems: readSaved()
+  })
 
   return (
     <ConfigContext value={makeAutocompleteConfig(config)}>

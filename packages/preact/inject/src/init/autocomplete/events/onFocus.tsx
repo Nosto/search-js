@@ -9,7 +9,7 @@ export async function onFocus(value: string, context: AutocompleteInjectContext)
     return
   }
 
-  const userComponentRenderer = createUserComponentRenderer(context, history)
+  const userComponentRenderer = createUserComponentRenderer(context)
   history.onHighlightChange(() => {
     userComponentRenderer(renderHistory, history.element)
   })
