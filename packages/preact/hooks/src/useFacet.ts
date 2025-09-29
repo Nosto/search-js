@@ -1,5 +1,7 @@
 import type { SearchTermsFacet } from "@nosto/nosto-js/client"
-import { useCallback, useState } from "preact/hooks"
+import { useConfig } from "@preact/common/config/configContext"
+import { useEventBusSubscribe } from "@preact/events/eventBusSubscribe"
+import { useCallback, useEffect, useState } from "preact/hooks"
 
 import { useActions } from "./useActions"
 
@@ -60,6 +62,7 @@ export interface UseFacetOptions {
  * @group Hooks
  */
 export function useFacet(facet: SearchTermsFacet, options?: UseFacetOptions) {
+  const { pageType } = useConfig()
   const selectedFiltersCount = facet.data?.filter(v => v.selected).length ?? 0
 
   const { active: initialActive } = {
@@ -73,6 +76,29 @@ export function useFacet(facet: SearchTermsFacet, options?: UseFacetOptions) {
   const toggleActive = useCallback(() => {
     setActive(!active)
   }, [active])
+
+  // Listen for removeAll event to reset active state
+  useEventBusSubscribe({
+    event: "filters/removeAll",
+    callback: ({ targetStore }) => {
+      if (pageType === targetStore) {
+        setActive(false)
+      }
+    }
+  })
+
+  // Update active state when selectedFiltersCount changes
+  // This ensures that when filters are cleared, facets become inactive
+  useEffect(() => {
+    // Only update if options.active is not explicitly set
+    if (options?.active === undefined) {
+      if (selectedFiltersCount === 0) {
+        setActive(false)
+      } else if (selectedFiltersCount > 0 && !active) {
+        setActive(true)
+      }
+    }
+  }, [selectedFiltersCount, active, options?.active])
 
   return {
     /** Active value */

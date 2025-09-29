@@ -1,8 +1,15 @@
 import { useProductFilters } from "@preact/hooks/useProductFilters/useProductFilters"
-import { describe, expect, it } from "vitest"
+import { ConfigContext } from "@preact/common/config/configContext"
+import { dispatchNostoEvent } from "@preact/events/eventBusDispatch"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { mockActions, mockStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
+
+// Mock the event dispatch function
+vi.mock("@preact/events/eventBusDispatch", () => ({
+  dispatchNostoEvent: vi.fn()
+}))
 
 describe("useProductFilters", () => {
   const store = mockStore({
@@ -21,6 +28,16 @@ describe("useProductFilters", () => {
       }
     }
   })
+  const mockConfig = {
+    pageType: "search" as const,
+    defaultCurrency: "EUR",
+    queryModifications: (query: any) => query
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
   mockActions()
 
   it("should return empty array if no filters", () => {
@@ -31,7 +48,14 @@ describe("useProductFilters", () => {
         }
       }
     })
-    const render = renderHookWithProviders(() => useProductFilters(), { store })
+    const render = renderHookWithProviders(() => useProductFilters(), { 
+      store,
+      wrapper: ({ children }) => (
+        <ConfigContext value={mockConfig}>
+          {children}
+        </ConfigContext>
+      )
+    })
     const { filters } = render.result.current
     expect(filters).toEqual([])
   })
@@ -49,7 +73,14 @@ describe("useProductFilters", () => {
         }
       }
     })
-    const render = renderHookWithProviders(() => useProductFilters(), { store })
+    const render = renderHookWithProviders(() => useProductFilters(), { 
+      store,
+      wrapper: ({ children }) => (
+        <ConfigContext value={mockConfig}>
+          {children}
+        </ConfigContext>
+      )
+    })
     const { filters } = render.result.current
     expect(filters).toEqual([
       {
@@ -82,7 +113,14 @@ describe("useProductFilters", () => {
         }
       }
     })
-    const render = renderHookWithProviders(() => useProductFilters(), { store })
+    const render = renderHookWithProviders(() => useProductFilters(), { 
+      store,
+      wrapper: ({ children }) => (
+        <ConfigContext value={mockConfig}>
+          {children}
+        </ConfigContext>
+      )
+    })
     const { filters } = render.result.current
     expect(filters).toEqual([
       {
@@ -109,7 +147,14 @@ describe("useProductFilters", () => {
         }
       }
     })
-    const render = renderHookWithProviders(() => useProductFilters(), { store })
+    const render = renderHookWithProviders(() => useProductFilters(), { 
+      store,
+      wrapper: ({ children }) => (
+        <ConfigContext value={mockConfig}>
+          {children}
+        </ConfigContext>
+      )
+    })
     const { filters } = render.result.current
     expect(filters).toEqual([
       {
@@ -120,5 +165,27 @@ describe("useProductFilters", () => {
         remove: expect.any(Function)
       }
     ])
+  })
+
+  it("should emit filters/removeAll event when removeAll is called", () => {
+    const render = renderHookWithProviders(() => useProductFilters(), { 
+      store,
+      wrapper: ({ children }) => (
+        <ConfigContext value={mockConfig}>
+          {children}
+        </ConfigContext>
+      )
+    })
+    const { removeAll } = render.result.current
+
+    removeAll()
+
+    // Verify the event was dispatched with correct parameters
+    expect(dispatchNostoEvent).toHaveBeenCalledWith({
+      event: "filters/removeAll",
+      params: {
+        targetStore: "search"
+      }
+    })
   })
 })

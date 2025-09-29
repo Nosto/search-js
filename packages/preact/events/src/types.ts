@@ -23,6 +23,9 @@ export type EventParams = {
     value: InputSearchRangeFilter | string | undefined
     targetStore: PageType
   }
+  ["filters/removeAll"]: {
+    targetStore: PageType
+  }
 }
 
 export type AllowedEvents = keyof EventParams

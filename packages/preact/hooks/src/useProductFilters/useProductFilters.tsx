@@ -1,3 +1,5 @@
+import { useConfig } from "@preact/common/config/configContext"
+import { dispatchNostoEvent } from "@preact/events/eventBusDispatch"
 import { useCallback, useMemo } from "preact/hooks"
 
 import { useActions } from "../useActions"
@@ -37,6 +39,7 @@ import { useProductFiltersUtils } from "./useProductFiltersUtils"
  * @group Hooks
  */
 export function useProductFilters() {
+  const { pageType } = useConfig()
   const { filter } = useNostoAppState(state => ({
     filter: state.query.products?.filter ?? []
   }))
@@ -70,7 +73,15 @@ export function useProductFilters() {
         filter: []
       }
     })
-  }, [updateSearch])
+    
+    // Emit custom event to notify facet components
+    dispatchNostoEvent({
+      event: "filters/removeAll",
+      params: {
+        targetStore: pageType
+      }
+    })
+  }, [updateSearch, pageType])
 
   return {
     /** Selected filters array. */

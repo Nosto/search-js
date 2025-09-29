@@ -46,5 +46,8 @@ export function StoreActionsListener() {
     }
   })
 
+  // Note: filters/removeAll event is handled directly in useFacet hook
+  // to reset the active state, not here as it doesn't need a store action
+
   return null
 }
