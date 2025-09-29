@@ -1,3 +1,19 @@
+# [3.15.0](https://github.com/Nosto/search-js/compare/v3.14.0...v3.15.0) (2025-09-29)
+
+
+### Bug Fixes
+
+* drop functionality from dev/preact ([2403305](https://github.com/Nosto/search-js/commit/24033056f3860d2180048235f20dfeb218fe3ccc))
+* handle history size of 0 or 1 ([492f18f](https://github.com/Nosto/search-js/commit/492f18f3a81729518f5ba58037c04c5c62da9a0b))
+* lint ([254d252](https://github.com/Nosto/search-js/commit/254d2527beb7e7b9d4d4d4dd740a7e72280e5736))
+* tests and minor bugfix ([fd8edc1](https://github.com/Nosto/search-js/commit/fd8edc1cc72cae54d852a090c9a550dc0584cf93))
+* use correct history size ([c28be09](https://github.com/Nosto/search-js/commit/c28be09e66d3ad2b78ac854e9d53e0c1c95ddf91))
+
+
+### Features
+
+* add useHistory hook ([2485a8b](https://github.com/Nosto/search-js/commit/2485a8b1b267cf7c8abcd2a4e4f580ff85d86ee9))
+
 # [3.14.0](https://github.com/Nosto/search-js/compare/v3.13.1...v3.14.0) (2025-09-18)
 
 
