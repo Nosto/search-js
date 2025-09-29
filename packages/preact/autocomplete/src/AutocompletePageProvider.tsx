@@ -19,13 +19,13 @@ export function AutocompletePageProvider({ config, store, children }: Autocomple
   const actualStore = store ?? createStore()
   useCheckClientScript()
 
-  const { readSaved } = useHistory()
+  const { getSaved } = useHistory()
 
   useEffect(() => {
     actualStore.updateState({
-      historyItems: readSaved()
+      historyItems: getSaved()
     })
-  }, [actualStore, readSaved])
+  }, [actualStore, getSaved])
 
   return (
     <ConfigContext value={makeAutocompleteConfig(config)}>
