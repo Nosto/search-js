@@ -16,6 +16,11 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   const track = pageType === "search" ? "serp" : pageType
 
   const mergedQuery = deepMerge(context.store.getInitialState().query, query)
+
+  // If the new query has products but no filter specified, and there were existing filters, clear them to allow for fresh searches
+  if (query.products && !query.products.filter && mergedQuery.products?.filter) {
+    mergedQuery.products.filter = []
+  }
   const mergedOptions = deepMerge(context.config.search, options, {
     track,
     redirect: pageType !== "autocomplete",

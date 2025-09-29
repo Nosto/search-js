@@ -134,4 +134,59 @@ describe("newSearch", () => {
       expect(context.store.getInitialState()).toEqual(initialState)
     })
   })
+
+  describe("filter clearing behavior", () => {
+    it("should clear existing filters when newSearch is called with empty filters", async () => {
+      // Create a store with existing filters
+      const context = {
+        config: makeSerpConfig(),
+        store: createStore({
+          query: {
+            products: {
+              filter: [
+                { field: "brand", value: ["nike"] },
+                { field: "color", value: ["red"] }
+              ]
+            }
+          }
+        })
+      }
+
+      // Perform a new search with no filters (simulating a fresh search)
+      const query = { products: { from: 0 }, query: "new search" } satisfies SearchQuery
+      await newSearch(context, query)
+
+      // Check that the state query now has no filters
+      const currentState = context.store.getState()
+      expect(currentState.query.products?.filter).toEqual([])
+    })
+
+    it("should allow filters to be explicitly cleared by passing empty filter array", async () => {
+      // Create a store with existing filters
+      const context = {
+        config: makeSerpConfig(),
+        store: createStore({
+          query: {
+            products: {
+              filter: [
+                { field: "brand", value: ["nike"] },
+                { field: "color", value: ["red"] }
+              ]
+            }
+          }
+        })
+      }
+
+      // Perform a new search with explicitly empty filters
+      const query = {
+        products: { from: 0, filter: [] },
+        query: "new search"
+      } satisfies SearchQuery
+      await newSearch(context, query)
+
+      // Check that the state query now has no filters
+      const currentState = context.store.getState()
+      expect(currentState.query.products?.filter).toEqual([])
+    })
+  })
 })
