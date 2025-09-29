@@ -1,6 +1,5 @@
 import type { SearchTermsFacet } from "@nosto/nosto-js/client"
 import { useFacet } from "@preact/hooks/useFacet"
-import { renderHook } from "@testing-library/preact"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { mockActions, mockStore } from "../mocks/mocks"
@@ -25,7 +24,15 @@ describe("useFacet", () => {
   })
 
   it("should initialize with active set to true if there are selected filters", () => {
-    const { result } = renderHook(() => useFacet(mockFacet))
+    // Create store with some filters to prevent global reset
+    const store = mockStore({
+      query: {
+        products: {
+          filter: [{ field: "color", value: ["red"] }]
+        }
+      }
+    })
+    const { result } = renderHookWithProviders(() => useFacet(mockFacet), { store })
     expect(result.current.active).toBe(true)
   })
 
@@ -38,7 +45,15 @@ describe("useFacet", () => {
         { value: "Green", selected: false, count: 7 }
       ]
     }
-    const { result } = renderHook(() => useFacet(facetWithoutSelectedFilters))
+    // Create store with some filters to prevent global reset
+    const store = mockStore({
+      query: {
+        products: {
+          filter: [{ field: "size", value: ["large"] }]
+        }
+      }
+    })
+    const { result } = renderHookWithProviders(() => useFacet(facetWithoutSelectedFilters), { store })
     expect(result.current.active).toBe(false)
   })
 
@@ -51,12 +66,28 @@ describe("useFacet", () => {
         { value: "Green", selected: false, count: 7 }
       ]
     }
-    const { result } = renderHook(() => useFacet(facetWithoutSelectedFilters, { active: true }))
+    // Create store with empty filters to test that explicit active option overrides global reset
+    const store = mockStore({
+      query: {
+        products: {
+          filter: []
+        }
+      }
+    })
+    const { result } = renderHookWithProviders(() => useFacet(facetWithoutSelectedFilters, { active: true }), { store })
     expect(result.current.active).toBe(true)
   })
 
   it("should return the correct selected filters count", () => {
-    const { result } = renderHook(() => useFacet(mockFacet))
+    // Create store with some filters to prevent global reset
+    const store = mockStore({
+      query: {
+        products: {
+          filter: [{ field: "color", value: ["red"] }]
+        }
+      }
+    })
+    const { result } = renderHookWithProviders(() => useFacet(mockFacet), { store })
     expect(result.current.selectedFiltersCount).toBe(2)
   })
 
@@ -65,13 +96,29 @@ describe("useFacet", () => {
       ...mockFacet,
       data: undefined
     }
+    // Create store with some filters to prevent global reset
+    const store = mockStore({
+      query: {
+        products: {
+          filter: [{ field: "size", value: ["large"] }]
+        }
+      }
+    })
     // @ts-expect-error Checking incorrect usage
-    const { result } = renderHook(() => useFacet(facetWithoutFilters))
+    const { result } = renderHookWithProviders(() => useFacet(facetWithoutFilters), { store })
     expect(result.current.selectedFiltersCount).toBe(0)
   })
 
   it("should toggle active state when toggleActive is called", () => {
-    const { result, rerender } = renderHook(() => useFacet(mockFacet))
+    // Create store with some filters to prevent global reset
+    const store = mockStore({
+      query: {
+        products: {
+          filter: [{ field: "color", value: ["red"] }]
+        }
+      }
+    })
+    const { result, rerender } = renderHookWithProviders(() => useFacet(mockFacet), { store })
     expect(result.current.active).toBe(true)
     result.current.toggleActive()
     rerender()
@@ -82,64 +129,185 @@ describe("useFacet", () => {
   })
 
   it("should call toggleProductFilter with the correct arguments when toggleProductFilter is called", () => {
-    const { result } = renderHook(() => useFacet(mockFacet))
+    // Create store with some filters to prevent global reset
+    const store = mockStore({
+      query: {
+        products: {
+          filter: [{ field: "color", value: ["red"] }]
+        }
+      }
+    })
+    const { result } = renderHookWithProviders(() => useFacet(mockFacet), { store })
     result.current.toggleProductFilter("color", "Red", false)
     expect(actions.toggleProductFilter).toHaveBeenCalledWith("color", "Red", false)
   })
 
-  it("should reset active state when all filters are cleared and no explicit active option is set", () => {
-    // Start with a facet that has selected filters (active should be true)
-    const { result, rerender } = renderHook(({ facet }) => useFacet(facet), {
-      initialProps: {
-        facet: mockFacet
+  it("should reset active state when all filters are cleared globally and no explicit active option is set", () => {
+    // Create a store with filters applied
+    const store = mockStore({
+      loading: false,
+      initialized: true,
+      query: {
+        products: {
+          from: 0,
+          filter: [
+            {
+              field: "color",
+              value: ["red"]
+            }
+          ]
+        }
+      },
+      response: {
+        products: {
+          facets: []
+        }
       }
     })
 
-    expect(result.current.active).toBe(true)
-    expect(result.current.selectedFiltersCount).toBe(2)
-
-    // Simulate clearing all filters (like calling removeAll())
-    const clearedFacet = {
+    // Create a facet with selected filters
+    const facetWithSelectedFilters = {
       ...mockFacet,
       data: [
-        { value: "Red", selected: false, count: 10 },
+        { value: "Red", selected: true, count: 10 },
         { value: "Blue", selected: false, count: 5 },
         { value: "Green", selected: false, count: 7 }
       ]
     }
 
-    rerender({ facet: clearedFacet })
+    const { result, rerender } = renderHookWithProviders(() => useFacet(facetWithSelectedFilters), { store })
 
+    // Initially active since facet has selected filters
+    expect(result.current.active).toBe(true)
+    expect(result.current.selectedFiltersCount).toBe(1)
+
+    // Simulate clearing ALL filters globally (like calling removeAll())
+    store.updateState({
+      query: {
+        products: {
+          from: 0,
+          filter: [] // Global filter array is now empty
+        }
+      }
+    })
+
+    rerender()
+
+    // Should reset active state because global filters were cleared
     expect(result.current.active).toBe(false)
-    expect(result.current.selectedFiltersCount).toBe(0)
   })
 
-  it("should not reset active state when filters are cleared but explicit active option is set", () => {
-    // Start with a facet that has selected filters and explicit active: true
-    const { result, rerender } = renderHook(({ facet, options }) => useFacet(facet, options), {
-      initialProps: {
-        facet: mockFacet,
-        options: { active: true }
+  it("should not reset active state when individual facet filters are cleared but global filters remain", () => {
+    // Create a store with multiple filters applied
+    const store = mockStore({
+      loading: false,
+      initialized: true,
+      query: {
+        products: {
+          from: 0,
+          filter: [
+            {
+              field: "color",
+              value: ["red"]
+            },
+            {
+              field: "size",
+              value: ["large"]
+            }
+          ]
+        }
+      },
+      response: {
+        products: {
+          facets: []
+        }
       }
     })
 
-    expect(result.current.active).toBe(true)
-
-    // Simulate clearing all filters
-    const clearedFacet = {
+    // Create a facet with selected filters initially
+    const facetWithSelectedFilters = {
       ...mockFacet,
       data: [
-        { value: "Red", selected: false, count: 10 },
+        { value: "Red", selected: true, count: 10 },
         { value: "Blue", selected: false, count: 5 },
         { value: "Green", selected: false, count: 7 }
       ]
     }
 
-    rerender({ facet: clearedFacet, options: { active: true } })
+    const { result, rerender } = renderHookWithProviders(() => useFacet(facetWithSelectedFilters), { store })
+
+    // Initially active
+    expect(result.current.active).toBe(true)
+
+    // Keep other filters in global state (simulate only clearing this facet's filters)
+    store.updateState({
+      query: {
+        products: {
+          from: 0,
+          filter: [
+            {
+              field: "size",
+              value: ["large"] // Other filters still exist
+            }
+          ]
+        }
+      }
+    })
+
+    rerender()
+
+    // Should NOT reset active state because global filters are not empty
+    expect(result.current.active).toBe(true)
+  })
+
+  it("should not reset active state when all filters are cleared but explicit active option is set", () => {
+    // Create a store with filters applied
+    const store = mockStore({
+      loading: false,
+      initialized: true,
+      query: {
+        products: {
+          from: 0,
+          filter: [
+            {
+              field: "color",
+              value: ["red"]
+            }
+          ]
+        }
+      },
+      response: {
+        products: {
+          facets: []
+        }
+      }
+    })
+
+    const facetWithSelectedFilters = {
+      ...mockFacet,
+      data: [
+        { value: "Red", selected: true, count: 10 },
+        { value: "Blue", selected: false, count: 5 },
+        { value: "Green", selected: false, count: 7 }
+      ]
+    }
+
+    const { result } = renderHookWithProviders(() => useFacet(facetWithSelectedFilters, { active: true }), { store })
+
+    expect(result.current.active).toBe(true)
+
+    // Clear all filters globally
+    store.updateState({
+      query: {
+        products: {
+          from: 0,
+          filter: []
+        }
+      }
+    })
 
     // Should remain active because explicit active: true was set
     expect(result.current.active).toBe(true)
-    expect(result.current.selectedFiltersCount).toBe(0)
   })
 
   it("should reset active state when used with useProductFilters removeAll integration", () => {
