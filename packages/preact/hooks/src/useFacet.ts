@@ -1,5 +1,5 @@
 import type { SearchTermsFacet } from "@nosto/nosto-js/client"
-import { useCallback, useState } from "preact/hooks"
+import { useCallback, useEffect, useState } from "preact/hooks"
 
 import { useActions } from "./useActions"
 
@@ -69,6 +69,13 @@ export function useFacet(facet: SearchTermsFacet, options?: UseFacetOptions) {
 
   const [active, setActive] = useState(initialActive)
   const { toggleProductFilter } = useActions()
+
+  // Reset active state when all filters are cleared and no explicit active option is set
+  useEffect(() => {
+    if (selectedFiltersCount === 0 && !options?.active) {
+      setActive(false)
+    }
+  }, [selectedFiltersCount, options?.active])
 
   const toggleActive = useCallback(() => {
     setActive(!active)

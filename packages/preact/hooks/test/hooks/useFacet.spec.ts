@@ -84,4 +84,59 @@ describe("useFacet", () => {
     result.current.toggleProductFilter("color", "Red", false)
     expect(actions.toggleProductFilter).toHaveBeenCalledWith("color", "Red", false)
   })
+
+  it("should reset active state when all filters are cleared and no explicit active option is set", () => {
+    // Start with a facet that has selected filters (active should be true)
+    const { result, rerender } = renderHook(({ facet }) => useFacet(facet), {
+      initialProps: {
+        facet: mockFacet
+      }
+    })
+
+    expect(result.current.active).toBe(true)
+    expect(result.current.selectedFiltersCount).toBe(2)
+
+    // Simulate clearing all filters (like calling removeAll())
+    const clearedFacet = {
+      ...mockFacet,
+      data: [
+        { value: "Red", selected: false, count: 10 },
+        { value: "Blue", selected: false, count: 5 },
+        { value: "Green", selected: false, count: 7 }
+      ]
+    }
+
+    rerender({ facet: clearedFacet })
+
+    expect(result.current.active).toBe(false)
+    expect(result.current.selectedFiltersCount).toBe(0)
+  })
+
+  it("should not reset active state when filters are cleared but explicit active option is set", () => {
+    // Start with a facet that has selected filters and explicit active: true
+    const { result, rerender } = renderHook(({ facet, options }) => useFacet(facet, options), {
+      initialProps: {
+        facet: mockFacet,
+        options: { active: true }
+      }
+    })
+
+    expect(result.current.active).toBe(true)
+
+    // Simulate clearing all filters
+    const clearedFacet = {
+      ...mockFacet,
+      data: [
+        { value: "Red", selected: false, count: 10 },
+        { value: "Blue", selected: false, count: 5 },
+        { value: "Green", selected: false, count: 7 }
+      ]
+    }
+
+    rerender({ facet: clearedFacet, options: { active: true } })
+
+    // Should remain active because explicit active: true was set
+    expect(result.current.active).toBe(true)
+    expect(result.current.selectedFiltersCount).toBe(0)
+  })
 })
