@@ -45,16 +45,6 @@ describe("useHistory", () => {
       expect(localStorage.setItem).toHaveBeenCalledWith(historyKey, JSON.stringify(["query1", "query3", "query2"]))
     })
 
-    it("should handle unlimited history size when historySize is 0", () => {
-      const longHistory = Array.from({ length: 10 }, (_, i) => `query${i + 1}`)
-      localStorage.setItem(historyKey, JSON.stringify(longHistory))
-      const { result } = renderUseHistory(0)
-
-      result.current.addQuery("new query")
-
-      expect(localStorage.setItem).toHaveBeenCalledWith(historyKey, JSON.stringify([...longHistory, "new query"]))
-    })
-
     it("should update store state with reversed history items", () => {
       localStorage.setItem(historyKey, JSON.stringify(["query1", "query2"]))
       const store = mockStore({ historyItems: [] })
@@ -114,5 +104,21 @@ describe("useHistory", () => {
 
     result.current.addQuery("new3")
     expect(localStorage.setItem).toHaveBeenCalledWith(historyKey, JSON.stringify(["new1", "new2", "new3"]))
+  })
+
+  it("should keep 1 query with history size of 1", () => {
+    localStorage.setItem(historyKey, JSON.stringify(["old1", "old2"]))
+    const { result } = renderUseHistory(1)
+
+    result.current.addQuery("new1")
+    expect(localStorage.setItem).toHaveBeenCalledWith(historyKey, JSON.stringify(["new1"]))
+  })
+
+  it("should keep no queries with history size of 1", () => {
+    localStorage.setItem(historyKey, JSON.stringify(["old1", "old2"]))
+    const { result } = renderUseHistory(0)
+
+    result.current.addQuery("new1")
+    expect(localStorage.setItem).toHaveBeenCalledWith(historyKey, JSON.stringify([]))
   })
 })

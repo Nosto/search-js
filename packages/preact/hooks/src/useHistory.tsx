@@ -12,10 +12,10 @@ export function useHistory() {
   const addQuery = useCallback(
     (value: string) => {
       const allItems = getLocalStorageItem<string[]>(historyKey) ?? []
-      const filteredItems = allItems.filter(v => v !== value).slice(historySize ? -historySize + 1 : 0)
-      filteredItems.push(value)
-      setLocalStorageItem(historyKey, filteredItems)
-      updateState({ historyItems: filteredItems.reverse() })
+      const currentElements = allItems.filter(v => v !== value).concat(value)
+      const sliceToSave = historySize ? currentElements.slice(-historySize) : []
+      setLocalStorageItem(historyKey, sliceToSave)
+      updateState({ historyItems: sliceToSave.reverse() })
     },
     [historySize, updateState]
   )
