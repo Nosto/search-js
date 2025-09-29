@@ -11,7 +11,6 @@ import { AutocompleteInjectConfig } from "../config"
 import { bindBlur, bindClickOutside } from "../helpers/dom"
 import { resolveCssSelector } from "../resolveCssSelector"
 import { waitForElements } from "../wait"
-import { AutocompleteContext, createContextHandle } from "./autocomplete/AutocompleteContext"
 import { AutocompleteDropdown, createDropdownComponent } from "./autocomplete/components/AutocompleteDropdown"
 import { AutocompleteHistory, createHistoryComponent } from "./autocomplete/components/AutocompleteHistory"
 import { onClick } from "./autocomplete/events/onClick"
@@ -94,7 +93,7 @@ function renderAutocompleteComponent(context: AutocompleteInjectContext) {
   if (!renderAutocomplete) {
     return
   }
-  const userComponentRenderer = createUserComponentRenderer(context, dropdown)
+  const userComponentRenderer = createUserComponentRenderer(context)
   dropdown.onHighlightChange(() => {
     userComponentRenderer(renderAutocomplete, dropdown.element)
   })
@@ -127,20 +126,13 @@ async function injectSpeechToText(context: AutocompleteInjectContext) {
   )
 }
 
-export function createUserComponentRenderer(
-  injectContext: AutocompleteInjectContext,
-  element: AutocompleteDropdown | AutocompleteHistory
-) {
+export function createUserComponentRenderer(injectContext: AutocompleteInjectContext) {
   const { config, store } = injectContext
-  const userContext = createContextHandle(injectContext, element)
-  element.onHighlightChange(() => {
-    userContext.highlightedElementIndex = element.highlightedIndex()
-  })
   return (renderer: () => VNode | Promise<VNode>, target: HTMLDivElement) =>
     render(
       <ErrorBoundary>
         <AutocompletePageProvider config={config} store={store}>
-          <AutocompleteContext value={userContext}>{renderer()}</AutocompleteContext>
+          {renderer()}
         </AutocompletePageProvider>
       </ErrorBoundary>,
       target

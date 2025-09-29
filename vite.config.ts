@@ -55,6 +55,7 @@ export default defineConfig({
     }
   },
   test: {
+    clearMocks: true,
     coverage: {
       include: ["packages/*/src/**/*.{js,ts}"],
       skipFull: true,

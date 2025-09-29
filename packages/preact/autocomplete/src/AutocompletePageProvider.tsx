@@ -3,7 +3,9 @@ import { StoreActionsListener } from "@preact/common/store/components/StoreActio
 import { createStore, type Store } from "@preact/common/store/store"
 import { StoreContext } from "@preact/common/store/storeContext"
 import { useCheckClientScript } from "@preact/hooks/useCheckClientScript"
+import { useHistory } from "@preact/hooks/useHistory"
 import { ComponentChildren } from "preact"
+import { useEffect } from "preact/hooks"
 
 import { makeAutocompleteConfig, PublicAutocompleteConfig } from "./AutocompleteConfig"
 
@@ -16,6 +18,14 @@ type AutocompleteProps = {
 export function AutocompletePageProvider({ config, store, children }: AutocompleteProps) {
   const actualStore = store ?? createStore()
   useCheckClientScript()
+
+  const { getSaved } = useHistory()
+
+  useEffect(() => {
+    actualStore.updateState({
+      historyItems: getSaved()
+    })
+  }, [actualStore, getSaved])
 
   return (
     <ConfigContext value={makeAutocompleteConfig(config)}>
