@@ -1,8 +1,10 @@
+import type { SearchTermsFacet } from "@nosto/nosto-js/client"
 import { useFacet } from "@preact/hooks/useFacet"
 import { renderHook } from "@testing-library/preact"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
-import { mockActions } from "../mocks/mocks"
+import { mockActions, mockStore } from "../mocks/mocks"
+import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 describe("useFacet", () => {
   const mockFacet = {
@@ -138,5 +140,94 @@ describe("useFacet", () => {
     // Should remain active because explicit active: true was set
     expect(result.current.active).toBe(true)
     expect(result.current.selectedFiltersCount).toBe(0)
+  })
+
+  it("should reset active state when used with useProductFilters removeAll integration", () => {
+    // Create a store with filters applied
+    const store = mockStore({
+      loading: false,
+      initialized: true,
+      query: {
+        products: {
+          from: 0,
+          filter: [
+            {
+              field: "color",
+              value: ["red", "green"]
+            }
+          ]
+        }
+      },
+      response: {
+        products: {
+          size: 10,
+          total: 100,
+          hits: [],
+          facets: [
+            {
+              id: "color",
+              type: "terms" as const,
+              name: "Color",
+              field: "color",
+              data: [
+                { value: "red", selected: true, count: 10 },
+                { value: "green", selected: true, count: 7 },
+                { value: "blue", selected: false, count: 5 }
+              ]
+            }
+          ]
+        }
+      }
+    })
+
+    // Mock the actions (not used in this test but needed for rendering)
+    mockActions()
+
+    // Render facet hook with current facet state
+    const facetRender = renderHookWithProviders(
+      () => useFacet(store.getState().response.products?.facets?.[0] as SearchTermsFacet),
+      { store }
+    )
+
+    // Initial state: facet should be active since it has selected filters
+    expect(facetRender.result.current.active).toBe(true)
+    expect(facetRender.result.current.selectedFiltersCount).toBe(2)
+
+    // Simulate calling removeAll() which clears filters in the store
+    store.updateState({
+      query: {
+        products: {
+          from: 0,
+          filter: []
+        }
+      },
+      response: {
+        products: {
+          size: 10,
+          total: 100,
+          hits: [],
+          facets: [
+            {
+              id: "color",
+              type: "terms" as const,
+              name: "Color",
+              field: "color",
+              data: [
+                { value: "red", selected: false, count: 10 },
+                { value: "green", selected: false, count: 7 },
+                { value: "blue", selected: false, count: 5 }
+              ]
+            }
+          ]
+        }
+      }
+    })
+
+    // Re-render facet with updated data from store
+    facetRender.rerender()
+
+    // After removeAll() equivalent, facet should no longer be active
+    expect(facetRender.result.current.active).toBe(false)
+    expect(facetRender.result.current.selectedFiltersCount).toBe(0)
   })
 })
