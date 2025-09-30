@@ -1,4 +1,4 @@
-import { InputSearchTopLevelFilter, SearchFacet } from "@nosto/nosto-js/client"
+import { InputSearchRangeFilter, InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
 import { useEventBusSubscribe } from "@preact/events/eventBusSubscribe"
 import { parseNumber } from "@utils/parseNumber"
 import { useCallback, useState } from "preact/hooks"
@@ -6,23 +6,19 @@ import { useCallback, useState } from "preact/hooks"
 import { useActions } from "./useActions"
 import { useNostoAppState } from "./useNostoAppState"
 
-const extractRangeValues = (filter?: InputSearchTopLevelFilter) => {
+type RangeProps = [number | undefined, number | undefined]
+
+const getRangeValues = (filter?: InputSearchTopLevelFilter) => {
   const filterValue = filter?.range ? filter.range[0] : undefined
 
   if (typeof filterValue === "object" && ("gte" in filterValue || "lte" in filterValue)) {
-    return [parseNumber(filterValue.gte), parseNumber(filterValue.lte)] as const
+    return [parseNumber(filterValue.gte), parseNumber(filterValue.lte)]
   }
 
   return [undefined, undefined]
 }
 
-const calculateMinMax = (stat?: SearchFacet) => {
-  const min = stat && "min" in stat ? Math.floor(stat.min ?? 0) : 0
-  const max = stat && "max" in stat ? Math.ceil(stat.max ?? 0) : 0
-  return [min, max]
-}
-
-const createRangeFilter = (from: number | undefined, to: number | undefined, min: number, max: number) => {
+const createRangeValues = (from: number | undefined, to: number | undefined, min: number, max: number) => {
   const fromRounded = from !== undefined ? Math.floor(from) : undefined
   const toRounded = to !== undefined ? Math.ceil(to) : undefined
   const fromDefined = fromRounded !== undefined
@@ -32,22 +28,17 @@ const createRangeFilter = (from: number | undefined, to: number | undefined, min
     return undefined
   }
 
-  if ((min === fromRounded || !fromDefined) && toDefined) {
-    return { lte: toRounded.toString() }
+  const filter: InputSearchRangeFilter = {}
+
+  if (fromDefined && fromRounded !== min) {
+    filter.gte = fromRounded.toString()
   }
 
-  if ((max === toRounded || !toDefined) && fromDefined) {
-    return { gte: fromRounded.toString() }
+  if (toDefined && toRounded !== max) {
+    filter.lte = toRounded.toString()
   }
 
-  if (fromDefined && toDefined) {
-    return {
-      gte: fromRounded.toString(),
-      lte: toRounded.toString()
-    }
-  }
-
-  return undefined
+  return Object.keys(filter).length > 0 ? filter : undefined
 }
 
 /**
@@ -90,8 +81,10 @@ export function useRange(id: string) {
   const stat = products?.facets?.find(v => v.id === id)
 
   const filter = query.products?.filter?.find(v => v.field === stat?.field)
-  const value = extractRangeValues(filter)
-  const [min, max] = calculateMinMax(stat)
+  const value = getRangeValues(filter)
+
+  const min = stat && "min" in stat ? Math.floor(stat.min ?? 0) : 0
+  const max = stat && "max" in stat ? Math.ceil(stat.max ?? 0) : 0
 
   const hasActiveFilter = value[0] !== undefined || value[1] !== undefined
   const [active, setActive] = useState(hasActiveFilter)
@@ -101,10 +94,10 @@ export function useRange(id: string) {
   }, [])
 
   const updateRange = useCallback(
-    ([from, to]: (number | undefined)[]) => {
+    ([from, to]: RangeProps) => {
       if (!stat) return
 
-      const filterObject = createRangeFilter(from, to, min, max)
+      const filterObject = createRangeValues(from, to, min, max)
       replaceFilter(stat.field, filterObject)
     },
     [min, max, replaceFilter, stat]
