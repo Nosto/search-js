@@ -2,7 +2,6 @@ import { useConfig } from "@preact/common/config/configContext"
 import { dispatchNostoEvent } from "@preact/events/eventBusDispatch"
 import { useCallback, useMemo } from "preact/hooks"
 
-import { useActions } from "../useActions"
 import { useNostoAppState } from "../useNostoAppState"
 import { useProductFiltersUtils } from "./useProductFiltersUtils"
 
@@ -42,7 +41,6 @@ export function useProductFilters() {
   const { filter } = useNostoAppState(state => ({
     filter: state.query.products?.filter ?? []
   }))
-  const { updateSearch } = useActions()
   const { pageType } = useConfig()
   const { selectFilters, toValueFilter, toRangeFilter } = useProductFiltersUtils()
 
@@ -75,14 +73,7 @@ export function useProductFilters() {
         targetStore: pageType
       }
     })
-
-    // Update the search to clear all filters
-    updateSearch({
-      products: {
-        filter: []
-      }
-    })
-  }, [updateSearch, pageType])
+  }, [pageType])
 
   return {
     /** Selected filters array. */
