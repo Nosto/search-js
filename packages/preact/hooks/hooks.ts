@@ -1,4 +1,5 @@
 /** @module preact/hooks */
+export { type SwatchField, type SwatchOption } from "./src/types"
 export { useActions } from "./src/useActions"
 export { useDecoratedSearchResults } from "./src/useDecoratedSearchResults"
 export { useFacet, type UseFacetOptions } from "./src/useFacet"
@@ -13,6 +14,7 @@ export { useRange } from "./src/useRange"
 export { useRangeSelector } from "./src/useRangeSelector"
 export { useResponse } from "./src/useResponse"
 export { useSelectedFiltersCount } from "./src/useSelectedFiltersCount"
+export { useShopifyProduct } from "./src/useShopifyProduct/useShopifyProduct"
 export { useSizeOptions } from "./src/useSizeOptions"
 export { useSort } from "./src/useSort/useSort"
 export { type SpeechToText, speechToTextSupported, useSpeechToText } from "./src/useSpeechToText"
