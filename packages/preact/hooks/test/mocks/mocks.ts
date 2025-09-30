@@ -18,7 +18,8 @@ export function mockActions() {
     newSearch: vi.fn(),
     updateSearch: vi.fn(),
     toggleProductFilter: vi.fn(),
-    replaceFilter: vi.fn()
+    replaceFilter: vi.fn(),
+    removeAllFilters: vi.fn()
   }
   vi.spyOn(useActions, "useActions").mockImplementation(() => actions)
   return actions

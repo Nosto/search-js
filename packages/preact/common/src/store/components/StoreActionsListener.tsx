@@ -4,7 +4,7 @@ import { useActions } from "@preact/hooks/useActions"
 
 export function StoreActionsListener() {
   const { pageType } = useConfig()
-  const { newSearch, updateSearch, replaceFilter, toggleProductFilter } = useActions()
+  const { newSearch, updateSearch, replaceFilter, toggleProductFilter, removeAllFilters } = useActions()
 
   useEventBusSubscribe({
     event: "actions/newSearch",
@@ -43,6 +43,16 @@ export function StoreActionsListener() {
         return
       }
       toggleProductFilter(field, value, active)
+    }
+  })
+
+  useEventBusSubscribe({
+    event: "actions/removeAllFilters",
+    callback: ({ targetStore }) => {
+      if (pageType !== targetStore) {
+        return
+      }
+      removeAllFilters()
     }
   })
 

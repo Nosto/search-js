@@ -1,3 +1,5 @@
+import { useConfig } from "@preact/common/config/configContext"
+import { dispatchNostoEvent } from "@preact/events/eventBusDispatch"
 import { useCallback, useMemo } from "preact/hooks"
 
 import { useActions } from "../useActions"
@@ -41,6 +43,7 @@ export function useProductFilters() {
     filter: state.query.products?.filter ?? []
   }))
   const { updateSearch } = useActions()
+  const { pageType } = useConfig()
   const { selectFilters, toValueFilter, toRangeFilter } = useProductFiltersUtils()
 
   const filters = useMemo(() => {
@@ -65,12 +68,21 @@ export function useProductFilters() {
   }, [filter, selectFilters, toRangeFilter, toValueFilter])
 
   const removeAll = useCallback(() => {
+    // Dispatch the removeAllFilters event to notify facets to reset their active state
+    dispatchNostoEvent({
+      event: "actions/removeAllFilters",
+      params: {
+        targetStore: pageType
+      }
+    })
+
+    // Update the search to clear all filters
     updateSearch({
       products: {
         filter: []
       }
     })
-  }, [updateSearch])
+  }, [updateSearch, pageType])
 
   return {
     /** Selected filters array. */

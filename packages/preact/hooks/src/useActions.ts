@@ -4,6 +4,7 @@ import { StoreContext } from "@preact/common/store/storeContext"
 import { useCallback, useContext, useMemo } from "preact/hooks"
 
 import { newSearch } from "../../common/src/actions/newSearch"
+import { removeAllFilters } from "../../common/src/actions/removeAllFilters"
 import { replaceFilter } from "../../common/src/actions/replaceFilter"
 import { toggleProductFilter } from "../../common/src/actions/toggleProductFilter"
 import { updateSearch } from "../../common/src/actions/updateSearch"
@@ -72,10 +73,15 @@ export function useActions() {
     [context]
   )
 
+  const removeAllFiltersCallback = useCallback(() => {
+    return removeAllFilters(context)
+  }, [context])
+
   return {
     newSearch: newSearchCallback,
     updateSearch: updateSearchCallback,
     toggleProductFilter: toggleProductFilterCallback,
-    replaceFilter: replaceFilterCallback
+    replaceFilter: replaceFilterCallback,
+    removeAllFilters: removeAllFiltersCallback
   }
 }
