@@ -1,3 +1,10 @@
+# [3.16.0](https://github.com/Nosto/search-js/compare/v3.15.0...v3.16.0) (2025-09-30)
+
+
+### Features
+
+* implement useShopifyProduct hook with caching and tests ([6dd5a96](https://github.com/Nosto/search-js/commit/6dd5a966a64d35a8bf41da88ccda5eb2952c0092))
+
 # [3.15.0](https://github.com/Nosto/search-js/compare/v3.14.0...v3.15.0) (2025-09-29)
 
 
