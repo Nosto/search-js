@@ -1,3 +1,15 @@
+# [3.17.0](https://github.com/Nosto/search-js/compare/v3.16.1...v3.17.0) (2025-09-30)
+
+
+### Bug Fixes
+
+* reviews ([8d34d65](https://github.com/Nosto/search-js/commit/8d34d65872afd07fa97fcaf1b29bcb1713479ce1))
+
+
+### Features
+
+* remove all filters with custom event ([2878ed8](https://github.com/Nosto/search-js/commit/2878ed8f0e01adea0838f09f34cbb42ad81d9a94))
+
 ## [3.16.1](https://github.com/Nosto/search-js/compare/v3.16.0...v3.16.1) (2025-09-30)
 
 
