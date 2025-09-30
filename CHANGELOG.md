@@ -1,3 +1,10 @@
+## [3.17.1](https://github.com/Nosto/search-js/compare/v3.17.0...v3.17.1) (2025-09-30)
+
+
+### Bug Fixes
+
+* make removeAllFilters event notification only ([e19d9cc](https://github.com/Nosto/search-js/commit/e19d9cc137de07abb0491c9ab58768d7578d6861))
+
 # [3.17.0](https://github.com/Nosto/search-js/compare/v3.16.1...v3.17.0) (2025-09-30)
 
 
