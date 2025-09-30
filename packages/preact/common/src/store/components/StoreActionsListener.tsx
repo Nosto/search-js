@@ -46,5 +46,16 @@ export function StoreActionsListener() {
     }
   })
 
+  useEventBusSubscribe({
+    event: "events/removeAllFilters",
+    callback: () => {
+      updateSearch({
+        products: {
+          filter: []
+        }
+      })
+    }
+  })
+
   return null
 }

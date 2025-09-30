@@ -1,4 +1,5 @@
 import type { SearchTermsFacet } from "@nosto/nosto-js/client"
+import { useEventBusSubscribe } from "@preact/events/eventBusSubscribe"
 import { useCallback, useState } from "preact/hooks"
 
 import { useActions } from "./useActions"
@@ -73,6 +74,13 @@ export function useFacet(facet: SearchTermsFacet, options?: UseFacetOptions) {
   const toggleActive = useCallback(() => {
     setActive(!active)
   }, [active])
+
+  useEventBusSubscribe({
+    event: "events/removeAllFilters",
+    callback: () => {
+      setActive(false)
+    }
+  })
 
   return {
     /** Active value */
