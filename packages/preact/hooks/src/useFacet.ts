@@ -89,10 +89,10 @@ export function useFacet(facet: SearchTermsFacet, options?: UseFacetOptions) {
 
   // Update active state when facet data changes (when filters are cleared)
   useEffect(() => {
-    const newSelectedFiltersCount = facet.data?.filter(v => v.selected).length ?? 0
-    if (newSelectedFiltersCount === 0 && !options?.active) {
+    const selectedFiltersCount = facet.data?.filter(v => v.selected).length ?? 0
+    if (selectedFiltersCount === 0 && !options?.active) {
       setActive(false)
-    } else if (newSelectedFiltersCount > 0 && !options?.active) {
+    } else if (selectedFiltersCount > 0 && !options?.active) {
       setActive(true)
     }
   }, [facet.data, options?.active])
