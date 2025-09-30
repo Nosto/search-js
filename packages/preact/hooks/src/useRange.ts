@@ -122,11 +122,17 @@ export function useRange(id: string) {
   }
 
   return {
+    /** Min value */
     min,
+    /** Max value */
     max,
+    /** Range value */
     range: [value[0] ?? min, value[1] ?? max],
+    /** Update range function */
+    updateRange,
+    /** Is the range filter active */
     active,
-    toggleActive,
-    updateRange
+    /** Toggle active state function */
+    toggleActive
   }
 }
