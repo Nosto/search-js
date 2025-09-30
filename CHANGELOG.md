@@ -1,3 +1,10 @@
+## [3.16.1](https://github.com/Nosto/search-js/compare/v3.16.0...v3.16.1) (2025-09-30)
+
+
+### Bug Fixes
+
+* decouple getSaved from useHistory ([23602e0](https://github.com/Nosto/search-js/commit/23602e0e421b97c7606971d1c055ad75b2e772c1))
+
 # [3.16.0](https://github.com/Nosto/search-js/compare/v3.15.0...v3.16.0) (2025-09-30)
 
 
