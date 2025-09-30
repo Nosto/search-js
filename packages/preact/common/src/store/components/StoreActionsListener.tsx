@@ -47,11 +47,8 @@ export function StoreActionsListener() {
   })
 
   useEventBusSubscribe({
-    event: "actions/removeAllFilters",
-    callback: ({ targetStore }) => {
-      if (pageType !== targetStore) {
-        return
-      }
+    event: "events/removeAllFilters",
+    callback: () => {
       updateSearch({
         products: {
           filter: []

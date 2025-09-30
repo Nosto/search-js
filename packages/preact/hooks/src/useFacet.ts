@@ -1,5 +1,4 @@
 import type { SearchTermsFacet } from "@nosto/nosto-js/client"
-import { useConfig } from "@preact/common/config/configContext"
 import { useEventBusSubscribe } from "@preact/events/eventBusSubscribe"
 import { useCallback, useState } from "preact/hooks"
 
@@ -71,18 +70,14 @@ export function useFacet(facet: SearchTermsFacet, options?: UseFacetOptions) {
 
   const [active, setActive] = useState(initialActive)
   const { toggleProductFilter } = useActions()
-  const { pageType } = useConfig()
 
   const toggleActive = useCallback(() => {
     setActive(!active)
   }, [active])
 
   useEventBusSubscribe({
-    event: "actions/removeAllFilters",
-    callback: ({ targetStore }) => {
-      if (pageType !== targetStore) {
-        return
-      }
+    event: "events/removeAllFilters",
+    callback: () => {
       setActive(false)
     }
   })

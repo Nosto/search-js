@@ -1,4 +1,3 @@
-import { useConfig } from "@preact/common/config/configContext"
 import { dispatchNostoEvent } from "@preact/events/eventBusDispatch"
 import { useCallback, useMemo } from "preact/hooks"
 
@@ -42,7 +41,6 @@ export function useProductFilters() {
     filter: state.query.products?.filter ?? []
   }))
   const { selectFilters, toValueFilter, toRangeFilter } = useProductFiltersUtils()
-  const { pageType } = useConfig()
 
   const filters = useMemo(() => {
     if (!filter) {
@@ -67,12 +65,10 @@ export function useProductFilters() {
 
   const removeAll = useCallback(() => {
     dispatchNostoEvent({
-      event: "actions/removeAllFilters",
-      params: {
-        targetStore: pageType
-      }
+      event: "events/removeAllFilters",
+      params: null
     })
-  }, [pageType])
+  }, [])
 
   return {
     /** Selected filters array. */

@@ -1,8 +1,8 @@
 import { useFacet } from "@preact/hooks/useFacet"
+import { renderHook } from "@testing-library/preact"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { mockActions } from "../mocks/mocks"
-import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 describe("useFacet", () => {
   const mockFacet = {
@@ -23,7 +23,7 @@ describe("useFacet", () => {
   })
 
   it("should initialize with active set to true if there are selected filters", () => {
-    const { result } = renderHookWithProviders(() => useFacet(mockFacet))
+    const { result } = renderHook(() => useFacet(mockFacet))
     expect(result.current.active).toBe(true)
   })
 
@@ -36,7 +36,7 @@ describe("useFacet", () => {
         { value: "Green", selected: false, count: 7 }
       ]
     }
-    const { result } = renderHookWithProviders(() => useFacet(facetWithoutSelectedFilters))
+    const { result } = renderHook(() => useFacet(facetWithoutSelectedFilters))
     expect(result.current.active).toBe(false)
   })
 
@@ -49,12 +49,12 @@ describe("useFacet", () => {
         { value: "Green", selected: false, count: 7 }
       ]
     }
-    const { result } = renderHookWithProviders(() => useFacet(facetWithoutSelectedFilters, { active: true }))
+    const { result } = renderHook(() => useFacet(facetWithoutSelectedFilters, { active: true }))
     expect(result.current.active).toBe(true)
   })
 
   it("should return the correct selected filters count", () => {
-    const { result } = renderHookWithProviders(() => useFacet(mockFacet))
+    const { result } = renderHook(() => useFacet(mockFacet))
     expect(result.current.selectedFiltersCount).toBe(2)
   })
 
@@ -64,12 +64,12 @@ describe("useFacet", () => {
       data: undefined
     }
     // @ts-expect-error Checking incorrect usage
-    const { result } = renderHookWithProviders(() => useFacet(facetWithoutFilters))
+    const { result } = renderHook(() => useFacet(facetWithoutFilters))
     expect(result.current.selectedFiltersCount).toBe(0)
   })
 
   it("should toggle active state when toggleActive is called", () => {
-    const { result, rerender } = renderHookWithProviders(() => useFacet(mockFacet))
+    const { result, rerender } = renderHook(() => useFacet(mockFacet))
     expect(result.current.active).toBe(true)
     result.current.toggleActive()
     rerender()
@@ -80,7 +80,7 @@ describe("useFacet", () => {
   })
 
   it("should call toggleProductFilter with the correct arguments when toggleProductFilter is called", () => {
-    const { result } = renderHookWithProviders(() => useFacet(mockFacet))
+    const { result } = renderHook(() => useFacet(mockFacet))
     result.current.toggleProductFilter("color", "Red", false)
     expect(actions.toggleProductFilter).toHaveBeenCalledWith("color", "Red", false)
   })
