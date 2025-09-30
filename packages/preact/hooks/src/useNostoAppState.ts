@@ -1,6 +1,6 @@
 import { State } from "@preact/common/store/store"
 import { StoreContext } from "@preact/common/store/storeContext"
-import { useContext, useEffect, useState } from "preact/hooks"
+import { useCallback, useContext, useEffect, useState } from "preact/hooks"
 
 /**
  * Imports a part of the Nosto state to the component.
@@ -44,11 +44,18 @@ export function useNostoAppState(): State
 export function useNostoAppState<Selected>(selector: (state: State) => Selected): Selected
 export function useNostoAppState<Selected>(selector: (state: State) => Selected = fullStateSelector<Selected>) {
   const store = useContext(StoreContext)
-  const [slice, setSlice] = useState(selector(store.getState()))
-  store.onChange(selector, setSlice)
+  const [slice, setSlice] = useState(() => selector(store.getState()))
+
+  const stableSelector = useCallback(selector, [selector])
+
   useEffect(() => {
+    // Update slice immediately in case the state changed while the component was re-rendering
+    setSlice(stableSelector(store.getState()))
+
+    store.onChange(stableSelector, setSlice)
     return () => store.clearOnChange(setSlice)
-  }, [store])
+  }, [store, stableSelector])
+
   return slice
 }
 
