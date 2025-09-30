@@ -5,6 +5,14 @@ import { useCallback, useContext } from "preact/hooks"
 
 export const historyKey = "nosto:search-js:history"
 
+export function getSaved() {
+  const historyFromLocalStorage = getLocalStorageItem<string[]>(historyKey) ?? []
+  return historyFromLocalStorage
+    .slice()
+    .reverse()
+    .filter((c: string) => !!c)
+}
+
 export function useHistory() {
   const { updateState } = useContext(StoreContext)
   const { historySize } = useAutocompleteConfig()
@@ -20,16 +28,7 @@ export function useHistory() {
     [historySize, updateState]
   )
 
-  const getSaved = useCallback(() => {
-    const historyFromLocalStorage = getLocalStorageItem<string[]>(historyKey) ?? []
-    return historyFromLocalStorage
-      .slice()
-      .reverse()
-      .filter((c: string) => !!c)
-  }, [])
-
   return {
-    addQuery,
-    getSaved
+    addQuery
   }
 }
