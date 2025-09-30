@@ -82,10 +82,11 @@ describe("useRange", () => {
       }
     })
     const render = renderHookWithProviders(() => useRange("missing"), { store })
-    const { min, max, range, updateRange } = render.result.current
+    const { min, max, range, active, updateRange } = render.result.current
     expect(min).toBe(0)
     expect(max).toBe(0)
     expect(range).toEqual([0, 0])
+    expect(active).toBe(false)
     expect(updateRange).toBeInstanceOf(Function)
   })
 
@@ -98,6 +99,48 @@ describe("useRange", () => {
       gte: "30",
       lte: "40"
     })
+  })
+
+  it("handles active state correctly", () => {
+    // Test with no active filter - should be false
+    const render1 = renderHookWithProviders(() => useRange("price"), { store })
+    let { active } = render1.result.current
+
+    // Test with active filter - should be true
+    store.updateState({
+      query: {
+        products: {
+          filter: [{ field: "price", range: [{ gte: "10", lte: "50" }] }]
+        }
+      }
+    })
+    const render2 = renderHookWithProviders(() => useRange("price"), { store })
+    active = render2.result.current.active
+    expect(active).toBe(true)
+
+    // Test with partial filter (gte only) - should be true
+    store.updateState({
+      query: {
+        products: {
+          filter: [{ field: "price", range: [{ gte: "10" }] }]
+        }
+      }
+    })
+    const render3 = renderHookWithProviders(() => useRange("price"), { store })
+    active = render3.result.current.active
+    expect(active).toBe(true)
+
+    // Test with partial filter (lte only) - should be true
+    store.updateState({
+      query: {
+        products: {
+          filter: [{ field: "price", range: [{ lte: "50" }] }]
+        }
+      }
+    })
+    const render4 = renderHookWithProviders(() => useRange("price"), { store })
+    active = render4.result.current.active
+    expect(active).toBe(true)
   })
 
   describe("state tests", () => {
