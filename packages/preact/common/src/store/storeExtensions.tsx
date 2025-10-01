@@ -38,7 +38,7 @@ export function createExtendableStore<State extends BaseState>(defaultState: Sta
   }
 
   function onChange<T>(selector: (state: State) => T, callback: (piece: T) => void) {
-    let lastValue: T | undefined
+    let lastValue = selector(state)
 
     changeCallbacks.set(callback, newState => {
       const piece = selector(newState)

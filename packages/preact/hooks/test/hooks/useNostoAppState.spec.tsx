@@ -55,6 +55,40 @@ describe("useNostoAppState", () => {
     expect(render.result.current).toEqual(true)
   })
 
+  it("supports transition to undefined", () => {
+    store.updateState({
+      query: {
+        query: "query"
+      }
+    })
+
+    const render = renderHookWithProviders(() => useNostoAppState(state => state.query?.query), { store })
+    expect(render.result.current).toEqual("query")
+
+    store.updateState({
+      query: {}
+    })
+    render.rerender()
+    expect(render.result.current).toEqual(undefined)
+  })
+
+  it("supports transition from undefined", () => {
+    store.updateState({
+      query: {}
+    })
+
+    const render = renderHookWithProviders(() => useNostoAppState(state => state.query?.query), { store })
+    expect(render.result.current).toEqual(undefined)
+
+    store.updateState({
+      query: {
+        query: "query"
+      }
+    })
+    render.rerender()
+    expect(render.result.current).toEqual("query")
+  })
+
   it("registers onChange on mount", () => {
     store.onChange = vi.fn()
     store.clearOnChange = vi.fn()
