@@ -8,39 +8,6 @@ import { useNostoAppState } from "./useNostoAppState"
 
 type RangeProps = [number | undefined, number | undefined]
 
-function getRangeValues(filter?: InputSearchTopLevelFilter) {
-  const filterValue = filter?.range?.[0]
-
-  if (typeof filterValue === "object" && ("gte" in filterValue || "lte" in filterValue)) {
-    return [parseNumber(filterValue.gte), parseNumber(filterValue.lte)]
-  }
-
-  return [undefined, undefined]
-}
-
-function createRangeValues(from: number | undefined, to: number | undefined, min: number, max: number) {
-  const fromRounded = from !== undefined ? Math.floor(from) : undefined
-  const toRounded = to !== undefined ? Math.ceil(to) : undefined
-  const fromDefined = fromRounded !== undefined
-  const toDefined = toRounded !== undefined
-
-  if ((min === fromRounded || !fromDefined) && (max === toRounded || !toDefined)) {
-    return undefined
-  }
-
-  const filter: InputSearchRangeFilter = {}
-
-  if (fromDefined && fromRounded !== min) {
-    filter.gte = fromRounded.toString()
-  }
-
-  if (toDefined && toRounded !== max) {
-    filter.lte = toRounded.toString()
-  }
-
-  return Object.keys(filter).length > 0 ? filter : undefined
-}
-
 /**
  * A hook that returns range information and functions to update the range.
  *
@@ -95,7 +62,9 @@ export function useRange(id: string) {
 
   const updateRange = useCallback(
     ([from, to]: RangeProps) => {
-      if (!stat) return
+      if (!stat) {
+        return
+      }
 
       const filterObject = createRangeValues(from, to, min, max)
       replaceFilter(stat.field, filterObject)
@@ -135,4 +104,37 @@ export function useRange(id: string) {
     /** Toggle active state function */
     toggleActive
   }
+}
+
+function getRangeValues(filter?: InputSearchTopLevelFilter) {
+  const filterValue = filter?.range?.[0]
+
+  if (typeof filterValue === "object" && ("gte" in filterValue || "lte" in filterValue)) {
+    return [parseNumber(filterValue.gte), parseNumber(filterValue.lte)]
+  }
+
+  return [undefined, undefined]
+}
+
+function createRangeValues(from: number | undefined, to: number | undefined, min: number, max: number) {
+  const fromRounded = from !== undefined ? Math.floor(from) : undefined
+  const toRounded = to !== undefined ? Math.ceil(to) : undefined
+  const fromDefined = fromRounded !== undefined
+  const toDefined = toRounded !== undefined
+
+  if ((min === fromRounded || !fromDefined) && (max === toRounded || !toDefined)) {
+    return undefined
+  }
+
+  const filter: InputSearchRangeFilter = {}
+
+  if (fromDefined && fromRounded !== min) {
+    filter.gte = fromRounded.toString()
+  }
+
+  if (toDefined && toRounded !== max) {
+    filter.lte = toRounded.toString()
+  }
+
+  return Object.keys(filter).length > 0 ? filter : undefined
 }

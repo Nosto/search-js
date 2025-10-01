@@ -101,12 +101,13 @@ describe("useRange", () => {
     })
   })
 
-  it("handles active state correctly", () => {
-    // Test with no active filter - should be false
-    const render1 = renderHookWithProviders(() => useRange("price"), { store })
-    let { active } = render1.result.current
+  it("returns false when no filter is active", () => {
+    const render = renderHookWithProviders(() => useRange("price"), { store })
+    const { active } = render.result.current
+    expect(active).toBe(false)
+  })
 
-    // Test with active filter - should be true
+  it("returns true when both gte and lte filters are active", () => {
     store.updateState({
       query: {
         products: {
@@ -114,11 +115,12 @@ describe("useRange", () => {
         }
       }
     })
-    const render2 = renderHookWithProviders(() => useRange("price"), { store })
-    active = render2.result.current.active
+    const render = renderHookWithProviders(() => useRange("price"), { store })
+    const { active } = render.result.current
     expect(active).toBe(true)
+  })
 
-    // Test with partial filter (gte only) - should be true
+  it("returns true when only gte filter is active", () => {
     store.updateState({
       query: {
         products: {
@@ -126,11 +128,12 @@ describe("useRange", () => {
         }
       }
     })
-    const render3 = renderHookWithProviders(() => useRange("price"), { store })
-    active = render3.result.current.active
+    const render = renderHookWithProviders(() => useRange("price"), { store })
+    const { active } = render.result.current
     expect(active).toBe(true)
+  })
 
-    // Test with partial filter (lte only) - should be true
+  it("returns true when only lte filter is active", () => {
     store.updateState({
       query: {
         products: {
@@ -138,8 +141,8 @@ describe("useRange", () => {
         }
       }
     })
-    const render4 = renderHookWithProviders(() => useRange("price"), { store })
-    active = render4.result.current.active
+    const render = renderHookWithProviders(() => useRange("price"), { store })
+    const { active } = render.result.current
     expect(active).toBe(true)
   })
 
@@ -208,7 +211,7 @@ describe("useRange", () => {
   })
 
   describe("edge cases", () => {
-    it("handles decimal values and rounding", () => {
+    it("rounds decimal values correctly", () => {
       const render = renderHookWithProviders(() => useRange("price"), { store })
       const { updateRange } = render.result.current
 
@@ -218,11 +221,21 @@ describe("useRange", () => {
         gte: "10", // Math.floor(10.7)
         lte: "21" // Math.ceil(20.3)
       })
+    })
+
+    it("returns undefined when rounded values equal min/max boundaries", () => {
+      const render = renderHookWithProviders(() => useRange("price"), { store })
+      const { updateRange } = render.result.current
 
       // Test that values rounding to min/max return undefined (no filter needed)
       updateRange([0.1, 99.9])
       expect(actions.replaceFilter).toHaveBeenLastCalledWith("price", undefined)
       // Math.floor(0.1) = 0 (equals min), Math.ceil(99.9) = 100 (equals max)
+    })
+
+    it("handles partial filters when one value rounds to boundary", () => {
+      const render = renderHookWithProviders(() => useRange("price"), { store })
+      const { updateRange } = render.result.current
 
       // Test values that don't round to min/max
       updateRange([0.1, 50.5])
