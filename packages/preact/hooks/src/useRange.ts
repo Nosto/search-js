@@ -8,8 +8,8 @@ import { useNostoAppState } from "./useNostoAppState"
 
 type RangeProps = [number | undefined, number | undefined]
 
-const getRangeValues = (filter?: InputSearchTopLevelFilter) => {
-  const filterValue = filter?.range ? filter.range[0] : undefined
+function getRangeValues(filter?: InputSearchTopLevelFilter) {
+  const filterValue = filter?.range?.[0]
 
   if (typeof filterValue === "object" && ("gte" in filterValue || "lte" in filterValue)) {
     return [parseNumber(filterValue.gte), parseNumber(filterValue.lte)]
@@ -18,7 +18,7 @@ const getRangeValues = (filter?: InputSearchTopLevelFilter) => {
   return [undefined, undefined]
 }
 
-const createRangeValues = (from: number | undefined, to: number | undefined, min: number, max: number) => {
+function createRangeValues(from: number | undefined, to: number | undefined, min: number, max: number) {
   const fromRounded = from !== undefined ? Math.floor(from) : undefined
   const toRounded = to !== undefined ? Math.ceil(to) : undefined
   const fromDefined = fromRounded !== undefined
