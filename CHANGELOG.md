@@ -1,3 +1,17 @@
+# [3.18.0](https://github.com/Nosto/search-js/compare/v3.17.2...v3.18.0) (2025-10-01)
+
+
+### Bug Fixes
+
+* refactorings ([36014a0](https://github.com/Nosto/search-js/commit/36014a0d9ec0e8160ada2b0de88155c2bf993d6b))
+* reviews ([3db70b3](https://github.com/Nosto/search-js/commit/3db70b3667ca1eeec37299fac1fbf8adc2b9f96f))
+* reviews ([d2a4b53](https://github.com/Nosto/search-js/commit/d2a4b534249d937e6349899a2f711825d2ab6b81))
+
+
+### Features
+
+* useRange match useFacet hook ([87f39d4](https://github.com/Nosto/search-js/commit/87f39d4932a532a4e3fa9a5cab30cde58d84a29a))
+
 ## [3.17.2](https://github.com/Nosto/search-js/compare/v3.17.1...v3.17.2) (2025-10-01)
 
 
