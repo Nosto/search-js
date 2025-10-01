@@ -1,3 +1,10 @@
+## [3.18.1](https://github.com/Nosto/search-js/compare/v3.18.0...v3.18.1) (2025-10-01)
+
+
+### Bug Fixes
+
+* use core prefix instead of ./ ([540e522](https://github.com/Nosto/search-js/commit/540e522d2f1adbd58e2f9c75fb0ea2a5c7219cac))
+
 # [3.18.0](https://github.com/Nosto/search-js/compare/v3.17.2...v3.18.0) (2025-10-01)
 
 
