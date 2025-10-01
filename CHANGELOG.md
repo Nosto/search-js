@@ -1,3 +1,10 @@
+## [3.17.2](https://github.com/Nosto/search-js/compare/v3.17.1...v3.17.2) (2025-10-01)
+
+
+### Bug Fixes
+
+* fix onChange logic ([00cd626](https://github.com/Nosto/search-js/commit/00cd626c51f00589689b25bbfecb8004d33b59fb))
+
 ## [3.17.1](https://github.com/Nosto/search-js/compare/v3.17.0...v3.17.1) (2025-09-30)
 
 
