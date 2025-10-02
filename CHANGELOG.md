@@ -1,3 +1,10 @@
+## [3.19.1](https://github.com/Nosto/search-js/compare/v3.19.0...v3.19.1) (2025-10-02)
+
+
+### Bug Fixes
+
+* legacy compatibility exports ([2862b1c](https://github.com/Nosto/search-js/commit/2862b1c9112ee4663295db19456e694f7eab5fa6))
+
 # [3.19.0](https://github.com/Nosto/search-js/compare/v3.18.1...v3.19.0) (2025-10-02)
 
 
