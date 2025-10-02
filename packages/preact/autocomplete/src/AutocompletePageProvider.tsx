@@ -3,7 +3,7 @@ import { StoreActionsListener } from "@preact/common/store/components/StoreActio
 import { createStore, type Store } from "@preact/common/store/store"
 import { StoreContext } from "@preact/common/store/storeContext"
 import { useCheckClientScript } from "@preact/hooks/useCheckClientScript"
-import { getSaved } from "@preact/hooks/useHistory"
+import { getSavedHistory } from "@preact/hooks/useHistory"
 import { ComponentChildren } from "preact"
 import { useEffect } from "preact/hooks"
 
@@ -21,7 +21,7 @@ export function AutocompletePageProvider({ config, store, children }: Autocomple
 
   useEffect(() => {
     actualStore.updateState({
-      historyItems: getSaved()
+      historyItems: getSavedHistory()
     })
   }, [actualStore])
 
