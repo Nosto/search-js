@@ -1,6 +1,6 @@
 import { makeAutocompleteConfig } from "@preact/autocomplete/AutocompleteConfig"
 import { ConfigContext } from "@preact/common/config/configContext"
-import { getSaved, historyKey, useHistory } from "@preact/hooks/useHistory"
+import { getSavedHistory, historyKey, useHistory } from "@preact/hooks/useHistory"
 import { describe, expect, it, vi } from "vitest"
 
 import { mockLocalStorage, mockStore } from "../mocks/mocks"
@@ -66,21 +66,21 @@ describe("useHistory", () => {
 
   describe("getSaved", () => {
     it("should return empty array when no history exists", () => {
-      const saved = getSaved()
+      const saved = getSavedHistory()
 
       expect(saved).toEqual([])
     })
 
     it("should return reversed history items", () => {
       localStorage.setItem(historyKey, JSON.stringify(["query1", "query2", "query3"]))
-      const saved = getSaved()
+      const saved = getSavedHistory()
 
       expect(saved).toEqual(["query3", "query2", "query1"])
     })
 
     it("should filter out empty strings and falsy values", () => {
       localStorage.setItem(historyKey, JSON.stringify(["query1", "", "query2", null, "query3", undefined]))
-      const saved = getSaved()
+      const saved = getSavedHistory()
 
       expect(saved).toEqual(["query3", "query2", "query1"])
     })
