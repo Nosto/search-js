@@ -1,3 +1,15 @@
+# [3.19.0](https://github.com/Nosto/search-js/compare/v3.18.1...v3.19.0) (2025-10-02)
+
+
+### Bug Fixes
+
+* **workflow:** add npm caching and remove workflow_call trigger ([0d4d5b5](https://github.com/Nosto/search-js/commit/0d4d5b56b0b060d85fece1e6c916655adbde0f2b))
+
+
+### Features
+
+* **workflow:** add minimal copilot-setup-steps.yml with Node 22 and npm ci ([e207997](https://github.com/Nosto/search-js/commit/e207997b5b64ede4a4e20d79a9b6763ae9a30888))
+
 ## [3.18.1](https://github.com/Nosto/search-js/compare/v3.18.0...v3.18.1) (2025-10-01)
 
 
