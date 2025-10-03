@@ -1,4 +1,5 @@
 /** @module preact/common */
+export { withDefaultQuery } from "./src/actions/withDefaultQuery"
 export { ErrorBoundary } from "./src/components/ErrorBoundary"
 export { InfiniteScroll, type InfiniteScrollProps } from "./src/components/InfiniteScroll/InfiniteScroll"
 export { InfiniteScrollWithLink } from "./src/components/InfiniteScroll/InfiniteScrollWithLink"
