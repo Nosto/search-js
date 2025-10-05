@@ -48,12 +48,12 @@ export function useRange(id: string) {
   const stat = products?.facets?.find(v => v.id === id)
 
   const filter = query.products?.filter?.find(v => v.field === stat?.field)
-  const value = useMemo(() => getRangeValues(filter), [filter])
+  const [rangeStart, rangeEnd] = getRangeValues(filter)
   const min = stat && "min" in stat ? Math.floor(stat.min ?? 0) : 0
   const max = stat && "max" in stat ? Math.ceil(stat.max ?? 0) : 0
-  const range = useMemo(() => [value[0] ?? min, value[1] ?? max], [value, min, max])
+  const range = useMemo(() => [rangeStart ?? min, rangeEnd ?? max], [rangeStart, rangeEnd, min, max])
 
-  const hasActiveFilter = value[0] !== undefined || value[1] !== undefined
+  const hasActiveFilter = rangeStart !== undefined || rangeEnd !== undefined
   const [active, setActive] = useState(hasActiveFilter)
 
   const toggleActive = useCallback(() => {
