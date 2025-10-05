@@ -10,6 +10,15 @@ type RangeProps = [number | undefined, number | undefined]
 
 const FALLBACK_RANGE = [0, 0] as const
 
+const FALLBACK_RETURN_VALUE = {
+  min: 0,
+  max: 0,
+  range: FALLBACK_RANGE,
+  active: false,
+  toggleActive: () => {},
+  updateRange: () => {}
+} as const
+
 /**
  * A hook that returns range information and functions to update the range.
  *
@@ -84,14 +93,7 @@ export function useRange(id: string) {
   })
 
   if (!stat) {
-    return {
-      min: 0,
-      max: 0,
-      range: FALLBACK_RANGE,
-      active: false,
-      toggleActive: () => {},
-      updateRange: () => {}
-    }
+    return FALLBACK_RETURN_VALUE
   }
 
   return {
