@@ -150,7 +150,7 @@ describe("useRangeSelector", () => {
     render.rerender()
     const secondRender = render.result.current
     
-    // Object values should be consistent when state hasn't changed (excluding functions)
-    expectStable(firstRender, secondRender, ["min", "max", "range", "ranges", "isSelected"])
+    // Object values should be consistent when state hasn't changed
+    expectStable(firstRender, secondRender)
   })
 })

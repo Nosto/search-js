@@ -2,25 +2,23 @@ import { expect } from "vitest"
 
 /**
  * Helper function to assert that hook return values remain stable across re-renders.
- * Handles both simple objects that can be compared with toStrictEqual and complex objects
- * that require selective property comparison (e.g., when functions are involved).
  */
-export function expectStable(firstRender: any, secondRender: any, selectiveProps?: string[]) {
-  if (selectiveProps) {
-    // For hooks that return functions, compare only the specified properties
-    const firstValues = selectiveProps.reduce((acc, prop) => {
-      acc[prop] = firstRender[prop]
-      return acc
-    }, {} as any)
+export function expectStable<T extends object>(firstRender: T, secondRender: T) {
+  Object.keys(firstRender).forEach(key => {
+    const firstValue = firstRender[key as keyof T]
+    const secondValue = secondRender[key as keyof T]
     
-    const secondValues = selectiveProps.reduce((acc, prop) => {
-      acc[prop] = secondRender[prop]
-      return acc
-    }, {} as any)
+    // Skip function comparisons as they are expected to be different instances
+    if (typeof firstValue === 'function' && typeof secondValue === 'function') {
+      return
+    }
     
-    expect(firstValues).toStrictEqual(secondValues)
-  } else {
-    // For simple objects, compare the entire result
-    expect(firstRender).toStrictEqual(secondRender)
-  }
+    // For primitives, use toBe for reference equality
+    if (typeof firstValue !== 'object' || firstValue === null) {
+      expect(firstValue, `${key} mismatch`).toBe(secondValue)
+    } else {
+      // For objects/arrays, use toStrictEqual for deep equality
+      expect(firstValue, `${key} mismatch`).toStrictEqual(secondValue)
+    }
+  })
 }

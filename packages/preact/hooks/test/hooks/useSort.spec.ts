@@ -93,7 +93,7 @@ describe("useSort", () => {
     render.rerender()
     const secondRender = render.result.current
     
-    // Object values should be consistent when state hasn't changed (excluding functions)
-    expectStable(firstRender, secondRender, ["activeSort"])
+    // Object values should be consistent when state hasn't changed
+    expectStable(firstRender, secondRender)
   })
 })
