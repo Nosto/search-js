@@ -393,4 +393,96 @@ describe("useRange", () => {
       })
     })
   })
+
+  describe("memoization", () => {
+    it("should return stable range tuple when values don't change", () => {
+      const render = renderHookWithProviders(() => useRange("price"), { store })
+
+      // Get initial range reference
+      const { range: initialRange } = render.result.current
+      expect(initialRange).toEqual([0, 100])
+
+      // Re-render without state changes
+      render.rerender()
+
+      // Range reference should be the same
+      const { range: secondRange } = render.result.current
+      expect(secondRange).toBe(initialRange) // Reference equality check
+      expect(secondRange).toEqual([0, 100])
+    })
+
+    it("should return new range tuple when filter values change", () => {
+      const render = renderHookWithProviders(() => useRange("price"), { store })
+
+      // Get initial range reference
+      const { range: initialRange } = render.result.current
+      expect(initialRange).toEqual([0, 100])
+
+      // Update store with filter
+      store.updateState({
+        query: {
+          products: {
+            filter: [{ field: "price", range: [{ gte: "10", lte: "50" }] }]
+          }
+        }
+      })
+      render.rerender()
+
+      // Range reference should be different due to value changes
+      const { range: updatedRange } = render.result.current
+      expect(updatedRange).not.toBe(initialRange) // Reference should be different
+      expect(updatedRange).toEqual([10, 50])
+    })
+
+    it("should return new range tuple when min/max values change", () => {
+      const render = renderHookWithProviders(() => useRange("price"), { store })
+
+      // Get initial range reference
+      const { range: initialRange } = render.result.current
+      expect(initialRange).toEqual([0, 100])
+
+      // Update store with new facet min/max
+      store.updateState({
+        response: {
+          products: {
+            size: 10,
+            total: 100,
+            hits: [],
+            facets: [
+              {
+                name: "price",
+                id: "price",
+                field: "price",
+                min: 10,
+                max: 200,
+                type: "stats"
+              }
+            ]
+          }
+        }
+      })
+      render.rerender()
+
+      // Range reference should be different due to min/max changes
+      const { range: updatedRange } = render.result.current
+      expect(updatedRange).not.toBe(initialRange) // Reference should be different
+      expect(updatedRange).toEqual([10, 200])
+    })
+
+    it("should return stable fallback range when no stat is found", () => {
+      const render = renderHookWithProviders(() => useRange("missing"), { store })
+
+      // Get initial range reference for missing stat
+      const { range: initialRange } = render.result.current
+      expect(initialRange).toEqual([0, 0])
+
+      // Re-render without changes
+      render.rerender()
+
+      // Range reference should be the same
+      const { range: secondRange } = render.result.current
+      expect(secondRange).toBe(initialRange) // Reference equality check
+      expect(secondRange).toEqual([0, 0])
+    })
+  })
 })
