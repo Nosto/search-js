@@ -1,4 +1,5 @@
 import { InputSearchSort } from "@nosto/nosto-js/client"
+import { useCallback } from "preact/hooks"
 
 import { useActions } from "../useActions"
 import { useNostoAppState } from "../useNostoAppState"
@@ -52,16 +53,19 @@ export function useSort(sortOptions: SortOption[]) {
   const activeSort =
     sortOptions.find(option => isMatchingSort(option.value.sort, query.products?.sort || []))?.id ?? sortOptions[0]?.id
 
-  const setSort = (sortId: string) => {
-    const selectedSort = sortOptions.find(option => option.id === sortId)
-    if (selectedSort) {
-      updateSearch({
-        products: {
-          sort: selectedSort.value.sort
-        }
-      })
-    }
-  }
+  const setSort = useCallback(
+    (sortId: string) => {
+      const selectedSort = sortOptions.find(option => option.id === sortId)
+      if (selectedSort) {
+        updateSearch({
+          products: {
+            sort: selectedSort.value.sort
+          }
+        })
+      }
+    },
+    [sortOptions, updateSearch]
+  )
 
   return {
     /** Active sort */

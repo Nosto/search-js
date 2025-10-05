@@ -1,5 +1,5 @@
 import { useResponse } from "@preact/hooks/useResponse"
-import { describe, it } from "vitest"
+import { describe, expect, it } from "vitest"
 
 import { expectStable } from "../mocks/expectStable"
 import { mockActions, mockStore } from "../mocks/mocks"
@@ -73,11 +73,11 @@ describe("useResponse", () => {
   it("maintains consistent object values on re-render", () => {
     const render = renderHookWithProviders(() => useResponse(), { store })
     const firstRender = render.result.current
-    
+
     // Force re-render without state change
     render.rerender()
     const secondRender = render.result.current
-    
+
     // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })

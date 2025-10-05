@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/preact"
-import { describe, it, vi } from "vitest"
+import { describe, expect, it, vi } from "vitest"
 
 import { expectStable } from "../mocks/expectStable"
 import { mockSpeechToText } from "../mocks/speechMock"
@@ -35,11 +35,11 @@ describe("useSpeechToText", async () => {
   it("maintains consistent object values on re-render", () => {
     const { result, rerender } = renderHook(() => useSpeechToText())
     const firstRender = result.current
-    
+
     // Force re-render without state change
     rerender()
     const secondRender = result.current
-    
+
     // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })

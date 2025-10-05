@@ -1,5 +1,5 @@
 import { act, waitFor } from "@testing-library/preact"
-import { beforeEach, describe, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { ShopifyProduct } from "../../src/useShopifyProduct/types"
 import { clearShopifyProductCache, useShopifyProduct } from "../../src/useShopifyProduct/useShopifyProduct"
@@ -202,11 +202,11 @@ describe("useShopifyProduct", () => {
   it("maintains consistent object values on re-render", () => {
     const { result, rerender } = renderHookWithProviders(() => useShopifyProduct("test-product"))
     const firstRender = result.current
-    
+
     // Force re-render without state change
     rerender()
     const secondRender = result.current
-    
+
     // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })

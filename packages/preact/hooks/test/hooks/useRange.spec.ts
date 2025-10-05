@@ -1,47 +1,12 @@
 import type { InputSearchFilter } from "@nosto/nosto-js/client"
 import { useRange } from "@preact/hooks/useRange"
-import { beforeEach, describe, it } from "vitest"
+import { beforeEach, describe, expect, it } from "vitest"
 
 import { expectStable } from "../mocks/expectStable"
 import { mockActions, mockStore, resetStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 describe("useRange", () => {
-  it("maintains consistent object values on re-render", () => {
-    const store = mockStore({
-      loading: false,
-      initialized: true,
-      query: {},
-      response: {
-        products: {
-          size: 10,
-          total: 100,
-          hits: [],
-          facets: [
-            {
-              name: "price",
-              id: "price",
-              field: "price",
-              min: 0,
-              max: 100,
-              type: "stats"
-            }
-          ]
-        }
-      }
-    })
-    mockActions()
-
-    const render = renderHookWithProviders(() => useRange("price"), { store })
-    const firstRender = render.result.current
-    
-    // Force re-render without state change
-    render.rerender()
-    const secondRender = render.result.current
-    
-    // Object values should be consistent when state hasn't changed
-    expectStable(firstRender, secondRender)
-  })
   const actions = mockActions()
   const store = mockStore({
     loading: false,
@@ -72,6 +37,18 @@ describe("useRange", () => {
 
   beforeEach(() => {
     resetStore(store)
+  })
+
+  it("maintains consistent object values on re-render", () => {
+    const render = renderHookWithProviders(() => useRange("price"), { store })
+    const firstRender = render.result.current
+
+    // Force re-render without state change
+    render.rerender()
+    const secondRender = render.result.current
+
+    // Object values should be consistent when state hasn't changed
+    expectStable(firstRender, secondRender)
   })
 
   it("handles various updateRange scenarios", () => {

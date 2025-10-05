@@ -1,5 +1,5 @@
 import { usePagination } from "@preact/hooks/usePagination"
-import { describe, it } from "vitest"
+import { describe, expect, it } from "vitest"
 
 import { expectStable } from "../mocks/expectStable"
 import { mockStore } from "../mocks/mocks"
@@ -136,11 +136,11 @@ describe("usePagination", () => {
   it("maintains consistent object values on re-render", () => {
     const render = renderHookWithProviders(() => usePagination(), { store })
     const firstRender = render.result.current
-    
+
     // Force re-render without state change
     render.rerender()
     const secondRender = render.result.current
-    
+
     // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })

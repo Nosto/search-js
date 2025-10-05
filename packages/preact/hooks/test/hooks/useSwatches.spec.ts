@@ -1,7 +1,7 @@
 import { SearchProductSku } from "@nosto/nosto-js/client"
 import { useSwatches } from "@preact/hooks/useSwatches/useSwatches"
 import { renderHook } from "@testing-library/preact"
-import { describe, it } from "vitest"
+import { describe, expect, it } from "vitest"
 
 import { expectStable } from "../mocks/expectStable"
 
@@ -195,13 +195,14 @@ describe("useSwatches", () => {
   })
 
   it("maintains consistent object values on re-render", () => {
-    const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
+    const fields = ["color", "size", "material"]
+    const { result, rerender } = renderHook(() => useSwatches(testSKUs, fields))
     const firstRender = result.current
-    
+
     // Force re-render without state change
     rerender()
     const secondRender = result.current
-    
+
     // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })

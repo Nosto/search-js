@@ -1,5 +1,5 @@
 import { useSizeOptions } from "@preact/hooks/useSizeOptions"
-import { describe, it } from "vitest"
+import { describe, expect, it } from "vitest"
 
 import { expectStable } from "../mocks/expectStable"
 import { mockActions, mockStore } from "../mocks/mocks"
@@ -121,11 +121,11 @@ describe("useSizeOptions", () => {
 
     const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store })
     const firstRender = render.result.current
-    
+
     // Force re-render without state change
     render.rerender()
     const secondRender = render.result.current
-    
+
     // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })

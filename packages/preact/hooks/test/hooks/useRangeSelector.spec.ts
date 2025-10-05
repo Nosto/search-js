@@ -1,5 +1,5 @@
 import { useRangeSelector } from "@preact/hooks/useRangeSelector"
-import { afterEach, beforeEach, describe, it, vi } from "vitest"
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
 import { expectStable } from "../mocks/expectStable"
 import { mockActions, mockStore, resetStore } from "../mocks/mocks"
@@ -145,11 +145,11 @@ describe("useRangeSelector", () => {
   it("maintains consistent object values on re-render", () => {
     const render = renderHookWithProviders(() => useRangeSelector("price", 100), { store })
     const firstRender = render.result.current
-    
+
     // Force re-render without state change
     render.rerender()
     const secondRender = render.result.current
-    
+
     // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })

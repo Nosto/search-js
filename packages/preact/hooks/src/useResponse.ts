@@ -80,11 +80,14 @@ import { useNostoAppState } from "./useNostoAppState"
  *
  */
 export function useResponse(): { products: SearchProducts; keywords: SearchKeywords } {
-  const { products, keywords } = useNostoAppState(state => state.response)
+  const { products, keywords } = useNostoAppState(state => ({
+    products: state.response.products ?? { hits: [], total: 0 },
+    keywords: state.response.keywords ?? { hits: [], total: 0 }
+  }))
   return {
     /** Array of products */
-    products: products ?? { hits: [], total: 0 },
+    products,
     /** Array of keywords */
-    keywords: keywords ?? { hits: [], total: 0 }
+    keywords
   }
 }
