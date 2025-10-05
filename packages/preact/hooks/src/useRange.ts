@@ -8,6 +8,8 @@ import { useNostoAppState } from "./useNostoAppState"
 
 type RangeProps = [number | undefined, number | undefined]
 
+const FALLBACK_RANGE = [0, 0] as const
+
 /**
  * A hook that returns range information and functions to update the range.
  *
@@ -57,7 +59,6 @@ export function useRange(id: string) {
   const [active, setActive] = useState(hasActiveFilter)
 
   const range = useMemo(() => [value[0] ?? min, value[1] ?? max], [value, min, max])
-  const fallbackRange = useMemo(() => [0, 0], [])
 
   const toggleActive = useCallback(() => {
     setActive(prev => !prev)
@@ -86,7 +87,7 @@ export function useRange(id: string) {
     return {
       min: 0,
       max: 0,
-      range: fallbackRange,
+      range: FALLBACK_RANGE,
       active: false,
       toggleActive: () => {},
       updateRange: () => {}
