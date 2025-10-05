@@ -8,12 +8,10 @@ import { useNostoAppState } from "./useNostoAppState"
 
 type RangeProps = [number | undefined, number | undefined]
 
-const FALLBACK_RANGE = [0, 0] as const
-
 const FALLBACK_RETURN_VALUE = {
   min: 0,
   max: 0,
-  range: FALLBACK_RANGE,
+  range: [0, 0],
   active: false,
   toggleActive: () => {},
   updateRange: () => {}
