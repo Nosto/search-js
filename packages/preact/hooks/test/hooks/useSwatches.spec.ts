@@ -1,7 +1,9 @@
 import { SearchProductSku } from "@nosto/nosto-js/client"
 import { useSwatches } from "@preact/hooks/useSwatches/useSwatches"
 import { renderHook } from "@testing-library/preact"
-import { describe, expect, it } from "vitest"
+import { describe, it } from "vitest"
+
+import { expectStable } from "../mocks/expectStable"
 
 function createSwatchOptions(fields: Record<string, string>): { key: string; value: string }[] {
   return Object.entries(fields).map(([key, value]) => ({ key, value }))
@@ -201,7 +203,7 @@ describe("useSwatches", () => {
     const secondRender = result.current
     
     // Object values should be consistent when state hasn't changed
-    expect(firstRender).toStrictEqual(secondRender)
+    expectStable(firstRender, secondRender)
   })
 
   it("should return one matchedSku even if not all fields are selected, if only one SKU matches", () => {

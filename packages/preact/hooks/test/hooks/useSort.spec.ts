@@ -1,7 +1,8 @@
 import { useSort } from "@preact/hooks/useSort/useSort"
 import { createSortOption, isMatchingSort } from "@preact/hooks/useSort/utils"
-import { describe, expect, it } from "vitest"
+import { describe, it } from "vitest"
 
+import { expectStable } from "../mocks/expectStable"
 import { mockActions, mockStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
@@ -93,6 +94,6 @@ describe("useSort", () => {
     const secondRender = render.result.current
     
     // Object values should be consistent when state hasn't changed (excluding functions)
-    expect(firstRender.activeSort).toStrictEqual(secondRender.activeSort)
+    expectStable(firstRender, secondRender, ["activeSort"])
   })
 })

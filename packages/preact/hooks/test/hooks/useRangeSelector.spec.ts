@@ -1,6 +1,7 @@
 import { useRangeSelector } from "@preact/hooks/useRangeSelector"
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { afterEach, beforeEach, describe, it, vi } from "vitest"
 
+import { expectStable } from "../mocks/expectStable"
 import { mockActions, mockStore, resetStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
@@ -150,18 +151,6 @@ describe("useRangeSelector", () => {
     const secondRender = render.result.current
     
     // Object values should be consistent when state hasn't changed (excluding functions)
-    expect({
-      min: firstRender.min,
-      max: firstRender.max,
-      range: firstRender.range,
-      ranges: firstRender.ranges,
-      isSelected: firstRender.isSelected
-    }).toStrictEqual({
-      min: secondRender.min,
-      max: secondRender.max,
-      range: secondRender.range,
-      ranges: secondRender.ranges,
-      isSelected: secondRender.isSelected
-    })
+    expectStable(firstRender, secondRender, ["min", "max", "range", "ranges", "isSelected"])
   })
 })

@@ -2,7 +2,9 @@ import { nostojs } from "@nosto/nosto-js"
 import { clearNostoGlobals, mockNostojs } from "@nosto/nosto-js/testing"
 import { usePersonalization } from "@preact/hooks/usePersonalization"
 import { renderHook } from "@testing-library/preact"
-import { afterEach, describe, expect, it } from "vitest"
+import { afterEach, describe, it } from "vitest"
+
+import { expectStable } from "../mocks/expectStable"
 
 describe("usePersonalization", () => {
   afterEach(() => {
@@ -57,6 +59,6 @@ describe("usePersonalization", () => {
     const secondRender = result.current
     
     // Object values should be consistent when state hasn't changed
-    expect(firstRender).toStrictEqual(secondRender)
+    expectStable(firstRender, secondRender)
   })
 })

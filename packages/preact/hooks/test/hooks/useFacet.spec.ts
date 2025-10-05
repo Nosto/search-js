@@ -1,7 +1,8 @@
 import { useFacet } from "@preact/hooks/useFacet"
 import { renderHook } from "@testing-library/preact"
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, it, vi } from "vitest"
 
+import { expectStable } from "../mocks/expectStable"
 import { mockActions } from "../mocks/mocks"
 
 describe("useFacet", () => {
@@ -94,6 +95,6 @@ describe("useFacet", () => {
     const secondRender = result.current
     
     // Object values should be consistent when state hasn't changed
-    expect(firstRender).toStrictEqual(secondRender)
+    expectStable(firstRender, secondRender)
   })
 })

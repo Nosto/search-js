@@ -1,7 +1,8 @@
 import type { InputSearchFilter } from "@nosto/nosto-js/client"
 import { useRange } from "@preact/hooks/useRange"
-import { beforeEach, describe, expect, it } from "vitest"
+import { beforeEach, describe, it } from "vitest"
 
+import { expectStable } from "../mocks/expectStable"
 import { mockActions, mockStore, resetStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
@@ -39,7 +40,7 @@ describe("useRange", () => {
     const secondRender = render.result.current
     
     // Object values should be consistent when state hasn't changed
-    expect(firstRender).toStrictEqual(secondRender)
+    expectStable(firstRender, secondRender)
   })
   const actions = mockActions()
   const store = mockStore({
