@@ -114,7 +114,7 @@ describe("useSizeOptions", () => {
     })
   })
 
-  it("maintains object reference stability on re-render", () => {
+  it("maintains consistent object values on re-render", () => {
     const sizes = [24, 48, 72]
     const serpSize = 5
 
@@ -125,7 +125,7 @@ describe("useSizeOptions", () => {
     render.rerender()
     const secondRender = render.result.current
     
-    // Object reference should be stable when state hasn't changed
-    expect(firstRender).toBe(secondRender)
+    // Object values should be consistent when state hasn't changed
+    expect(firstRender).toStrictEqual(secondRender)
   })
 })

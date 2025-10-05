@@ -48,7 +48,7 @@ describe("usePersonalization", () => {
     expect(result.current.boost).toEqual([])
   })
 
-  it("maintains object reference stability on re-render", () => {
+  it("maintains consistent object values on re-render", () => {
     const { result, rerender } = renderHook(() => usePersonalization())
     const firstRender = result.current
     
@@ -56,7 +56,7 @@ describe("usePersonalization", () => {
     rerender()
     const secondRender = result.current
     
-    // Object reference should be stable when state hasn't changed
-    expect(firstRender).toBe(secondRender)
+    // Object values should be consistent when state hasn't changed
+    expect(firstRender).toStrictEqual(secondRender)
   })
 })

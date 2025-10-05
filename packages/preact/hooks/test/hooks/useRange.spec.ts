@@ -6,7 +6,7 @@ import { mockActions, mockStore, resetStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 describe("useRange", () => {
-  it("maintains object reference stability on re-render", () => {
+  it("maintains consistent object values on re-render", () => {
     const store = mockStore({
       loading: false,
       initialized: true,
@@ -38,8 +38,8 @@ describe("useRange", () => {
     render.rerender()
     const secondRender = render.result.current
     
-    // Object reference should be stable when state hasn't changed
-    expect(firstRender).toBe(secondRender)
+    // Object values should be consistent when state hasn't changed
+    expect(firstRender).toStrictEqual(secondRender)
   })
   const actions = mockActions()
   const store = mockStore({

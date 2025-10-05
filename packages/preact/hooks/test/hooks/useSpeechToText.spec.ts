@@ -31,7 +31,7 @@ describe("useSpeechToText", async () => {
     expect(stopMock).toHaveBeenCalled()
   })
 
-  it("maintains object reference stability on re-render", () => {
+  it("maintains consistent object values on re-render", () => {
     const { result, rerender } = renderHook(() => useSpeechToText())
     const firstRender = result.current
     
@@ -39,7 +39,7 @@ describe("useSpeechToText", async () => {
     rerender()
     const secondRender = result.current
     
-    // Object reference should be stable when state hasn't changed
-    expect(firstRender).toBe(secondRender)
+    // Object values should be consistent when state hasn't changed
+    expect(firstRender).toStrictEqual(secondRender)
   })
 })

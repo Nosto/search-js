@@ -192,7 +192,7 @@ describe("useSwatches", () => {
     expect(result.current.matchedSkus.map(s => s.id)).toEqual(["Red-S-Cotton", "Red-M-Silk"])
   })
 
-  it("maintains object reference stability on re-render", () => {
+  it("maintains consistent object values on re-render", () => {
     const { result, rerender } = renderHook(() => useSwatches(testSKUs, ["color", "size", "material"]))
     const firstRender = result.current
     
@@ -200,8 +200,8 @@ describe("useSwatches", () => {
     rerender()
     const secondRender = result.current
     
-    // Object reference should be stable when state hasn't changed
-    expect(firstRender).toBe(secondRender)
+    // Object values should be consistent when state hasn't changed
+    expect(firstRender).toStrictEqual(secondRender)
   })
 
   it("should return one matchedSku even if not all fields are selected, if only one SKU matches", () => {

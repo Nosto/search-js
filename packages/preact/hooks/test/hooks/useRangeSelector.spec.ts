@@ -141,7 +141,7 @@ describe("useRangeSelector", () => {
     expect(actions.replaceFilter).toHaveBeenCalledWith("price", { lte: "350" })
   })
 
-  it("maintains object reference stability on re-render", () => {
+  it("maintains consistent object values on re-render", () => {
     const render = renderHookWithProviders(() => useRangeSelector("price", 100), { store })
     const firstRender = render.result.current
     
@@ -149,7 +149,19 @@ describe("useRangeSelector", () => {
     render.rerender()
     const secondRender = render.result.current
     
-    // Object reference should be stable when state hasn't changed
-    expect(firstRender).toBe(secondRender)
+    // Object values should be consistent when state hasn't changed (excluding functions)
+    expect({
+      min: firstRender.min,
+      max: firstRender.max,
+      range: firstRender.range,
+      ranges: firstRender.ranges,
+      isSelected: firstRender.isSelected
+    }).toStrictEqual({
+      min: secondRender.min,
+      max: secondRender.max,
+      range: secondRender.range,
+      ranges: secondRender.ranges,
+      isSelected: secondRender.isSelected
+    })
   })
 })

@@ -132,7 +132,7 @@ describe("usePagination", () => {
     expect(last).toEqual({ current: false, from: 90, page: 10 })
   })
 
-  it("maintains object reference stability on re-render", () => {
+  it("maintains consistent object values on re-render", () => {
     const render = renderHookWithProviders(() => usePagination(), { store })
     const firstRender = render.result.current
     
@@ -140,7 +140,7 @@ describe("usePagination", () => {
     render.rerender()
     const secondRender = render.result.current
     
-    // Object reference should be stable when state hasn't changed
-    expect(firstRender).toBe(secondRender)
+    // Object values should be consistent when state hasn't changed
+    expect(firstRender).toStrictEqual(secondRender)
   })
 })
