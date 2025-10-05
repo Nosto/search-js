@@ -113,4 +113,19 @@ describe("useSizeOptions", () => {
       }
     })
   })
+
+  it("maintains object reference stability on re-render", () => {
+    const sizes = [24, 48, 72]
+    const serpSize = 5
+
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store })
+    const firstRender = render.result.current
+    
+    // Force re-render without state change
+    render.rerender()
+    const secondRender = render.result.current
+    
+    // Object reference should be stable when state hasn't changed
+    expect(firstRender).toBe(secondRender)
+  })
 })

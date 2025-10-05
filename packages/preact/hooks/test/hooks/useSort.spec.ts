@@ -78,4 +78,21 @@ describe("useSort", () => {
     expect(isMatchingSort(scoreSortOpt.value.sort, [])).toBe(false)
     expect(isMatchingSort([], [])).toBe(true)
   })
+
+  it("maintains object reference stability on re-render", () => {
+    const sortOptions = [
+      { id: "price-asc", value: { name: "Price: Low to High", sort: [{ field: "price", order: "asc" as const }] } },
+      { id: "price-desc", value: { name: "Price: High to Low", sort: [{ field: "price", order: "desc" as const }] } }
+    ]
+
+    const render = renderHookWithProviders(() => useSort(sortOptions), { store })
+    const firstRender = render.result.current
+    
+    // Force re-render without state change
+    render.rerender()
+    const secondRender = render.result.current
+    
+    // Object reference should be stable when state hasn't changed
+    expect(firstRender).toBe(secondRender)
+  })
 })
