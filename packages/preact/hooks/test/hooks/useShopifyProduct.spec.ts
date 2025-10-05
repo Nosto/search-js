@@ -198,6 +198,18 @@ describe("useShopifyProduct", () => {
     expect(mockFetch).toHaveBeenCalledTimes(2)
   })
 
+  it("maintains object reference stability on re-render", () => {
+    const { result, rerender } = renderHookWithProviders(() => useShopifyProduct("test-product"))
+    const firstRender = result.current
+    
+    // Force re-render without state change
+    rerender()
+    const secondRender = result.current
+    
+    // Object reference should be stable when state hasn't changed
+    expect(firstRender).toBe(secondRender)
+  })
+
   it("should expire cache after TTL", async () => {
     // Mock Date.now to control time
     const originalDateNow = Date.now

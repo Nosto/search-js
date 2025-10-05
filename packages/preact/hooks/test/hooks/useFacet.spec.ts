@@ -84,4 +84,16 @@ describe("useFacet", () => {
     result.current.toggleProductFilter("color", "Red", false)
     expect(actions.toggleProductFilter).toHaveBeenCalledWith("color", "Red", false)
   })
+
+  it("maintains object reference stability on re-render", () => {
+    const { result, rerender } = renderHook(() => useFacet(mockFacet))
+    const firstRender = result.current
+    
+    // Force re-render without state change
+    rerender()
+    const secondRender = result.current
+    
+    // Object reference should be stable when state hasn't changed
+    expect(firstRender).toBe(secondRender)
+  })
 })

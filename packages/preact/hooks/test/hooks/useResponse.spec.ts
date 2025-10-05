@@ -68,4 +68,18 @@ describe("useResponse", () => {
     expect(keywords).toEqual(appState.response.keywords)
     expect(products).toEqual(appState.response.products)
   })
+
+  it("maintains object reference stability on re-render", () => {
+    const render = renderHookWithProviders(() => useResponse(), { store })
+    const firstRender = render.result.current
+    
+    // Force re-render without state change
+    render.rerender()
+    const secondRender = render.result.current
+    
+    // Object reference should be stable when state hasn't changed
+    expect(firstRender).toBe(secondRender)
+    expect(firstRender.keywords).toBe(secondRender.keywords)
+    expect(firstRender.products).toBe(secondRender.products)
+  })
 })

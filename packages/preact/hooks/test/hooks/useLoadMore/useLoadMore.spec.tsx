@@ -35,4 +35,19 @@ describe("useLoadMore", () => {
 
     expect(loadMore).toBeInstanceOf(Function)
   })
+
+  it("maintains object reference stability on re-render", () => {
+    const render = renderHookWithProviders(() => useLoadMore(24), {
+      store,
+      wrapper: ({ children }) => <ConfigContext value={makeSerpConfig()}>{children}</ConfigContext>
+    })
+    const firstRender = render.result.current
+    
+    // Force re-render without state change
+    render.rerender()
+    const secondRender = render.result.current
+    
+    // Object reference should be stable when state hasn't changed
+    expect(firstRender).toBe(secondRender)
+  })
 })

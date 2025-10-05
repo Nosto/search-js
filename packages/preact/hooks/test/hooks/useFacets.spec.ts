@@ -49,4 +49,16 @@ describe("useFacets", () => {
     expect(loading).toBe(false)
     expect(facets).toEqual(appState.response.products?.facets)
   })
+
+  it("maintains object reference stability on re-render", () => {
+    const render = renderHookWithProviders(() => useFacets(), { store })
+    const firstRender = render.result.current
+    
+    // Force re-render without state change
+    render.rerender()
+    const secondRender = render.result.current
+    
+    // Object reference should be stable when state hasn't changed
+    expect(firstRender).toBe(secondRender)
+  })
 })

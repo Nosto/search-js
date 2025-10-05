@@ -140,4 +140,16 @@ describe("useRangeSelector", () => {
     handleMaxChange(350)
     expect(actions.replaceFilter).toHaveBeenCalledWith("price", { lte: "350" })
   })
+
+  it("maintains object reference stability on re-render", () => {
+    const render = renderHookWithProviders(() => useRangeSelector("price", 100), { store })
+    const firstRender = render.result.current
+    
+    // Force re-render without state change
+    render.rerender()
+    const secondRender = render.result.current
+    
+    // Object reference should be stable when state hasn't changed
+    expect(firstRender).toBe(secondRender)
+  })
 })

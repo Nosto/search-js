@@ -6,6 +6,41 @@ import { mockActions, mockStore, resetStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 describe("useRange", () => {
+  it("maintains object reference stability on re-render", () => {
+    const store = mockStore({
+      loading: false,
+      initialized: true,
+      query: {},
+      response: {
+        products: {
+          size: 10,
+          total: 100,
+          hits: [],
+          facets: [
+            {
+              name: "price",
+              id: "price",
+              field: "price",
+              min: 0,
+              max: 100,
+              type: "stats"
+            }
+          ]
+        }
+      }
+    })
+    mockActions()
+
+    const render = renderHookWithProviders(() => useRange("price"), { store })
+    const firstRender = render.result.current
+    
+    // Force re-render without state change
+    render.rerender()
+    const secondRender = render.result.current
+    
+    // Object reference should be stable when state hasn't changed
+    expect(firstRender).toBe(secondRender)
+  })
   const actions = mockActions()
   const store = mockStore({
     loading: false,
