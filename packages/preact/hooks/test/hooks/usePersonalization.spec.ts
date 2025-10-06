@@ -51,7 +51,10 @@ describe("usePersonalization", () => {
 
   it("maintains consistent object values on re-render", () => {
     const mockSegments = ["segment1", "segment2"]
-    const mockBoost = [{ id: "boost1" }, { id: "boost2" }]
+    const mockBoost = [
+      { id: "boost1", field: "category", value: ["Shoes"], weight: 0.1 },
+      { id: "boost2", field: "brand", value: ["Nike"], weight: 0.2 }
+    ]
 
     mockNostojs({
       getSearchSessionParams: async () => ({
