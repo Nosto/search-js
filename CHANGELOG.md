@@ -1,3 +1,10 @@
+# [3.20.0](https://github.com/Nosto/search-js/compare/v3.19.1...v3.20.0) (2025-10-06)
+
+
+### Features
+
+* bump GitHub Actions node version from 22 to 24 ([aa8ab3e](https://github.com/Nosto/search-js/commit/aa8ab3e103ff86193bf0e0afa33318f6680b76ff))
+
 ## [3.19.1](https://github.com/Nosto/search-js/compare/v3.19.0...v3.19.1) (2025-10-02)
 
 
