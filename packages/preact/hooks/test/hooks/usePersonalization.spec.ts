@@ -7,6 +7,12 @@ import { afterEach, describe, expect, it } from "vitest"
 import { expectStable } from "../mocks/expectStable"
 
 describe("usePersonalization", () => {
+  const mockSegments = ["segment1", "segment2"]
+  const mockBoost = [
+    { id: "boost1", field: "category", value: ["Shoes"], weight: 0.1 },
+    { id: "boost2", field: "brand", value: ["Nike"], weight: 0.2 }
+  ]
+
   afterEach(() => {
     clearNostoGlobals()
   })
@@ -18,9 +24,6 @@ describe("usePersonalization", () => {
   })
 
   it("should set segments and boost from API", async () => {
-    const mockSegments = ["segment1", "segment2"]
-    const mockBoost = [{ id: "boost1" }, { id: "boost2" }]
-
     mockNostojs({
       getSearchSessionParams: async () => ({
         products: { personalizationBoost: mockBoost },
@@ -50,12 +53,6 @@ describe("usePersonalization", () => {
   })
 
   it("maintains consistent object values on re-render", () => {
-    const mockSegments = ["segment1", "segment2"]
-    const mockBoost = [
-      { id: "boost1", field: "category", value: ["Shoes"], weight: 0.1 },
-      { id: "boost2", field: "brand", value: ["Nike"], weight: 0.2 }
-    ]
-
     mockNostojs({
       getSearchSessionParams: async () => ({
         products: { personalizationBoost: mockBoost },
