@@ -89,11 +89,8 @@ describe("useSort", () => {
     const render = renderHookWithProviders(() => useSort(sortOptions), { store })
     const firstRender = render.result.current
 
-    // Force re-render without state change
     render.rerender()
     const secondRender = render.result.current
-
-    // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })
 })

@@ -36,11 +36,8 @@ describe("useSpeechToText", async () => {
     const { result, rerender } = renderHook(() => useSpeechToText())
     const firstRender = result.current
 
-    // Force re-render without state change
     rerender()
     const secondRender = result.current
-
-    // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })
 })

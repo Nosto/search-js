@@ -199,11 +199,8 @@ describe("useSwatches", () => {
     const { result, rerender } = renderHook(() => useSwatches(testSKUs, fields))
     const firstRender = result.current
 
-    // Force re-render without state change
     rerender()
     const secondRender = result.current
-
-    // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })
 

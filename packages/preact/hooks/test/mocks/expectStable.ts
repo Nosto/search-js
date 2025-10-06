@@ -1,8 +1,6 @@
 import { expect } from "vitest"
 
-/**
- * Helper function to assert that hook return values remain stable across re-renders.
- */
+
 export function expectStable<T extends object>(firstRender: T, secondRender: T) {
   const mismatches = Object.keys(firstRender).filter(key => {
     const firstValue = firstRender[key as keyof T]

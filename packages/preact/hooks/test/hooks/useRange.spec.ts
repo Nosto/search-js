@@ -43,11 +43,8 @@ describe("useRange", () => {
     const render = renderHookWithProviders(() => useRange("price"), { store })
     const firstRender = render.result.current
 
-    // Force re-render without state change
     render.rerender()
     const secondRender = render.result.current
-
-    // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })
 

@@ -22,7 +22,6 @@ describe("usePersonalization", () => {
     const mockBoost = [{ id: "boost1" }, { id: "boost2" }]
 
     mockNostojs({
-      // @ts-expect-error FIXME
       getSearchSessionParams: async () => ({
         products: { personalizationBoost: mockBoost },
         segments: mockSegments
@@ -55,7 +54,6 @@ describe("usePersonalization", () => {
     const mockBoost = [{ id: "boost1" }, { id: "boost2" }]
 
     mockNostojs({
-      // @ts-expect-error FIXME
       getSearchSessionParams: async () => ({
         products: { personalizationBoost: mockBoost },
         segments: mockSegments
@@ -65,11 +63,8 @@ describe("usePersonalization", () => {
     const { result, rerender } = renderHook(() => usePersonalization())
     const firstRender = result.current
 
-    // Force re-render without state change
     rerender()
     const secondRender = result.current
-
-    // Object values should be consistent when state hasn't changed
     expectStable(firstRender, secondRender)
   })
 })
