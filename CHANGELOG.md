@@ -1,3 +1,17 @@
+# [3.21.0](https://github.com/Nosto/search-js/compare/v3.20.0...v3.21.0) (2025-10-07)
+
+
+### Bug Fixes
+
+* change stability tests from toBe to toStrictEqual for value comparison ([b76baf5](https://github.com/Nosto/search-js/commit/b76baf5e28a6ae129b60f578872a80e3696d56b4))
+* update mockBoost structure with more detailed personalization data ([f4ec6f4](https://github.com/Nosto/search-js/commit/f4ec6f425ea6a30b086db554ddae69b85eef2703))
+
+
+### Features
+
+* complete hook stability tests POC with all object-returning hooks ([b2ab1ba](https://github.com/Nosto/search-js/commit/b2ab1baf88dbdde6703159f5acf27cb51bd8db93))
+* implement hook stability tests POC ([e0781b3](https://github.com/Nosto/search-js/commit/e0781b39dd6d4992365d0d57f4c3ae425255e4ed))
+
 # [3.20.0](https://github.com/Nosto/search-js/compare/v3.19.1...v3.20.0) (2025-10-06)
 
 
