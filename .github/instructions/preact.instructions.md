@@ -3,7 +3,7 @@ applyTo: "**/*.tsx"
 ---
 
 # Preact Conventions
-- Favor functional style react components and use the function syntax instead of lambda syntax
+- Favor functional style React components and use the function syntax instead of lambda syntax
 - Extract props definitions with more than 2 members
 - Capitalize component names to clearly distinguish them from HTML elements
 - Keep components small and focused, following the single-responsibility principle
