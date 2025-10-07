@@ -2,6 +2,7 @@ import { useSort } from "@preact/hooks/useSort/useSort"
 import { createSortOption, isMatchingSort } from "@preact/hooks/useSort/utils"
 import { describe, expect, it } from "vitest"
 
+import { expectStable } from "../mocks/expectStable"
 import { mockActions, mockStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
@@ -77,5 +78,19 @@ describe("useSort", () => {
     expect(isMatchingSort(scoreSortOpt.value.sort, scoreSortDesc.value.sort)).toBe(false)
     expect(isMatchingSort(scoreSortOpt.value.sort, [])).toBe(false)
     expect(isMatchingSort([], [])).toBe(true)
+  })
+
+  it("maintains consistent object values on re-render", () => {
+    const sortOptions = [
+      { id: "price-asc", value: { name: "Price: Low to High", sort: [{ field: "price", order: "asc" as const }] } },
+      { id: "price-desc", value: { name: "Price: High to Low", sort: [{ field: "price", order: "desc" as const }] } }
+    ]
+
+    const render = renderHookWithProviders(() => useSort(sortOptions), { store })
+    const firstRender = render.result.current
+
+    render.rerender()
+    const secondRender = render.result.current
+    expectStable(firstRender, secondRender)
   })
 })

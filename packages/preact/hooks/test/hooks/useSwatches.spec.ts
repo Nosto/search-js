@@ -3,6 +3,8 @@ import { useSwatches } from "@preact/hooks/useSwatches/useSwatches"
 import { renderHook } from "@testing-library/preact"
 import { describe, expect, it } from "vitest"
 
+import { expectStable } from "../mocks/expectStable"
+
 function createSwatchOptions(fields: Record<string, string>): { key: string; value: string }[] {
   return Object.entries(fields).map(([key, value]) => ({ key, value }))
 }
@@ -190,6 +192,16 @@ describe("useSwatches", () => {
     rerender()
 
     expect(result.current.matchedSkus.map(s => s.id)).toEqual(["Red-S-Cotton", "Red-M-Silk"])
+  })
+
+  it("maintains consistent object values on re-render", () => {
+    const fields = ["color", "size", "material"]
+    const { result, rerender } = renderHook(() => useSwatches(testSKUs, fields))
+    const firstRender = result.current
+
+    rerender()
+    const secondRender = result.current
+    expectStable(firstRender, secondRender)
   })
 
   it("should return one matchedSku even if not all fields are selected, if only one SKU matches", () => {

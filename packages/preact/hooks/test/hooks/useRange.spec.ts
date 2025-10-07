@@ -2,6 +2,7 @@ import type { InputSearchFilter } from "@nosto/nosto-js/client"
 import { useRange } from "@preact/hooks/useRange"
 import { beforeEach, describe, expect, it } from "vitest"
 
+import { expectStable } from "../mocks/expectStable"
 import { mockActions, mockStore, resetStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
@@ -36,6 +37,15 @@ describe("useRange", () => {
 
   beforeEach(() => {
     resetStore(store)
+  })
+
+  it("maintains consistent object values on re-render", () => {
+    const render = renderHookWithProviders(() => useRange("price"), { store })
+    const firstRender = render.result.current
+
+    render.rerender()
+    const secondRender = render.result.current
+    expectStable(firstRender, secondRender)
   })
 
   it("handles various updateRange scenarios", () => {

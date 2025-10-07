@@ -1,6 +1,7 @@
 import { useRangeSelector } from "@preact/hooks/useRangeSelector"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 
+import { expectStable } from "../mocks/expectStable"
 import { mockActions, mockStore, resetStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
@@ -139,5 +140,14 @@ describe("useRangeSelector", () => {
 
     handleMaxChange(350)
     expect(actions.replaceFilter).toHaveBeenCalledWith("price", { lte: "350" })
+  })
+
+  it("maintains consistent object values on re-render", () => {
+    const render = renderHookWithProviders(() => useRangeSelector("price", 100), { store })
+    const firstRender = render.result.current
+
+    render.rerender()
+    const secondRender = render.result.current
+    expectStable(firstRender, secondRender)
   })
 })

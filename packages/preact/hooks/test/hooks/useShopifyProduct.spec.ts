@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 
 import { ShopifyProduct } from "../../src/useShopifyProduct/types"
 import { clearShopifyProductCache, useShopifyProduct } from "../../src/useShopifyProduct/useShopifyProduct"
+import { expectStable } from "../mocks/expectStable"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
 // Mock fetch
@@ -196,6 +197,15 @@ describe("useShopifyProduct", () => {
 
     expect(result.current.product?.title).toBe("Updated Product")
     expect(mockFetch).toHaveBeenCalledTimes(2)
+  })
+
+  it("maintains consistent object values on re-render", () => {
+    const { result, rerender } = renderHookWithProviders(() => useShopifyProduct("test-product"))
+    const firstRender = result.current
+
+    rerender()
+    const secondRender = result.current
+    expectStable(firstRender, secondRender)
   })
 
   it("should expire cache after TTL", async () => {

@@ -57,7 +57,8 @@ export default defineConfig({
   test: {
     clearMocks: true,
     coverage: {
-      include: ["packages/*/src/**/*.{js,ts}"],
+      include: ["packages/**/src/**/*.{js,ts,tsx}"],
+      exclude: ["packages/preact/inject/**/*"],
       skipFull: true,
       thresholds: {
         statements: 80,

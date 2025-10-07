@@ -2,6 +2,7 @@ import { useFacet } from "@preact/hooks/useFacet"
 import { renderHook } from "@testing-library/preact"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
+import { expectStable } from "../mocks/expectStable"
 import { mockActions } from "../mocks/mocks"
 
 describe("useFacet", () => {
@@ -83,5 +84,14 @@ describe("useFacet", () => {
     const { result } = renderHook(() => useFacet(mockFacet))
     result.current.toggleProductFilter("color", "Red", false)
     expect(actions.toggleProductFilter).toHaveBeenCalledWith("color", "Red", false)
+  })
+
+  it("maintains consistent object values on re-render", () => {
+    const { result, rerender } = renderHook(() => useFacet(mockFacet))
+    const firstRender = result.current
+
+    rerender()
+    const secondRender = result.current
+    expectStable(firstRender, secondRender)
   })
 })

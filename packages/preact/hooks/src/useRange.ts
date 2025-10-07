@@ -1,7 +1,7 @@
 import { InputSearchRangeFilter, InputSearchTopLevelFilter } from "@nosto/nosto-js/client"
 import { useEventBusSubscribe } from "@preact/events/eventBusSubscribe"
 import { parseNumber } from "@utils/parseNumber"
-import { useCallback, useState } from "preact/hooks"
+import { useCallback, useMemo, useState } from "preact/hooks"
 
 import { useActions } from "./useActions"
 import { useNostoAppState } from "./useNostoAppState"
@@ -48,12 +48,12 @@ export function useRange(id: string) {
   const stat = products?.facets?.find(v => v.id === id)
 
   const filter = query.products?.filter?.find(v => v.field === stat?.field)
-  const value = getRangeValues(filter)
-
+  const [rangeStart, rangeEnd] = getRangeValues(filter)
   const min = stat && "min" in stat ? Math.floor(stat.min ?? 0) : 0
   const max = stat && "max" in stat ? Math.ceil(stat.max ?? 0) : 0
+  const range = useMemo(() => [rangeStart ?? min, rangeEnd ?? max], [rangeStart, rangeEnd, min, max])
 
-  const hasActiveFilter = value[0] !== undefined || value[1] !== undefined
+  const hasActiveFilter = rangeStart !== undefined || rangeEnd !== undefined
   const [active, setActive] = useState(hasActiveFilter)
 
   const toggleActive = useCallback(() => {
@@ -80,14 +80,7 @@ export function useRange(id: string) {
   })
 
   if (!stat) {
-    return {
-      min: 0,
-      max: 0,
-      range: [0, 0],
-      active: false,
-      toggleActive: () => {},
-      updateRange: () => {}
-    }
+    return FALLBACK_RETURN_VALUE
   }
 
   return {
@@ -96,7 +89,7 @@ export function useRange(id: string) {
     /** Max value */
     max,
     /** Range value */
-    range: [value[0] ?? min, value[1] ?? max],
+    range,
     /** Update range function */
     updateRange,
     /** Is the range filter active */
@@ -105,6 +98,15 @@ export function useRange(id: string) {
     toggleActive
   }
 }
+
+const FALLBACK_RETURN_VALUE = {
+  min: 0,
+  max: 0,
+  range: [0, 0],
+  active: false,
+  toggleActive: () => {},
+  updateRange: () => {}
+} as const
 
 function getRangeValues(filter?: InputSearchTopLevelFilter) {
   const filterValue = filter?.range?.[0]

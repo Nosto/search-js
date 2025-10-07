@@ -1,5 +1,5 @@
 import { parseNumber } from "@utils/parseNumber"
-import { useMemo } from "preact/hooks"
+import { useCallback, useMemo } from "preact/hooks"
 
 import { useProductFilters } from "./useProductFilters/useProductFilters"
 import { useRange } from "./useRange"
@@ -111,13 +111,19 @@ export function useRangeSelector(id: string, rangeSize: number) {
     return ranges
   }, [filters, min, max, rangeSize])
 
-  const handleMinChange = (value: number) => {
-    updateRange([value, range[1]])
-  }
+  const handleMinChange = useCallback(
+    (value: number) => {
+      updateRange([value, range[1]])
+    },
+    [range, updateRange]
+  )
 
-  const handleMaxChange = (value: number) => {
-    updateRange([range[0], value])
-  }
+  const handleMaxChange = useCallback(
+    (value: number) => {
+      updateRange([range[0], value])
+    },
+    [range, updateRange]
+  )
 
   const isSelected = min !== range[0] || max !== range[1]
 

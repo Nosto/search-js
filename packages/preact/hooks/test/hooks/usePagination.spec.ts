@@ -1,6 +1,7 @@
 import { usePagination } from "@preact/hooks/usePagination"
 import { describe, expect, it } from "vitest"
 
+import { expectStable } from "../mocks/expectStable"
 import { mockStore } from "../mocks/mocks"
 import { renderHookWithProviders } from "../mocks/renderHookWithProviders"
 
@@ -130,5 +131,14 @@ describe("usePagination", () => {
       { page: 8, from: 70, current: false }
     ])
     expect(last).toEqual({ current: false, from: 90, page: 10 })
+  })
+
+  it("maintains consistent object values on re-render", () => {
+    const render = renderHookWithProviders(() => usePagination(), { store })
+    const firstRender = render.result.current
+
+    render.rerender()
+    const secondRender = render.result.current
+    expectStable(firstRender, secondRender)
   })
 })

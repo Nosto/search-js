@@ -3,6 +3,7 @@ import { useLoadMore } from "@preact/hooks/useLoadMore/useLoadMore"
 import { makeSerpConfig } from "@preact/serp/SerpConfig"
 import { describe, expect, it } from "vitest"
 
+import { expectStable } from "../../mocks/expectStable"
 import { mockActions, mockStore } from "../../mocks/mocks"
 import { renderHookWithProviders } from "../../mocks/renderHookWithProviders"
 
@@ -34,5 +35,17 @@ describe("useLoadMore", () => {
     }).result.current
 
     expect(loadMore).toBeInstanceOf(Function)
+  })
+
+  it("maintains consistent object values on re-render", () => {
+    const render = renderHookWithProviders(() => useLoadMore(24), {
+      store,
+      wrapper: ({ children }) => <ConfigContext value={makeSerpConfig()}>{children}</ConfigContext>
+    })
+    const firstRender = render.result.current
+
+    render.rerender()
+    const secondRender = render.result.current
+    expectStable(firstRender, secondRender)
   })
 })
