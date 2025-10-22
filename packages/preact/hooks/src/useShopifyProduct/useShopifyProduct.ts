@@ -102,8 +102,13 @@ export function useShopifyProduct(handle: string): UseShopifyProductState {
   return state
 }
 
+function createShopifyUrl(url: string) {
+  const root = window.Shopify?.routes?.root
+  return root ? new URL(`${root}products/${url}`, window.location.href) : url
+}
+
 async function fetchShopifyProduct(handle: string): Promise<ShopifyProduct> {
-  const response = await fetch(`/products/${handle}.js`)
+  const response = await fetch(createShopifyUrl(`/products/${handle}.js`))
 
   if (!response.ok) {
     throw new Error(`Failed to fetch product: ${response.status} ${response.statusText}`)
