@@ -89,12 +89,13 @@ export type AutocompleteInjectContext = AutocompleteInjectConfig & {
 }
 
 function renderAutocompleteComponent(context: AutocompleteInjectContext) {
-  const { dropdown, renderAutocomplete } = context
+  const { dropdown, renderAutocomplete, store } = context
   if (!renderAutocomplete) {
     return
   }
   const userComponentRenderer = createUserComponentRenderer(context)
   dropdown.onHighlightChange(() => {
+    store.updateState({ highlightIndex: dropdown.highlightedIndex() })
     userComponentRenderer(renderAutocomplete, dropdown.element)
   })
   const end = measure("renderAutocomplete")

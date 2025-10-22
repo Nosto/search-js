@@ -28,6 +28,10 @@ export interface State {
    * History items
    */
   historyItems?: string[]
+  /**
+   * Current highlighted index for autocomplete dropdown navigation
+   */
+  highlightIndex?: number
 }
 
 export const defaultState: State = {
