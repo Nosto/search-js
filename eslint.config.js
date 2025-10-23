@@ -43,12 +43,13 @@ export default tseslint.config(
   },
   {
     plugins: {
-      react
+      react,
+      "react-hooks": reactHooks
     },
     extends: [
       react.configs.flat.recommended,
       react.configs.flat["jsx-runtime"],
-      reactHooks.configs["recommended-latest"]
+      reactHooks.configs.flat["recommended-latest"]
     ],
     files: ["**/*.{js,ts,tsx}"],
     settings: {
