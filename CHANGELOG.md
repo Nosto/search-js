@@ -1,3 +1,10 @@
+## [3.21.1](https://github.com/Nosto/search-js/compare/v3.21.0...v3.21.1) (2025-10-23)
+
+
+### Bug Fixes
+
+* add url normalization ([90fa7f4](https://github.com/Nosto/search-js/commit/90fa7f47abcd8192dd661d3e04032add31543845))
+
 # [3.21.0](https://github.com/Nosto/search-js/compare/v3.20.0...v3.21.0) (2025-10-07)
 
 
