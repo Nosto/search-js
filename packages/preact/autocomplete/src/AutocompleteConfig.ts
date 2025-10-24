@@ -6,7 +6,8 @@ export const defaultAutocompleteConfig = {
   historyEnabled: true,
   historySize: 5,
   debounceDelay: 500,
-  minQueryLength: 2
+  minQueryLength: 2,
+  elementClassName: "ns-autocomplete-element"
 } satisfies Partial<AutocompleteConfig>
 
 export interface AutocompleteConfig extends BaseConfig {
@@ -35,6 +36,11 @@ export interface AutocompleteConfig extends BaseConfig {
    * Minimum query length to show autocomplete dropdown
    */
   minQueryLength: number
+
+  /**
+   * CSS class name for autocomplete elements
+   */
+  elementClassName: string
 }
 
 export type PublicAutocompleteConfig = Omit<AutocompleteConfig, keyof typeof defaultAutocompleteConfig | "pageType"> &

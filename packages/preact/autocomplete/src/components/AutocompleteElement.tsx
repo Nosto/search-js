@@ -1,5 +1,6 @@
 import { nostojs } from "@nosto/nosto-js"
 import { AsComponent, BaseElement, BaseElementProps } from "@preact/common/components/BaseElement"
+import { useAutocompleteConfig } from "@preact/common/config/configContext"
 import { useCallback } from "preact/hooks"
 
 import { KeywordHit, ProductHit } from "../types"
@@ -20,8 +21,10 @@ export function AutocompleteElement<C extends AsComponent>({
     }
   }, [hit])
 
+  const { elementClassName } = useAutocompleteConfig()
+
   return (
-    <BaseElement onClick={onClick} as={as} componentProps={componentProps} className="ns-autocomplete-element">
+    <BaseElement onClick={onClick} as={as} componentProps={componentProps} className={elementClassName}>
       {children}
     </BaseElement>
   )

@@ -1,3 +1,4 @@
+import { useAutocompleteConfig } from "@preact/common/config/configContext"
 import { cl } from "@utils/cl"
 import { ComponentChildren } from "preact"
 
@@ -24,9 +25,11 @@ export interface HistoryElementProps {
  * @group Components
  */
 export function HistoryElement({ children, class: className, onSubmit }: HistoryElementProps) {
+  const { elementClassName } = useAutocompleteConfig()
+
   return (
     <div
-      className={cl("ns-autocomplete-element", className)}
+      className={cl(elementClassName, className)}
       onClick={onSubmit}
       onKeyDown={event => {
         if (event.key === "Enter") {
