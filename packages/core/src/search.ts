@@ -27,9 +27,14 @@ import { searchWithRetries } from "./withRetries"
  *   { query: 'shoes' },
  *   { hitDecorators: [priceDecorator()] }
  * )
+ * ```
+ *
+ * @example
+ * ```ts
+ * import { search } from '@nosto/search-js'
  *
  * // Search with filters
- * const filteredResults = await search({
+ * const results = await search({
  *   query: 'shoes',
  *   filters: {
  *     color: ['red', 'blue']

@@ -33,6 +33,12 @@ export type Result = SearchProduct &
  *   { hitDecorators: [priceDecorator()] }
  * )
  * console.log(results.products.hits[0].priceText) // "$99.99"
+ * ```
+ *
+ * @example
+ * ```ts
+ * import { search } from '@nosto/search-js'
+ * import { priceDecorator } from '@nosto/search-js/currencies'
  *
  * // Use with custom currency settings
  * const customDecorator = priceDecorator({
@@ -47,11 +53,11 @@ export type Result = SearchProduct &
  *     }
  *   }
  * })
- * const euroResults = await search(
+ * const results = await search(
  *   { query: 'shoes' },
  *   { hitDecorators: [customDecorator] }
  * )
- * console.log(euroResults.products.hits[0].priceText) // "€99,99"
+ * console.log(results.products.hits[0].priceText) // "€99,99"
  * ```
  */
 export function priceDecorator(config?: Partial<CurrencyConfig>) {

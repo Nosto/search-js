@@ -46,9 +46,14 @@ const currencyLocales: Record<string, string> = {
  * const { formatCurrency } = getCurrencyFormatting()
  * console.log(formatCurrency(1234.56)) // Uses default currency
  * console.log(formatCurrency(1234.56, 'USD')) // "$1,234.56"
+ * ```
+ *
+ * @example
+ * ```ts
+ * import { getCurrencyFormatting } from '@nosto/search-js/currencies'
  *
  * // Override with custom settings
- * const { formatCurrency: customFormat } = getCurrencyFormatting({
+ * const { formatCurrency } = getCurrencyFormatting({
  *   defaultCurrency: 'EUR',
  *   defaultLocale: 'de-DE',
  *   currencySettings: {
@@ -61,7 +66,7 @@ const currencyLocales: Record<string, string> = {
  *     }
  *   }
  * })
- * console.log(customFormat(1234.56)) // "1.234,56€"
+ * console.log(formatCurrency(1234.56)) // "1.234,56€"
  * ```
  */
 export function getCurrencyFormatting(overrides: Partial<CurrencyConfig> = {}) {
