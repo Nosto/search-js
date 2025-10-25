@@ -15,9 +15,44 @@ export type Result = SearchProduct &
   }
 
 /**
- * Exposes currency formatting logic as a SearchProduct decorator
- * Sets priceText and listPriceText fields on product and SKU level
- * Requires price, listPrice and priceCurrencyCode fields to be present
+ * Exposes currency formatting logic as a SearchProduct decorator.
+ * Sets priceText and listPriceText fields on product and SKU level.
+ * Requires price, listPrice and priceCurrencyCode fields to be present.
+ *
+ * @param config - Optional configuration to customize currency formatting.
+ * @returns A decorator function that adds formatted price text to search products.
+ *
+ * @example
+ * ```ts
+ * import { search } from '@nosto/search-js'
+ * import { priceDecorator } from '@nosto/search-js/currencies'
+ *
+ * // Use with default settings
+ * const results = await search(
+ *   { query: 'shoes' },
+ *   { hitDecorators: [priceDecorator()] }
+ * )
+ * console.log(results.products.hits[0].priceText) // "$99.99"
+ *
+ * // Use with custom currency settings
+ * const customDecorator = priceDecorator({
+ *   defaultCurrency: 'EUR',
+ *   currencySettings: {
+ *     EUR: {
+ *       currencyBeforeAmount: true,
+ *       currencyToken: '€',
+ *       decimalCharacter: ',',
+ *       groupingSeparator: '.',
+ *       decimalPlaces: 2
+ *     }
+ *   }
+ * })
+ * const euroResults = await search(
+ *   { query: 'shoes' },
+ *   { hitDecorators: [customDecorator] }
+ * )
+ * console.log(euroResults.products.hits[0].priceText) // "€99,99"
+ * ```
  */
 export function priceDecorator(config?: Partial<CurrencyConfig>) {
   const { formatCurrency } = getCurrencyFormatting(config)
