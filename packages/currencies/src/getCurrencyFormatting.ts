@@ -32,6 +32,43 @@ const currencyLocales: Record<string, string> = {
   PKR: "en-IN"
 }
 
+/**
+ * Creates a currency formatting function with customizable settings.
+ *
+ * @param overrides - Optional configuration to override default currency settings.
+ * @returns An object containing the formatCurrency function.
+ *
+ * @example
+ * ```ts
+ * import { getCurrencyFormatting } from '@nosto/search-js/currencies'
+ *
+ * // Use default settings from Nosto
+ * const { formatCurrency } = getCurrencyFormatting()
+ * console.log(formatCurrency(1234.56)) // Uses default currency
+ * console.log(formatCurrency(1234.56, 'USD')) // "$1,234.56"
+ * ```
+ *
+ * @example
+ * ```ts
+ * import { getCurrencyFormatting } from '@nosto/search-js/currencies'
+ *
+ * // Override with custom settings
+ * const { formatCurrency } = getCurrencyFormatting({
+ *   defaultCurrency: 'EUR',
+ *   defaultLocale: 'de-DE',
+ *   currencySettings: {
+ *     EUR: {
+ *       currencyBeforeAmount: false,
+ *       currencyToken: '€',
+ *       decimalCharacter: ',',
+ *       groupingSeparator: '.',
+ *       decimalPlaces: 2
+ *     }
+ *   }
+ * })
+ * console.log(formatCurrency(1234.56)) // "1.234,56€"
+ * ```
+ */
 export function getCurrencyFormatting(overrides: Partial<CurrencyConfig> = {}) {
   const config: CurrencyConfig = {
     ...defaultConfig,
