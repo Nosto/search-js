@@ -57,7 +57,6 @@
       "import": "./dist/preact/hooks/hooks.es.js",
       "require": "./dist/preact/hooks/hooks.cjs.js"
     },
-
     "./preact/legacy": {
       "types": "./dist/preact/legacy/legacy.d.ts",
       "import": "./dist/preact/legacy/legacy.es.js",
