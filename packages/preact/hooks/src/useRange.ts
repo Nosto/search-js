@@ -106,7 +106,7 @@ const FALLBACK_RETURN_VALUE = {
   active: false,
   toggleActive: () => {},
   updateRange: () => {}
-} as const
+}
 
 function getRangeValues(filter?: InputSearchTopLevelFilter) {
   const filterValue = filter?.range?.[0]
