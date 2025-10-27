@@ -13,6 +13,34 @@ import { searchWithRetries } from "./withRetries"
  * @param query - The search query to be executed.
  * @param options - An object containing optional parameters for the search.
  * @returns A promise that resolves to the search result.
+ *
+ * @example
+ * ```ts
+ * import { search } from '@nosto/search-js'
+ * import { priceDecorator } from '@nosto/search-js/currencies'
+ *
+ * // Basic search
+ * const results = await search({ query: 'shoes' })
+ *
+ * // Search with decorators
+ * const decoratedResults = await search(
+ *   { query: 'shoes' },
+ *   { hitDecorators: [priceDecorator()] }
+ * )
+ * ```
+ *
+ * @example
+ * ```ts
+ * import { search } from '@nosto/search-js'
+ *
+ * // Search with filters
+ * const results = await search({
+ *   query: 'shoes',
+ *   filters: {
+ *     color: ['red', 'blue']
+ *   }
+ * })
+ * ```
  */
 export async function search<HD extends readonly HitDecorator[]>(query: SearchQuery, options: SearchOptions<HD> = {}) {
   const api = await new Promise(nostojs)
