@@ -1,3 +1,10 @@
+## [3.21.2](https://github.com/Nosto/search-js/compare/v3.21.1...v3.21.2) (2025-10-27)
+
+
+### Bug Fixes
+
+* simplify return type by dropping as const ([dc3582e](https://github.com/Nosto/search-js/commit/dc3582e1a9bf22ad1998b14d82b4b5c3ddd192a8))
+
 ## [3.21.1](https://github.com/Nosto/search-js/compare/v3.21.0...v3.21.1) (2025-10-23)
 
 
