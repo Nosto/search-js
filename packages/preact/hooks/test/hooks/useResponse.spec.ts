@@ -71,6 +71,25 @@ describe("useResponse", () => {
         ],
         total: 2,
         size: 2
+      },
+      categories: {
+        hits: [
+          {
+            name: "Men's Clothing",
+            fullName: "Men's Clothing",
+            externalId: "mens-clothing",
+            url: "/categories/mens-clothing"
+          },
+          {
+            name: "Jeans",
+            fullName: "Men's Clothing > Jeans",
+            externalId: "jeans",
+            parentExternalId: "mens-clothing",
+            url: "/categories/jeans"
+          }
+        ],
+        total: 2,
+        size: 2
       }
     }
   })
@@ -79,10 +98,11 @@ describe("useResponse", () => {
 
   it("returns autocomplete from the response", () => {
     const render = renderHookWithProviders(() => useResponse(), { store })
-    const { keywords, products, popularSearches } = render.result.current
+    const { keywords, products, popularSearches, categories } = render.result.current
     expect(keywords).toEqual(appState.response.keywords)
     expect(products).toEqual(appState.response.products)
     expect(popularSearches).toEqual(appState.response.popularSearches)
+    expect(categories).toEqual(appState.response.categories)
   })
 
   it("maintains consistent object values on re-render", () => {
@@ -107,7 +127,8 @@ describe("useResponse", () => {
     mockActions()
 
     const render = renderHookWithProviders(() => useResponse(), { store: storeWithoutPopularSearches })
-    const { popularSearches } = render.result.current
+    const { popularSearches, categories } = render.result.current
     expect(popularSearches).toEqual({ hits: [], total: 0 })
+    expect(categories).toEqual({ hits: [], total: 0 })
   })
 })

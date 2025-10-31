@@ -1,4 +1,4 @@
-import type { SearchKeywords, SearchPopularSearches, SearchProducts } from "@nosto/nosto-js/client"
+import type { SearchCategories, SearchKeywords, SearchPopularSearches, SearchProducts } from "@nosto/nosto-js/client"
 
 import { useNostoAppState } from "./useNostoAppState"
 
@@ -10,7 +10,7 @@ import { useNostoAppState } from "./useNostoAppState"
  * import { defaultConfig } from "../config"
  *
  * export default () => {
- *   const { products, keywords, popularSearches } = useResponse()
+ *   const { products, keywords, popularSearches, categories } = useResponse()
  *   return (
  *     <div>
  *       <div>
@@ -85,6 +85,20 @@ import { useNostoAppState } from "./useNostoAppState"
  *             </div>
  *           </div>
  *         )}
+ *         {categories.hits.length > 0 && (
+ *           <div>
+ *             <div>
+ *               Categories
+ *             </div>
+ *             <div>
+ *               {categories.hits.map(hit => (
+ *                 <div key={hit.externalId}>
+ *                   {hit.name}
+ *                 </div>
+ *               ))}
+ *             </div>
+ *           </div>
+ *         )}
  *       </div>
  *     </div>
  *   )
@@ -97,11 +111,13 @@ export function useResponse(): {
   products: SearchProducts
   keywords: SearchKeywords
   popularSearches: SearchPopularSearches
+  categories: SearchCategories
 } {
-  const { products, keywords, popularSearches } = useNostoAppState(state => ({
+  const { products, keywords, popularSearches, categories } = useNostoAppState(state => ({
     products: state.response.products ?? { hits: [], total: 0 },
     keywords: state.response.keywords ?? { hits: [], total: 0 },
-    popularSearches: state.response.popularSearches ?? { hits: [], total: 0 }
+    popularSearches: state.response.popularSearches ?? { hits: [], total: 0 },
+    categories: state.response.categories ?? { hits: [], total: 0 }
   }))
   return {
     /** Array of products */
@@ -109,6 +125,8 @@ export function useResponse(): {
     /** Array of keywords */
     keywords,
     /** Array of popular searches */
-    popularSearches
+    popularSearches,
+    /** Array of categories */
+    categories
   }
 }
