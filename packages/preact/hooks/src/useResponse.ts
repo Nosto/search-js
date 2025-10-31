@@ -10,7 +10,7 @@ import { useNostoAppState } from "./useNostoAppState"
  * import { defaultConfig } from "../config"
  *
  * export default () => {
- *   const { products, keywords } = useResponse()
+ *   const { products, keywords, popularSearches } = useResponse()
  *   return (
  *     <div>
  *       <div>
@@ -69,6 +69,20 @@ import { useNostoAppState } from "./useNostoAppState"
  *               })}
  *             </div>
  *             <SubmitButton />
+ *           </div>
+ *         )}
+ *         {popularSearches.hits.length > 0 && (
+ *           <div>
+ *             <div>
+ *               Popular Searches
+ *             </div>
+ *             <div>
+ *               {popularSearches.hits.map(hit => (
+ *                 <div key={hit.query}>
+ *                   {hit.query} ({hit.total} results)
+ *                 </div>
+ *               ))}
+ *             </div>
  *           </div>
  *         )}
  *       </div>
