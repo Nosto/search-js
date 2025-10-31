@@ -1,14 +1,13 @@
 import { useMemo } from "preact/hooks"
 import { useLocation } from "preact-iso"
 
-import { useInfiniteScroll, useInjectionLogic } from "../contexts/InfiniteScrollContext"
+import { useInfiniteScroll } from "../contexts/InfiniteScrollContext"
 import { Button } from "./Button"
 import { getButtonStyle, styles } from "./Header.styles"
 
 export function Header() {
   const { path: locationUrl } = useLocation()
   const { isInfiniteScrollEnabled, toggleInfiniteScroll } = useInfiniteScroll()
-  const { isInjectionEnabled, toggleInjection } = useInjectionLogic()
 
   const locations = useMemo(
     () => [
@@ -35,10 +34,6 @@ export function Header() {
         <Button onClick={toggleInfiniteScroll} style={getButtonStyle(isInfiniteScrollEnabled, "green")}>
           {isInfiniteScrollEnabled ? "🟢" : "⚪"}
           <span> Infinite Scroll</span>
-        </Button>
-        <Button onClick={toggleInjection} style={getButtonStyle(isInjectionEnabled, "blue")}>
-          {isInjectionEnabled ? "🟢" : "⚪"}
-          <span> Injection</span>
         </Button>
       </div>
     </header>

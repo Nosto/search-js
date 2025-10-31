@@ -3,7 +3,6 @@ import { useContext, useState } from "preact/hooks"
 
 interface UserPreferences {
   isInfiniteScrollEnabled: boolean
-  isInjectionEnabled: boolean
 }
 
 interface UserPreferencesContextType {
@@ -49,7 +48,6 @@ function loadPreferences(): UserPreferences {
   const preferences = localStorage.getItem(localStorageKey)
   return {
     isInfiniteScrollEnabled: false,
-    isInjectionEnabled: false,
     ...(preferences ? (JSON.parse(preferences) as UserPreferences) : {})
   }
 }
@@ -71,13 +69,5 @@ export function useInfiniteScroll() {
   return {
     isInfiniteScrollEnabled: preferences.isInfiniteScrollEnabled,
     toggleInfiniteScroll: () => updatePreference("isInfiniteScrollEnabled", !preferences.isInfiniteScrollEnabled)
-  }
-}
-
-export function useInjectionLogic() {
-  const { preferences, updatePreference } = useUserPreferences()
-  return {
-    isInjectionEnabled: preferences.isInjectionEnabled,
-    toggleInjection: () => updatePreference("isInjectionEnabled", !preferences.isInjectionEnabled)
   }
 }
