@@ -57,6 +57,39 @@ describe("useResponse", () => {
         ],
         total: 14,
         size: 4
+      },
+      popularSearches: {
+        hits: [
+          {
+            query: "jeans",
+            total: 100
+          },
+          {
+            query: "denim",
+            total: 75
+          }
+        ],
+        total: 2,
+        size: 2
+      },
+      categories: {
+        hits: [
+          {
+            name: "Men's Clothing",
+            fullName: "Men's Clothing",
+            externalId: "mens-clothing",
+            url: "/categories/mens-clothing"
+          },
+          {
+            name: "Jeans",
+            fullName: "Men's Clothing > Jeans",
+            externalId: "jeans",
+            parentExternalId: "mens-clothing",
+            url: "/categories/jeans"
+          }
+        ],
+        total: 2,
+        size: 2
       }
     }
   })
@@ -65,9 +98,11 @@ describe("useResponse", () => {
 
   it("returns autocomplete from the response", () => {
     const render = renderHookWithProviders(() => useResponse(), { store })
-    const { keywords, products } = render.result.current
+    const { keywords, products, popularSearches, categories } = render.result.current
     expect(keywords).toEqual(appState.response.keywords)
     expect(products).toEqual(appState.response.products)
+    expect(popularSearches).toEqual(appState.response.popularSearches)
+    expect(categories).toEqual(appState.response.categories)
   })
 
   it("maintains consistent object values on re-render", () => {
@@ -77,5 +112,23 @@ describe("useResponse", () => {
     render.rerender()
     const secondRender = render.result.current
     expectStable(firstRender, secondRender)
+  })
+
+  it("returns default empty popularSearches when not in response", () => {
+    const storeWithoutPopularSearches = mockStore({
+      loading: false,
+      initialized: true,
+      query: {},
+      response: {
+        products: { hits: [], total: 0 },
+        keywords: { hits: [], total: 0 }
+      }
+    })
+    mockActions()
+
+    const render = renderHookWithProviders(() => useResponse(), { store: storeWithoutPopularSearches })
+    const { popularSearches, categories } = render.result.current
+    expect(popularSearches).toEqual({ hits: [], total: 0 })
+    expect(categories).toEqual({ hits: [], total: 0 })
   })
 })
