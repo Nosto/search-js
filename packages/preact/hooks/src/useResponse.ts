@@ -1,4 +1,4 @@
-import type { SearchKeywords, SearchProducts } from "@nosto/nosto-js/client"
+import type { SearchKeywords, SearchPopularSearches, SearchProducts } from "@nosto/nosto-js/client"
 
 import { useNostoAppState } from "./useNostoAppState"
 
@@ -79,15 +79,22 @@ import { useNostoAppState } from "./useNostoAppState"
  * @group Hooks
  *
  */
-export function useResponse(): { products: SearchProducts; keywords: SearchKeywords } {
-  const { products, keywords } = useNostoAppState(state => ({
+export function useResponse(): {
+  products: SearchProducts
+  keywords: SearchKeywords
+  popularSearches: SearchPopularSearches
+} {
+  const { products, keywords, popularSearches } = useNostoAppState(state => ({
     products: state.response.products ?? { hits: [], total: 0 },
-    keywords: state.response.keywords ?? { hits: [], total: 0 }
+    keywords: state.response.keywords ?? { hits: [], total: 0 },
+    popularSearches: state.response.popularSearches ?? { hits: [], total: 0 }
   }))
   return {
     /** Array of products */
     products,
     /** Array of keywords */
-    keywords
+    keywords,
+    /** Array of popular searches */
+    popularSearches
   }
 }
