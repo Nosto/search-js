@@ -1,3 +1,10 @@
+## [3.22.1](https://github.com/Nosto/search-js/compare/v3.22.0...v3.22.1) (2025-10-31)
+
+
+### Bug Fixes
+
+* add support for popular searches in AutocompleteElement ([9b7bf86](https://github.com/Nosto/search-js/commit/9b7bf86b85e642914a9cafaeaceb94b0bd36cbf2))
+
 # [3.22.0](https://github.com/Nosto/search-js/compare/v3.21.2...v3.22.0) (2025-10-31)
 
 
