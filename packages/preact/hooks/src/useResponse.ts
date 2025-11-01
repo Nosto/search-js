@@ -114,10 +114,10 @@ export function useResponse(): {
   categories: SearchCategories
 } {
   const { products, keywords, popularSearches, categories } = useNostoAppState(state => ({
-    products: state.response.products ?? { hits: [], total: 0 },
-    keywords: state.response.keywords ?? { hits: [], total: 0 },
-    popularSearches: state.response.popularSearches ?? { hits: [], total: 0 },
-    categories: state.response.categories ?? { hits: [], total: 0 }
+    products: state.response.products ?? defaultValue,
+    keywords: state.response.keywords ?? defaultValue,
+    popularSearches: state.response.popularSearches ?? defaultValue,
+    categories: state.response.categories ?? defaultValue
   }))
   return {
     /** Array of products */
@@ -130,3 +130,5 @@ export function useResponse(): {
     categories
   }
 }
+
+const defaultValue = { hits: [], total: 0 }
