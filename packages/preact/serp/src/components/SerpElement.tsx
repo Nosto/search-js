@@ -1,4 +1,5 @@
 import { nostojs } from "@nosto/nosto-js"
+import { SearchHit } from "@nosto/nosto-js/client"
 import { ProductHit } from "@preact/autocomplete/types"
 import { AsComponent, BaseElement, BaseElementProps } from "@preact/common/components/BaseElement"
 import { useConfig } from "@preact/common/config/configContext"
@@ -23,7 +24,7 @@ export function SerpElement<C extends AsComponent>({ children, hit, componentPro
 
   const onClick = useCallback(() => {
     if (hit && track) {
-      nostojs(api => api.recordSearchClick(track, hit))
+      nostojs(api => api.recordSearchClick(track, hit as SearchHit))
     }
     savePageScroll()
   }, [hit, track])

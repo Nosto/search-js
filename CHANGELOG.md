@@ -1,3 +1,18 @@
+## [3.22.1](https://github.com/Nosto/search-js/compare/v3.22.0...v3.22.1) (2025-10-31)
+
+
+### Bug Fixes
+
+* add support for popular searches in AutocompleteElement ([9b7bf86](https://github.com/Nosto/search-js/commit/9b7bf86b85e642914a9cafaeaceb94b0bd36cbf2))
+
+# [3.22.0](https://github.com/Nosto/search-js/compare/v3.21.2...v3.22.0) (2025-10-31)
+
+
+### Features
+
+* add categories support to useResponse hook ([a48d978](https://github.com/Nosto/search-js/commit/a48d97896870a17db1293a8cdb6c2ac07e39882a))
+* add popularSearches support to useResponse hook ([00a86e4](https://github.com/Nosto/search-js/commit/00a86e4bacd91ca1ca559708fc753711296c0631))
+
 ## [3.21.2](https://github.com/Nosto/search-js/compare/v3.21.1...v3.21.2) (2025-10-27)
 
 
