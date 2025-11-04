@@ -4,10 +4,10 @@ import { SearchFn, SearchOptions } from "./types"
 
 export async function searchWithRedirects(
   query: SearchQuery,
-  { redirect, ...options }: SearchOptions,
+  options: SearchOptions,
   searchFn: SearchFn
 ): Promise<SearchResult> {
-  if (!redirect) {
+  if (!options.redirect) {
     return searchFn(query, options)
   }
   const response = await searchFn(query, options)
