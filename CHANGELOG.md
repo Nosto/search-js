@@ -1,3 +1,10 @@
+# [3.23.0](https://github.com/Nosto/search-js/compare/v3.22.1...v3.23.0) (2025-11-04)
+
+
+### Features
+
+* add searchWithRedirects ([b537f79](https://github.com/Nosto/search-js/commit/b537f79eca0d1e6337afba1e999ffd0f96561a0a))
+
 ## [3.22.1](https://github.com/Nosto/search-js/compare/v3.22.0...v3.22.1) (2025-10-31)
 
 
