@@ -26,20 +26,27 @@ export function getRedirectUrl(query: string | undefined, result: SearchResult):
   }
 
   const queryString = query.toLowerCase().trim()
-  if (queryString && result.keywords?.hits) {
-    const matchingKeyword = result.keywords.hits.find(
-      keyword => keyword.keyword.toLowerCase().trim() === queryString && keyword._redirect
-    )
-
-    return matchingKeyword?._redirect
+  if (!queryString || !result.keywords?.hits) {
+    return undefined
   }
 
-  return undefined
+  const matchingKeyword = result.keywords.hits.find(
+    keyword => keyword.keyword.toLowerCase().trim() === queryString && keyword._redirect
+  )
+
+  return matchingKeyword?._redirect
 }
 
 /**
- * Search middleware that passes through the search operation.
- * Use with the search function to enable redirect support.
+ * Search middleware for redirect support.
+ *
+ * This is a pass-through middleware that exists to maintain consistency with the middleware
+ * naming convention. The actual redirect logic is implemented via the `getRedirectUrl` helper
+ * function, which should be called in autocomplete components to check for keyword redirects
+ * before navigation.
+ *
+ * Note: Redirects cannot be performed during the search operation itself as that would
+ * break normal search flows. Instead, redirects are handled at the UI layer using `getRedirectUrl`.
  *
  * @param query - The search query
  * @param options - Search options
