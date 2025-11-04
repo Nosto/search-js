@@ -1,6 +1,6 @@
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
-import { SearchOptions } from "./types"
-import { SearchFn } from "./types"
+
+import { SearchFn, SearchOptions } from "./types"
 
 export async function searchWithRedirects(
   query: SearchQuery,
