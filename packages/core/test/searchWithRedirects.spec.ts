@@ -47,4 +47,27 @@ describe("searchWithRedirects", () => {
     expect(window.location.href).toBe(redirectUrl)
     expect(search).toHaveBeenCalledTimes(1)
   })
+
+  it("should not redirect if no matching keyword with _redirect is found", async () => {
+    const result = {
+      keywords: {
+        hits: [{ keyword: "hats" }, { keyword: "bags" }],
+        total: 2,
+        size: 2
+      }
+    }
+    search.mockResolvedValue(result)
+
+    // Mock window.location.href
+    vi.stubGlobal("window", {
+      location: {
+        href: ""
+      }
+    })
+
+    const response = await searchWithRedirects(query, { redirect: true }, search)
+    expect(window.location.href).toBe("")
+    expect(response).toEqual(result)
+    expect(search).toHaveBeenCalledTimes(1)
+  })
 })
