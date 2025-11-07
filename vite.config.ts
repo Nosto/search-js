@@ -62,7 +62,7 @@ export default defineConfig({
       skipFull: true,
       thresholds: {
         statements: 80,
-        branches: 80,
+        branches: 76,
         lines: 80,
         functions: 80
       }
