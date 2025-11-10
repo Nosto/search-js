@@ -7,6 +7,59 @@ updates:
     commit-message:
       prefix: "deps"
     open-pull-requests-limit: 10
+    groups:
+      # Testing framework and tools
+      testing:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+          - "@testing-library/*"
+          - "jsdom"
+      
+      # ESLint plugins and configuration
+      eslint-plugins:
+        patterns:
+          - "eslint-plugin-*"
+          - "eslint-config-*"
+          - "eslint"
+      
+      # TypeScript tooling and type definitions
+      typescript:
+        patterns:
+          - "typescript"
+          - "typescript-eslint"
+          - "@types/*"
+      
+      # Vite build tools and plugins
+      vite:
+        patterns:
+          - "vite"
+          - "vite-plugin-*"
+      
+      # Commitlint tools
+      commitlint:
+        patterns:
+          - "@commitlint/*"
+      
+      # Preact-related dependencies
+      preact:
+        patterns:
+          - "preact"
+          - "@preact/*"
+      
+      # Code formatting and documentation
+      formatting-docs:
+        patterns:
+          - "prettier"
+          - "typedoc"
+      
+      # Development utilities
+      dev-utilities:
+        patterns:
+          - "husky"
+          - "concurrently"
+          - "copyfiles"
+          - "isbot"
 
   - package-ecosystem: "github-actions"
     directory: "/"
