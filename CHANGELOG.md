@@ -1,3 +1,10 @@
+# [3.24.0](https://github.com/Nosto/search-js/compare/v3.23.0...v3.24.0) (2025-11-11)
+
+
+### Features
+
+* **deps:** add dependabot group definitions based on module dependencies ([1595e11](https://github.com/Nosto/search-js/commit/1595e111650134404ba6a574f1dd89d050e3b463))
+
 # [3.23.0](https://github.com/Nosto/search-js/compare/v3.22.1...v3.23.0) (2025-11-04)
 
 
