@@ -7,6 +7,19 @@ updates:
     commit-message:
       prefix: "deps"
     open-pull-requests-limit: 10
+    groups:
+      # Vitest testing framework
+      vitest:
+        patterns:
+          - "vitest"
+          - "@vitest/*"
+      
+      # ESLint and plugins
+      eslint:
+        patterns:
+          - "eslint-plugin-*"
+          - "eslint-config-*"
+          - "eslint"
 
   - package-ecosystem: "github-actions"
     directory: "/"
