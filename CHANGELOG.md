@@ -1,3 +1,10 @@
+## [3.24.1](https://github.com/Nosto/search-js/compare/v3.24.0...v3.24.1) (2025-11-17)
+
+
+### Bug Fixes
+
+* update package-lock.json files after jsdom bump ([7713877](https://github.com/Nosto/search-js/commit/771387738341304d07994662fbb7fea94a3d9a41))
+
 # [3.24.0](https://github.com/Nosto/search-js/compare/v3.23.0...v3.24.0) (2025-11-11)
 
 
