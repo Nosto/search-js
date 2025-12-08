@@ -117,7 +117,7 @@
     "eslint-plugin-unused-imports": "^4.3.0",
     "husky": "^9.1.7",
     "isbot": "^5.1.32",
-    "jsdom": "^27.2.0",
+    "jsdom": "^27.3.0",
     "prettier": "^3.7.3",
     "typedoc": "^0.28.15",
     "typescript": "^5.9.3",
