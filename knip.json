@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/knip@5/schema.json",
+  "ignore": [
+    "dist/**",
+    "docs/**",
+    "node_modules/**",
+    "dev/**"
+  ],
+  "ignoreDependencies": [
+    "globals",
+    "preact",
+    "@types/dom-speech-recognition"
+  ]
+}
