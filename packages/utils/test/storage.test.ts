@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
-import * as storage from "../src/storage"
+
 import { logger } from "../src/logger"
+import * as storage from "../src/storage"
 
 // Store original storage references
 const originalLocalStorage = window.localStorage
@@ -48,9 +49,7 @@ describe("storage", () => {
   describe("getLocalStorageItem", () => {
     it("should retrieve a value from localStorage", () => {
       window.localStorage.setItem("nosto:search-js:test", '{"foo":"bar"}')
-      const result = storage.getLocalStorageItem<{ foo: string }>(
-        "nosto:search-js:test"
-      )
+      const result = storage.getLocalStorageItem<{ foo: string }>("nosto:search-js:test")
       expect(result).toEqual({ foo: "bar" })
     })
 
@@ -127,16 +126,12 @@ describe("storage", () => {
   describe("getSessionStorageItem", () => {
     it("should retrieve a value from sessionStorage", () => {
       window.sessionStorage.setItem("nosto:search-js:test", '{"foo":"bar"}')
-      const result = storage.getSessionStorageItem<{ foo: string }>(
-        "nosto:search-js:test"
-      )
+      const result = storage.getSessionStorageItem<{ foo: string }>("nosto:search-js:test")
       expect(result).toEqual({ foo: "bar" })
     })
 
     it("should return undefined if item does not exist", () => {
-      const result = storage.getSessionStorageItem(
-        "nosto:search-js:nonexistent"
-      )
+      const result = storage.getSessionStorageItem("nosto:search-js:nonexistent")
       expect(result).toBeUndefined()
     })
 
@@ -190,9 +185,7 @@ describe("storage", () => {
       const storageModule = await import("../src/storage")
 
       storageModule.setLocalStorageItem("nosto:search-js:test", { foo: "bar" })
-      const result = storageModule.getLocalStorageItem<{ foo: string }>(
-        "nosto:search-js:test"
-      )
+      const result = storageModule.getLocalStorageItem<{ foo: string }>("nosto:search-js:test")
 
       expect(result).toEqual({ foo: "bar" })
     })
@@ -210,13 +203,13 @@ describe("storage", () => {
       vi.resetModules()
       const storageModule = await import("../src/storage")
 
-      storageModule.setSessionStorageItem("nosto:search-js:session", { 
-        session: "data" 
+      storageModule.setSessionStorageItem("nosto:search-js:session", {
+        session: "data"
       })
-      const sessionResult = storageModule.getSessionStorageItem<{ 
-        session: string 
+      const sessionResult = storageModule.getSessionStorageItem<{
+        session: string
       }>("nosto:search-js:session")
-      
+
       expect(sessionResult).toEqual({ session: "data" })
     })
 
@@ -228,17 +221,15 @@ describe("storage", () => {
         },
         configurable: true
       })
-      
+
       // Re-import the module to trigger initialization with blocked storage
       vi.resetModules()
       const storageModule = await import("../src/storage")
 
       storageModule.setLocalStorageItem("nosto:search-js:test", { foo: "bar" })
       storageModule.removeLocalStorageItem("nosto:search-js:test")
-      const removedResult = storageModule.getLocalStorageItem(
-        "nosto:search-js:test"
-      )
-      
+      const removedResult = storageModule.getLocalStorageItem("nosto:search-js:test")
+
       expect(removedResult).toBeUndefined()
     })
   })
@@ -255,9 +246,7 @@ describe("storage", () => {
       }
 
       storage.setLocalStorageItem("nosto:search-js:complex", complexData)
-      const result = storage.getLocalStorageItem<typeof complexData>(
-        "nosto:search-js:complex"
-      )
+      const result = storage.getLocalStorageItem<typeof complexData>("nosto:search-js:complex")
 
       expect(result).toEqual(complexData)
     })
@@ -266,9 +255,7 @@ describe("storage", () => {
       const arrayData = [{ id: 1 }, { id: 2 }, { id: 3 }]
 
       storage.setSessionStorageItem("nosto:search-js:array", arrayData)
-      const result = storage.getSessionStorageItem<typeof arrayData>(
-        "nosto:search-js:array"
-      )
+      const result = storage.getSessionStorageItem<typeof arrayData>("nosto:search-js:array")
 
       expect(result).toEqual(arrayData)
     })
@@ -278,15 +265,9 @@ describe("storage", () => {
       storage.setLocalStorageItem("nosto:search-js:number", 42)
       storage.setLocalStorageItem("nosto:search-js:boolean", true)
 
-      expect(
-        storage.getLocalStorageItem<string>("nosto:search-js:string")
-      ).toBe("test string")
-      expect(
-        storage.getLocalStorageItem<number>("nosto:search-js:number")
-      ).toBe(42)
-      expect(
-        storage.getLocalStorageItem<boolean>("nosto:search-js:boolean")
-      ).toBe(true)
+      expect(storage.getLocalStorageItem<string>("nosto:search-js:string")).toBe("test string")
+      expect(storage.getLocalStorageItem<number>("nosto:search-js:number")).toBe(42)
+      expect(storage.getLocalStorageItem<boolean>("nosto:search-js:boolean")).toBe(true)
     })
   })
 })
