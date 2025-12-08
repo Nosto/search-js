@@ -1,3 +1,11 @@
+## [3.24.2](https://github.com/Nosto/search-js/compare/v3.24.1...v3.24.2) (2025-12-08)
+
+
+### Bug Fixes
+
+* lint ([438df4c](https://github.com/Nosto/search-js/commit/438df4ce871c8f925ef6cbdf8849b152731f85d1))
+* support blocked storage access ([4fb80d9](https://github.com/Nosto/search-js/commit/4fb80d92a46ee74e832a8b06ee03ad2fbc22a7d2))
+
 ## [3.24.1](https://github.com/Nosto/search-js/compare/v3.24.0...v3.24.1) (2025-11-17)
 
 
