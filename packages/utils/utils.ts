@@ -12,5 +12,13 @@ export { parseNumber } from "./src/parseNumber"
 export { measure } from "./src/performance"
 export { pick } from "./src/pick"
 export type { Simplify } from "./src/simplify"
+export {
+  getLocalStorageItem,
+  getSessionStorageItem,
+  removeLocalStorageItem,
+  removeSessionStorageItem,
+  setLocalStorageItem,
+  setSessionStorageItem
+} from "./src/storage"
 export type { Unfreeze } from "./src/types"
 export { unique } from "./src/unique"

@@ -1,10 +1,11 @@
+import { createInMemoryStorage } from "./createInMemoryStorage"
 import { logger } from "./logger"
 
 type Key = `nosto:search-js:${string}`
 
 export function setStorageItem(name: Key, value: unknown, storage: Storage) {
-  const stringValue = JSON.stringify(value)
   try {
+    const stringValue = JSON.stringify(value)
     storage.setItem(name, stringValue)
   } catch (error) {
     logger.warn(error)
@@ -28,6 +29,18 @@ export function removeStorageItem(name: Key, storage: Storage) {
   } catch (error) {
     logger.warn(error)
   }
+}
+
+let localStorage: Storage
+let sessionStorage: Storage
+
+try {
+  localStorage = window.localStorage
+  sessionStorage = window.sessionStorage
+} catch (error) {
+  logger.warn(error)
+  localStorage = createInMemoryStorage()
+  sessionStorage = createInMemoryStorage()
 }
 
 export function setLocalStorageItem(name: Key, value: unknown) {
