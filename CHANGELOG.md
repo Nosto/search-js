@@ -1,3 +1,10 @@
+## [3.24.3](https://github.com/nosto/search-js/compare/v3.24.2...v3.24.3) (2025-12-09)
+
+
+### Bug Fixes
+
+* add repositry config in package.json and pin semantic-version to 25.0.2 ([bfa63ec](https://github.com/nosto/search-js/commit/bfa63ec3e3696ec25f4569dbb7e65c736588d905))
+
 ## [3.24.2](https://github.com/Nosto/search-js/compare/v3.24.1...v3.24.2) (2025-12-08)
 
 
