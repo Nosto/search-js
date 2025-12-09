@@ -47,6 +47,7 @@ jobs:
         uses: cycjimmy/semantic-release-action@b12c8f6015dc215fe37bc154d4ad456dd3833c90 # v6.0.0
         id: semantic
         with:
+          semantic_version: 25.0.2
           extra_plugins: |
             @semantic-release/changelog
             @semantic-release/git
@@ -56,7 +57,6 @@ jobs:
             ]
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_PAT_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPMJS_TOKEN }}
 
   publish-docs:
     needs: release
