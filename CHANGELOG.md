@@ -1,3 +1,10 @@
+## [3.24.4](https://github.com/Nosto/search-js/compare/v3.24.3...v3.24.4) (2025-12-10)
+
+
+### Bug Fixes
+
+* repository.url in package.sjon ([f1dc0f8](https://github.com/Nosto/search-js/commit/f1dc0f8fad2a622f2fa88d2e105a3229f79085ff))
+
 ## [3.24.3](https://github.com/nosto/search-js/compare/v3.24.2...v3.24.3) (2025-12-09)
 
 
