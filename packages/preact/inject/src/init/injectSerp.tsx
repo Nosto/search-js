@@ -10,7 +10,6 @@ export async function injectSerp(config: SerpInjectConfig, store: Store) {
 
   const ComponentToRender = await userRender()
 
-  // eslint-disable-next-line func-style
   const renderComponent = () => (
     <ErrorBoundary>
       <SearchPageProvider store={store} config={config.config}>

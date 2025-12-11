@@ -22,7 +22,6 @@ const localStorageKey = "nosto:search-js-dev:user-preferences"
 export function UserPreferencesProvider({ children }: UserPreferencesProviderProps) {
   const [preferences, setPreferences] = useState<UserPreferences>(loadPreferences)
 
-  // eslint-disable-next-line func-style
   const updatePreference = <K extends keyof UserPreferences>(key: K, value: UserPreferences[K]) => {
     setPreferences(prev => {
       const newPreferences = {

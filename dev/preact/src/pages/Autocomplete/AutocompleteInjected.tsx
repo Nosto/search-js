@@ -44,7 +44,6 @@ export function AutocompleteInjected() {
     })
   })
 
-  // eslint-disable-next-line func-style
   const handleSearch = () => {
     console.log("Native search")
   }

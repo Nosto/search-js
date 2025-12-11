@@ -13,7 +13,6 @@ function getParents(target: Element) {
 }
 
 export function bindClickOutside([element, input]: HTMLElement[], callback: () => void) {
-  // eslint-disable-next-line func-style
   const onClick = (event: MouseEvent) => {
     const target = event.target
 

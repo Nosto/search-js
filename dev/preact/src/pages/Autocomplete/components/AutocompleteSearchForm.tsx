@@ -41,7 +41,6 @@ export function AutocompleteSearchForm() {
     window.dispatchEvent(new PopStateEvent("popstate"))
   }, [])
 
-  // eslint-disable-next-line func-style
   const handleSearch = (e: Event) => {
     e.preventDefault()
     if (input.trim()) {

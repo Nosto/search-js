@@ -67,7 +67,6 @@ export function usePagination(options?: { width?: number }): {
     const currentPage = products.size! > 0 ? Math.floor(from / products.size!) + 1 : 1
     const totalPages = products.size! > 0 ? Math.ceil(products.total / products.size!) : 0
 
-    // eslint-disable-next-line func-style
     const showPage = (page: number) => page >= currentPage - pagesToShow && page <= currentPage + pagesToShow
 
     const resultsFrom = from + 1
@@ -78,7 +77,6 @@ export function usePagination(options?: { width?: number }): {
       current: true
     }
 
-    // eslint-disable-next-line func-style
     const pageToPosition = (page: number) => {
       return {
         from: (page - 1) * products.size!,

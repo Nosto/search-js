@@ -25,7 +25,6 @@ export function ProductCard({ product: baseProduct }: Props) {
   const { matchedSkus, swatches, toggleOption } = useSwatches(product.skus, ["size"])
   const previewImage = matchedSkus[0]?.imageUrl || productImagePlaceholder
 
-  // eslint-disable-next-line func-style
   const handleAddToCart = (sku: SearchProductSku) => {
     console.log(sku)
   }

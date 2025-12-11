@@ -4,7 +4,6 @@ export function debounce<T extends (...args: never[]) => unknown>(
 ): ((...args: Parameters<T>) => void) & { cancel: () => void } {
   let timeoutId: ReturnType<typeof setTimeout> | null = null
 
-  // eslint-disable-next-line func-style
   const debounced = (...args: Parameters<T>) => {
     if (timeoutId) {
       clearTimeout(timeoutId)
