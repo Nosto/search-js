@@ -10,6 +10,7 @@ export async function injectCategory(config: CategoryInjectConfig, store: Store)
 
   const ComponentToRender = await userRender()
 
+  // eslint-disable-next-line func-style
   const renderComponent = () => (
     <ErrorBoundary>
       <CategoryPageProvider store={store} config={config.config}>

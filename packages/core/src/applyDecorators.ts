@@ -11,6 +11,7 @@ export async function applyDecorators<HD extends readonly HitDecorator[]>(
   if (!response.products?.hits?.length || !hitDecorators?.length) {
     return response as DecoratedResult<HD>
   }
+  // eslint-disable-next-line func-style
   const decorator = (product: SearchProduct) => {
     return hitDecorators.reduce((acc, decorator) => {
       return decorator(acc)

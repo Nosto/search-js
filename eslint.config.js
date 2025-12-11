@@ -30,6 +30,12 @@ export default tseslint.config(
     }
   },
   {
+    files: ["packages/**/src/**/*.{js,ts,tsx}", "!packages/**/test/**"],
+    rules: {
+      "func-style": ["error", "declaration", { allowArrowFunctions: false }]
+    }
+  },
+  {
     plugins: {
       "barrel-files": barrelFiles
     },

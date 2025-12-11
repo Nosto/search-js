@@ -36,6 +36,7 @@ export function createComponent(input: HTMLInputElement, dropdown: HTMLDivElemen
     onChangeListeners: [] as (() => void)[]
   }
 
+  // eslint-disable-next-line func-style
   const highlightElement = (elements: Element[], highlightIndex: number) => {
     const totalCount = elements.length
     if (totalCount === 0) {
@@ -44,10 +45,12 @@ export function createComponent(input: HTMLInputElement, dropdown: HTMLDivElemen
     highlightState.index = highlightIndex >= 0 ? highlightIndex % totalCount : totalCount - 1
     highlightState.onChangeListeners.forEach(callback => callback())
   }
+  // eslint-disable-next-line func-style
   const clearHighlight = () => {
     highlightState.index = -1
     highlightState.onChangeListeners.forEach(callback => callback())
   }
+  // eslint-disable-next-line func-style
   const getHighlightIndex = () => {
     return highlightState.index
   }
