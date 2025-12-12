@@ -1,3 +1,11 @@
+## [3.24.5](https://github.com/Nosto/search-js/compare/v3.24.4...v3.24.5) (2025-12-12)
+
+
+### Bug Fixes
+
+* only trigger updateSearch when sortId differs from activeSort ([2303e76](https://github.com/Nosto/search-js/commit/2303e7640715830c008c43078f054cfe6e37d4a3))
+* remove extra closing brace in setSort callback ([9f429fe](https://github.com/Nosto/search-js/commit/9f429fe1aac499c31179350dd1e5a1768e20b4fb))
+
 ## [3.24.4](https://github.com/Nosto/search-js/compare/v3.24.3...v3.24.4) (2025-12-10)
 
 
