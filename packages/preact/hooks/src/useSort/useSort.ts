@@ -55,15 +55,17 @@ export function useSort(sortOptions: SortOption[]) {
 
   const setSort = useCallback(
     (sortId: string) => {
-      if (sortId !== activeSort) {
-        const selectedSort = sortOptions.find(option => option.id === sortId)
-        if (selectedSort) {
-          updateSearch({
-            products: {
-              sort: selectedSort.value.sort
-            }
-          })
-        }
+      if (sortId === activeSort) {
+        return
+      }
+      const selectedSort = sortOptions.find(option => option.id === sortId)
+      if (selectedSort) {
+        updateSearch({
+          products: {
+            sort: selectedSort.value.sort
+          }
+        })
+      }
       }
     },
     [sortOptions, updateSearch, activeSort]
