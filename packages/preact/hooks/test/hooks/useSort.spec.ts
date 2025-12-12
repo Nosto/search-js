@@ -54,20 +54,61 @@ describe("useSort", () => {
   })
 
   it("handles sort change correctly", () => {
-    const { setSort } = renderHookWithProviders(() => useSort(sortOptions), { store }).result.current
+    const testStore = mockStore({
+      loading: false,
+      initialized: true,
+      query: {
+        products: {
+          sort: []
+        }
+      },
+      response: {
+        products: {
+          size: 10,
+          total: 100,
+          hits: []
+        }
+      }
+    })
 
-    setSort("score")
+    const { result, rerender } = renderHookWithProviders(() => useSort(sortOptions), { store: testStore })
+
+    result.current.setSort("score")
     expect(actions.updateSearch).toHaveBeenCalledWith({
       products: {
         sort: [{ field: "score", order: "desc" }]
       }
     })
-    setSort("default")
+
+    // Simulate the store state update after updateSearch
+    testStore.updateState({
+      query: {
+        products: {
+          sort: [{ field: "score", order: "desc" }]
+        }
+      }
+    })
+    rerender()
+
+    result.current.setSort("default")
     expect(actions.updateSearch).toHaveBeenCalledWith({
       products: {
         sort: []
       }
     })
+  })
+
+  it("does not call updateSearch when selecting the same sort", () => {
+    const { setSort, activeSort } = renderHookWithProviders(() => useSort(sortOptions), { store }).result.current
+
+    expect(activeSort).toBe("default")
+    expect(actions.updateSearch).not.toHaveBeenCalled()
+
+    // Try to set the same sort
+    setSort("default")
+
+    // updateSearch should not have been called
+    expect(actions.updateSearch).not.toHaveBeenCalled()
   })
 
   it("returns correct matching sort", () => {
