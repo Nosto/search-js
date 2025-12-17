@@ -3,7 +3,7 @@ import { useCallback } from "preact/hooks"
 
 import { useActions } from "../useActions"
 import { useNostoAppState } from "../useNostoAppState"
-import { isMatchingSort } from "./utils"
+import { getActiveSortId } from "./utils"
 
 export interface SortOption {
   id: string
@@ -50,8 +50,7 @@ export function useSort(sortOptions: SortOption[]) {
   const query = useNostoAppState(state => state.query)
   const { updateSearch } = useActions()
 
-  const activeSort =
-    sortOptions.find(option => isMatchingSort(option.value.sort, query.products?.sort || []))?.id ?? sortOptions[0]?.id
+  const activeSort = getActiveSortId(sortOptions, query.products?.sort || [])
 
   const setSort = useCallback(
     (sortId: string) => {

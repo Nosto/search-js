@@ -1,16 +1,15 @@
-import { InputSearchSort } from "@nosto/nosto-js/client"
 import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
 import { useCallback, useEffect, useState } from "preact/hooks"
 
 import { useActions } from "../useActions"
 import { useNostoAppState } from "../useNostoAppState"
 import { SortOption } from "./useSort"
-import { isMatchingSort } from "./utils"
+import { getActiveSortId } from "./utils"
 
 const sortStorageKey = "nosto:search-js:sort"
 
 /**
- * Preact hook that imports the sort state to the component and persists it in session storage.
+ * Preact hook that import sort state to the component and persists it in session storage.
  * This hook extends useSort functionality by maintaining the sort selection across page reloads
  * within the same session.
  * @param sortOptions
@@ -44,10 +43,6 @@ const sortStorageKey = "nosto:search-js:sort"
  * ```
  * @group Hooks
  */
-function getActiveSortId(sortOptions: SortOption[], querySort: InputSearchSort[]) {
-  return sortOptions.find(option => isMatchingSort(option.value.sort, querySort))?.id ?? sortOptions[0]?.id
-}
-
 export function useSortWithSessionStorage(sortOptions: SortOption[]) {
   const query = useNostoAppState(state => state.query)
   const { updateSearch } = useActions()
