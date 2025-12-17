@@ -1,3 +1,4 @@
+import { InputSearchSort } from "@nosto/nosto-js/client"
 import { getSessionStorageItem, setSessionStorageItem } from "@utils/storage"
 import { useCallback, useEffect, useState } from "preact/hooks"
 
@@ -43,24 +44,26 @@ const sortStorageKey = "nosto:search-js:sort"
  * ```
  * @group Hooks
  */
+function getActiveSortId(sortOptions: SortOption[], querySort: InputSearchSort[]) {
+  return sortOptions.find(option => isMatchingSort(option.value.sort, querySort))?.id ?? sortOptions[0]?.id
+}
+
 export function useSortWithSessionStorage(sortOptions: SortOption[]) {
   const query = useNostoAppState(state => state.query)
   const { updateSearch } = useActions()
   const [isInitialized, setIsInitialized] = useState(false)
 
   // Get the current active sort from query state
-  const activeSort =
-    sortOptions.find(option => isMatchingSort(option.value.sort, query.products?.sort || []))?.id ?? sortOptions[0]?.id
+  const activeSort = getActiveSortId(sortOptions, query.products?.sort || [])
 
   // Load sort from session storage on mount and apply it
+  // This effect runs only once on mount to restore persisted sort state
   useEffect(() => {
     if (!isInitialized) {
       const storedSortId = getSessionStorageItem<string>(sortStorageKey)
       if (storedSortId) {
         const storedOption = sortOptions.find(option => option.id === storedSortId)
-        const currentActiveSort =
-          sortOptions.find(option => isMatchingSort(option.value.sort, query.products?.sort || []))?.id ??
-          sortOptions[0]?.id
+        const currentActiveSort = getActiveSortId(sortOptions, query.products?.sort || [])
         if (storedOption && storedOption.id !== currentActiveSort) {
           updateSearch({
             products: {
@@ -71,6 +74,7 @@ export function useSortWithSessionStorage(sortOptions: SortOption[]) {
       }
       setIsInitialized(true)
     }
+    // Intentionally only depends on isInitialized to run once on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInitialized])
 
