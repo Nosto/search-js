@@ -9,7 +9,7 @@ import { isMatchingSort } from "./utils"
 const sortStorageKey = "nosto:search-js:sort"
 
 /**
- * Preact hook that imports sort state to the component and persists it in session storage.
+ * Preact hook that imports the sort state to the component and persists it in session storage.
  * This hook extends useSort functionality by maintaining the sort selection across page reloads
  * within the same session.
  * @param sortOptions
@@ -54,21 +54,25 @@ export function useSortWithSessionStorage(sortOptions: SortOption[]) {
 
   // Load sort from session storage on mount and apply it
   useEffect(() => {
-    const storedSortId = getSessionStorageItem<string>(sortStorageKey)
-    if (storedSortId && !isInitialized) {
-      const storedOption = sortOptions.find(option => option.id === storedSortId)
-      if (storedOption && storedOption.id !== activeSort) {
-        updateSearch({
-          products: {
-            sort: storedOption.value.sort
-          }
-        })
+    if (!isInitialized) {
+      const storedSortId = getSessionStorageItem<string>(sortStorageKey)
+      if (storedSortId) {
+        const storedOption = sortOptions.find(option => option.id === storedSortId)
+        const currentActiveSort =
+          sortOptions.find(option => isMatchingSort(option.value.sort, query.products?.sort || []))?.id ??
+          sortOptions[0]?.id
+        if (storedOption && storedOption.id !== currentActiveSort) {
+          updateSearch({
+            products: {
+              sort: storedOption.value.sort
+            }
+          })
+        }
       }
       setIsInitialized(true)
-    } else if (!isInitialized) {
-      setIsInitialized(true)
     }
-  }, [sortOptions, updateSearch, activeSort, isInitialized])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isInitialized])
 
   const setSort = useCallback(
     (sortId: string) => {
