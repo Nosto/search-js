@@ -12,3 +12,4 @@ applyTo: "**/*.ts,**/*.tsx"
 * Use async/await instead of Promise chaining 
 * Use individual named exports over bulk exports
 * Favor named exports over default exports
+* Use function declarations for top-level functions instead of arrow function expressions
