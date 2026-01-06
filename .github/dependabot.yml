@@ -20,6 +20,11 @@ updates:
           - "eslint-plugin-*"
           - "eslint-config-*"
           - "eslint"
+      
+      # Commitlint and configs
+      commitlint:
+        patterns:
+          - "@commitlint/*"
 
   - package-ecosystem: "github-actions"
     directory: "/"
