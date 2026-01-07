@@ -1,3 +1,10 @@
+## [3.24.6](https://github.com/Nosto/search-js/compare/v3.24.5...v3.24.6) (2026-01-07)
+
+
+### Bug Fixes
+
+* resolve npm audit security vulnerabilities ([50d5616](https://github.com/Nosto/search-js/commit/50d56169f4ffb3a57679d8bb8ec4d8a6344757a3))
+
 ## [3.24.5](https://github.com/Nosto/search-js/compare/v3.24.4...v3.24.5) (2025-12-12)
 
 
