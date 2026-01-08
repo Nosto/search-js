@@ -15,7 +15,7 @@ export const styles = {
   }
 }
 
-export const getButtonStyle = (isEnabled: boolean, color: "green" | "blue") => {
+export function getButtonStyle(isEnabled: boolean, color: "green" | "blue") {
   const colors = {
     green: {
       enabled: "#22c55e",

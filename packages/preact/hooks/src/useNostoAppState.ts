@@ -52,4 +52,6 @@ export function useNostoAppState<Selected>(selector: (state: State) => Selected 
   return slice
 }
 
-const fullStateSelector = <Selected>(state: State) => state as Selected
+function fullStateSelector<Selected>(state: State) {
+  return state as Selected
+}
