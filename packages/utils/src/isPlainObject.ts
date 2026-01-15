@@ -1,4 +1,6 @@
-const isObject = (v: unknown): v is object => String(v) === "[object Object]"
+function isObject(v: unknown): v is object {
+  return String(v) === "[object Object]"
+}
 
 /**
  * Checks if a value is a plain object.
