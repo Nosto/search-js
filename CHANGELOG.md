@@ -1,3 +1,10 @@
+# [3.25.0](https://github.com/Nosto/search-js/compare/v3.24.6...v3.25.0) (2026-01-15)
+
+
+### Features
+
+* **deps:** add commitlint dependabot group config ([6151c96](https://github.com/Nosto/search-js/commit/6151c96d026bb04b5c0468e7c2e69d35b95f29ef))
+
 ## [3.24.6](https://github.com/Nosto/search-js/compare/v3.24.5...v3.24.6) (2026-01-07)
 
 
