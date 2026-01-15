@@ -1,3 +1,10 @@
+## [3.25.1](https://github.com/Nosto/search-js/compare/v3.25.0...v3.25.1) (2026-01-15)
+
+
+### Bug Fixes
+
+* remove func-style rule to only enforce top-level functions manually ([f7f69a3](https://github.com/Nosto/search-js/commit/f7f69a3e69aa5507c47f68d0ab23f5ae36fbdc7b))
+
 # [3.25.0](https://github.com/Nosto/search-js/compare/v3.24.6...v3.25.0) (2026-01-15)
 
 
