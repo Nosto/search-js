@@ -8,6 +8,12 @@ updates:
       prefix: "deps"
     open-pull-requests-limit: 10
     groups:
+      # Bundle all patch updates
+      patch-updates:
+        applies-to: version-updates
+        update-types:
+          - "patch"
+      
       # Vitest testing framework
       vitest:
         patterns:
