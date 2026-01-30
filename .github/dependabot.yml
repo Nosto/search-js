@@ -10,13 +10,11 @@ updates:
     groups:
       # Bundle all patch updates
       patch-updates:
-        applies-to: version-updates
         update-types:
           - "patch"
       
       # Bundle all minor updates
       minor-updates:
-        applies-to: version-updates
         update-types:
           - "minor"
       
