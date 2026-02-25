@@ -97,9 +97,9 @@
     "prepare": "husky"
   },
   "devDependencies": {
-    "@commitlint/cli": "^20.4.1",
-    "@commitlint/config-conventional": "^20.4.1",
-    "@nosto/nosto-js": "^2.11.0",
+    "@commitlint/cli": "^20.4.2",
+    "@commitlint/config-conventional": "^20.4.2",
+    "@nosto/nosto-js": "^2.11.1",
     "@testing-library/dom": "^10.4.1",
     "@types/dom-speech-recognition": "^0.0.7",
     "@types/eslint-config-prettier": "^6.11.3",
@@ -121,7 +121,7 @@
     "prettier": "^3.8.1",
     "typedoc": "^0.28.17",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.56.0",
+    "typescript-eslint": "^8.56.1",
     "vite": "^7.3.1",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.7"
