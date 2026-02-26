@@ -1,3 +1,11 @@
+## [3.25.2](https://github.com/Nosto/search-js/compare/v3.25.1...v3.25.2) (2026-02-26)
+
+
+### Bug Fixes
+
+* **deps:** resolve npm audit vulnerabilities ([4fdabb4](https://github.com/Nosto/search-js/commit/4fdabb4d18b1871d2b8a0508b31a685686d97112))
+* **deps:** resolve npm audit vulnerabilities in dev/preact ([97b7dfc](https://github.com/Nosto/search-js/commit/97b7dfc2c77bea107d4711bbf5572a44fd7425ba))
+
 ## [3.25.1](https://github.com/Nosto/search-js/compare/v3.25.0...v3.25.1) (2026-01-15)
 
 
