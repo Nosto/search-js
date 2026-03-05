@@ -1,3 +1,12 @@
+## [3.25.3](https://github.com/Nosto/search-js/compare/v3.25.2...v3.25.3) (2026-03-05)
+
+
+### Bug Fixes
+
+* **deps:** add minimatch override for dev preact audit ([c696950](https://github.com/Nosto/search-js/commit/c6969501664c43620f8a671e8361030b08c30c5e))
+* **deps:** add overrides for minimatch to fix ReDoS vulnerabilities ([5301bf2](https://github.com/Nosto/search-js/commit/5301bf2bb2f4dcd072f25c5b9065371b87a2781c))
+* **deps:** use >=10.2.3 range for minimatch override to allow future patches ([33ea2d6](https://github.com/Nosto/search-js/commit/33ea2d64dd6b261077e4739e5d2fcf23db327fc1))
+
 ## [3.25.2](https://github.com/Nosto/search-js/compare/v3.25.1...v3.25.2) (2026-02-26)
 
 
