@@ -127,7 +127,7 @@
     "vitest": "^4.0.7"
   },
   "overrides": {
-    "minimatch": "^10.2.3"
+    "minimatch": ">=10.2.3"
   },
   "publishConfig": {
     "access": "public"
