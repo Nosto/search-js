@@ -94,6 +94,7 @@
     "lint-fix": "eslint --fix",
     "typecheck": "tsc --noEmit",
     "install:dev": "(cd dev/preact && npm i --ignore-scripts)",
+    "postinstall": "patch-package",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -107,7 +108,7 @@
     "@vitest/coverage-v8": "^4.0.18",
     "concurrently": "^9.2.1",
     "copyfiles": "^2.4.1",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-barrel-files": "^3.0.1",
     "eslint-plugin-prettier": "^5.5.5",
@@ -115,9 +116,11 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-unused-imports": "^4.4.1",
+    "globals": "^17.4.0",
     "husky": "^9.1.7",
     "isbot": "^5.1.35",
     "jsdom": "^28.1.0",
+    "patch-package": "^8.0.1",
     "prettier": "^3.8.1",
     "typedoc": "^0.28.17",
     "typescript": "^5.9.3",
