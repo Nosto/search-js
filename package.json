@@ -94,7 +94,7 @@
     "lint-fix": "eslint --fix",
     "typecheck": "tsc --noEmit",
     "install:dev": "(cd dev/preact && npm i --ignore-scripts)",
-    "postinstall": "node -e \"if (process.env.INIT_CWD === process.cwd()) { try { require('child_process').execSync('patch-package', { stdio: 'inherit' }); } catch (e) { console.warn('postinstall patch-package failed:', e && e.message); } }\"",
+    "postinstall": "node scripts/postinstall.js",
     "prepare": "husky"
   },
   "devDependencies": {
