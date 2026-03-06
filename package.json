@@ -94,7 +94,7 @@
     "lint-fix": "eslint --fix",
     "typecheck": "tsc --noEmit",
     "install:dev": "(cd dev/preact && npm i --ignore-scripts)",
-    "postinstall": "patch-package",
+    "postinstall": "node -e \"if (process.env.INIT_CWD === process.cwd()) { try { require('child_process').execSync('patch-package', { stdio: 'inherit' }); } catch (e) { console.warn('postinstall patch-package failed:', e && e.message); } }\"",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -110,7 +110,7 @@
     "copyfiles": "^2.4.1",
     "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-barrel-files": "^3.0.1",
+    "eslint-plugin-barrel-files": "3.0.1",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
