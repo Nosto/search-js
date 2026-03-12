@@ -2,7 +2,6 @@ import { ErrorBoundary } from "@preact/common/components/ErrorBoundary"
 import { render } from "@testing-library/preact"
 import * as loggerModule from "@utils/logger"
 import { describe, expect, it, vi } from "vitest"
-import { h } from "preact"
 import { useEffect } from "preact/hooks"
 
 describe("ErrorBoundary", () => {
