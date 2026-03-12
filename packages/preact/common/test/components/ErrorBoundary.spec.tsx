@@ -6,8 +6,8 @@ import { useEffect } from "preact/hooks"
 
 describe("ErrorBoundary", () => {
   it("logs a warning when an error is caught", () => {
-    const warnSpy = vi.spyOn(loggerModule.logger, "warn")
-    const errorSpy = vi.spyOn(loggerModule.logger, "error")
+    const warnSpy = vi.spyOn(loggerModule.logger, "warn").mockImplementation(() => {})
+    const errorSpy = vi.spyOn(loggerModule.logger, "error").mockImplementation(() => {})
 
     const ThrowingChild = () => {
       useEffect(() => {
