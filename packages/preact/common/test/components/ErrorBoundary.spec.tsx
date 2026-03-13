@@ -1,33 +1,38 @@
 import { ErrorBoundary } from "@preact/common/components/ErrorBoundary"
-import { render, waitFor } from "@testing-library/preact"
+import { render } from "@testing-library/preact"
 import * as loggerModule from "@utils/logger"
-import { describe, expect, it, vi } from "vitest"
+import * as preactHooks from "preact/hooks"
+import { afterEach, describe, expect, it, vi } from "vitest"
+
+vi.mock("preact/hooks", async importOriginal => {
+  const actual = await importOriginal<typeof import("preact/hooks")>()
+  return { ...actual, useErrorBoundary: vi.fn() }
+})
 
 describe("ErrorBoundary", () => {
-  it("logs a warning when an error is caught", async () => {
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  it("logs a warning when an error is caught", () => {
+    const error = new Error("Test error")
+    vi.mocked(preactHooks.useErrorBoundary).mockReturnValue([error, vi.fn()])
     const warnSpy = vi.spyOn(loggerModule.logger, "warn").mockImplementation(() => {})
     const errorSpy = vi.spyOn(loggerModule.logger, "error").mockImplementation(() => {})
-    vi.spyOn(console, "error").mockImplementation(() => {})
 
-    const ThrowingChild = () => {
-      throw new Error("Test error")
-    }
+    render(
+      <ErrorBoundary>
+        <div>child</div>
+      </ErrorBoundary>
+    )
 
-    try {
-      render(
-        <ErrorBoundary>
-          <ThrowingChild />
-        </ErrorBoundary>
-      )
-    } catch {
-      // error propagates out of the boundary in jsdom test environment
-    }
-
-    await waitFor(() => expect(warnSpy).toHaveBeenCalled())
+    expect(warnSpy).toHaveBeenCalledWith("Error caught in ErrorBoundary", error)
     expect(errorSpy).not.toHaveBeenCalled()
   })
 
   it("renders children when no error occurs", () => {
+    vi.mocked(preactHooks.useErrorBoundary).mockReturnValue([undefined, vi.fn()])
+
     const result = render(
       <ErrorBoundary>
         <div>Safe Child</div>
