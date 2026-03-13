@@ -10,7 +10,7 @@ export function ErrorBoundary({ children }: { children: ComponentChildren }) {
   const [error] = useErrorBoundary()
 
   if (error) {
-    logger.error("Error caught in ErrorBoundary", error)
+    logger.warn("Error caught in ErrorBoundary", error)
   }
 
   return <Fragment>{children}</Fragment>
