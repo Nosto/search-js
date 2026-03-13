@@ -1,3 +1,10 @@
+## [3.25.4](https://github.com/Nosto/search-js/compare/v3.25.3...v3.25.4) (2026-03-13)
+
+
+### Bug Fixes
+
+* **error-boundary:** change ErrorBoundary logging from error to warn ([ca08039](https://github.com/Nosto/search-js/commit/ca08039dc1b72b055d7cde7045ace99b8dda2e9d))
+
 ## [3.25.3](https://github.com/Nosto/search-js/compare/v3.25.2...v3.25.3) (2026-03-05)
 
 
