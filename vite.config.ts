@@ -1,12 +1,15 @@
 import { resolve } from "path"
+import { defineConfig, type UserConfig } from "vite"
 import dts from "vite-plugin-dts"
-import { defineConfig } from "vitest/config"
+import type { TestUserConfig } from "vitest/config"
 
 const basePackages = ["core", "currencies", "thumbnails", "utils"]
 const preactPackages = ["autocomplete", "category", "common", "events", "hooks", "inject", "legacy", "serp"]
 const packages = [...basePackages, ...preactPackages]
 
-export default defineConfig({
+type ViteTestConfig = UserConfig & { test: TestUserConfig }
+
+const config: ViteTestConfig = {
   plugins: [
     dts({
       compilerOptions: {
@@ -71,4 +74,6 @@ export default defineConfig({
     environment: "jsdom",
     include: ["packages/**/*.spec.ts", "packages/**/*.test.ts", "packages/**/*.spec.tsx", "packages/**/*.test.tsx"]
   }
-})
+}
+
+export default defineConfig(config)
