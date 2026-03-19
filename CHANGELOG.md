@@ -1,3 +1,11 @@
+## [3.25.5](https://github.com/Nosto/search-js/compare/v3.25.4...v3.25.5) (2026-03-19)
+
+
+### Bug Fixes
+
+* **deps:** update dev preact flatted lock ([f00a4e7](https://github.com/Nosto/search-js/commit/f00a4e7b5e549f073498d6dae8585fafce071a19))
+* **deps:** update flatted to 3.4.2 to fix high severity vulnerability ([42eb2e6](https://github.com/Nosto/search-js/commit/42eb2e6d5363e9c451f8e2091df8760fc97a4a59))
+
 ## [3.25.4](https://github.com/Nosto/search-js/compare/v3.25.3...v3.25.4) (2026-03-13)
 
 
