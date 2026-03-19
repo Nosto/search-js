@@ -1,3 +1,10 @@
+## [3.25.6](https://github.com/Nosto/search-js/compare/v3.25.5...v3.25.6) (2026-03-19)
+
+
+### Bug Fixes
+
+* **deps:** upgrade vitest to 4.1.0 to support vite 8 ([7d67b3b](https://github.com/Nosto/search-js/commit/7d67b3bdeba9bf63bc9c23c644370aeb5e70f0c3))
+
 ## [3.25.5](https://github.com/Nosto/search-js/compare/v3.25.4...v3.25.5) (2026-03-19)
 
 
