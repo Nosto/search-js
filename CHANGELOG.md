@@ -1,3 +1,11 @@
+## [3.25.7](https://github.com/Nosto/search-js/compare/v3.25.6...v3.25.7) (2026-04-01)
+
+
+### Bug Fixes
+
+* **deps:** fix npm audit vulnerabilities by updating brace-expansion and picomatch ([7f51ccb](https://github.com/Nosto/search-js/commit/7f51ccb7aebcb0917658cae76fd553d73b9521e7))
+* **deps:** fix npm audit vulnerabilities in dev/preact app ([cc41779](https://github.com/Nosto/search-js/commit/cc41779c8471e9ac2809d8e3692ee522f60f56e6))
+
 ## [3.25.6](https://github.com/Nosto/search-js/compare/v3.25.5...v3.25.6) (2026-03-19)
 
 
