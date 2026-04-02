@@ -1,3 +1,10 @@
+## [3.25.8](https://github.com/Nosto/search-js/compare/v3.25.7...v3.25.8) (2026-04-02)
+
+
+### Bug Fixes
+
+* **deps:** add lodash override to resolve high severity vulnerabilities ([c3de248](https://github.com/Nosto/search-js/commit/c3de248b83b39d3e2c35f4e2c3110be35d4a3f99))
+
 ## [3.25.7](https://github.com/Nosto/search-js/compare/v3.25.6...v3.25.7) (2026-04-01)
 
 
