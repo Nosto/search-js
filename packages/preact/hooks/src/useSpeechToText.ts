@@ -1,3 +1,4 @@
+/// <reference types="dom-speech-recognition" />
 import { useCallback, useRef, useState } from "preact/hooks"
 
 interface SpeechToTextOptions {
