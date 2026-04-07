@@ -1,3 +1,12 @@
+## [3.25.9](https://github.com/Nosto/search-js/compare/v3.25.8...v3.25.9) (2026-04-07)
+
+
+### Bug Fixes
+
+* fix TypeScript 6.0 build errors in tsconfig and useSpeechToText ([9fe073b](https://github.com/Nosto/search-js/commit/9fe073b6ab7d7729b495b02b4c66d295a815e03e))
+* upgrade vite in dev/preact to 6.4.2 to fix npm audit vulnerabilities ([c8ec209](https://github.com/Nosto/search-js/commit/c8ec2090ea74bacb64befe1ed1cf44d1949f6a83))
+* upgrade vite to 8.0.5 to fix npm audit vulnerabilities ([1ca2df1](https://github.com/Nosto/search-js/commit/1ca2df10a2eb77b971b236a8baa582a73fbba7d7))
+
 ## [3.25.8](https://github.com/Nosto/search-js/compare/v3.25.7...v3.25.8) (2026-04-02)
 
 
