@@ -14,7 +14,9 @@ export type SerpElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, 
 }
 
 /**
- * Wrapper component that can be used to wrap any element in the search result list.
+ * Wrapper component for rendering products in search result lists.
+ *
+ * Wrap product rendering with this component so product clicks are tracked.
  *
  * @group Components
  */
