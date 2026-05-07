@@ -1,3 +1,10 @@
+## [3.25.10](https://github.com/Nosto/search-js/compare/v3.25.9...v3.25.10) (2026-05-07)
+
+
+### Bug Fixes
+
+* **build:** support vite-plugin-dts 5 ([78ce078](https://github.com/Nosto/search-js/commit/78ce0786e8613a4ee3e44cdc0c98536b152dedfe))
+
 ## [3.25.9](https://github.com/Nosto/search-js/compare/v3.25.8...v3.25.9) (2026-04-07)
 
 
