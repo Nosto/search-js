@@ -17,7 +17,7 @@ export default defineConfig({
       },
       include: ["packages/**/*", ...preactPackages.map(name => `packages/preact/${name}/${name}.ts`)],
       exclude: ["dist", "**/vite.config.ts", "**/test", "dev"],
-      outDir: "dist"
+      outDirs: "dist"
     })
   ],
   build: {
