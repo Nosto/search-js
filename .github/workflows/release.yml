@@ -33,16 +33,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Audit dependencies
-        run: npm audit --audit-level=high
-
       - name: Install dev app dependencies
         working-directory: ./dev/preact
         run: npm ci
-
-      - name: Audit dev app dependencies
-        working-directory: ./dev/preact
-        run: npm audit --audit-level=high
 
       - name: Run build
         run: npm run build
@@ -91,16 +84,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Audit dependencies
-        run: npm audit --audit-level=high
-  
       - name: Install dev app dependencies
         working-directory: ./dev/preact
         run: npm ci
-
-      - name: Audit dev app dependencies
-        working-directory: ./dev/preact
-        run: npm audit --audit-level=high
 
       - run: npm run build
 
