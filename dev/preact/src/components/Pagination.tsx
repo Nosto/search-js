@@ -4,34 +4,6 @@ import { useCallback, useState } from "preact/hooks"
 
 import { styles } from "./Pagination.styles"
 
-function PaginationLink({
-  goToPage,
-  active,
-  children
-}: {
-  goToPage: () => void
-  active?: boolean
-  children: ComponentChildren
-}) {
-  const [hovered, setHovered] = useState(false)
-  const style = active ? styles.linkActive : hovered ? styles.linkHover : styles.link
-
-  return (
-    <a
-      href="#"
-      style={style}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      onClick={e => {
-        e.preventDefault()
-        goToPage()
-      }}
-    >
-      {children}
-    </a>
-  )
-}
-
 export function Pagination() {
   const { prev, first, pages, last, next } = usePagination({
     width: 5
@@ -71,5 +43,33 @@ export function Pagination() {
       )}
       {next && <PaginationLink goToPage={handlePaginate(next)}>{"→"}</PaginationLink>}
     </div>
+  )
+}
+
+function PaginationLink({
+  goToPage,
+  active,
+  children
+}: {
+  goToPage: () => void
+  active?: boolean
+  children: ComponentChildren
+}) {
+  const [hovered, setHovered] = useState(false)
+  const style = active ? styles.linkActive : hovered ? styles.linkHover : styles.link
+
+  return (
+    <a
+      href="#"
+      style={style}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onClick={e => {
+        e.preventDefault()
+        goToPage()
+      }}
+    >
+      {children}
+    </a>
   )
 }

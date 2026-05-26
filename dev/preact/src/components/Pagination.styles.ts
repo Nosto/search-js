@@ -11,7 +11,7 @@ const base = {
   fontWeight: "500",
   textDecoration: "none",
   cursor: "pointer",
-  color: "#444",
+  color: "#ddd",
   lineHeight: 1,
   transition: "background 0.15s, border-color 0.15s, color 0.15s"
 } as const
@@ -34,7 +34,8 @@ export const styles = {
   linkHover: {
     ...base,
     backgroundColor: "#f3f0f9",
-    borderColor: "#c4b5e8"
+    borderColor: "#c4b5e8",
+    color: "#444"
   },
   ellipsis: {
     display: "inline-flex",

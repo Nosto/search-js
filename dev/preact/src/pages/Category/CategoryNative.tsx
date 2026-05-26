@@ -21,7 +21,7 @@ export function CategoryNative() {
   } satisfies CategoryConfig
 
   return (
-    <div className="category" title="Category (Native)" style={styles.container}>
+    <div className="category" style={styles.container}>
       <CategoryPageProvider config={config}>
         <CategoryQueryHandler categoryPath={categoryPath} />
         {isInfiniteScrollEnabled ? <CategoryContentInfinite /> : <CategoryContentPaginated />}
