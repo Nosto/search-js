@@ -55,7 +55,14 @@ export function useSizeOptions(sizes: number[], serpSize: number) {
 
   const to = from + size
 
-  const sizeOptions = useMemo(() => [...sizes].reverse().filter(value => value < total), [sizes, total])
+  const sizeOptions = useMemo(() => {
+    const sorted = [...sizes].sort((a, b) => a - b)
+    if (sorted.length === 0) {
+      return []
+    }
+    const ceiling = sorted.find(s => s >= total) ?? sorted[sorted.length - 1]
+    return sorted.filter(s => s <= ceiling).reverse()
+  }, [sizes, total])
 
   const handleSizeChange = useCallback(
     (size: number) => {

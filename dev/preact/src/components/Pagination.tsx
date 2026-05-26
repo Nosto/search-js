@@ -1,13 +1,27 @@
 import { useActions, usePagination } from "@nosto/search-js/preact/hooks"
 import { type ComponentChildren } from "preact"
-import { useCallback } from "preact/hooks"
+import { useCallback, useState } from "preact/hooks"
 
 import { styles } from "./Pagination.styles"
 
-function PaginationLink({ goToPage, children }: { goToPage: () => void; children: ComponentChildren }) {
+function PaginationLink({
+  goToPage,
+  active,
+  children
+}: {
+  goToPage: () => void
+  active?: boolean
+  children: ComponentChildren
+}) {
+  const [hovered, setHovered] = useState(false)
+  const style = active ? styles.linkActive : hovered ? styles.linkHover : styles.link
+
   return (
     <a
       href="#"
+      style={style}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       onClick={e => {
         e.preventDefault()
         goToPage()
@@ -37,25 +51,25 @@ export function Pagination() {
 
   return (
     <div style={styles.container}>
-      {prev && <PaginationLink goToPage={handlePaginate(prev)}>{"<"}</PaginationLink>}
+      {prev && <PaginationLink goToPage={handlePaginate(prev)}>{"←"}</PaginationLink>}
       {first && (
         <>
           <PaginationLink goToPage={handlePaginate(first)}>{first.page}</PaginationLink>
-          <span>...</span>
+          <span style={styles.ellipsis}>{"···"}</span>
         </>
       )}
-      {pages.map(({ page, from }) => (
-        <PaginationLink key={page} goToPage={handlePaginate({ from })}>
+      {pages.map(({ page, from, current }) => (
+        <PaginationLink key={page} active={current} goToPage={handlePaginate({ from })}>
           {page}
         </PaginationLink>
       ))}
       {last && (
         <>
-          <span>...</span>
+          <span style={styles.ellipsis}>{"···"}</span>
           <PaginationLink goToPage={handlePaginate(last)}>{last.page}</PaginationLink>
         </>
       )}
-      {next && <PaginationLink goToPage={handlePaginate(next)}>{">"}</PaginationLink>}
+      {next && <PaginationLink goToPage={handlePaginate(next)}>{"→"}</PaginationLink>}
     </div>
   )
 }
