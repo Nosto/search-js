@@ -79,11 +79,12 @@ describe("useSizeOptions", () => {
 
     expect(sizeOptions).toEqual([72, 48, 24])
   })
+
   it("returns minimal size option when there are no results", () => {
     const sizes = [24, 48, 72]
     const serpSize = 5
 
-    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(10) })
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(0) })
     const { sizeOptions } = render.result.current
 
     expect(sizeOptions).toEqual([24])
