@@ -1,3 +1,10 @@
+# [3.26.0](https://github.com/Nosto/search-js/compare/v3.25.10...v3.26.0) (2026-06-01)
+
+
+### Features
+
+* **ci:** add explicit permissions to workflow files ([5dcf1f0](https://github.com/Nosto/search-js/commit/5dcf1f0b39fc43eeb0d33125ffd05e73c4d40feb))
+
 ## [3.25.10](https://github.com/Nosto/search-js/compare/v3.25.9...v3.25.10) (2026-05-07)
 
 
