@@ -1,3 +1,12 @@
+## [3.26.1](https://github.com/Nosto/search-js/compare/v3.26.0...v3.26.1) (2026-06-01)
+
+
+### Bug Fixes
+
+* dev app pagination style ([7c31ed1](https://github.com/Nosto/search-js/commit/7c31ed1bd61ebe5783adbd9dd735698a0bdaf8b3))
+* lint ([3e96f0f](https://github.com/Nosto/search-js/commit/3e96f0fef733f24371c7272b636f78458c432539))
+* useSizeOptions round up ([946e2e5](https://github.com/Nosto/search-js/commit/946e2e5743030fc5369321889edde5822c202786))
+
 # [3.26.0](https://github.com/Nosto/search-js/compare/v3.25.10...v3.26.0) (2026-06-01)
 
 
