@@ -79,25 +79,57 @@ describe("useSizeOptions", () => {
 
     expect(sizeOptions).toEqual([72, 48, 24])
   })
-  it("returns correct size options when there are no more results", () => {
+
+  it("returns minimal size option when there are no results", () => {
     const sizes = [24, 48, 72]
     const serpSize = 5
 
-    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(10) })
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(0) })
     const { sizeOptions } = render.result.current
 
-    expect(sizeOptions).toEqual([])
+    expect(sizeOptions).toEqual([24])
   })
 
-  it("returns only size options smaller than total", () => {
+  it("returns size options rounding up from total", () => {
     const sizes = [24, 48, 72]
     const serpSize = 5
 
-    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(50) })
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(32) })
     const { sizeOptions } = render.result.current
 
     expect(sizeOptions).toEqual([48, 24])
   })
+
+  it("returns minimal size options with few results", () => {
+    const sizes = [24, 48, 72]
+    const serpSize = 5
+
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(3) })
+    const { sizeOptions } = render.result.current
+
+    expect(sizeOptions).toEqual([24])
+  })
+
+  it("returns only size options less than or equal to total", () => {
+    const sizes = [24, 48, 72]
+    const serpSize = 5
+
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(48) })
+    const { sizeOptions } = render.result.current
+
+    expect(sizeOptions).toEqual([48, 24])
+  })
+
+  it("returns only size options equal to total", () => {
+    const sizes = [24, 48, 72]
+    const serpSize = 5
+
+    const render = renderHookWithProviders(() => useSizeOptions(sizes, serpSize), { store: createStoreWithTotal(48) })
+    const { sizeOptions } = render.result.current
+
+    expect(sizeOptions).toEqual([48, 24])
+  })
+
   it("handles size change correctly with string passed instead", () => {
     const sizes = [24, 48, 72]
     const serpSize = 5
