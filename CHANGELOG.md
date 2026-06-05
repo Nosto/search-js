@@ -1,3 +1,11 @@
+## [3.26.2](https://github.com/Nosto/search-js/compare/v3.26.1...v3.26.2) (2026-06-05)
+
+
+### Bug Fixes
+
+* tests ([40890bf](https://github.com/Nosto/search-js/commit/40890bfa07baa9eb3b00408eb31fa11fae4809c6))
+* tracking on cached requests ([27b10ce](https://github.com/Nosto/search-js/commit/27b10cea01dbc7e096e17d98cd27c8399cffc3ca))
+
 ## [3.26.1](https://github.com/Nosto/search-js/compare/v3.26.0...v3.26.1) (2026-06-01)
 
 
