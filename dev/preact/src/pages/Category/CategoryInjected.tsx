@@ -19,6 +19,7 @@ export function CategoryInject() {
       category: {
         config: {
           defaultCurrency: "EUR",
+          persistentSearchCache: true,
           search: {
             hitDecorators
           }

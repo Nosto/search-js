@@ -1,11 +1,16 @@
 import { STORAGE_ENTRY_NAME } from "@core/resultCaching"
 import { searchWithCache } from "@core/withCache"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
+import { mockNostojs } from "@nosto/nosto-js/testing"
 import { getSessionStorageItem } from "@utils/storage"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("searchWithCache", () => {
   const search = vi.fn()
+
+  const mockNostojsApi = {
+    recordSearch: vi.fn()
+  }
 
   const resultDefault = { products: { hits: [{ name: "product 1" }], size: 1, total: 2 } }
 
@@ -16,13 +21,18 @@ describe("searchWithCache", () => {
   }
 
   async function testSearch({ query, result }: TestSearchOptions) {
-    const response = await searchWithCache(query, { usePersistentCache: true }, search)
+    const response = await searchWithCache(query, { usePersistentCache: true, track: "serp" }, search)
     expect(response).toEqual(result)
     expect(getSessionStorageItem(STORAGE_ENTRY_NAME)).toEqual({
       query,
       result,
       created: expect.any(Number)
     })
+  }
+
+  async function createCache({ ...options }: TestSearchOptions) {
+    await testSearch(options)
+    search.mockClear()
   }
 
   async function testSearchTriggered({ triggeredQuery, ...options }: TestSearchOptions) {
@@ -39,6 +49,7 @@ describe("searchWithCache", () => {
 
   beforeEach(() => {
     vi.resetAllMocks()
+    mockNostojs(mockNostojsApi)
     search.mockResolvedValue(resultDefault)
 
     sessionStorage.clear()
@@ -56,6 +67,8 @@ describe("searchWithCache", () => {
         query: { products: { from: 1, size: 1 } },
         result: resultDefault
       })
+
+      expect(mockNostojsApi.recordSearch).not.toHaveBeenCalled()
     })
 
     it("should not call search when existing cache found, full page", async () => {
@@ -68,6 +81,16 @@ describe("searchWithCache", () => {
         query: { products: { from: 0, size: 1 } },
         result: resultDefault
       })
+    })
+
+    it("should call recordSearch when existing cache found, full page", async () => {
+      const query = { products: { from: 0, size: 1 } }
+
+      await createCache({ query, result: resultDefault })
+      mockNostojsApi.recordSearch.mockClear()
+      await testSearch({ query, result: resultDefault })
+
+      expect(mockNostojsApi.recordSearch).toHaveBeenCalledWith("serp", query, resultDefault)
     })
 
     it("should not call search when existing cache found, partial page", async () => {
@@ -89,6 +112,31 @@ describe("searchWithCache", () => {
         query: { products: { from: 0, size: 5 } },
         result: multipleResults
       })
+    })
+
+    it("should call recordSearch when existing cache found, full page", async () => {
+      const multipleResults = {
+        products: {
+          hits: [{ name: "product 1" }, { name: "product 2" }, { name: "product 3" }],
+          size: 5,
+          total: 3
+        }
+      }
+      search.mockResolvedValue(multipleResults)
+
+      const query = { products: { from: 0, size: 5 } }
+      await createCache({
+        query,
+        result: multipleResults
+      })
+
+      mockNostojsApi.recordSearch.mockClear()
+      await testSearchNotTriggered({
+        query,
+        result: multipleResults
+      })
+
+      expect(mockNostojsApi.recordSearch).toHaveBeenCalledWith("serp", query, multipleResults)
     })
 
     it("should call search when existing cache entry is expired", async () => {

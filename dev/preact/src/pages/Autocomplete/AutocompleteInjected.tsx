@@ -15,7 +15,8 @@ export function AutocompleteInjected() {
     init({
       autocomplete: {
         config: {
-          defaultCurrency: "EUR"
+          defaultCurrency: "EUR",
+          memoryCache: true
         },
         formCssSelector: "#inject-autocomplete-form",
         inputCssSelector: "#inject-autocomplete-input",
@@ -41,7 +42,7 @@ export function AutocompleteInjected() {
           }
         }
       }
-    })
+    } satisfies Parameters<typeof init>[0])
   })
 
   const handleSearch = () => {

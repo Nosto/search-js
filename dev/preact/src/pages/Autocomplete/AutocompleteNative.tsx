@@ -6,6 +6,7 @@ import { AutocompleteSearchForm } from "./components/AutocompleteSearchForm"
 export function AutocompleteNative() {
   const config = {
     defaultCurrency: "EUR",
+    memoryCache: true,
     search: {
       hitDecorators
     }

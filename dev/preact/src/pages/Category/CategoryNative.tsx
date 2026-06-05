@@ -15,6 +15,7 @@ export function CategoryNative() {
 
   const config = {
     defaultCurrency: "EUR",
+    persistentSearchCache: true,
     search: {
       hitDecorators
     }
