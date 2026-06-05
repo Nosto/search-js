@@ -90,6 +90,7 @@ describe("searchWithCache", () => {
       mockNostojsApi.recordSearch.mockClear()
       await testSearch({ query, result: resultDefault })
 
+      expect(mockNostojsApi.recordSearch).toHaveBeenCalledTimes(1)
       expect(mockNostojsApi.recordSearch).toHaveBeenCalledWith("serp", query, resultDefault)
     })
 
@@ -114,7 +115,7 @@ describe("searchWithCache", () => {
       })
     })
 
-    it("should call recordSearch when existing cache found, full page", async () => {
+    it("should call recordSearch when existing cache found, partial page", async () => {
       const multipleResults = {
         products: {
           hits: [{ name: "product 1" }, { name: "product 2" }, { name: "product 3" }],
@@ -136,6 +137,7 @@ describe("searchWithCache", () => {
         result: multipleResults
       })
 
+      expect(mockNostojsApi.recordSearch).toHaveBeenCalledTimes(1)
       expect(mockNostojsApi.recordSearch).toHaveBeenCalledWith("serp", query, multipleResults)
     })
 

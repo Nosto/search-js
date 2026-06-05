@@ -47,6 +47,7 @@ describe("searchWithMemoryCache", () => {
   it("should call recordSearch if using cached response", async () => {
     await searchWithMemoryCache(query, { useMemoryCache: true, track: "serp" }, search)
     const response = await searchWithMemoryCache(query, { useMemoryCache: true, track: "serp" }, search)
+    expect(mockNostojsApi.recordSearch).toHaveBeenCalledTimes(1)
     expect(mockNostojsApi.recordSearch).toHaveBeenCalledWith("serp", query, response)
   })
 
