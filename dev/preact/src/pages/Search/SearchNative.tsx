@@ -15,6 +15,7 @@ export function SearchNative() {
 
   const config = {
     defaultCurrency: "EUR",
+    persistentSearchCache: true,
     search: {
       hitDecorators
     }

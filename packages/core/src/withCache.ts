@@ -1,4 +1,5 @@
 import { SearchFn, SearchOptions } from "@core/types"
+import { nostojs } from "@nosto/nosto-js"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 
 import { cacheSearchResult, loadCachedResult } from "./resultCaching"
@@ -32,12 +33,16 @@ async function getSearchResultWithCache(
 
   // when request data is already in cache
   if (size === resultSize) {
+    if (options.track) {
+      nostojs(api => api.recordSearch(options.track!, searchQuery, result))
+    }
+
     return result
   }
 
   // requested size is less than the cache size
   if (size < resultSize) {
-    return {
+    const trimmedResult = {
       ...result,
       products: {
         ...result.products,
@@ -45,7 +50,13 @@ async function getSearchResultWithCache(
         hits: cacheHits.slice(0, size),
         total: result.products?.total || 0
       }
+    } satisfies SearchResult
+
+    if (options.track) {
+      nostojs(api => api.recordSearch(options.track!, searchQuery, trimmedResult))
     }
+
+    return trimmedResult
   }
 
   // requested size is more than the cache size. So, use cache data for prefilling

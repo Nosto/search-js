@@ -1,5 +1,6 @@
 import { clearMemoryCache, searchWithMemoryCache } from "@core/withMemoryCache"
 import { SearchQuery } from "@nosto/nosto-js/client"
+import { mockNostojs } from "@nosto/nosto-js/testing"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("searchWithMemoryCache", () => {
@@ -15,10 +16,22 @@ describe("searchWithMemoryCache", () => {
     }
   }
 
+  const mockNostojsApi = {
+    recordSearch: vi.fn()
+  }
+
   beforeEach(() => {
     vi.resetAllMocks()
     search.mockResolvedValue(result)
+    mockNostojs(mockNostojsApi)
     clearMemoryCache()
+  })
+
+  it("should call search if useMemoryCache is true, but cache is empty", async () => {
+    const response = await searchWithMemoryCache(query, { useMemoryCache: true, track: "serp" }, search)
+    expect(response).toEqual(result)
+    expect(search).toHaveBeenCalledTimes(1)
+    expect(mockNostojsApi.recordSearch).not.toHaveBeenCalled()
   })
 
   it("should cache and reuse response if useMemoryCache is true", async () => {
@@ -29,6 +42,18 @@ describe("searchWithMemoryCache", () => {
     const cached = await searchWithMemoryCache(query, { useMemoryCache: true }, search)
     expect(cached).toEqual(result)
     expect(search).toHaveBeenCalledTimes(1)
+  })
+
+  it("should call recordSearch if using cached response", async () => {
+    await searchWithMemoryCache(query, { useMemoryCache: true, track: "serp" }, search)
+    const response = await searchWithMemoryCache(query, { useMemoryCache: true, track: "serp" }, search)
+    expect(mockNostojsApi.recordSearch).toHaveBeenCalledTimes(1)
+    expect(mockNostojsApi.recordSearch).toHaveBeenCalledWith("serp", query, response)
+  })
+
+  it("should not call recordSearch if useMemoryCache is false", async () => {
+    await searchWithMemoryCache(query, { useMemoryCache: false, track: "serp" }, search)
+    expect(mockNostojsApi.recordSearch).not.toHaveBeenCalled()
   })
 
   it("should not cache if useMemoryCache is false", async () => {

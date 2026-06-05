@@ -17,7 +17,8 @@ export function SearchInjected() {
     init({
       serp: {
         config: {
-          defaultCurrency: "EUR"
+          defaultCurrency: "EUR",
+          persistentSearchCache: true
         },
         cssSelector: "#inject-search",
         render: () => (

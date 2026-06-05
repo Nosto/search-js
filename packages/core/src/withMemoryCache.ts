@@ -1,4 +1,5 @@
 import { SearchFn, SearchOptions } from "@core/types"
+import { nostojs } from "@nosto/nosto-js"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { isEqual } from "@utils/isEqual"
 
@@ -45,7 +46,13 @@ export async function searchWithMemoryCache(query: SearchQuery, options: SearchO
 
   const cacheKey = JSON.stringify(query)
   const cached = getFromCache(cacheKey, query)
-  if (cached) return cached
+  if (cached) {
+    if (options.track) {
+      nostojs(api => api.recordSearch(options.track!, query, cached))
+    }
+
+    return cached
+  }
 
   const result = await searchFn(query, options)
   setCache(cacheKey, query, result)
