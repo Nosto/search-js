@@ -59,6 +59,35 @@ describe("newSearch", () => {
     expect(onBeforeSearch).toHaveBeenCalled()
   })
 
+  it("respects the track option when provided", async () => {
+    const context = {
+      config: makeSerpConfig(),
+      store: createStore({
+        loading: false
+      })
+    }
+
+    const query = { products: { from: 0 } }
+    await newSearch(context, query, { track: "autocomplete" })
+
+    expect(search).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ track: "autocomplete" }))
+  })
+
+  it("disables tracking when track is false", async () => {
+    const context = {
+      config: makeSerpConfig(),
+      store: createStore({
+        loading: false
+      })
+    }
+
+    const query = { products: { from: 0 } }
+    await newSearch(context, query, { track: false })
+
+    expect(search).toHaveBeenCalledTimes(1)
+    expect(search.mock.calls[0][1].track).toBeUndefined()
+  })
+
   it("invokes onSearchError on error", async () => {
     const onSearchError = vi.fn()
     const context = {
