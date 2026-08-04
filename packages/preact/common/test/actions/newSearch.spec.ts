@@ -73,6 +73,20 @@ describe("newSearch", () => {
     expect(search).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ track: "autocomplete" }))
   })
 
+  it("applies the default track when track is true", async () => {
+    const context = {
+      config: makeSerpConfig(),
+      store: createStore({
+        loading: false
+      })
+    }
+
+    const query = { products: { from: 0 } }
+    await newSearch(context, query, { track: true })
+
+    expect(search).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ track: "serp" }))
+  })
+
   it("disables tracking when track is false", async () => {
     const context = {
       config: makeSerpConfig(),
