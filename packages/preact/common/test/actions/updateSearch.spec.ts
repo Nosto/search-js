@@ -69,4 +69,15 @@ describe("updateSearch", () => {
       expect.objectContaining({})
     )
   })
+
+  it("respects the track option when provided", async () => {
+    await updateSearch(context, { query: "New query" }, { track: "autocomplete" })
+    expect(search).toHaveBeenCalledWith(expect.anything(), expect.objectContaining({ track: "autocomplete" }))
+  })
+
+  it("disables tracking when track is false", async () => {
+    await updateSearch(context, { query: "New query" }, { track: false })
+    expect(search).toHaveBeenCalledTimes(1)
+    expect(search.mock.calls[0][1].track).toBeUndefined()
+  })
 })

@@ -1,6 +1,6 @@
 import { search } from "@core/search"
 import { SearchOptions } from "@core/types"
-import type { SearchQuery, SearchTrackOptions } from "@nosto/nosto-js/client"
+import type { SearchQuery } from "@nosto/nosto-js/client"
 import { deepMerge } from "@utils/deepMerge"
 import { logger } from "@utils/logger"
 import { mergeArrays } from "@utils/mergeArrays"
@@ -13,7 +13,7 @@ export type NewSearchOptions = Omit<SearchOptions, "track"> & {
   /**
    * The search type override for tracking. Use `false` to suppress tracking.
    */
-  track?: SearchTrackOptions | false
+  track?: SearchOptions["track"] | false
 }
 
 export async function newSearch(context: ActionContext, query: SearchQuery, options?: NewSearchOptions): Promise<void> {
