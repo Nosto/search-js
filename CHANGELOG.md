@@ -1,3 +1,15 @@
+# [3.28.0](https://github.com/Nosto/search-js/compare/v3.27.0...v3.28.0) (2026-08-04)
+
+
+### Bug Fixes
+
+* drop duplicated tests ([1e854b9](https://github.com/Nosto/search-js/commit/1e854b96b592da92e72c315a8c6a3b334e845cc6))
+
+
+### Features
+
+* support track=true in newSearch ([662ebd2](https://github.com/Nosto/search-js/commit/662ebd2be525bd8094d47dff13e32728858aae59))
+
 # [3.27.0](https://github.com/Nosto/search-js/compare/v3.26.2...v3.27.0) (2026-08-04)
 
 
