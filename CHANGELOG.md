@@ -1,3 +1,15 @@
+# [3.27.0](https://github.com/Nosto/search-js/compare/v3.26.2...v3.27.0) (2026-08-04)
+
+
+### Bug Fixes
+
+* pass track: false types to useActions ([d6d3843](https://github.com/Nosto/search-js/commit/d6d3843e9df3a967b17ce14134b8a3925d42b173))
+
+
+### Features
+
+* add support for tracking overrides ([c2533d3](https://github.com/Nosto/search-js/commit/c2533d30a8e27fa46f11fa25b4b0ba6ec3a30bd3))
+
 ## [3.26.2](https://github.com/Nosto/search-js/compare/v3.26.1...v3.26.2) (2026-06-05)
 
 
