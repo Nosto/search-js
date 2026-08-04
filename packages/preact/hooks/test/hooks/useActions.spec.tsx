@@ -58,16 +58,4 @@ describe("useActions", () => {
     result.current.updateSearch({ query: "shoes" }, { track: false })
     expect(updateSearch).toHaveBeenCalledWith(expect.anything(), { query: "shoes" }, { track: false })
   })
-
-  it("passes track: false through to newSearch", () => {
-    const { result } = renderUseActions()
-    result.current.newSearch({ query: "shoes" }, { track: false })
-    expect(newSearch).toHaveBeenCalledWith(expect.anything(), { query: "shoes" }, { track: false })
-  })
-
-  it("passes track: false through to updateSearch", () => {
-    const { result } = renderUseActions()
-    result.current.updateSearch({ query: "shoes" }, { track: false })
-    expect(updateSearch).toHaveBeenCalledWith(expect.anything(), { query: "shoes" }, { track: false })
-  })
 })
