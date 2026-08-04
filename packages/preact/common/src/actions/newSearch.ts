@@ -6,22 +6,26 @@ import { logger } from "@utils/logger"
 import { mergeArrays } from "@utils/mergeArrays"
 import { measure } from "@utils/performance"
 
-import { ActionContext } from "../types"
+import { ActionContext, PageType } from "../types"
 import { withDefaultQuery } from "./withDefaultQuery"
 
 export type NewSearchOptions = Omit<SearchOptions, "track"> & {
   /**
-   * The search type override for tracking. Use `false` to suppress tracking.
+   * The search type override for tracking.
+   * - `false` suppresses tracking,
+   * - `true` applies the default for the page type.
+   * - `"autocomplete" | "category" | "serp"` forces specific page type.
+   *
+   * Default: `true`
    */
-  track?: SearchOptions["track"] | false
+  track?: SearchOptions["track"] | boolean
 }
 
 export async function newSearch(context: ActionContext, query: SearchQuery, options?: NewSearchOptions): Promise<void> {
   const end = measure("newSearch")
 
   const pageType = context.config.pageType
-  const defaultTrack = pageType === "search" ? "serp" : pageType
-  const track = options?.track === false ? undefined : (options?.track ?? defaultTrack)
+  const track = resolveTrack(options?.track, pageType)
 
   const mergedQuery = deepMerge(context.store.getInitialState().query, query)
   const mergedOptions = deepMerge(context.config.search, options, {
@@ -64,4 +68,12 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
     context.config.onSearchError?.(error, fullQuery, mergedOptions, pageType)
   }
   end()
+}
+
+function resolveTrack(track: NewSearchOptions["track"], pageType: PageType): SearchOptions["track"] {
+  if (typeof track === "string") {
+    return track
+  }
+  const defaultTrack = pageType === "search" ? "serp" : pageType
+  return track === false ? undefined : defaultTrack
 }
