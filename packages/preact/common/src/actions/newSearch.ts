@@ -9,11 +9,19 @@ import { measure } from "@utils/performance"
 import { ActionContext } from "../types"
 import { withDefaultQuery } from "./withDefaultQuery"
 
-export async function newSearch(context: ActionContext, query: SearchQuery, options?: SearchOptions): Promise<void> {
+export type NewSearchOptions = Omit<SearchOptions, "track"> & {
+  /**
+   * The search type override for tracking. Use `false` to suppress tracking.
+   */
+  track?: SearchOptions["track"] | false
+}
+
+export async function newSearch(context: ActionContext, query: SearchQuery, options?: NewSearchOptions): Promise<void> {
   const end = measure("newSearch")
 
   const pageType = context.config.pageType
-  const track = pageType === "search" ? "serp" : pageType
+  const defaultTrack = pageType === "search" ? "serp" : pageType
+  const track = options?.track === false ? undefined : (options?.track ?? defaultTrack)
 
   const mergedQuery = deepMerge(context.store.getInitialState().query, query)
   const mergedOptions = deepMerge(context.config.search, options, {
