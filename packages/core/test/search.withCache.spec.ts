@@ -244,6 +244,19 @@ describe("searchWithCache", () => {
         result: mergedResult
       })
     })
+
+    it("should drop tracking from the backfill request and record a single search event", async () => {
+      const query = { products: { from: 0, size: 2 } }
+      await createCache({ query: { products: { from: 0, size: 1 } }, result: resultDefault })
+      search.mockResolvedValue({ products: { hits: [{ name: "product 2" }], total: 2 } })
+
+      const result = await searchWithPersistentCache(query, { usePersistentCache: true, track: "serp" }, search)
+
+      expect(search.mock.lastCall?.[0].track).toBeUndefined()
+      expect(search.mock.lastCall?.[1].track).toBeUndefined()
+      expect(mockNostojsApi.recordSearch).toHaveBeenCalledTimes(1)
+      expect(mockNostojsApi.recordSearch).toHaveBeenCalledWith("serp", query, result)
+    })
   })
 
   describe("infinite scroll", () => {
