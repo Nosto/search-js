@@ -37,8 +37,8 @@ export async function searchWithChunking(
     results.push(chunkResult)
 
     // No more products to fetch beyond the total
-    const total = chunkResult.products?.total ?? 0
-    if (chunkStart + chunkSize >= total) {
+    const total = chunkResult.products?.total
+    if (total !== undefined && chunkStart + chunkSize >= total) {
       break
     }
   }
