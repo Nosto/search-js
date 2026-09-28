@@ -70,6 +70,26 @@ describe("searchWithAppend", () => {
     expect(result.products?.hits).toHaveLength(120)
   })
 
+  it("should append after the cached hits when the cached query has no size", async () => {
+    search.mockImplementation(async (query: SearchQuery) => {
+      const from = query.products?.from ?? 0
+      const size = query.products?.size ?? 24
+      return {
+        products: {
+          hits: Array.from({ length: size }, (_, i) => ({ productId: String(from + i) })),
+          total: 1000,
+          from,
+          size
+        }
+      }
+    })
+    await searchWithAppend({ query: "shoes" }, {}, search)
+    const result = await searchWithAppend({ query: "shoes", products: { size: 48 } }, {}, search)
+
+    expect(search).toHaveBeenLastCalledWith(productQuery(24, 24), {})
+    expect(result.products?.hits.map(hit => hit.productId)).toEqual(Array.from({ length: 48 }, (_, i) => String(i)))
+  })
+
   it("should drop tracking from the tail request and record a single search event", async () => {
     await searchWithAppend(productQuery(100), {}, search)
     const result = await searchWithAppend(productQuery(120), { track: "serp" }, search)

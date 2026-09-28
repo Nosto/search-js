@@ -74,6 +74,24 @@ describe("searchWithChunking", () => {
     expect(result.products?.hits).toHaveLength(300)
   })
 
+  it("should request all chunks when the total is not provided", async () => {
+    const query: SearchQuery = { query: "shoes", products: { from: 0, size: 600 } }
+    search.mockImplementation(async (query: SearchQuery) => {
+      const { from = 0, size = 0 } = query.products || {}
+      return {
+        products: {
+          hits: Array.from({ length: size }, (_, i) => ({ productId: String(from + i) })),
+          from,
+          size
+        }
+      }
+    })
+    const result = await searchWithChunking(query, {}, search)
+
+    expect(search).toHaveBeenCalledTimes(3)
+    expect(result.products?.hits).toHaveLength(600)
+  })
+
   it("should drop tracking from chunks and record a single search event", async () => {
     const query: SearchQuery = { query: "shoes", products: { size: 500 } }
     const result = await searchWithChunking(query, { track: "serp" }, search)
