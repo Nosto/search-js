@@ -3,8 +3,9 @@ import { SearchHit } from "@nosto/nosto-js/client"
 import { ProductHit } from "@preact/autocomplete/types"
 import { AsComponent, BaseElement, BaseElementProps } from "@preact/common/components/BaseElement"
 import { useConfig } from "@preact/common/config/configContext"
+import { StoreContext } from "@preact/common/store/storeContext"
 import { savePageScroll } from "@utils/pageScroll/savePageScroll"
-import { useCallback } from "preact/hooks"
+import { useCallback, useContext } from "preact/hooks"
 
 /**
  * @group Components
@@ -22,6 +23,7 @@ export type SerpElementProps<C extends AsComponent> = Omit<BaseElementProps<C>, 
  */
 export function SerpElement<C extends AsComponent>({ children, hit, componentProps, as }: SerpElementProps<C>) {
   const config = useConfig()
+  const store = useContext(StoreContext)
   const { pageType } = config
   const track = pageType === "autocomplete" ? undefined : pageType === "search" ? "serp" : pageType
   const preservePageScroll = config.pageType !== "autocomplete" && config.preservePageScroll
@@ -31,9 +33,9 @@ export function SerpElement<C extends AsComponent>({ children, hit, componentPro
       nostojs(api => api.recordSearchClick(track, hit as SearchHit))
     }
     if (preservePageScroll) {
-      savePageScroll()
+      savePageScroll(store.getState().query.products?.size)
     }
-  }, [hit, track, preservePageScroll])
+  }, [hit, track, preservePageScroll, store])
 
   return (
     <BaseElement as={as} onClick={onClick} componentProps={componentProps}>

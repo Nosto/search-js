@@ -1,6 +1,8 @@
 import { mockNostojs } from "@nosto/nosto-js/testing"
 import { makeAutocompleteConfig } from "@preact/autocomplete/AutocompleteConfig"
 import { ConfigContext } from "@preact/common/config/configContext"
+import { createStore } from "@preact/common/store/store"
+import { StoreContext } from "@preact/common/store/storeContext"
 import { SerpElement } from "@preact/serp/components/SerpElement"
 import { makeSerpConfig } from "@preact/serp/SerpConfig"
 import { render } from "@testing-library/preact"
@@ -130,6 +132,19 @@ describe("SerpElement", () => {
 
       result.getByText("Product").click()
       expect(sessionStorage.getItem(scrollPosStorageKey)).not.toBeNull()
+    })
+
+    it("saves the loaded product count on click", () => {
+      const result = render(
+        <ConfigContext value={makeSerpConfig({ preservePageScroll: true })}>
+          <StoreContext value={createStore({ query: { products: { size: 72 } } })}>
+            <SerpElement hit={hit}>Product</SerpElement>
+          </StoreContext>
+        </ConfigContext>
+      )
+
+      result.getByText("Product").click()
+      expect(JSON.parse(sessionStorage.getItem(scrollPosStorageKey)!)).toMatchObject({ productCount: 72 })
     })
 
     it("is not saved on click when preservePageScroll is disabled", () => {

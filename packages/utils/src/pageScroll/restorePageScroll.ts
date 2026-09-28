@@ -4,7 +4,7 @@ import { is } from "valibot"
 import { savedScrollSchema } from "./savedScrollSchema"
 import { scrollPosStorageKey } from "./savePageScroll"
 
-export function restoreSavedScroll() {
+export function loadSavedScroll() {
   const savedScrollPosition = window.sessionStorage.getItem(scrollPosStorageKey)
   if (!savedScrollPosition) {
     return
@@ -16,6 +16,14 @@ export function restoreSavedScroll() {
   }
   // The position was saved on a different page
   if (savedScroll.url !== window.location.href) {
+    return
+  }
+  return savedScroll
+}
+
+export function restoreSavedScroll() {
+  const savedScroll = loadSavedScroll()
+  if (!savedScroll) {
     return
   }
 

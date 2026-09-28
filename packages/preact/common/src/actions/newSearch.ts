@@ -4,7 +4,7 @@ import type { SearchQuery } from "@nosto/nosto-js/client"
 import { deepMerge } from "@utils/deepMerge"
 import { logger } from "@utils/logger"
 import { mergeArrays } from "@utils/mergeArrays"
-import { restoreSavedScroll } from "@utils/pageScroll/restorePageScroll"
+import { loadSavedScroll, restoreSavedScroll } from "@utils/pageScroll/restorePageScroll"
 import { measure } from "@utils/performance"
 
 import { ActionContext, PageType } from "../types"
@@ -28,7 +28,17 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
   const pageType = context.config.pageType
   const track = resolveTrack(options?.track, pageType)
 
-  const mergedQuery = deepMerge(context.store.getInitialState().query, query)
+  const isInitialSearch = !context.store.getState().initialized
+  const shouldRestoreScroll = isInitialSearch && pageType !== "autocomplete" && context.config.preservePageScroll
+
+  let mergedQuery = deepMerge(context.store.getInitialState().query, query)
+
+  // Load as many products as were shown before leaving the page
+  const savedProductCount = shouldRestoreScroll && loadSavedScroll()?.productCount
+  if (savedProductCount) {
+    mergedQuery = deepMerge(mergedQuery, { products: { size: savedProductCount } })
+  }
+
   const mergedOptions = deepMerge(context.config.search, options, {
     track,
     redirect: pageType !== "autocomplete",
@@ -39,7 +49,6 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
 
   context.config.onBeforeSearch?.(context, mergedOptions)
 
-  const isInitialSearch = !context.store.getState().initialized
   context.store.updateState({
     query: mergedQuery,
     loading: true,
@@ -67,7 +76,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
     })
 
     // Restore the scroll position saved when navigating to a product
-    if (isInitialSearch && context.config.pageType !== "autocomplete" && context.config.preservePageScroll) {
+    if (shouldRestoreScroll) {
       restoreSavedScroll()
     }
   } catch (error) {

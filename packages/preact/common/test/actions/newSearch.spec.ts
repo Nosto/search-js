@@ -3,7 +3,7 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { newSearch } from "@preact/common/actions/newSearch"
 import { createStore } from "@preact/common/store/store"
 import { makeSerpConfig } from "@preact/serp/SerpConfig"
-import { restoreSavedScroll } from "@utils/pageScroll/restorePageScroll"
+import { loadSavedScroll, restoreSavedScroll } from "@utils/pageScroll/restorePageScroll"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 vi.mock(import("@utils/pageScroll/restorePageScroll"))
@@ -145,6 +145,31 @@ describe("newSearch", () => {
     it("is not restored when preservePageScroll is disabled", async () => {
       await newSearch(createContext(false), { products: { from: 0 } })
       expect(restoreSavedScroll).not.toHaveBeenCalled()
+    })
+
+    it("loads the saved product count on the initial search", async () => {
+      vi.mocked(loadSavedScroll).mockReturnValue({ url: "", scrollY: 1000, productCount: 72 })
+      const context = createContext(true)
+      await newSearch(context, { products: { size: 24 } })
+
+      expect(search.mock.calls[0][0].products.size).toBe(72)
+      expect(context.store.getState().query.products?.size).toBe(72)
+    })
+
+    it("loads the saved product count only on the initial search", async () => {
+      vi.mocked(loadSavedScroll).mockReturnValue({ url: "", scrollY: 1000, productCount: 72 })
+      const context = createContext(true)
+      await newSearch(context, { products: { size: 24 } })
+      await newSearch(context, { products: { size: 24 } })
+
+      expect(search.mock.calls[1][0].products.size).toBe(24)
+    })
+
+    it("does not load the saved product count when preservePageScroll is disabled", async () => {
+      vi.mocked(loadSavedScroll).mockReturnValue({ url: "", scrollY: 1000, productCount: 72 })
+      await newSearch(createContext(false), { products: { size: 24 } })
+
+      expect(search.mock.calls[0][0].products.size).toBe(24)
     })
   })
 

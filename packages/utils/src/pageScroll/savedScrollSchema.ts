@@ -1,8 +1,9 @@
-import { InferOutput, number, object, string } from "valibot"
+import { InferOutput, number, object, optional, string } from "valibot"
 
 export const savedScrollSchema = object({
   url: string(),
-  scrollY: number()
+  scrollY: number(),
+  productCount: optional(number())
 })
 
 export type SavedScroll = InferOutput<typeof savedScrollSchema>
