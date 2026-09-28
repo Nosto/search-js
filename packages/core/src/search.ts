@@ -3,8 +3,10 @@ import { SearchQuery } from "@nosto/nosto-js/client"
 
 import { applyDecorators } from "./applyDecorators"
 import { DecoratedResult, HitDecorator, SearchFn, SearchOptions, SearchWithNext } from "./types"
-import { searchWithCache } from "./withCache"
+import { searchWithAppend } from "./withAppend"
+import { searchWithChunking } from "./withChunking"
 import { searchWithMemoryCache } from "./withMemoryCache"
+import { searchWithPersistentCache } from "./withPersistentCache"
 import { searchWithRedirects } from "./withRedirects"
 import { searchWithRetries } from "./withRetries"
 
@@ -48,9 +50,11 @@ export async function search<HD extends readonly HitDecorator[]>(query: SearchQu
   const searchFn = wrap(
     api.search,
     searchWithRetries,
+    searchWithChunking,
+    searchWithAppend,
     searchWithRedirects,
     searchWithMemoryCache,
-    searchWithCache,
+    searchWithPersistentCache,
     applyDecorators
   )
   return searchFn(query, options) as Promise<DecoratedResult<HD>>

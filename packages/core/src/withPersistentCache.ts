@@ -4,7 +4,7 @@ import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 
 import { cacheSearchResult, loadCachedResult } from "./resultCaching"
 
-export async function searchWithCache(
+export async function searchWithPersistentCache(
   query: SearchQuery,
   { usePersistentCache, ...options }: SearchOptions,
   searchFn: SearchFn
@@ -63,7 +63,7 @@ async function getSearchResultWithCache(
   const backfillSize = size - cacheHits.length
 
   // for pagination scenario, use the from value from the request
-  const backfillFrom = from > 0 ? from + 1 : size - backfillSize
+  const backfillFrom = from + cacheHits.length
   const backfillQuery = {
     ...searchQuery,
     products: {

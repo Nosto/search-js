@@ -18,7 +18,8 @@ export function SearchInjected() {
       serp: {
         config: {
           defaultCurrency: "EUR",
-          persistentSearchCache: true
+          persistentSearchCache: true,
+          preservePageScroll: true
         },
         cssSelector: "#inject-search",
         render: () => (

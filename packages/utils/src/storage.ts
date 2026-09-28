@@ -3,6 +3,8 @@ import { logger } from "./logger"
 
 type Key = `nosto:search-js:${string}`
 
+export const memoryStorage = createInMemoryStorage()
+
 export function setStorageItem(name: Key, value: unknown, storage: Storage) {
   try {
     const stringValue = JSON.stringify(value)
