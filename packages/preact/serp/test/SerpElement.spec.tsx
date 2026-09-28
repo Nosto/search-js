@@ -15,7 +15,9 @@ describe("SerpElement", () => {
   }
 
   beforeEach(() => {
-    mockNostojs()
+    mockNostojs({
+      recordSearchClick: vi.fn()
+    })
   })
 
   describe("should handle clicking exactly once", () => {
