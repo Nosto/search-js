@@ -4,6 +4,7 @@ import type { SearchQuery } from "@nosto/nosto-js/client"
 import { deepMerge } from "@utils/deepMerge"
 import { logger } from "@utils/logger"
 import { mergeArrays } from "@utils/mergeArrays"
+import { restoreSavedScroll } from "@utils/pageScroll/restorePageScroll"
 import { measure } from "@utils/performance"
 
 import { ActionContext, PageType } from "../types"
@@ -38,6 +39,7 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
 
   context.config.onBeforeSearch?.(context, mergedOptions)
 
+  const isInitialSearch = !context.store.getState().initialized
   context.store.updateState({
     query: mergedQuery,
     loading: true,
@@ -63,6 +65,11 @@ export async function newSearch(context: ActionContext, query: SearchQuery, opti
       response,
       loading: false
     })
+
+    // Restore the scroll position saved when navigating to a product
+    if (isInitialSearch && context.config.pageType !== "autocomplete" && context.config.preservePageScroll) {
+      restoreSavedScroll()
+    }
   } catch (error) {
     logger.error("Search action failed", error)
     context.config.onSearchError?.(error, fullQuery, mergedOptions, pageType)

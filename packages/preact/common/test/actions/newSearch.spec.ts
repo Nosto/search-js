@@ -3,7 +3,10 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { newSearch } from "@preact/common/actions/newSearch"
 import { createStore } from "@preact/common/store/store"
 import { makeSerpConfig } from "@preact/serp/SerpConfig"
+import { restoreSavedScroll } from "@utils/pageScroll/restorePageScroll"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+
+vi.mock(import("@utils/pageScroll/restorePageScroll"))
 
 describe("newSearch", () => {
   const search = vi.fn()
@@ -117,6 +120,32 @@ describe("newSearch", () => {
     search.mockRejectedValue(new Error("Search error"))
     await newSearch(context, query)
     expect(onSearchError).toHaveBeenCalled()
+  })
+
+  describe("page scroll", () => {
+    function createContext(preservePageScroll: boolean) {
+      return {
+        config: makeSerpConfig({ preservePageScroll }),
+        store: createStore({ loading: false })
+      }
+    }
+
+    it("is restored after the initial search when preservePageScroll is enabled", async () => {
+      await newSearch(createContext(true), { products: { from: 0 } })
+      expect(restoreSavedScroll).toHaveBeenCalledTimes(1)
+    })
+
+    it("is restored only after the initial search", async () => {
+      const context = createContext(true)
+      await newSearch(context, { products: { from: 0 } })
+      await newSearch(context, { products: { from: 24 } })
+      expect(restoreSavedScroll).toHaveBeenCalledTimes(1)
+    })
+
+    it("is not restored when preservePageScroll is disabled", async () => {
+      await newSearch(createContext(false), { products: { from: 0 } })
+      expect(restoreSavedScroll).not.toHaveBeenCalled()
+    })
   })
 
   describe("query base filters", () => {

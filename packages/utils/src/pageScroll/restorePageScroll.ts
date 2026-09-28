@@ -1,10 +1,8 @@
-import { logger } from "./logger"
+import { logger } from "@utils/logger"
+import { is } from "valibot"
 
-const scrollPosStorageKey = "nosto:search-js:scrollPos"
-
-export function savePageScroll() {
-  window.sessionStorage.setItem(scrollPosStorageKey, window.scrollY.toString())
-}
+import { savedScrollSchema } from "./savedScrollSchema"
+import { scrollPosStorageKey } from "./savePageScroll"
 
 export function restoreSavedScroll() {
   const savedScrollPosition = window.sessionStorage.getItem(scrollPosStorageKey)
@@ -12,7 +10,16 @@ export function restoreSavedScroll() {
     return
   }
 
-  const scrollTo = Math.floor(parseFloat(savedScrollPosition))
+  const savedScroll = JSON.parse(savedScrollPosition)
+  if (!is(savedScrollSchema, savedScroll)) {
+    return
+  }
+  // The position was saved on a different page
+  if (savedScroll.url !== window.location.href) {
+    return
+  }
+
+  const scrollTo = Math.floor(savedScroll.scrollY)
   const interval = window.setInterval(() => {
     const maxScrollable = document.documentElement.scrollHeight - window.innerHeight
     if (maxScrollable >= scrollTo) {

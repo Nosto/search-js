@@ -3,7 +3,9 @@ import { StoreActionsListener } from "@preact/common/store/components/StoreActio
 import { createStore, type Store } from "@preact/common/store/store"
 import { StoreContext } from "@preact/common/store/storeContext"
 import { useCheckClientScript } from "@preact/hooks/useCheckClientScript"
+import { savePageScroll } from "@utils/pageScroll/savePageScroll"
 import { ComponentChildren } from "preact"
+import { useEffect } from "preact/hooks"
 
 import { makeCategoryConfig, PublicCategoryConfig } from "./CategoryConfig"
 
@@ -16,6 +18,14 @@ type CategoryProps = {
 export function CategoryPageProvider({ config, store, children }: CategoryProps) {
   const actualStore = store ?? createStore()
   useCheckClientScript()
+
+  useEffect(() => {
+    if (!config.preservePageScroll) {
+      return
+    }
+    window.addEventListener("pagehide", savePageScroll)
+    return () => window.removeEventListener("pagehide", savePageScroll)
+  }, [config.preservePageScroll])
 
   return (
     <ConfigContext value={makeCategoryConfig(config)}>

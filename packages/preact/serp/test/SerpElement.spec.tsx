@@ -2,6 +2,7 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { makeAutocompleteConfig } from "@preact/autocomplete/AutocompleteConfig"
 import { ConfigContext } from "@preact/common/config/configContext"
 import { SerpElement } from "@preact/serp/components/SerpElement"
+import { makeSerpConfig } from "@preact/serp/SerpConfig"
 import { render } from "@testing-library/preact"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -110,6 +111,36 @@ describe("SerpElement", () => {
 
       result.getByText("Button text").click()
       expect(onClick).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe("page scroll", () => {
+    const scrollPosStorageKey = "nosto:search-js:scrollPos"
+
+    beforeEach(() => {
+      sessionStorage.clear()
+    })
+
+    it("is saved on click when preservePageScroll is enabled", () => {
+      const result = render(
+        <ConfigContext value={makeSerpConfig({ preservePageScroll: true })}>
+          <SerpElement hit={hit}>Product</SerpElement>
+        </ConfigContext>
+      )
+
+      result.getByText("Product").click()
+      expect(sessionStorage.getItem(scrollPosStorageKey)).not.toBeNull()
+    })
+
+    it("is not saved on click when preservePageScroll is disabled", () => {
+      const result = render(
+        <ConfigContext value={makeSerpConfig()}>
+          <SerpElement hit={hit}>Product</SerpElement>
+        </ConfigContext>
+      )
+
+      result.getByText("Product").click()
+      expect(sessionStorage.getItem(scrollPosStorageKey)).toBeNull()
     })
   })
 
