@@ -16,7 +16,8 @@ describe("newSearch", () => {
     vi.spyOn(restorePageScroll, "restoreSavedScroll").mockImplementation(() => {})
 
     mockNostojs({
-      search
+      search,
+      recordSearch: vi.fn()
     })
 
     sessionStorage.clear()
@@ -162,7 +163,7 @@ describe("newSearch", () => {
       await newSearch(context, { products: { size: 24 } })
       await newSearch(context, { products: { size: 24 } })
 
-      expect(search.mock.calls[1][0].products.size).toBe(24)
+      expect(context.store.getState().query.products?.size).toBe(24)
     })
 
     it("does not load the saved product count when preservePageScroll is disabled", async () => {
