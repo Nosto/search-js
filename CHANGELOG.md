@@ -1,3 +1,12 @@
+## [3.28.1](https://github.com/Nosto/search-js/compare/v3.28.0...v3.28.1) (2026-09-30)
+
+
+### Bug Fixes
+
+* better undefined query size handling ([caf6416](https://github.com/Nosto/search-js/commit/caf6416b5bc854b4ef941cba37e8b69ffa544d23))
+* infinite search results chunking and append without persistent cache ([1eb877b](https://github.com/Nosto/search-js/commit/1eb877b2427c2cafea91da9d187eebf907b2a132))
+* proper tracking with persistent cache ([5193316](https://github.com/Nosto/search-js/commit/519331644314e15941253f2396bcebdf1b8fa640))
+
 # [3.28.0](https://github.com/Nosto/search-js/compare/v3.27.0...v3.28.0) (2026-08-04)
 
 
