@@ -3,6 +3,7 @@ import { mockNostojs } from "@nosto/nosto-js/testing"
 import { newSearch } from "@preact/common/actions/newSearch"
 import { createStore } from "@preact/common/store/store"
 import { makeSerpConfig } from "@preact/serp/SerpConfig"
+import * as restorePageScroll from "@utils/pageScroll/restorePageScroll"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("newSearch", () => {
@@ -11,9 +12,12 @@ describe("newSearch", () => {
   beforeEach(() => {
     vi.resetAllMocks()
     search.mockResolvedValue({ products: { hits: [{ name: "product 1" }] } })
+    vi.spyOn(restorePageScroll, "loadSavedScroll").mockReturnValue(undefined)
+    vi.spyOn(restorePageScroll, "restoreSavedScroll").mockImplementation(() => {})
 
     mockNostojs({
-      search
+      search,
+      recordSearch: vi.fn()
     })
 
     sessionStorage.clear()
@@ -117,6 +121,57 @@ describe("newSearch", () => {
     search.mockRejectedValue(new Error("Search error"))
     await newSearch(context, query)
     expect(onSearchError).toHaveBeenCalled()
+  })
+
+  describe("page scroll", () => {
+    function createContext(preservePageScroll: boolean) {
+      return {
+        config: makeSerpConfig({ preservePageScroll }),
+        store: createStore({ loading: false })
+      }
+    }
+
+    it("is restored after the initial search when preservePageScroll is enabled", async () => {
+      await newSearch(createContext(true), { products: { from: 0 } })
+      expect(restorePageScroll.restoreSavedScroll).toHaveBeenCalledTimes(1)
+    })
+
+    it("is restored only after the initial search", async () => {
+      const context = createContext(true)
+      await newSearch(context, { products: { from: 0 } })
+      await newSearch(context, { products: { from: 24 } })
+      expect(restorePageScroll.restoreSavedScroll).toHaveBeenCalledTimes(1)
+    })
+
+    it("is not restored when preservePageScroll is disabled", async () => {
+      await newSearch(createContext(false), { products: { from: 0 } })
+      expect(restorePageScroll.restoreSavedScroll).not.toHaveBeenCalled()
+    })
+
+    it("loads the saved product count on the initial search", async () => {
+      vi.mocked(restorePageScroll.loadSavedScroll).mockReturnValue({ url: "", scrollY: 1000, productCount: 72 })
+      const context = createContext(true)
+      await newSearch(context, { products: { size: 24 } })
+
+      expect(search.mock.calls[0][0].products.size).toBe(72)
+      expect(context.store.getState().query.products?.size).toBe(72)
+    })
+
+    it("loads the saved product count only on the initial search", async () => {
+      vi.mocked(restorePageScroll.loadSavedScroll).mockReturnValue({ url: "", scrollY: 1000, productCount: 72 })
+      const context = createContext(true)
+      await newSearch(context, { products: { size: 24 } })
+      await newSearch(context, { products: { size: 24 } })
+
+      expect(context.store.getState().query.products?.size).toBe(24)
+    })
+
+    it("does not load the saved product count when preservePageScroll is disabled", async () => {
+      vi.mocked(restorePageScroll.loadSavedScroll).mockReturnValue({ url: "", scrollY: 1000, productCount: 72 })
+      await newSearch(createContext(false), { products: { size: 24 } })
+
+      expect(search.mock.calls[0][0].products.size).toBe(24)
+    })
   })
 
   describe("query base filters", () => {

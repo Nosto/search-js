@@ -1,3 +1,4 @@
+import { PageHideListener } from "@preact/common/components/PageHideListener"
 import { ConfigContext } from "@preact/common/config/configContext"
 import { StoreActionsListener } from "@preact/common/store/components/StoreActionsListener"
 import { createStore, type Store } from "@preact/common/store/store"
@@ -21,6 +22,7 @@ export function CategoryPageProvider({ config, store, children }: CategoryProps)
     <ConfigContext value={makeCategoryConfig(config)}>
       <StoreContext value={actualStore}>
         <StoreActionsListener />
+        <PageHideListener />
         {children}
       </StoreContext>
     </ConfigContext>

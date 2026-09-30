@@ -1,7 +1,10 @@
 import { mockNostojs } from "@nosto/nosto-js/testing"
 import { makeAutocompleteConfig } from "@preact/autocomplete/AutocompleteConfig"
 import { ConfigContext } from "@preact/common/config/configContext"
+import { createStore } from "@preact/common/store/store"
+import { StoreContext } from "@preact/common/store/storeContext"
 import { SerpElement } from "@preact/serp/components/SerpElement"
+import { makeSerpConfig } from "@preact/serp/SerpConfig"
 import { render } from "@testing-library/preact"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -12,7 +15,9 @@ describe("SerpElement", () => {
   }
 
   beforeEach(() => {
-    mockNostojs()
+    mockNostojs({
+      recordSearchClick: vi.fn()
+    })
   })
 
   describe("should handle clicking exactly once", () => {
@@ -110,6 +115,49 @@ describe("SerpElement", () => {
 
       result.getByText("Button text").click()
       expect(onClick).toHaveBeenCalledTimes(1)
+    })
+  })
+
+  describe("page scroll", () => {
+    const scrollPosStorageKey = "nosto:search-js:scrollPos"
+
+    beforeEach(() => {
+      sessionStorage.clear()
+    })
+
+    it("is saved on click when preservePageScroll is enabled", () => {
+      const result = render(
+        <ConfigContext value={makeSerpConfig({ preservePageScroll: true })}>
+          <SerpElement hit={hit}>Product</SerpElement>
+        </ConfigContext>
+      )
+
+      result.getByText("Product").click()
+      expect(sessionStorage.getItem(scrollPosStorageKey)).not.toBeNull()
+    })
+
+    it("saves the loaded product count on click", () => {
+      const result = render(
+        <ConfigContext value={makeSerpConfig({ preservePageScroll: true })}>
+          <StoreContext value={createStore({ query: { products: { size: 72 } } })}>
+            <SerpElement hit={hit}>Product</SerpElement>
+          </StoreContext>
+        </ConfigContext>
+      )
+
+      result.getByText("Product").click()
+      expect(JSON.parse(sessionStorage.getItem(scrollPosStorageKey)!)).toMatchObject({ productCount: 72 })
+    })
+
+    it("is not saved on click when preservePageScroll is disabled", () => {
+      const result = render(
+        <ConfigContext value={makeSerpConfig()}>
+          <SerpElement hit={hit}>Product</SerpElement>
+        </ConfigContext>
+      )
+
+      result.getByText("Product").click()
+      expect(sessionStorage.getItem(scrollPosStorageKey)).toBeNull()
     })
   })
 
