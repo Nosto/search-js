@@ -1,3 +1,13 @@
+## [3.28.2](https://github.com/Nosto/search-js/compare/v3.28.1...v3.28.2) (2026-09-30)
+
+
+### Bug Fixes
+
+* nostojs api mock missing ([363856a](https://github.com/Nosto/search-js/commit/363856a69d2a5c697f6f8593fe3f5fa6ae40c9ba))
+* page scroll restore ([4521bd6](https://github.com/Nosto/search-js/commit/4521bd6b36e52dddaf834a3402fb3a7e13886bfa))
+* proper page scroll restoration ([4745856](https://github.com/Nosto/search-js/commit/4745856111246fdd8b57c10d68012fbc0d335044))
+* test mock ([537307f](https://github.com/Nosto/search-js/commit/537307f33d70e2c821c9ac906335c63897e88b94))
+
 ## [3.28.1](https://github.com/Nosto/search-js/compare/v3.28.0...v3.28.1) (2026-09-30)
 
 
