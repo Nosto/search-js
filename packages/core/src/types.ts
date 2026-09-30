@@ -18,7 +18,7 @@ export type SearchOptions<HD extends readonly HitDecorator[] = readonly HitDecor
    */
   usePersistentCache?: boolean
   /**
-   * Whether to use a in-memory cache
+   * Whether to use an in-memory cache
    */
   useMemoryCache?: boolean
 }

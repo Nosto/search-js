@@ -4,7 +4,7 @@ import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 
 import { cacheSearchResult, loadCachedResult } from "./resultCaching"
 
-export async function searchWithCache(
+export async function searchWithPersistentCache(
   query: SearchQuery,
   { usePersistentCache, ...options }: SearchOptions,
   searchFn: SearchFn
@@ -63,7 +63,7 @@ async function getSearchResultWithCache(
   const backfillSize = size - cacheHits.length
 
   // for pagination scenario, use the from value from the request
-  const backfillFrom = from > 0 ? from + 1 : size - backfillSize
+  const backfillFrom = from + cacheHits.length
   const backfillQuery = {
     ...searchQuery,
     products: {
@@ -73,9 +73,11 @@ async function getSearchResultWithCache(
     }
   }
 
-  const backfillResponse = await searchFn(backfillQuery, options)
+  // Tracking is dropped from the backfill request and recorded once for the combined result
+  const { track, ...backfillOptions } = options
+  const backfillResponse = await searchFn(backfillQuery, backfillOptions)
 
-  return {
+  const backfilledResult = {
     ...result,
     products: {
       ...result.products,
@@ -83,5 +85,11 @@ async function getSearchResultWithCache(
       hits: [...(result.products?.hits || []), ...(backfillResponse.products?.hits || [])],
       total: backfillResponse.products?.total || 0
     }
+  } satisfies SearchResult
+
+  if (track) {
+    nostojs(api => api.recordSearch(track, searchQuery, backfilledResult))
   }
+
+  return backfilledResult
 }

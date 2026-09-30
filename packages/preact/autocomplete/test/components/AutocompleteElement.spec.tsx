@@ -2,13 +2,14 @@ import * as nostojs from "@nosto/nosto-js"
 import { AutocompleteElement } from "@preact/autocomplete/components/AutocompleteElement"
 import { render } from "@testing-library/preact"
 import { ComponentChildren } from "preact"
-import { beforeEach, describe, expect, it, vi, vitest } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
+
+vi.mock("@nosto/nosto-js", () => ({
+  nostojs: vi.fn()
+}))
 
 describe("AutocompleteElement", () => {
-  vi.mock("@nosto/nosto-js", () => ({
-    nostojs: vi.fn()
-  }))
-  const nostoJsSpy = vitest.spyOn(nostojs, "nostojs")
+  const nostoJsSpy = vi.spyOn(nostojs, "nostojs")
 
   const mockHit = {
     productId: "123",

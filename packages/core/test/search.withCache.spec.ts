@@ -1,5 +1,5 @@
 import { STORAGE_ENTRY_NAME } from "@core/resultCaching"
-import { searchWithCache } from "@core/withCache"
+import { searchWithPersistentCache } from "@core/withPersistentCache"
 import { SearchQuery, SearchResult } from "@nosto/nosto-js/client"
 import { mockNostojs } from "@nosto/nosto-js/testing"
 import { getSessionStorageItem } from "@utils/storage"
@@ -21,7 +21,7 @@ describe("searchWithCache", () => {
   }
 
   async function testSearch({ query, result }: TestSearchOptions) {
-    const response = await searchWithCache(query, { usePersistentCache: true, track: "serp" }, search)
+    const response = await searchWithPersistentCache(query, { usePersistentCache: true, track: "serp" }, search)
     expect(response).toEqual(result)
     expect(getSessionStorageItem(STORAGE_ENTRY_NAME)).toEqual({
       query,
@@ -205,6 +205,57 @@ describe("searchWithCache", () => {
         triggeredQuery: { products: { from: 2, size: 1 } },
         result: mergedResult
       })
+    })
+
+    it("should backfill after all cached hits when requested size is more than cache size", async () => {
+      const cachedResult = {
+        products: {
+          hits: [{ name: "product 3" }, { name: "product 4" }],
+          size: 2,
+          total: 6
+        }
+      }
+      search.mockResolvedValue(cachedResult)
+
+      await testSearchTriggered({
+        query: { products: { from: 2, size: 2 } },
+        result: cachedResult
+      })
+
+      const newResult = {
+        products: {
+          hits: [{ name: "product 5" }, { name: "product 6" }],
+          total: 6
+        }
+      }
+      search.mockResolvedValue(newResult)
+
+      const mergedResult = {
+        products: {
+          hits: [...cachedResult.products.hits, ...newResult.products.hits],
+          size: 4,
+          total: 6
+        }
+      }
+
+      await testSearchTriggered({
+        query: { products: { from: 2, size: 4 } },
+        triggeredQuery: { products: { from: 4, size: 2 } },
+        result: mergedResult
+      })
+    })
+
+    it("should drop tracking from the backfill request and record a single search event", async () => {
+      const query = { products: { from: 0, size: 2 } }
+      await createCache({ query: { products: { from: 0, size: 1 } }, result: resultDefault })
+      search.mockResolvedValue({ products: { hits: [{ name: "product 2" }], total: 2 } })
+
+      const result = await searchWithPersistentCache(query, { usePersistentCache: true, track: "serp" }, search)
+
+      expect(search.mock.lastCall?.[0].track).toBeUndefined()
+      expect(search.mock.lastCall?.[1].track).toBeUndefined()
+      expect(mockNostojsApi.recordSearch).toHaveBeenCalledTimes(1)
+      expect(mockNostojsApi.recordSearch).toHaveBeenCalledWith("serp", query, result)
     })
   })
 
