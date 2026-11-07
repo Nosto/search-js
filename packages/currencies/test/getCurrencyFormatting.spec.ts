@@ -73,6 +73,15 @@ describe("currency formatting", () => {
     expect(format(123450.0, "USD")).toEqual("$123,450.00")
   })
 
+  it("should prefer the given locale over the currency locale", () => {
+    const { formatCurrency: format } = getCurrencyFormatting({
+      locale: "fr-FR",
+      currencySettings: {}
+    })
+
+    expect(format(12345.0, "EUR")).toEqual("12\u202f345,00\u00a0€")
+  })
+
   it("should load currency settings from nosto", async () => {
     const mockApi = {
       internal: {

@@ -13,6 +13,8 @@ const defaultConfig = {
 export interface CurrencyConfig {
   defaultCurrency: string
   defaultLocale: string
+  /** Shopper locale, e.g. "fr-FR". Takes precedence over the currency-based locale. */
+  locale?: string
   currencySettings: CurrencyFormats
 }
 
@@ -86,7 +88,7 @@ export function getCurrencyFormatting(overrides: Partial<CurrencyConfig> = {}) {
   function formatCurrency(value: number, currency?: string) {
     const { defaultCurrency, currencySettings, defaultLocale } = config
     const currencyCode = currency ?? defaultCurrency
-    const locale = currencyLocales[currencyCode] ?? defaultLocale
+    const locale = config.locale ?? currencyLocales[currencyCode] ?? defaultLocale
 
     if (currencyCode in currencySettings) {
       // formatting using Nosto settings
