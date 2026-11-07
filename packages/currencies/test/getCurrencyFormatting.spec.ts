@@ -89,6 +89,7 @@ describe("currency formatting", () => {
     })
 
     expect(format(123450.5, "INR")).toEqual("₹123,450.50")
+    expect(format(123450.567, "INR")).toEqual("₹123,450.57")
   })
 
   it("should load currency settings from nosto", async () => {
