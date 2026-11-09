@@ -1,3 +1,15 @@
+# [3.29.0](https://github.com/Nosto/search-js/compare/v3.28.2...v3.29.0) (2026-11-09)
+
+
+### Features
+
+* **currencies:** add locale option to currency formatting ([1c56b4f](https://github.com/Nosto/search-js/commit/1c56b4fb0679615042a5740048383f5506ba2160))
+
+
+### Reverts
+
+* remove additional currency rounding assertion ([1d1308c](https://github.com/Nosto/search-js/commit/1d1308c527ea62b03ddf92170b5d8af7c0e2e645))
+
 ## [3.28.2](https://github.com/Nosto/search-js/compare/v3.28.1...v3.28.2) (2026-09-30)
 
 
